@@ -1,0 +1,319 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6403E8BB1BC0B1790041E320 /* RadarWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6403E8BA1BC0B1790041E320 /* RadarWindow.xib */; };
+		6424FE231BCB131F00C006B8 /* HowTo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6424FE201BCB131F00C006B8 /* HowTo.txt */; };
+		6424FE241BCB131F00C006B8 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6424FE211BCB131F00C006B8 /* README.txt */; };
+		6424FE251BCB131F00C006B8 /* VERSION in Resources */ = {isa = PBXBuildFile; fileRef = 6424FE221BCB131F00C006B8 /* VERSION */; };
+		643B35D61BAE1507003F55E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643B35D51BAE1507003F55E3 /* AppDelegate.swift */; };
+		643B35D81BAE1507003F55E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 643B35D71BAE1507003F55E3 /* Assets.xcassets */; };
+		643B35DB1BAE1507003F55E3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643B35D91BAE1507003F55E3 /* MainMenu.xib */; };
+		643B35E31BAE18BB003F55E3 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 643B35E21BAE18BB003F55E3 /* images */; };
+		64554AB81BB5C9BB0033E4C4 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64554AB61BB5C9BB0033E4C4 /* PreferencesWindow.swift */; };
+		64554AB91BB5C9BB0033E4C4 /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64554AB71BB5C9BB0033E4C4 /* PreferencesWindow.xib */; };
+		646AFA3A1BB186920054A0D1 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646AFA391BB186920054A0D1 /* StatusMenuController.swift */; };
+		646AFA3C1BB18F610054A0D1 /* YahooWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646AFA3B1BB18F610054A0D1 /* YahooWeatherAPI.swift */; };
+		64D80D651BC8731700DE4B8E /* readme.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 64D80D641BC8731700DE4B8E /* readme.rtf */; };
+		64FE9EB51BBF421700F9278C /* RadarWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FE9EB31BBF421700F9278C /* RadarWindow.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6403E8BA1BC0B1790041E320 /* RadarWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RadarWindow.xib; path = ./RadarWindow.xib; sourceTree = "<group>"; };
+		6424FE201BCB131F00C006B8 /* HowTo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = HowTo.txt; path = ./HowTo.txt; sourceTree = "<group>"; };
+		6424FE211BCB131F00C006B8 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.txt; path = ./README.txt; sourceTree = "<group>"; };
+		6424FE221BCB131F00C006B8 /* VERSION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = VERSION; path = ./VERSION; sourceTree = "<group>"; };
+		643B35D21BAE1507003F55E3 /* Meteo2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meteo2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		643B35D51BAE1507003F55E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ./AppDelegate.swift; sourceTree = "<group>"; };
+		643B35D71BAE1507003F55E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ./Assets.xcassets; sourceTree = "<group>"; };
+		643B35DA1BAE1507003F55E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		643B35DC1BAE1507003F55E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ./Info.plist; sourceTree = "<group>"; };
+		643B35E21BAE18BB003F55E3 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ./images; sourceTree = "<group>"; };
+		64554AB61BB5C9BB0033E4C4 /* PreferencesWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreferencesWindow.swift; path = ./PreferencesWindow.swift; sourceTree = "<group>"; };
+		64554AB71BB5C9BB0033E4C4 /* PreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PreferencesWindow.xib; path = ./PreferencesWindow.xib; sourceTree = "<group>"; };
+		646AFA391BB186920054A0D1 /* StatusMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatusMenuController.swift; path = ./StatusMenuController.swift; sourceTree = "<group>"; };
+		646AFA3B1BB18F610054A0D1 /* YahooWeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YahooWeatherAPI.swift; path = ./YahooWeatherAPI.swift; sourceTree = "<group>"; };
+		64D80D641BC8731700DE4B8E /* readme.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = readme.rtf; path = ./readme.rtf; sourceTree = "<group>"; };
+		64FE9EB31BBF421700F9278C /* RadarWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RadarWindow.swift; path = ./RadarWindow.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		643B35CF1BAE1507003F55E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		643B35C91BAE1507003F55E3 = {
+			isa = PBXGroup;
+			children = (
+				643B35E21BAE18BB003F55E3 /* images */,
+				643B35D51BAE1507003F55E3 /* AppDelegate.swift */,
+				64554AB61BB5C9BB0033E4C4 /* PreferencesWindow.swift */,
+				64FE9EB31BBF421700F9278C /* RadarWindow.swift */,
+				646AFA391BB186920054A0D1 /* StatusMenuController.swift */,
+				646AFA3B1BB18F610054A0D1 /* YahooWeatherAPI.swift */,
+				643B35D71BAE1507003F55E3 /* Assets.xcassets */,
+				643B35D91BAE1507003F55E3 /* MainMenu.xib */,
+				64554AB71BB5C9BB0033E4C4 /* PreferencesWindow.xib */,
+				6403E8BA1BC0B1790041E320 /* RadarWindow.xib */,
+				643B35DC1BAE1507003F55E3 /* Info.plist */,
+				64D80D641BC8731700DE4B8E /* readme.rtf */,
+				6424FE201BCB131F00C006B8 /* HowTo.txt */,
+				6424FE211BCB131F00C006B8 /* README.txt */,
+				6424FE221BCB131F00C006B8 /* VERSION */,
+				643B35D31BAE1507003F55E3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		643B35D31BAE1507003F55E3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				643B35D21BAE1507003F55E3 /* Meteo2.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		643B35D11BAE1507003F55E3 /* Meteo2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 643B35DF1BAE1507003F55E3 /* Build configuration list for PBXNativeTarget "Meteo2" */;
+			buildPhases = (
+				643B35CE1BAE1507003F55E3 /* Sources */,
+				643B35CF1BAE1507003F55E3 /* Frameworks */,
+				643B35D01BAE1507003F55E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Meteo2;
+			productName = Meteorologist;
+			productReference = 643B35D21BAE1507003F55E3 /* Meteo2.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		643B35CA1BAE1507003F55E3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Cassiopeia Information Technologies, LLC";
+				TargetAttributes = {
+					643B35D11BAE1507003F55E3 = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 7WNRPT262U;
+					};
+				};
+			};
+			buildConfigurationList = 643B35CD1BAE1507003F55E3 /* Build configuration list for PBXProject "Meteo2" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 643B35C91BAE1507003F55E3;
+			productRefGroup = 643B35D31BAE1507003F55E3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				643B35D11BAE1507003F55E3 /* Meteo2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		643B35D01BAE1507003F55E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64D80D651BC8731700DE4B8E /* readme.rtf in Resources */,
+				64554AB91BB5C9BB0033E4C4 /* PreferencesWindow.xib in Resources */,
+				643B35E31BAE18BB003F55E3 /* images in Resources */,
+				6424FE251BCB131F00C006B8 /* VERSION in Resources */,
+				643B35D81BAE1507003F55E3 /* Assets.xcassets in Resources */,
+				6403E8BB1BC0B1790041E320 /* RadarWindow.xib in Resources */,
+				643B35DB1BAE1507003F55E3 /* MainMenu.xib in Resources */,
+				6424FE241BCB131F00C006B8 /* README.txt in Resources */,
+				6424FE231BCB131F00C006B8 /* HowTo.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		643B35CE1BAE1507003F55E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64554AB81BB5C9BB0033E4C4 /* PreferencesWindow.swift in Sources */,
+				64FE9EB51BBF421700F9278C /* RadarWindow.swift in Sources */,
+				646AFA3A1BB186920054A0D1 /* StatusMenuController.swift in Sources */,
+				643B35D61BAE1507003F55E3 /* AppDelegate.swift in Sources */,
+				646AFA3C1BB18F610054A0D1 /* YahooWeatherAPI.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		643B35D91BAE1507003F55E3 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				643B35DA1BAE1507003F55E3 /* Base */,
+			);
+			name = MainMenu.xib;
+			path = .;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		643B35DD1BAE1507003F55E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		643B35DE1BAE1507003F55E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		643B35E01BAE1507003F55E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = ./Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heat.meteo2;
+				PRODUCT_NAME = Meteo2;
+			};
+			name = Debug;
+		};
+		643B35E11BAE1507003F55E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = ./Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heat.meteo2;
+				PRODUCT_NAME = Meteo2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		643B35CD1BAE1507003F55E3 /* Build configuration list for PBXProject "Meteo2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				643B35DD1BAE1507003F55E3 /* Debug */,
+				643B35DE1BAE1507003F55E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		643B35DF1BAE1507003F55E3 /* Build configuration list for PBXNativeTarget "Meteo2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				643B35E01BAE1507003F55E3 /* Debug */,
+				643B35E11BAE1507003F55E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 643B35CA1BAE1507003F55E3 /* Project object */;
+}

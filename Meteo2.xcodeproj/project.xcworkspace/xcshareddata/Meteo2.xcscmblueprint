@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "d3ebed13-a016-0410-8795-cbbf129bdbb2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "d3ebed13-a016-0410-8795-cbbf129bdbb2" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "d3ebed13-a016-0410-8795-cbbf129bdbb2" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3D9FB781-5EC5-4951-B7C1-7A9889937AD9",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "d3ebed13-a016-0410-8795-cbbf129bdbb2" : "meteorologist\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Meteo2",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "trunk\/Meteo2.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/svn.code.sf.net\/p\/heat-meteo\/svn",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d3ebed13-a016-0410-8795-cbbf129bdbb2"
+    }
+  ]
+}
