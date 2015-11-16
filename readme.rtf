@@ -1,7 +1,7 @@
 {\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf320
 {\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;\red10\green93\blue255;\red100\green100\blue100;\red38\green38\blue38;
-\red154\green154\blue154;\red38\green71\blue75;\red14\green14\blue255;}
+{\colortbl;\red255\green255\blue255;\red38\green38\blue38;\red38\green71\blue75;\red14\green14\blue255;
+}
 \margl1440\margr1440\vieww17720\viewh14020\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
@@ -99,38 +99,9 @@ As of today 14 Oct 2015, 1330 Zulu time, the version is 2.0.0.a5.\
 \cf0 \strike \strikec0 * controls in submenu\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \strike0\striked0 \
-\
-\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-
-\fs28 \cf0 \
-\pard\tx529\pardeftab529\pardirnatural\partightenfactor0
-\cf0 \CocoaLigature0 \
-Yahoo API Key (not sure this is even needed anywhere):\
-https://developer.yahoo.com/apps/\
-My id: EdwardD20@yahoo.com\
-
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth35940\clftsWidth3 \clmart10 \clmarl10 \clmarb410 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt160 \clpadl0 \clpadb160 \clpadr0 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\partightenfactor0
-{\field{\*\fldinst{HYPERLINK "https://developer.yahoo.com/apps/"}}{\fldrslt 
-\fs36 \cf2 \expnd0\expndtw0\kerning0
-\CocoaLigature1 My Apps}}
-\fs36 \cf2 \expnd0\expndtw0\kerning0
-\CocoaLigature1  \cf3 Meteorologist
-\fs28 \cf4 \cell \lastrow\row
 \pard\pardeftab720\partightenfactor0
-\cf4 Client ID
-\fs26 \cf5  (Consumer Key)
-\fs28 \cf4 \
-dj0yJmk9ZGZ6MVN0a1BYUnF0JmQ9WVdrOVRVbEJXV2RWTkc4bWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1mOA--\
-Client Secret
-\fs26 \cf5  (Consumer Secret)
-\fs28 \cf4 \
-5ccc0d61e58514d24eac2f95fad475e270b97b84\
-\
-{\field{\*\fldinst{HYPERLINK "https://developer.yahoo.com/weather/documentation.html"}}{\fldrslt https://developer.yahoo.com/weather/documentation.html}}\
-\
+
+\fs28 \cf2 \expnd0\expndtw0\kerning0
 \
 
 \b\fs30 Flow Logic
@@ -153,22 +124,22 @@ else\
 	the weatherSource preference is read along with the 8 possible cities\
 	If the weatherSource is Yahoo! (the only choice right now)\
 		YahooWeatherAPI.beginParsing is called with each City name\
-		then YahooWeatherAPI.\cf6 \kerning1\expnd0\expndtw0 \CocoaLigature0 updateMenuWithPrimaryLocation is called\
-		then \cf4 \expnd0\expndtw0\kerning0
-\CocoaLigature1 YahooWeatherAPI.\cf6 \kerning1\expnd0\expndtw0 \CocoaLigature0 updateMenuWithSecondaryLocation is called\
+		then YahooWeatherAPI.\cf3 \kerning1\expnd0\expndtw0 \CocoaLigature0 updateMenuWithPrimaryLocation is called\
+		then \cf2 \expnd0\expndtw0\kerning0
+\CocoaLigature1 YahooWeatherAPI.\cf3 \kerning1\expnd0\expndtw0 \CocoaLigature0 updateMenuWithSecondaryLocation is called\
 	endif\
 endif\
 An NSTimer is setup that when pops, will call updateWeather to refresh everything\
 updateWeather is also called each time the PreferencesWindow is closed\
 \
-In PreferencesWindow\cf4 \expnd0\expndtw0\kerning0
-\CocoaLigature1 .swift\cf6 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
+In PreferencesWindow\cf2 \expnd0\expndtw0\kerning0
+\CocoaLigature1 .swift\cf3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
 * the xib is updated with the proper localized (international) text\
 * the Window is updated with the current preferences (default are used if the don\'92t already exist)\
 * when the Window is closed, the preferences are saved\
 \
-In RadarWindow\cf4 \expnd0\expndtw0\kerning0
-\CocoaLigature1 .swift\cf6 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
+In RadarWindow\cf2 \expnd0\expndtw0\kerning0
+\CocoaLigature1 .swift\cf3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
 * the generic weather.com URL is setup\
 * the weather.com tag from Yahoo is saved to the URL\
 * a WebView page is displayed with the current combined URL\
@@ -179,7 +150,7 @@ In YahooWeatherAPI (this logic should eventually get repeated for each weather s
 \b beginParsing
 \b0  initializes the WeatherFields structure\
 	NSXMLParser is called based on the Yahoo! XML address for this particular city\
-	see {\field{\*\fldinst{HYPERLINK "https://developer.yahoo.com/weather/"}}{\fldrslt \cf7 https://developer.yahoo.com/weather/}}\
+	see {\field{\*\fldinst{HYPERLINK "https://developer.yahoo.com/weather/"}}{\fldrslt \cf4 https://developer.yahoo.com/weather/}}\
 
 \b setImage
 \b0  will pick the weather icon based on the current or forecast conditions for a given city\
