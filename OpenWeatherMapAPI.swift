@@ -283,6 +283,9 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
     
     func setImage(weatherCode: String) -> NSImage
     {
+        if (weatherCode == "") {
+            return NSImage(named: "MB-Sun")!
+        }
         return NSImage(named: weatherCode)!
     } // setImage
     
