@@ -215,7 +215,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         
         iForecastCount = 1
         
-        // https://developer.yahoo.com/weather/
+        // https://OpenWeatherMap.org
         
         // Should emit "Powered by Yahoo!", https://poweredby.yahoo.com/purple.png
         //var weatherQuery = NSString()
@@ -1088,15 +1088,10 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             let defaults = NSUserDefaults.standardUserDefaults()
             
             // Need to incorporate currentLink
-            newItem = NSMenuItem(title: (weatherFields.title1 as String), action: Selector("openWeatherURL:"), keyEquivalent: "")
+            newItem = NSMenuItem(title: "OpenWeatherMap.org weather for " + (weatherFields.title1 as String), action: Selector("openWeatherURL:"), keyEquivalent: "")
             newItem.target=self
             
-            // http://stackoverflow.com/questions/24200888/any-way-to-replace-characters-on-swift-string
-            var myURL = ""
-            myURL = weatherFields.URL as String
-            let replaced = String(myURL.characters.map {
-                $0 == " " ? "-" : $0
-                })
+            let replaced = String("http://openweathermap.org/city/" +  (locationWOEID as String))
             
             newItem.representedObject = replaced
             menu.addItem(newItem)
@@ -1114,13 +1109,14 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             
             currentConditions(weatherFields, cityName: cityName, currentForecastMenu: currentForecastMenu)
             
-            //var newItem : NSMenuItem
-            //newItem = NSMenuItem(title: NSLocalizedString("RadarImage_", // Unique key of your choice
-            //    value:"Radar Image", // Default (English) text
-            //    comment:"Radar Image"), action: Selector("showRadar:"), keyEquivalent: "")
-            //newItem.target=self
-            //newItem.representedObject = weatherFields.weatherTag as String
-            //currentForecastMenu.addItem(newItem)
+            var newItem : NSMenuItem
+            newItem = NSMenuItem(title: NSLocalizedString("RadarImage_", // Unique key of your choice
+                value:"Radar Image", // Default (English) text
+                comment:"Radar Image"), action: Selector("showRadar:"), keyEquivalent: "")
+            newItem.target=self
+            let myURL = String("http://openweathermap.org/city/" +  (locationWOEID as String) + "#map")
+            newItem.representedObject = myURL
+            currentForecastMenu.addItem(newItem)
             
             if (defaults.stringForKey("viewExtendedForecast")! == "1") {
                 var extendedForecastMenu = NSMenu()

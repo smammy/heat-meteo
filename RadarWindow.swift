@@ -46,8 +46,14 @@ class RadarWindow: NSWindowController, NSWindowDelegate {
         self.window?.center()
         self.window?.makeKeyAndOrderFront(nil)
         
+        let defaults = NSUserDefaults.standardUserDefaults()
         var ourURL = radarURL
-        ourURL.appendContentsOf(weatherComTag)
+        if (defaults.stringForKey("weatherSource")! == YAHOO_WEATHER) {
+            ourURL.appendContentsOf(weatherComTag)
+        }
+        else if (defaults.stringForKey("weatherSource")! == "1") {
+            ourURL = weatherComTag
+        }
         
         radarWind.title = NSLocalizedString("Radar_", // Unique key of your choice
             value:"Radar", // Default (English) text
