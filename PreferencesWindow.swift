@@ -150,7 +150,6 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         defaults.setValue(cityTextField6.stringValue, forKey: "city6")
         defaults.setValue(cityTextField7.stringValue, forKey: "city7")
         defaults.setValue(cityTextField8.stringValue, forKey: "city8")
-        defaults.setValue(YAHOO_WEATHER, forKey: "weatherSource")
         defaults.setValue(updateFrequencyTextField.stringValue, forKey: "updateFrequency")
         defaults.setValue(controlsInSubmenu.stringValue, forKey: "controlsInSubmenu")
         defaults.setValue(displayHumidity.stringValue, forKey: "displayHumidity")
@@ -203,6 +202,9 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         weatherSource.itemAtIndex(0)?.title = NSLocalizedString("Yahoo!_", // Unique key of your choice
             value:"Yahoo!", // Default (English) text
             comment:"Yahoo")
+        weatherSource.itemAtIndex(1)?.title = NSLocalizedString("OpenWeatherMap_", // Unique key of your choice
+            value:"OpenWeatherMap", // Default (English) text
+            comment:"OpenWeatherMap")
         
         currentWeatherInSubmenu.title = NSLocalizedString("CurrentWeather_", // Unique key of your choice
             value:"Current weather in submenu", // Default (English) text

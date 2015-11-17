@@ -2,7 +2,9 @@ This file could also be called the change log.
 
 v2.0.0
 - Complete re-write into Swift 2. Now requires at least 10.9. Some portions even newer OS's.
-- Weather information is based on the Yahoo! XML weather feed.
+- Weather information is based
+-   Yahoo! XML weather feed.
+-   OpenWeatherMap weather feed.
 - Only support MenuBar mode, no native application menus
 - Based on Xcode 7
 

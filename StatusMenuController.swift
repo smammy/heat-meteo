@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a10"
+let DEFAULT_PREFERENCE_VERSION = "a11"
 
 struct WeatherFields {
     
@@ -94,6 +94,83 @@ struct WeatherFields {
     var forecast5Low = NSMutableString()
     var forecast5Conditions = NSMutableString()
     
+    var forecast6Code = NSMutableString()
+    var forecast6Date = NSMutableString()
+    var forecast6Day = NSMutableString()
+    var forecast6High = NSMutableString()
+    var forecast6Low = NSMutableString()
+    var forecast6Conditions = NSMutableString()
+    
+    var forecast7Code = NSMutableString()
+    var forecast7Date = NSMutableString()
+    var forecast7Day = NSMutableString()
+    var forecast7High = NSMutableString()
+    var forecast7Low = NSMutableString()
+    var forecast7Conditions = NSMutableString()
+    
+    var forecast8Code = NSMutableString()
+    var forecast8Date = NSMutableString()
+    var forecast8Day = NSMutableString()
+    var forecast8High = NSMutableString()
+    var forecast8Low = NSMutableString()
+    var forecast8Conditions = NSMutableString()
+    
+    var forecast9Code = NSMutableString()
+    var forecast9Date = NSMutableString()
+    var forecast9Day = NSMutableString()
+    var forecast9High = NSMutableString()
+    var forecast9Low = NSMutableString()
+    var forecast9Conditions = NSMutableString()
+    
+    var forecast10Code = NSMutableString()
+    var forecast10Date = NSMutableString()
+    var forecast10Day = NSMutableString()
+    var forecast10High = NSMutableString()
+    var forecast10Low = NSMutableString()
+    var forecast10Conditions = NSMutableString()
+    
+    var forecast11Code = NSMutableString()
+    var forecast11Date = NSMutableString()
+    var forecast11Day = NSMutableString()
+    var forecast11High = NSMutableString()
+    var forecast11Low = NSMutableString()
+    var forecast11Conditions = NSMutableString()
+    
+    var forecast12Code = NSMutableString()
+    var forecast12Date = NSMutableString()
+    var forecast12Day = NSMutableString()
+    var forecast12High = NSMutableString()
+    var forecast12Low = NSMutableString()
+    var forecast12Conditions = NSMutableString()
+    
+    var forecast13Code = NSMutableString()
+    var forecast13Date = NSMutableString()
+    var forecast13Day = NSMutableString()
+    var forecast13High = NSMutableString()
+    var forecast13Low = NSMutableString()
+    var forecast13Conditions = NSMutableString()
+    
+    var forecast14Code = NSMutableString()
+    var forecast14Date = NSMutableString()
+    var forecast14Day = NSMutableString()
+    var forecast14High = NSMutableString()
+    var forecast14Low = NSMutableString()
+    var forecast14Conditions = NSMutableString()
+    
+    var forecast15Code = NSMutableString()
+    var forecast15Date = NSMutableString()
+    var forecast15Day = NSMutableString()
+    var forecast15High = NSMutableString()
+    var forecast15Low = NSMutableString()
+    var forecast15Conditions = NSMutableString()
+    
+    var forecast16Code = NSMutableString()
+    var forecast16Date = NSMutableString()
+    var forecast16Day = NSMutableString()
+    var forecast16High = NSMutableString()
+    var forecast16Low = NSMutableString()
+    var forecast16Conditions = NSMutableString()
+    
     var URL = NSMutableString()
     
     var weatherTag = NSMutableString()
@@ -105,6 +182,7 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
     var preferencesWindow: PreferencesWindow!   // http://footle.org/WeatherBar/
     var radarWindow: RadarWindow!
     let yahooWeatherAPI = YahooWeatherAPI()     // https://developer.yahoo.com/weather/
+    let openWeatherMapAPI = OpenWeatherMapAPI() // http://www.openweathermap.org
     var myTimer = NSTimer()                     // http://ios-blog.co.uk/tutorials/swift-nstimer-tutorial-lets-create-a-counter-application/
     
     let defaults = NSUserDefaults.standardUserDefaults()
@@ -114,6 +192,27 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
     var menu: NSMenu = NSMenu()
     var menuItem : NSMenuItem = NSMenuItem()
     var webVERSION = ""
+    
+    // https://gist.github.com/vtardia/3f7d17efd7b258e82b62
+    var appInfo: Dictionary<NSObject,AnyObject>
+    var appName: String!
+    override init() {
+        
+        // Init local parameters
+        self.appInfo = CFBundleGetInfoDictionary(CFBundleGetMainBundle()) as Dictionary
+        self.appName = appInfo["CFBundleName"] as! String
+        
+        // Init parent
+        super.init()
+        
+        // Other init below...
+        
+        // Library/Logs/Meteo.log
+        SetCustomLogFilename(self.appName)
+
+        InfoLog(String(format:"Application %@ starting", self.appName))
+        
+    }
     
     override func awakeFromNib() {
         
@@ -207,9 +306,9 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
     
     func updateWeather()
     {
-        NSURLCache.sharedURLCache().removeAllCachedResponses()
-        NSURLCache.sharedURLCache().diskCapacity = 0
-        NSURLCache.sharedURLCache().memoryCapacity = 0
+        //NSURLCache.sharedURLCache().removeAllCachedResponses()
+        //NSURLCache.sharedURLCache().diskCapacity = 0
+        //NSURLCache.sharedURLCache().memoryCapacity = 0
 
         radarWindow = RadarWindow()
         var controlsMenu = NSMenu()
@@ -293,7 +392,77 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
 
                 menu.addItem(NSMenuItem.separatorItem())
             }
+        } else if (defaults.stringForKey("weatherSource")! == "1") {
+            openWeatherMapAPI.setRadarWind(radarWindow)
+            weatherFields = openWeatherMapAPI.beginParsing(city)
+            
+            if (defaults.stringForKey("displayWeatherIcon")! == "1") {
+                statusBarItem.image = openWeatherMapAPI.setImage(weatherFields.currentCode as String)
+            } else {
+                statusBarItem.image = nil
+            }
+            
+            var statusTitle = ""
+            if (defaults.stringForKey("displayCityName")! == "1") {
+                statusTitle = city + " " + openWeatherMapAPI.formatTemp((weatherFields.currentTemp as String))
+            } else {
+                statusTitle = openWeatherMapAPI.formatTemp((weatherFields.currentTemp as String))
+            }
+            if (defaults.stringForKey("displayHumidity")! == "1") {
+                statusTitle = statusTitle + "/" + openWeatherMapAPI.formatHumidity((weatherFields.humidity as String))
+            }
+            statusBarItem.title = statusTitle
+            
+            openWeatherMapAPI.updateMenuWithPrimaryLocation(weatherFields, cityName: (city), menu: menu)
+            
+            if ((city2 != "") ||
+                (city3 != "") ||
+                (city4 != "") ||
+                (city5 != "") ||
+                (city6 != "") ||
+                (city7 != "") ||
+                (city8 != ""))
+            {
+                if (city2 != "")
+                {
+                    weatherFields = openWeatherMapAPI.beginParsing(city2)
+                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city2), menu: menu)
+                }
+                if (city3 != "")
+                {
+                    weatherFields = openWeatherMapAPI.beginParsing(city3)
+                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city3), menu: menu)
+                }
+                if (city4 != "")
+                {
+                    weatherFields = openWeatherMapAPI.beginParsing(city4)
+                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city4), menu: menu)
+                }
+                if (city5 != "")
+                {
+                    weatherFields = openWeatherMapAPI.beginParsing(city5)
+                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city5), menu: menu)
+                }
+                if (city6 != "")
+                {
+                    weatherFields = openWeatherMapAPI.beginParsing(city6)
+                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city6), menu: menu)
+                }
+                if (city7 != "")
+                {
+                    weatherFields = openWeatherMapAPI.beginParsing(city7)
+                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city7), menu: menu)
+                }
+                if (city8 != "")
+                {
+                    weatherFields = openWeatherMapAPI.beginParsing(city8)
+                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city8), menu: menu)
+                }
+                
+                menu.addItem(NSMenuItem.separatorItem())
+            }
         }
+
 
         var newItem : NSMenuItem
         if (defaults.stringForKey("controlsInSubmenu")! == "1") {

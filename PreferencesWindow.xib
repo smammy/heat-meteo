@@ -231,14 +231,13 @@
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zVw-8Z-rEa">
                         <rect key="frame" x="412" y="445" width="217" height="26"/>
                         <animations/>
-                        <popUpButtonCell key="cell" type="push" title="Yahoo!" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="gs1-Lb-OC0" id="rk4-oq-bDz">
+                        <popUpButtonCell key="cell" type="push" title="Yahoo!" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="gs1-Lb-OC0" id="rk4-oq-bDz" userLabel="Yahoo">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="9jL-W8-ghe">
                                 <items>
                                     <menuItem title="Yahoo!" state="on" id="gs1-Lb-OC0"/>
                                     <menuItem title="Item 2" id="eNd-vy-grU"/>
-                                    <menuItem title="Item 3" id="d0Y-Xc-DSu"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>

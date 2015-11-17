@@ -1,5 +1,5 @@
 //
-//  YahooWeatherAPI.swift
+//  OpenWeatherMapAPI.swift
 //  Meteo2
 //
 //  Swift code written by Ed Danley on 9/19/15.
@@ -25,27 +25,39 @@
 //  OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
+// http://home.openweathermap.org/api
+//
+// This API Key belongs to me (Ed Danley).
+//  It is part of their FREE package.
+//  At some point in time, it's possible somebody else
+//  will need to register another account
+//  Depending on the load the Meteo community puts on this account,
+//   it's possible individuals will need either own API Key.
+//
+// API Key = 516da734a74ae400a4551c546567d5b7
+// BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
+// Price = http://openweathermap.org/price
+//
 
 import Cocoa
 import Foundation
 
-class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
+class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
     
-    let QUERY_PREFIX1 = "https://query.yahooapis.com/v1/public/yql?q=SELECT%20woeid%20FROM%20geo.places(1)%20WHERE%20text%3D'"
-    let QUERY_SUFFIX1 = "'&format=xml&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
+    let QUERY_PREFIX1 = "http://api.openweathermap.org/data/2.5/weather?q='"
+    let QUERY_SUFFIX1a = "&appid="
+    let QUERY_SUFFIX1b = "&mode=xml&units=imperial"
     
-    let QUERY_PREFIX2 = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20IN("
-    let QUERY_SUFFIX2 = ")"
+    let QUERY_PREFIX2 = "http://api.openweathermap.org/data/2.5/forecast/daily?q='"
+    let QUERY_SUFFIX2a = "&appid="
+    let QUERY_SUFFIX2b = "&mode=xml&units=imperial"
     
-    let QUERY_PREFIX3 = "https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid IN("
-    let QUERY_SUFFIX3 = ")"
+    let APIID = "516da734a74ae400a4551c546567d5b7"
     
     var Parser = NSXMLParser()
     var element = NSString()
     
     var iForecastCount = 0
-    var inChannel = false
-    var inTitle = false
     
     var locationCountry = NSMutableString()
     var locationRegion = NSMutableString()
@@ -62,7 +74,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
     func beginParsing(inputCity: String) -> WeatherFields {
         
         DebugLog(String(format:"in beginParsing: %@", inputCity))
-
+        
         weatherFields.title1 = ""
         weatherFields.date = ""
         weatherFields.latitude = ""
@@ -117,16 +129,91 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         weatherFields.forecast5Low = ""
         weatherFields.forecast5Conditions = ""
         
+        weatherFields.forecast6Code = ""
+        weatherFields.forecast6Date = ""
+        weatherFields.forecast6Day = ""
+        weatherFields.forecast6High = ""
+        weatherFields.forecast6Low = ""
+        weatherFields.forecast6Conditions = ""
+        
+        weatherFields.forecast7Code = ""
+        weatherFields.forecast7Date = ""
+        weatherFields.forecast7Day = ""
+        weatherFields.forecast7High = ""
+        weatherFields.forecast7Low = ""
+        weatherFields.forecast7Conditions = ""
+        
+        weatherFields.forecast8Code = ""
+        weatherFields.forecast8Date = ""
+        weatherFields.forecast8Day = ""
+        weatherFields.forecast8High = ""
+        weatherFields.forecast8Low = ""
+        weatherFields.forecast8Conditions = ""
+        
+        weatherFields.forecast9Code = ""
+        weatherFields.forecast9Date = ""
+        weatherFields.forecast9Day = ""
+        weatherFields.forecast9High = ""
+        weatherFields.forecast9Low = ""
+        weatherFields.forecast9Conditions = ""
+        
+        weatherFields.forecast10Code = ""
+        weatherFields.forecast10Date = ""
+        weatherFields.forecast10Day = ""
+        weatherFields.forecast10High = ""
+        weatherFields.forecast10Low = ""
+        weatherFields.forecast10Conditions = ""
+        
+        weatherFields.forecast11Code = ""
+        weatherFields.forecast11Date = ""
+        weatherFields.forecast11Day = ""
+        weatherFields.forecast11High = ""
+        weatherFields.forecast11Low = ""
+        weatherFields.forecast11Conditions = ""
+        
+        weatherFields.forecast12Code = ""
+        weatherFields.forecast12Date = ""
+        weatherFields.forecast12Day = ""
+        weatherFields.forecast12High = ""
+        weatherFields.forecast12Low = ""
+        weatherFields.forecast12Conditions = ""
+        
+        weatherFields.forecast13Code = ""
+        weatherFields.forecast13Date = ""
+        weatherFields.forecast13Day = ""
+        weatherFields.forecast13High = ""
+        weatherFields.forecast13Low = ""
+        weatherFields.forecast13Conditions = ""
+        
+        weatherFields.forecast14Code = ""
+        weatherFields.forecast14Date = ""
+        weatherFields.forecast14Day = ""
+        weatherFields.forecast14High = ""
+        weatherFields.forecast14Low = ""
+        weatherFields.forecast14Conditions = ""
+        
+        weatherFields.forecast15Code = ""
+        weatherFields.forecast15Date = ""
+        weatherFields.forecast15Day = ""
+        weatherFields.forecast15High = ""
+        weatherFields.forecast15Low = ""
+        weatherFields.forecast15Conditions = ""
+        
+        weatherFields.forecast16Code = ""
+        weatherFields.forecast16Date = ""
+        weatherFields.forecast16Day = ""
+        weatherFields.forecast16High = ""
+        weatherFields.forecast16Low = ""
+        weatherFields.forecast16Conditions = ""
+        
         locationCity = ""
         locationCountry = ""
         locationRegion = ""
         locationWOEID = ""
-
+        
         Parser = NSXMLParser()
         
         iForecastCount = 1
-        inChannel = false
-        inTitle = false
         
         // https://developer.yahoo.com/weather/
         
@@ -136,30 +223,45 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         
         parseURL = ""
         parseURL.appendString(QUERY_PREFIX1)
+        parseURL.appendString(inputCity as String)
+        parseURL.appendString(QUERY_SUFFIX1a)
+        parseURL.appendString(APIID)
+        parseURL.appendString(QUERY_SUFFIX1b)
+        InfoLog(String(format:"URL for Current conditions OpenWeatherMap: %@\n", parseURL))
+        
+        parseURL = ""
+        parseURL.appendString(QUERY_PREFIX1)
         escapedCity = inputCity.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())!
         escapedCity = escapedCity.stringByReplacingOccurrencesOfString(",", withString: "%3D")
         parseURL.appendString(escapedCity as String)
-        parseURL.appendString(QUERY_SUFFIX1)
-        DebugLog(String(format:"URL for WOEID: %@\n", parseURL))
+        parseURL.appendString(QUERY_SUFFIX1a)
+        parseURL.appendString(APIID)
+        parseURL.appendString(QUERY_SUFFIX1b)
         Parser = NSXMLParser(contentsOfURL:(NSURL(string:parseURL as String))!)!
         
-        // Find WOEID (Yahoo's Where On Earth ID)
+        // Find Current weather conditions
         Parser.delegate = self
         Parser.parse()
         
         parseURL = ""
-        parseURL.appendString(QUERY_PREFIX3)
-        parseURL.appendString((locationWOEID as String))
-        parseURL.appendString(QUERY_SUFFIX3)
-        InfoLog(String(format:"URL for Yahoo Weather: %@\n", parseURL))
-
+        parseURL.appendString(QUERY_PREFIX2)
+        parseURL.appendString(inputCity as String)
+        parseURL.appendString(QUERY_SUFFIX2a)
+        parseURL.appendString(APIID)
+        parseURL.appendString(QUERY_SUFFIX2b)
+        InfoLog(String(format:"URL for Forecast conditions OpenWeatherMap: %@\n", parseURL))
+        
         parseURL = ""
         parseURL.appendString(QUERY_PREFIX2)
-        parseURL.appendString((locationWOEID as String))
-        parseURL.appendString(QUERY_SUFFIX2)
+        escapedCity = inputCity.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())!
+        escapedCity = escapedCity.stringByReplacingOccurrencesOfString(",", withString: "%3D")
+        parseURL.appendString(escapedCity as String)
+        parseURL.appendString(QUERY_SUFFIX2a)
+        parseURL.appendString(APIID)
+        parseURL.appendString(QUERY_SUFFIX2b)
         Parser = NSXMLParser(contentsOfURL:(NSURL(string:parseURL as String))!)!
         
-        // Get the XML feed for the city in question
+        // Find Forecast weather conditions
         Parser.delegate = self
         Parser.parse()
         
@@ -173,139 +275,20 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         weatherFields.URL.appendString(locationWOEID as String)
         weatherFields.URL.appendString("/")
         //locationCountry = locationCountry.stringByReplacingOccurrencesOfString(" ", withString: "-")
-
+        
         DebugLog(String(format:"leaving beginParsing: %@", inputCity))
-
+        
         return weatherFields
     } // beginParsing
     
     func setImage(weatherCode: String) -> NSImage
     {
-        /*
-        6	mixed rain and sleet
-        7	mixed snow and sleet
-        8	freezing drizzle
-        10	freezing rain
-        13	snow flurries               MB-Flurries
-        14	light snow showers
-        17	hail
-        18	sleet                       MB-Sleet
-        19	dust
-        20	foggy
-        21	haze                        MB-Hazy
-        22	smoky
-        23	blustery
-        24	windy                       MB-Wind
-        25	cold                        Temperature-2
-        35	mixed rain and hail
-        36	hot                         Temperature-9
-        3200	not available
-        
-        */
-        
-        if (weatherCode == "0")
-        {
-            return NSImage(named: "Tornado")!
-        }
-        else if ((weatherCode == "1") ||
-            (weatherCode == "2"))
-        {
-            return NSImage(named: "Hurricane")!
-        }
-        else if ((weatherCode == "3") ||
-            (weatherCode == "37") ||
-            (weatherCode == "38") ||
-            (weatherCode == "39") ||
-            (weatherCode == "45") ||
-            (weatherCode == "47") ||
-            (weatherCode == "4"))
-        {
-            return NSImage(named: "MB-Thunderstorm")!
-        }
-        else if ((weatherCode == "9") ||
-            (weatherCode == "11") ||
-            (weatherCode == "40") ||
-            (weatherCode == "12"))
-        {
-            return NSImage(named: "MB-Rain")!
-        }
-        else if ((weatherCode == "5") ||
-            (weatherCode == "16") ||
-            (weatherCode == "15") ||
-            (weatherCode == "41") ||
-            (weatherCode == "42") ||
-            (weatherCode == "43") ||
-            (weatherCode == "46"))
-        {
-            return NSImage(named: "MB-Snow")!
-        }
-        else if ((weatherCode == "5") ||
-            (weatherCode == "16") ||
-            (weatherCode == "15") ||
-            (weatherCode == "41") ||
-            (weatherCode == "42") ||
-            (weatherCode == "43") ||
-            (weatherCode == "46"))
-        {
-            return NSImage(named: "MB-Snow")!
-        }
-        else if ((weatherCode == "32") ||
-            (weatherCode == "34"))
-        {
-            return NSImage(named: "MB-Sun")!
-        }
-        else if ((weatherCode == "23") ||
-            (weatherCode == "24"))
-        {
-            return NSImage(named: "MB-Wind")!
-        }
-        else if ((weatherCode == "31") ||
-            (weatherCode == "33"))
-        {
-            return NSImage(named: "MB-Moon")!
-        }
-        else if ((weatherCode == "30") ||
-            (weatherCode == "44"))
-        {
-            return NSImage(named: "MB-Sun-Cloud-1")!
-        }
-        else if ((weatherCode == "20") ||
-            (weatherCode == "21"))
-        {
-            return NSImage(named: "MB-Hazy")!
-        }
-        else if ((weatherCode == "26"))
-        {
-            return NSImage(named: "MB-Cloudy")!
-        }
-        else if ((weatherCode == "27"))
-        {
-            return NSImage(named: "MB-Moon-Cloud-2")!
-        }
-        else if ((weatherCode == "28"))
-        {
-            return NSImage(named: "MB-Sun-Cloud-2")!
-        }
-        else if ((weatherCode == "29"))
-        {
-            return NSImage(named: "MB-Moon-Cloud-2")!
-        }
-        else if ((weatherCode == "3200"))
-        {
-            // Yahoo! doesn't have a code so this really isn't an error
-        }
-        else
-        {
-            print(NSLocalizedString("InvalidWeatherCode_", // Unique key of your choice
-                value:"Invalid weatherCode", // Default (English) text
-                comment:"Invalid weatherCode") + ":", weatherCode, terminator: "\n")
-        }
-        return NSImage()
+        return NSImage(named: weatherCode)!
     } // setImage
     
     func formatTemp(temp: String) -> String {
         let defaults = NSUserDefaults.standardUserDefaults()
-        var formattedTemp = temp
+        var formattedTemp = String(Int(((temp as NSString).doubleValue)))
         if (defaults.stringForKey("degreesUnit")! == "1") {
             // http://www.rapidtables.com/convert/temperature/how-fahrenheit-to-celsius.htm
             formattedTemp = String(Int(((temp as NSString).doubleValue - 32) / 1.8))
@@ -321,9 +304,10 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         return formattedTemp
     } // formatTemp
     
-    func formatWindSpeed(speed: String, direction: String) -> String {
+    func formatWindSpeed(speed2: String, direction: String) -> String {
         let defaults = NSUserDefaults.standardUserDefaults()
-        var formattedWindSpeed = direction + "° @ "
+        var formattedWindSpeed = String(Int(((direction as NSString).doubleValue))) + "° @ "
+        let speed = String(Int(((speed2 as NSString).doubleValue)))
         if (defaults.stringForKey("directionUnit")! == "1") {
             var windDirection = direction
             let iDirection = Int((direction as NSString).doubleValue)
@@ -350,44 +334,45 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         }
         if (defaults.stringForKey("speedUnit")! == "0") {
             formattedWindSpeed += speed + " " + NSLocalizedString("MPH_", // Unique key of your choice
-                        value:"MPH", // Default (English) text
-                        comment:"Miles Per Hour")
+                value:"MPH", // Default (English) text
+                comment:"Miles Per Hour")
         } else if (defaults.stringForKey("speedUnit")! == "1") {
             formattedWindSpeed += String(Int((speed as NSString).doubleValue * 1.6094)) + " " + NSLocalizedString("KPH_", // Unique key of your choice
-                        value:"KPH", // Default (English) text
-                        comment:"Kilometers Per Second")
+                value:"KPH", // Default (English) text
+                comment:"Kilometers Per Second")
         } else if (defaults.stringForKey("speedUnit")! == "2") {
             formattedWindSpeed += String(Int((speed as NSString).doubleValue * 0.44704)) + " " + NSLocalizedString("MPS_", // Unique key of your choice
-                        value:"MPS", // Default (English) text
-                        comment:"Meters Per Second")
+                value:"MPS", // Default (English) text
+                comment:"Meters Per Second")
         } else if (defaults.stringForKey("speedUnit")! == "3") {
             formattedWindSpeed += String(Int((speed as NSString).doubleValue * 1.15077944802)) + " " + NSLocalizedString("Knots_", // Unique key of your choice
-                        value:"Knots", // Default (English) text
-                        comment:"Knots")
+                value:"Knots", // Default (English) text
+                comment:"Knots")
         }
         return formattedWindSpeed
     } // formatWindSpeed
     
-    func formatPressure(pressure: String) -> String {
+    func formatPressure(pressure2: String) -> String {
         let defaults = NSUserDefaults.standardUserDefaults()
         var formattedPressure = ""
+        let pressure = String(format: "%.2f", (pressure2 as NSString).doubleValue / 33.8637526)
         if (defaults.stringForKey("pressureUnit")! == "0") {
             formattedPressure += pressure + " " + NSLocalizedString("Inches_", // Unique key of your choice
-                        value:"Inches", // Default (English) text
-                        comment:"Inches")
+                value:"Inches", // Default (English) text
+                comment:"Inches")
         } else if (defaults.stringForKey("pressureUnit")! == "1") {
             formattedPressure += String(Int((pressure as NSString).doubleValue * 33.8637526)) + " " + NSLocalizedString("mb_", // Unique key of your choice
-                        value:"mb", // Default (English) text
-                        comment:"Millibars")
+                value:"mb", // Default (English) text
+                comment:"Millibars")
         } else if (defaults.stringForKey("pressureUnit")! == "2") {
             formattedPressure += String(Int((pressure as NSString).doubleValue * 3.39)) + " " + NSLocalizedString("kp_", // Unique key of your choice
-                        value:"Kb", // Default (English) text
-                        comment:"KiloPascals")
+                value:"Kb", // Default (English) text
+                comment:"KiloPascals")
         } else if (defaults.stringForKey("pressureUnit")! == "3") {
             // Meters/second
             formattedPressure += String(Int((pressure as NSString).doubleValue * 33.8637526)) + " " + NSLocalizedString("hp_", // Unique key of your choice
-                        value:"hb", // Default (English) text
-                        comment:"HectorPascals")
+                value:"hb", // Default (English) text
+                comment:"HectorPascals")
         }
         return formattedPressure
     } // formatPressure
@@ -441,11 +426,11 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         newItem.target=self
         currentForecastMenu.addItem(newItem)
         
-        newItem = NSMenuItem(title: NSLocalizedString("FeelsLike_", // Unique key of your choice
-            value:"Feels Like", // Default (English) text
-            comment:"Feels Like") + ": " + formatTemp(weatherFields.windChill as String), action: Selector("dummy:"), keyEquivalent: "")
-        newItem.target=self
-        currentForecastMenu.addItem(newItem)
+        //newItem = NSMenuItem(title: NSLocalizedString("FeelsLike_", // Unique key of your choice
+        //    value:"Feels Like", // Default (English) text
+        //    comment:"Feels Like") + ": " + formatTemp(weatherFields.windChill as String), action: Selector("dummy:"), keyEquivalent: "")
+        //newItem.target=self
+        //currentForecastMenu.addItem(newItem)
         
         newItem = NSMenuItem(title: NSLocalizedString("Humidity_", // Unique key of your choice
             value:"Humidity", // Default (English) text
@@ -453,11 +438,11 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         newItem.target=self
         currentForecastMenu.addItem(newItem)
         
-        newItem = NSMenuItem(title: NSLocalizedString("Visibility_", // Unique key of your choice
-            value:"Visibility", // Default (English) text
-            comment:"Visibility") + ": " + formatVisibility(weatherFields.visibility as String), action: Selector("dummy:"), keyEquivalent: "")
-        newItem.target=self
-        currentForecastMenu.addItem(newItem)
+        //newItem = NSMenuItem(title: NSLocalizedString("Visibility_", // Unique key of your choice
+        //    value:"Visibility", // Default (English) text
+        //    comment:"Visibility") + ": " + formatVisibility(weatherFields.visibility as String), action: Selector("dummy:"), keyEquivalent: "")
+        //newItem.target=self
+        //currentForecastMenu.addItem(newItem)
         
         newItem = NSMenuItem(title: NSLocalizedString("Pressure_", // Unique key of your choice
             value:"Pressure", // Default (English) text
@@ -497,7 +482,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         let defaults = NSUserDefaults.standardUserDefaults()
         
         DebugLog(String(format:"in extendedForecasts: %@", cityName))
-
+        
         var extendedForecast = NSMenu()
         
         if (!weatherFields.forecast1Day.isEqual("")) {
@@ -759,6 +744,266 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 extendedForecast.addItem(newItem)
             }
         }
+        
+        if (!weatherFields.forecast6Day.isEqual("")) {
+            extendedForecast = NSMenu()
+            
+            if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
+                newItem = NSMenuItem(title: (weatherFields.forecast6Day as String) + " \t" + NSLocalizedString("High_", // Unique key of your choice
+                    value:"High", // Default (English) text
+                    comment:"High") + ": " + formatTemp(weatherFields.forecast6High as String) + " \t" + NSLocalizedString("Low_", // Unique key of your choice
+                        value:"Low", // Default (English) text
+                        comment:"Low") + ": " + formatTemp(weatherFields.forecast6Low as String) + " \t" + (weatherFields.forecast6Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                    newItem.image=setImage(weatherFields.forecast6Code as String)
+                } else {
+                    newItem.image = nil
+                }
+                newItem.target=self
+                extendedForecastMenu.addItem(newItem)
+            } else {
+                newItem = NSMenuItem(title: (weatherFields.forecast6Day as String) + ", " + formatTemp(weatherFields.forecast6High as String), action: nil, keyEquivalent: "")
+                extendedForecastMenu.addItem(newItem)
+                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                    newItem.image=setImage(weatherFields.forecast6Code as String)
+                } else {
+                    newItem.image = nil
+                }
+                extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                    value:"Date", // Default (English) text
+                    comment:"Date") + ": " + (weatherFields.forecast6Date as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                    value:"Forecast", // Default (English) text
+                    comment:"Forecast") + ": " + (weatherFields.forecast6Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("High_", // Unique key of your choice
+                    value:"High", // Default (English) text
+                    comment:"High") + ": " + formatTemp(weatherFields.forecast6High as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                    value:"Low", // Default (English) text
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast6Low as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+            }
+        }
+        
+        if (!weatherFields.forecast7Day.isEqual("")) {
+            extendedForecast = NSMenu()
+            
+            if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
+                newItem = NSMenuItem(title: (weatherFields.forecast7Day as String) + " \t" + NSLocalizedString("High_", // Unique key of your choice
+                    value:"High", // Default (English) text
+                    comment:"High") + ": " + formatTemp(weatherFields.forecast7High as String) + " \t" + NSLocalizedString("Low_", // Unique key of your choice
+                        value:"Low", // Default (English) text
+                        comment:"Low") + ": " + formatTemp(weatherFields.forecast7Low as String) + " \t" + (weatherFields.forecast7Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                    newItem.image=setImage(weatherFields.forecast7Code as String)
+                } else {
+                    newItem.image = nil
+                }
+                newItem.target=self
+                extendedForecastMenu.addItem(newItem)
+            } else {
+                newItem = NSMenuItem(title: (weatherFields.forecast7Day as String) + ", " + formatTemp(weatherFields.forecast7High as String), action: nil, keyEquivalent: "")
+                extendedForecastMenu.addItem(newItem)
+                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                    newItem.image=setImage(weatherFields.forecast7Code as String)
+                } else {
+                    newItem.image = nil
+                }
+                extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                    value:"Date", // Default (English) text
+                    comment:"Date") + ": " + (weatherFields.forecast7Date as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                    value:"Forecast", // Default (English) text
+                    comment:"Forecast") + ": " + (weatherFields.forecast7Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("High_", // Unique key of your choice
+                    value:"High", // Default (English) text
+                    comment:"High") + ": " + formatTemp(weatherFields.forecast7High as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                    value:"Low", // Default (English) text
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast7Low as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+            }
+        }
+        
+        if (!weatherFields.forecast8Day.isEqual("")) {
+            extendedForecast = NSMenu()
+            
+            if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
+                newItem = NSMenuItem(title: (weatherFields.forecast8Day as String) + " \t" + NSLocalizedString("High_", // Unique key of your choice
+                    value:"High", // Default (English) text
+                    comment:"High") + ": " + formatTemp(weatherFields.forecast8High as String) + " \t" + NSLocalizedString("Low_", // Unique key of your choice
+                        value:"Low", // Default (English) text
+                        comment:"Low") + ": " + formatTemp(weatherFields.forecast8Low as String) + " \t" + (weatherFields.forecast8Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                    newItem.image=setImage(weatherFields.forecast8Code as String)
+                } else {
+                    newItem.image = nil
+                }
+                newItem.target=self
+                extendedForecastMenu.addItem(newItem)
+            } else {
+                newItem = NSMenuItem(title: (weatherFields.forecast8Day as String) + ", " + formatTemp(weatherFields.forecast8High as String), action: nil, keyEquivalent: "")
+                extendedForecastMenu.addItem(newItem)
+                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                    newItem.image=setImage(weatherFields.forecast8Code as String)
+                } else {
+                    newItem.image = nil
+                }
+                extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                    value:"Date", // Default (English) text
+                    comment:"Date") + ": " + (weatherFields.forecast8Date as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                    value:"Forecast", // Default (English) text
+                    comment:"Forecast") + ": " + (weatherFields.forecast8Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("High_", // Unique key of your choice
+                    value:"High", // Default (English) text
+                    comment:"High") + ": " + formatTemp(weatherFields.forecast8High as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                    value:"Low", // Default (English) text
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast8Low as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+            }
+        }
+        
+        if (!weatherFields.forecast9Day.isEqual("")) {
+            extendedForecast = NSMenu()
+            
+            if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
+                newItem = NSMenuItem(title: (weatherFields.forecast9Day as String) + " \t" + NSLocalizedString("High_", // Unique key of your choice
+                    value:"High", // Default (English) text
+                    comment:"High") + ": " + formatTemp(weatherFields.forecast9High as String) + " \t" + NSLocalizedString("Low_", // Unique key of your choice
+                        value:"Low", // Default (English) text
+                        comment:"Low") + ": " + formatTemp(weatherFields.forecast9Low as String) + " \t" + (weatherFields.forecast9Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                    newItem.image=setImage(weatherFields.forecast9Code as String)
+                } else {
+                    newItem.image = nil
+                }
+                newItem.target=self
+                extendedForecastMenu.addItem(newItem)
+            } else {
+                newItem = NSMenuItem(title: (weatherFields.forecast9Day as String) + ", " + formatTemp(weatherFields.forecast9High as String), action: nil, keyEquivalent: "")
+                extendedForecastMenu.addItem(newItem)
+                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                    newItem.image=setImage(weatherFields.forecast9Code as String)
+                } else {
+                    newItem.image = nil
+                }
+                extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                    value:"Date", // Default (English) text
+                    comment:"Date") + ": " + (weatherFields.forecast9Date as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                    value:"Forecast", // Default (English) text
+                    comment:"Forecast") + ": " + (weatherFields.forecast9Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("High_", // Unique key of your choice
+                    value:"High", // Default (English) text
+                    comment:"High") + ": " + formatTemp(weatherFields.forecast9High as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                    value:"Low", // Default (English) text
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast9Low as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+            }
+        }
+        
+        if (!weatherFields.forecast10Day.isEqual("")) {
+            extendedForecast = NSMenu()
+            
+            if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
+                newItem = NSMenuItem(title: (weatherFields.forecast10Day as String) + " \t" + NSLocalizedString("High_", // Unique key of your choice
+                    value:"High", // Default (English) text
+                    comment:"High") + ": " + formatTemp(weatherFields.forecast10High as String) + " \t" + NSLocalizedString("Low_", // Unique key of your choice
+                        value:"Low", // Default (English) text
+                        comment:"Low") + ": " + formatTemp(weatherFields.forecast10Low as String) + " \t" + (weatherFields.forecast10Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                    newItem.image=setImage(weatherFields.forecast10Code as String)
+                } else {
+                    newItem.image = nil
+                }
+                newItem.target=self
+                extendedForecastMenu.addItem(newItem)
+            } else {
+                newItem = NSMenuItem(title: (weatherFields.forecast10Day as String) + ", " + formatTemp(weatherFields.forecast10High as String), action: nil, keyEquivalent: "")
+                extendedForecastMenu.addItem(newItem)
+                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                    newItem.image=setImage(weatherFields.forecast10Code as String)
+                } else {
+                    newItem.image = nil
+                }
+                extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                    value:"Date", // Default (English) text
+                    comment:"Date") + ": " + (weatherFields.forecast10Date as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                    value:"Forecast", // Default (English) text
+                    comment:"Forecast") + ": " + (weatherFields.forecast10Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("High_", // Unique key of your choice
+                    value:"High", // Default (English) text
+                    comment:"High") + ": " + formatTemp(weatherFields.forecast10High as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+                
+                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                    value:"Low", // Default (English) text
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast10Low as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem.target=self
+                extendedForecast.addItem(newItem)
+            }
+        }
         DebugLog(String(format:"leaving extendedForecasts: %@", cityName))
     } // extendedForecasts
     
@@ -773,8 +1018,8 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         let defaults = NSUserDefaults.standardUserDefaults()
         
         DebugLog(String(format:"in updateMenuWithSecondaryLocation: %@", cityName))
-
-        let city = weatherFields.title1.substringFromIndex(16)
+        
+        let city = weatherFields.title1
         var statusTitle = city as String + " " + formatTemp((weatherFields.currentTemp as String))
         if (defaults.stringForKey("displayHumidity")! == "1") {
             statusTitle = statusTitle + "/" + formatHumidity((weatherFields.humidity as String))
@@ -782,7 +1027,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         newItem = NSMenuItem(title: statusTitle, action: Selector("openWeatherURL:"), keyEquivalent: "")
         newItem.target=self
         newItem.image = setImage(weatherFields.currentCode as String)
-
+        
         // http://stackoverflow.com/questions/24200888/any-way-to-replace-characters-on-swift-string
         var myURL = ""
         myURL = weatherFields.URL as String
@@ -829,7 +1074,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         
         var newItem : NSMenuItem
         DebugLog(String(format:"in updateMenuWithPrimaryLocation: %@", cityName))
-
+        
         menu.removeAllItems()
         menu.font = NSFont(name: "Courier", size: 14)
         if (weatherFields.currentTemp.isEqual(nil) || weatherFields.currentTemp.isEqual(""))
@@ -841,7 +1086,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         else
         {
             let defaults = NSUserDefaults.standardUserDefaults()
-
+            
             // Need to incorporate currentLink
             newItem = NSMenuItem(title: (weatherFields.title1 as String), action: Selector("openWeatherURL:"), keyEquivalent: "")
             newItem.target=self
@@ -869,13 +1114,13 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
             
             currentConditions(weatherFields, cityName: cityName, currentForecastMenu: currentForecastMenu)
             
-            var newItem : NSMenuItem
-            newItem = NSMenuItem(title: NSLocalizedString("RadarImage_", // Unique key of your choice
-                value:"Radar Image", // Default (English) text
-                comment:"Radar Image"), action: Selector("showRadar:"), keyEquivalent: "")
-            newItem.target=self
-            newItem.representedObject = weatherFields.weatherTag as String
-            currentForecastMenu.addItem(newItem)
+            //var newItem : NSMenuItem
+            //newItem = NSMenuItem(title: NSLocalizedString("RadarImage_", // Unique key of your choice
+            //    value:"Radar Image", // Default (English) text
+            //    comment:"Radar Image"), action: Selector("showRadar:"), keyEquivalent: "")
+            //newItem.target=self
+            //newItem.representedObject = weatherFields.weatherTag as String
+            //currentForecastMenu.addItem(newItem)
             
             if (defaults.stringForKey("viewExtendedForecast")! == "1") {
                 var extendedForecastMenu = NSMenu()
@@ -905,81 +1150,203 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         
         DebugLog(String(format:"in didStartElement: %@", elementName))
         element = elementName
-
-        if (elementName as NSString).isEqualToString("channel") {
-            inChannel = true
-        }
-        else if (elementName as NSString).isEqualToString("title") {
-            if (inChannel) {
-                inTitle = true
+        
+        if (elementName as NSString).isEqualToString("city") {
+            weatherFields.title1.appendString(attributeDict["name"]!)
+            locationCity.appendString(attributeDict["name"]!)
+            locationWOEID.appendString(attributeDict["id"]!)
+            
+        } else if (elementName as NSString).isEqualToString("coord") {
+            weatherFields.latitude.appendString(attributeDict["lat"]!)
+            weatherFields.longitude.appendString(attributeDict["lon"]!)
+            
+        } else if (elementName as NSString).isEqualToString("speed") {
+            weatherFields.windSpeed.appendString(attributeDict["value"]!)
+            
+        } else if (elementName as NSString).isEqualToString("lastupdate") {
+            if (attributeDict["value"] != nil) {
+                weatherFields.date.appendString(attributeDict["value"]!)
             }
-        }  else if (elementName as NSString).isEqualToString("yweather:wind")
-        {
-            weatherFields.windChill.appendString(attributeDict["chill"]!)
-            weatherFields.windDirection.appendString(attributeDict["direction"]!)
-            weatherFields.windSpeed.appendString(attributeDict["speed"]!)
-        }  else if (elementName as NSString).isEqualToString("yweather:atmosphere")
-        {
-            weatherFields.humidity.appendString(attributeDict["humidity"]!)
-            weatherFields.pressure.appendString(attributeDict["pressure"]!)
-            weatherFields.visibility.appendString(attributeDict["visibility"]!)
-        }  else if (elementName as NSString).isEqualToString("yweather:astronomy")
-        {
-            weatherFields.sunrise.appendString(attributeDict["sunrise"]!)
-            weatherFields.sunset.appendString(attributeDict["sunset"]!)
-        }  else if (elementName as NSString).isEqualToString("yweather:condition")
-        {
-            weatherFields.currentCode.appendString(attributeDict["code"]!)
-            weatherFields.currentTemp.appendString(attributeDict["temp"]!)
-            weatherFields.currentConditions.appendString(attributeDict["text"]!)
-        }  else if (elementName as NSString).isEqualToString("yweather:location")
-        {
-            locationCity.appendString(attributeDict["city"]!)
-            locationCountry.appendString(attributeDict["country"]!)
-            locationRegion.appendString(attributeDict["region"]!)
-        } else if (elementName as NSString).isEqualToString("yweather:forecast")
-        {
+            
+        } else if (elementName as NSString).isEqualToString("gusts") {
+            //let Gusts = attributeDict["value"]!
+            //if (Gusts != "") {
+            //    weatherFields.windSpeed.appendString("G")
+            //    weatherFields.windSpeed.appendString(attributeDict["value"]!)
+            //}
+            
+        } else if (elementName as NSString).isEqualToString("direction") {
+            //weatherFields.windChill.appendString(attributeDict["code"]!)
+            weatherFields.windDirection.appendString(attributeDict["value"]!)
+            
+        } else if (elementName as NSString).isEqualToString("humidity") {
+            if (weatherFields.humidity == "") {
+                weatherFields.humidity.appendString(attributeDict["value"]!)
+            }
+            
+        } else if (elementName as NSString).isEqualToString("pressure") {
+            weatherFields.pressure.appendString(attributeDict["value"]!)
+            
+        } else if (elementName as NSString).isEqualToString("sun") {
+            if (weatherFields.sunrise == "") {
+                weatherFields.sunrise.appendString(attributeDict["rise"]!)
+                weatherFields.sunset.appendString(attributeDict["set"]!)
+            }
+            
+        } else if (elementName as NSString).isEqualToString("temperature") {
+            if (attributeDict["value"] != nil) {
+                weatherFields.currentTemp.appendString(attributeDict["value"]!)
+            }
+            else
+            {
+                if (iForecastCount == 1) {
+                    weatherFields.forecast1High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast1Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 2) {
+                    weatherFields.forecast2High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast2Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 3) {
+                    weatherFields.forecast3High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast3Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 4) {
+                    weatherFields.forecast4High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast4Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 5) {
+                    weatherFields.forecast5High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast5Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 6) {
+                    weatherFields.forecast6High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast6Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 7) {
+                    weatherFields.forecast7High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast7Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 8) {
+                    weatherFields.forecast8High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast8Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 9) {
+                    weatherFields.forecast9High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast9Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 10) {
+                    weatherFields.forecast10High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast10Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 11) {
+                    weatherFields.forecast11High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast11Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 12) {
+                    weatherFields.forecast12High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast12Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 13) {
+                    weatherFields.forecast13High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast13Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 14) {
+                    weatherFields.forecast14High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast14Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 15) {
+                    weatherFields.forecast15High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast15Low.appendString(attributeDict["min"]!)
+                } else if (iForecastCount == 16) {
+                    weatherFields.forecast16High.appendString(attributeDict["max"]!)
+                    weatherFields.forecast16Low.appendString(attributeDict["min"]!)
+                }
+            }
+            
+        } else if (elementName as NSString).isEqualToString("weather") {
+            weatherFields.currentCode.appendString(attributeDict["icon"]!)
+            
+        } else if (elementName as NSString).isEqualToString("clouds") {
+            if (attributeDict["name"] != nil) {
+                weatherFields.currentConditions.appendString(attributeDict["name"]!)
+            }
+            
+        } else if (elementName as NSString).isEqualToString("visibility") {
+            //weatherFields.visibility.appendString(attributeDict["id"]!)
+            
+        } else if (elementName as NSString).isEqualToString("time") {
             if (iForecastCount == 1) {
-                weatherFields.forecast1Code.appendString(attributeDict["code"]!)
-                weatherFields.forecast1Date.appendString(attributeDict["date"]!)
                 weatherFields.forecast1Day.appendString(attributeDict["day"]!)
-                weatherFields.forecast1High.appendString(attributeDict["high"]!)
-                weatherFields.forecast1Low.appendString(attributeDict["low"]!)
-                weatherFields.forecast1Conditions.appendString(attributeDict["text"]!)
-                iForecastCount++;
             } else if (iForecastCount == 2) {
-                weatherFields.forecast2Code.appendString(attributeDict["code"]!)
-                weatherFields.forecast2Date.appendString(attributeDict["date"]!)
                 weatherFields.forecast2Day.appendString(attributeDict["day"]!)
-                weatherFields.forecast2High.appendString(attributeDict["high"]!)
-                weatherFields.forecast2Low.appendString(attributeDict["low"]!)
-                weatherFields.forecast2Conditions.appendString(attributeDict["text"]!)
-                iForecastCount++;
             } else if (iForecastCount == 3) {
-                weatherFields.forecast3Code.appendString(attributeDict["code"]!)
-                weatherFields.forecast3Date.appendString(attributeDict["date"]!)
                 weatherFields.forecast3Day.appendString(attributeDict["day"]!)
-                weatherFields.forecast3High.appendString(attributeDict["high"]!)
-                weatherFields.forecast3Low.appendString(attributeDict["low"]!)
-                weatherFields.forecast3Conditions.appendString(attributeDict["text"]!)
-                iForecastCount++;
             } else if (iForecastCount == 4) {
-                weatherFields.forecast4Code.appendString(attributeDict["code"]!)
-                weatherFields.forecast4Date.appendString(attributeDict["date"]!)
                 weatherFields.forecast4Day.appendString(attributeDict["day"]!)
-                weatherFields.forecast4High.appendString(attributeDict["high"]!)
-                weatherFields.forecast4Low.appendString(attributeDict["low"]!)
-                weatherFields.forecast4Conditions.appendString(attributeDict["text"]!)
-                iForecastCount++;
             } else if (iForecastCount == 5) {
-                weatherFields.forecast5Code.appendString(attributeDict["code"]!)
-                weatherFields.forecast5Date.appendString(attributeDict["date"]!)
                 weatherFields.forecast5Day.appendString(attributeDict["day"]!)
-                weatherFields.forecast5High.appendString(attributeDict["high"]!)
-                weatherFields.forecast5Low.appendString(attributeDict["low"]!)
-                weatherFields.forecast5Conditions.appendString(attributeDict["text"]!)
-                iForecastCount++;
+            } else if (iForecastCount == 6) {
+                weatherFields.forecast6Day.appendString(attributeDict["day"]!)
+            } else if (iForecastCount == 7) {
+                weatherFields.forecast7Day.appendString(attributeDict["day"]!)
+            } else if (iForecastCount == 8) {
+                weatherFields.forecast8Day.appendString(attributeDict["day"]!)
+            } else if (iForecastCount == 9) {
+                weatherFields.forecast9Day.appendString(attributeDict["day"]!)
+            } else if (iForecastCount == 10) {
+                weatherFields.forecast10Day.appendString(attributeDict["day"]!)
+            } else if (iForecastCount == 11) {
+                weatherFields.forecast11Day.appendString(attributeDict["day"]!)
+            } else if (iForecastCount == 12) {
+                weatherFields.forecast12Day.appendString(attributeDict["day"]!)
+            } else if (iForecastCount == 13) {
+                weatherFields.forecast13Day.appendString(attributeDict["day"]!)
+            } else if (iForecastCount == 14) {
+                weatherFields.forecast14Day.appendString(attributeDict["day"]!)
+            } else if (iForecastCount == 15) {
+                weatherFields.forecast15Day.appendString(attributeDict["day"]!)
+            } else if (iForecastCount == 16) {
+                weatherFields.forecast16Day.appendString(attributeDict["day"]!)
             }
+            
+        } else if (elementName as NSString).isEqualToString("symbol") {
+            if (iForecastCount == 1) {
+                weatherFields.forecast1Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast1Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 2) {
+                weatherFields.forecast2Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast2Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 3) {
+                weatherFields.forecast3Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast3Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 4) {
+                weatherFields.forecast4Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast4Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 5) {
+                weatherFields.forecast5Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast5Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 6) {
+                weatherFields.forecast6Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast6Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 7) {
+                weatherFields.forecast7Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast7Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 8) {
+                weatherFields.forecast8Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast8Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 9) {
+                weatherFields.forecast9Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast9Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 10) {
+                weatherFields.forecast10Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast10Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 11) {
+                weatherFields.forecast11Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast11Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 12) {
+                weatherFields.forecast12Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast12Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 13) {
+                weatherFields.forecast13Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast13Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 14) {
+                weatherFields.forecast14Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast14Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 15) {
+                weatherFields.forecast15Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast15Conditions.appendString(attributeDict["name"]!)
+            } else if (iForecastCount == 16) {
+                weatherFields.forecast16Code.appendString(attributeDict["var"]!)
+                weatherFields.forecast16Conditions.appendString(attributeDict["name"]!)
+            }
+            
         }
         DebugLog(String(format:"leaving didStartElement: %@", elementName))
     } // parser parser:didStartElement
@@ -988,18 +1355,8 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         
         DebugLog(String(format:"in didEndElement: %@", elementName))
         
-        if (elementName as NSString).isEqualToString("lastBuildDate") {
-            inChannel = false
-        }
-        else if (elementName as NSString).isEqualToString("title") {
-            inTitle = false
-            inChannel = false
-        } else if (elementName as NSString).isEqualToString("geo:long") {
-        } else if (elementName as NSString).isEqualToString("yweather:atmosphere") {
-        } else if (elementName as NSString).isEqualToString("yweather:astronomy") {
-        } else if (elementName as NSString).isEqualToString("yweather:condition") {
-        } else if (elementName as NSString).isEqualToString("yweather:location") {
-        } else if (elementName as NSString).isEqualToString("yweather:forecast") {
+        if (elementName as NSString).isEqualToString("time") {
+            iForecastCount++;
         }
         DebugLog(String(format:"leaving didEndElement: %@", elementName))
     } // parser parser:didEndElement
@@ -1008,36 +1365,6 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         
         DebugLog(String(format:"in foundCharacters: %@\n", string))
         
-        if (inTitle) {
-            if (weatherFields.title1.isEqual("")) {
-                weatherFields.title1.appendString(string)
-            }
-        } else if element.isEqualToString("geo:lat") {
-            if (weatherFields.latitude.isEqual("")) {
-                weatherFields.latitude.appendString(string)
-            }
-        } else if element.isEqualToString("geo:long") {
-            if (weatherFields.longitude.isEqual("")) {
-                weatherFields.longitude.appendString(string)
-            }
-        } else if element.isEqualToString("lastBuildDate") {
-            if (weatherFields.date.isEqual("")) {
-                weatherFields.date.appendString(string)
-            }
-        } else if element.isEqualToString("woeid") {
-            if (locationWOEID.isEqual("")) {
-                locationWOEID.appendString(string)
-            }
-        } else if element.isEqualToString("guid") {
-            if (weatherFields.weatherTag.isEqual("")) {
-                if (string.characters.count > 8) {
-                    let stringB = string.substringToIndex(string.startIndex.advancedBy(8))
-                    weatherFields.weatherTag.appendString(stringB)
-                } else if (string.characters.count == 8) {
-                    weatherFields.weatherTag.appendString(string)
-                }
-            }
-        }
         DebugLog(String(format:"leaving foundCharacters: %@\n", string))
     } // parser parser:foundCharacters
     
@@ -1064,7 +1391,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
     } // openWeatherURL
     
     func showRadar(menu:NSMenuItem) {
-
+        
         DebugLog(String(format:"in showRadar\n"))
         
         let radarURL = menu.representedObject as! String
@@ -1075,4 +1402,4 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         DebugLog(String(format:"in showRadar\n"))
     } // showRadar
     
-} // class YahooWeatherAPI
+} // class OpenWeatherMapAPI

@@ -12,13 +12,15 @@
 		6424FE241BCB131F00C006B8 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6424FE211BCB131F00C006B8 /* README.txt */; };
 		6424FE251BCB131F00C006B8 /* VERSION in Resources */ = {isa = PBXBuildFile; fileRef = 6424FE221BCB131F00C006B8 /* VERSION */; };
 		643B35D61BAE1507003F55E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643B35D51BAE1507003F55E3 /* AppDelegate.swift */; };
-		643B35D81BAE1507003F55E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 643B35D71BAE1507003F55E3 /* Assets.xcassets */; };
 		643B35DB1BAE1507003F55E3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643B35D91BAE1507003F55E3 /* MainMenu.xib */; };
 		643B35E31BAE18BB003F55E3 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 643B35E21BAE18BB003F55E3 /* images */; };
 		64554AB81BB5C9BB0033E4C4 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64554AB61BB5C9BB0033E4C4 /* PreferencesWindow.swift */; };
 		64554AB91BB5C9BB0033E4C4 /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64554AB71BB5C9BB0033E4C4 /* PreferencesWindow.xib */; };
 		646AFA3A1BB186920054A0D1 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646AFA391BB186920054A0D1 /* StatusMenuController.swift */; };
 		646AFA3C1BB18F610054A0D1 /* YahooWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646AFA3B1BB18F610054A0D1 /* YahooWeatherAPI.swift */; };
+		6480F5C51BF9799E00B9A376 /* LogUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480F5C41BF9799E00B9A376 /* LogUtils.swift */; };
+		6480F5C71BF995CA00B9A376 /* OpenWeatherMapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480F5C61BF995CA00B9A376 /* OpenWeatherMapAPI.swift */; };
+		64AA09C91BFAA73F009D6421 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64AA09C81BFAA73F009D6421 /* Assets.xcassets */; };
 		64D80D651BC8731700DE4B8E /* readme.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 64D80D641BC8731700DE4B8E /* readme.rtf */; };
 		64FE9EB51BBF421700F9278C /* RadarWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FE9EB31BBF421700F9278C /* RadarWindow.swift */; };
 /* End PBXBuildFile section */
@@ -30,7 +32,6 @@
 		6424FE221BCB131F00C006B8 /* VERSION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = VERSION; path = ./VERSION; sourceTree = "<group>"; };
 		643B35D21BAE1507003F55E3 /* Meteo2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meteo2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		643B35D51BAE1507003F55E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ./AppDelegate.swift; sourceTree = "<group>"; };
-		643B35D71BAE1507003F55E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ./Assets.xcassets; sourceTree = "<group>"; };
 		643B35DA1BAE1507003F55E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		643B35DC1BAE1507003F55E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ./Info.plist; sourceTree = "<group>"; };
 		643B35E21BAE18BB003F55E3 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ./images; sourceTree = "<group>"; };
@@ -38,6 +39,9 @@
 		64554AB71BB5C9BB0033E4C4 /* PreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PreferencesWindow.xib; path = ./PreferencesWindow.xib; sourceTree = "<group>"; };
 		646AFA391BB186920054A0D1 /* StatusMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatusMenuController.swift; path = ./StatusMenuController.swift; sourceTree = "<group>"; };
 		646AFA3B1BB18F610054A0D1 /* YahooWeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YahooWeatherAPI.swift; path = ./YahooWeatherAPI.swift; sourceTree = "<group>"; };
+		6480F5C41BF9799E00B9A376 /* LogUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogUtils.swift; sourceTree = "<group>"; };
+		6480F5C61BF995CA00B9A376 /* OpenWeatherMapAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenWeatherMapAPI.swift; sourceTree = "<group>"; };
+		64AA09C81BFAA73F009D6421 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		64D80D641BC8731700DE4B8E /* readme.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = readme.rtf; path = ./readme.rtf; sourceTree = "<group>"; };
 		64FE9EB31BBF421700F9278C /* RadarWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RadarWindow.swift; path = ./RadarWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -56,13 +60,15 @@
 		643B35C91BAE1507003F55E3 = {
 			isa = PBXGroup;
 			children = (
+				64AA09C81BFAA73F009D6421 /* Assets.xcassets */,
 				643B35E21BAE18BB003F55E3 /* images */,
 				643B35D51BAE1507003F55E3 /* AppDelegate.swift */,
+				6480F5C41BF9799E00B9A376 /* LogUtils.swift */,
+				6480F5C61BF995CA00B9A376 /* OpenWeatherMapAPI.swift */,
 				64554AB61BB5C9BB0033E4C4 /* PreferencesWindow.swift */,
 				64FE9EB31BBF421700F9278C /* RadarWindow.swift */,
 				646AFA391BB186920054A0D1 /* StatusMenuController.swift */,
 				646AFA3B1BB18F610054A0D1 /* YahooWeatherAPI.swift */,
-				643B35D71BAE1507003F55E3 /* Assets.xcassets */,
 				643B35D91BAE1507003F55E3 /* MainMenu.xib */,
 				64554AB71BB5C9BB0033E4C4 /* PreferencesWindow.xib */,
 				6403E8BA1BC0B1790041E320 /* RadarWindow.xib */,
@@ -146,10 +152,10 @@
 				64554AB91BB5C9BB0033E4C4 /* PreferencesWindow.xib in Resources */,
 				643B35E31BAE18BB003F55E3 /* images in Resources */,
 				6424FE251BCB131F00C006B8 /* VERSION in Resources */,
-				643B35D81BAE1507003F55E3 /* Assets.xcassets in Resources */,
 				6403E8BB1BC0B1790041E320 /* RadarWindow.xib in Resources */,
 				643B35DB1BAE1507003F55E3 /* MainMenu.xib in Resources */,
 				6424FE241BCB131F00C006B8 /* README.txt in Resources */,
+				64AA09C91BFAA73F009D6421 /* Assets.xcassets in Resources */,
 				6424FE231BCB131F00C006B8 /* HowTo.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,9 +167,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6480F5C51BF9799E00B9A376 /* LogUtils.swift in Sources */,
 				64554AB81BB5C9BB0033E4C4 /* PreferencesWindow.swift in Sources */,
 				64FE9EB51BBF421700F9278C /* RadarWindow.swift in Sources */,
 				646AFA3A1BB186920054A0D1 /* StatusMenuController.swift in Sources */,
+				6480F5C71BF995CA00B9A376 /* OpenWeatherMapAPI.swift in Sources */,
 				643B35D61BAE1507003F55E3 /* AppDelegate.swift in Sources */,
 				646AFA3C1BB18F610054A0D1 /* YahooWeatherAPI.swift in Sources */,
 			);
