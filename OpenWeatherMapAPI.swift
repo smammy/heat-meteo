@@ -44,11 +44,11 @@ import Foundation
 
 class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
     
-    let QUERY_PREFIX1 = "http://api.openweathermap.org/data/2.5/weather?q='"
+    let QUERY_PREFIX1 = "http://api.openweathermap.org/data/2.5/weather?q="
     let QUERY_SUFFIX1a = "&appid="
     let QUERY_SUFFIX1b = "&mode=xml&units=imperial"
     
-    let QUERY_PREFIX2 = "http://api.openweathermap.org/data/2.5/forecast/daily?q='"
+    let QUERY_PREFIX2 = "http://api.openweathermap.org/data/2.5/forecast/daily?q="
     let QUERY_SUFFIX2a = "&appid="
     let QUERY_SUFFIX2b = "&mode=xml&units=imperial"
     
@@ -1031,15 +1031,15 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         newItem.target=self
         newItem.image = setImage(weatherFields.currentCode as String)
         
-        // http://stackoverflow.com/questions/24200888/any-way-to-replace-characters-on-swift-string
-        var myURL = ""
-        myURL = weatherFields.URL as String
-        let replaced = String(myURL.characters.map {
-            $0 == " " ? "-" : $0
-            })
+        // Need to incorporate currentLink
+        newItem = NSMenuItem(title: (weatherFields.title1 as String), action: Selector("openWeatherURL:"), keyEquivalent: "")
+        newItem.target=self
+        
+        let replaced = String("http://openweathermap.org/city/" +  (locationWOEID as String))
         
         newItem.representedObject = replaced
         menu.addItem(newItem)
+        
         menu.setSubmenu(newLocation, forItem: newItem)
         
         var currentForecastMenu = NSMenu()
@@ -1079,7 +1079,6 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         DebugLog(String(format:"in updateMenuWithPrimaryLocation: %@", cityName))
         
         menu.removeAllItems()
-        menu.font = NSFont(name: "Courier", size: 14)
         if (weatherFields.currentTemp.isEqual(nil) || weatherFields.currentTemp.isEqual(""))
         {
             menu.title = NSLocalizedString("Failed_", // Unique key of your choice

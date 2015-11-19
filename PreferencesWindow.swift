@@ -77,6 +77,8 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var pressureUnit: NSPopUpButton!
     @IBOutlet weak var directionLabel: NSTextField!
     @IBOutlet weak var directionUnit: NSPopUpButton!
+    @IBOutlet weak var fontLabel: NSTextField!
+    @IBOutlet weak var fontSelection: NSPopUpButton!
     
     var delegate: PreferencesWindowDelegate?
 
@@ -99,6 +101,10 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         versionTextLabel.stringValue = "Version " + version + " build " + build
 
         let defaults = NSUserDefaults.standardUserDefaults()
+        
+        fontSelection.addItemsWithTitles(NSFontManager.sharedFontManager().availableFontFamilies)
+        let familyName = defaults.stringForKey("font") ?? "Tahoma"
+        fontSelection.selectItemWithTitle(familyName)
         
         weatherSource.selectItemAtIndex(Int(defaults.stringForKey("weatherSource") ?? YAHOO_WEATHER)!)
 
@@ -169,6 +175,8 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         defaults.setValue(speedUnit.indexOfSelectedItem, forKey: "speedUnit")
         defaults.setValue(pressureUnit.indexOfSelectedItem, forKey: "pressureUnit")
         defaults.setValue(directionUnit.indexOfSelectedItem, forKey: "directionUnit")
+        
+        defaults.setValue(fontSelection.selectedItem!.title, forKey: "font")
         
         defaults.setValue(DEFAULT_PREFERENCE_VERSION, forKey: "preferenceVersion")
         delegate?.preferencesDidUpdate()
@@ -309,6 +317,10 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
             value:"Ordinal", // Default (English) text
             comment:"Ordinal")
         // Need default value
+        
+        fontLabel.stringValue = NSLocalizedString("Font_", // Unique key of your choice
+            value:"Font", // Default (English) text
+            comment:"Font") + ":"
         
     } // initDisplay
 

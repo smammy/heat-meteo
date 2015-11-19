@@ -16,6 +16,7 @@
 		643B35E31BAE18BB003F55E3 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 643B35E21BAE18BB003F55E3 /* images */; };
 		64554AB81BB5C9BB0033E4C4 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64554AB61BB5C9BB0033E4C4 /* PreferencesWindow.swift */; };
 		64554AB91BB5C9BB0033E4C4 /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64554AB71BB5C9BB0033E4C4 /* PreferencesWindow.xib */; };
+		646819A21BFD34BC009B5804 /* WeatherUnderground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646819A11BFD34BB009B5804 /* WeatherUnderground.swift */; };
 		646AFA3A1BB186920054A0D1 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646AFA391BB186920054A0D1 /* StatusMenuController.swift */; };
 		646AFA3C1BB18F610054A0D1 /* YahooWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646AFA3B1BB18F610054A0D1 /* YahooWeatherAPI.swift */; };
 		6480F5C51BF9799E00B9A376 /* LogUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480F5C41BF9799E00B9A376 /* LogUtils.swift */; };
@@ -37,6 +38,7 @@
 		643B35E21BAE18BB003F55E3 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ./images; sourceTree = "<group>"; };
 		64554AB61BB5C9BB0033E4C4 /* PreferencesWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreferencesWindow.swift; path = ./PreferencesWindow.swift; sourceTree = "<group>"; };
 		64554AB71BB5C9BB0033E4C4 /* PreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PreferencesWindow.xib; path = ./PreferencesWindow.xib; sourceTree = "<group>"; };
+		646819A11BFD34BB009B5804 /* WeatherUnderground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherUnderground.swift; sourceTree = "<group>"; };
 		646AFA391BB186920054A0D1 /* StatusMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatusMenuController.swift; path = ./StatusMenuController.swift; sourceTree = "<group>"; };
 		646AFA3B1BB18F610054A0D1 /* YahooWeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YahooWeatherAPI.swift; path = ./YahooWeatherAPI.swift; sourceTree = "<group>"; };
 		6480F5C41BF9799E00B9A376 /* LogUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogUtils.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				643B35D91BAE1507003F55E3 /* MainMenu.xib */,
 				64554AB71BB5C9BB0033E4C4 /* PreferencesWindow.xib */,
 				6403E8BA1BC0B1790041E320 /* RadarWindow.xib */,
+				646819A11BFD34BB009B5804 /* WeatherUnderground.swift */,
 				643B35DC1BAE1507003F55E3 /* Info.plist */,
 				64D80D641BC8731700DE4B8E /* readme.rtf */,
 				6424FE201BCB131F00C006B8 /* HowTo.txt */,
@@ -167,6 +170,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				646819A21BFD34BC009B5804 /* WeatherUnderground.swift in Sources */,
 				6480F5C51BF9799E00B9A376 /* LogUtils.swift in Sources */,
 				64554AB81BB5C9BB0033E4C4 /* PreferencesWindow.swift in Sources */,
 				64FE9EB51BBF421700F9278C /* RadarWindow.swift in Sources */,

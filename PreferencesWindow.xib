@@ -35,6 +35,8 @@
                 <outlet property="extendedForecastIcons" destination="xKR-dV-x2j" id="kcz-va-RVK"/>
                 <outlet property="extendedForecastInSubmenu" destination="Gwn-pp-DCP" id="zx1-ss-dtP"/>
                 <outlet property="extendedForecastSingleLine" destination="fUp-Qx-8ht" id="b5v-2Q-n0Z"/>
+                <outlet property="fontLabel" destination="l8I-2I-1h5" id="bFR-Hx-d1w"/>
+                <outlet property="fontSelection" destination="kXB-PQ-mvq" id="Cdz-oG-LBo"/>
                 <outlet property="globalUnitsLabel" destination="cPi-G8-dzm" id="0PI-8t-oPX"/>
                 <outlet property="logMessages" destination="SPb-cC-8aq" id="KiS-AR-56Z"/>
                 <outlet property="newVersion" destination="rEe-VA-p2R" id="ia7-Xf-KFe"/>
@@ -146,7 +148,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rg9-ze-nXt">
-                        <rect key="frame" x="444" y="421" width="28" height="22"/>
+                        <rect key="frame" x="444" y="395" width="28" height="22"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="30" drawsBackground="YES" id="C9U-9Y-U4x">
                             <font key="font" metaFont="system"/>
@@ -155,7 +157,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m1c-iL-nZY">
-                        <rect key="frame" x="298" y="414" width="140" height="26"/>
+                        <rect key="frame" x="298" y="388" width="140" height="26"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Update frequence:_" id="5ly-B9-HMw">
                             <font key="font" metaFont="system"/>
@@ -173,7 +175,7 @@
                         </textFieldCell>
                     </textField>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EBA-4m-p5v">
-                        <rect key="frame" x="413" y="370" width="191" height="18"/>
+                        <rect key="frame" x="413" y="344" width="191" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Show controls in submenu_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="B4Y-Zm-5RD">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -181,7 +183,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gXH-JB-RnT">
-                        <rect key="frame" x="310" y="346" width="191" height="18"/>
+                        <rect key="frame" x="310" y="320" width="191" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Display weather icon_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2S7-Cb-3yj">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -189,7 +191,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GDy-AN-jE3">
-                        <rect key="frame" x="498" y="346" width="191" height="18"/>
+                        <rect key="frame" x="498" y="320" width="191" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Display city name_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="dUQ-XS-5f5">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -373,7 +375,7 @@
                         </textFieldCell>
                     </textField>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QWy-bS-jVj">
-                        <rect key="frame" x="413" y="390" width="216" height="18"/>
+                        <rect key="frame" x="413" y="364" width="216" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Current weather in submenu_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="B55-Gj-lKx">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -381,7 +383,7 @@
                         </buttonCell>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RQx-mQ-2o4">
-                        <rect key="frame" x="478" y="423" width="89" height="17"/>
+                        <rect key="frame" x="478" y="397" width="89" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="minutes_" id="4ek-Ol-SyK">
                             <font key="font" metaFont="system"/>
@@ -461,7 +463,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ngf-Lr-bhj">
-                        <rect key="frame" x="498" y="326" width="191" height="18"/>
+                        <rect key="frame" x="498" y="300" width="191" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Display Humidity_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="d1O-fu-B68">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -469,13 +471,31 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wx6-5H-8EY">
-                        <rect key="frame" x="310" y="326" width="191" height="18"/>
+                        <rect key="frame" x="310" y="300" width="191" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Display type (C/F)_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="M4Q-8H-G9m">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kXB-PQ-mvq" userLabel="NSFont">
+                        <rect key="frame" x="412" y="419" width="217" height="26"/>
+                        <animations/>
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="n9a-PU-aTg" userLabel="NSFont">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="aLT-QX-rTv"/>
+                        </popUpButtonCell>
+                    </popUpButton>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l8I-2I-1h5">
+                        <rect key="frame" x="298" y="425" width="111" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Display Font:_" id="9he-ih-5bR">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <animations/>
             </view>

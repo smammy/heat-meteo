@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a13"
+let DEFAULT_PREFERENCE_VERSION = "a16"
 
 struct WeatherFields {
     
@@ -205,17 +205,21 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         // Init parent
         super.init()
         
-        // Other init below...
-        
-        // Library/Logs/Meteo.log
-        SetCustomLogFilename(self.appName)
-
-        InfoLog(String(format:"Application %@ starting", self.appName))
-        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if (defaults.stringForKey("logMessages")! == "1") {
+            // Other init below...
+            
+            // Library/Logs/Meteo.log
+            SetCustomLogFilename(self.appName)
+            
+            InfoLog(String(format:"Application %@ starting", self.appName))
+        }
     }
     
     override func awakeFromNib() {
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+
         let newVersion = defaults.stringForKey("newVersion")
         if ((newVersion != nil) && (newVersion! == "1")) {
             // Check for updates
@@ -274,6 +278,12 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         
         //Add statusBarItem
         statusBarItem = statusBar.statusItemWithLength(-1)
+        
+        if (defaults.stringForKey("font") != nil) {
+            menu.font = NSFont(name: defaults.stringForKey("font")!, size: 14)
+        } else {
+            menu.font = NSFont(name: "Tahoma", size: 14)
+        }
         statusBarItem.menu = menu
         statusBarItem.image = theCityImage
         statusBarItem.title = NSLocalizedString("Loading_", // Unique key of your choice
@@ -508,6 +518,7 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
     } // dummy
     
     func preferencesDidUpdate() {
+        menu.font = NSFont(name: defaults.stringForKey("font")!, size: 14)
         updateWeather()
     }
 

@@ -831,7 +831,6 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         DebugLog(String(format:"in updateMenuWithPrimaryLocation: %@", cityName))
 
         menu.removeAllItems()
-        menu.font = NSFont(name: "Courier", size: 14)
         if (weatherFields.currentTemp.isEqual(nil) || weatherFields.currentTemp.isEqual(""))
         {
             menu.title = NSLocalizedString("Failed_", // Unique key of your choice
