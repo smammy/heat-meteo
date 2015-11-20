@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a16"
+let DEFAULT_PREFERENCE_VERSION = "a17"
 
 struct WeatherFields {
     
@@ -206,7 +206,8 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         super.init()
         
         let defaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.stringForKey("logMessages")! == "1") {
+        if ((defaults.stringForKey("logMessages") != nil) &&
+            (defaults.stringForKey("logMessages")! == "1")) {
             // Other init below...
             
             // Library/Logs/Meteo.log

@@ -22,6 +22,7 @@
 		6480F5C51BF9799E00B9A376 /* LogUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480F5C41BF9799E00B9A376 /* LogUtils.swift */; };
 		6480F5C71BF995CA00B9A376 /* OpenWeatherMapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480F5C61BF995CA00B9A376 /* OpenWeatherMapAPI.swift */; };
 		64AA09C91BFAA73F009D6421 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64AA09C81BFAA73F009D6421 /* Assets.xcassets */; };
+		64ABFFAD1BFEC5B3007EE148 /* TheWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ABFFAC1BFEC5B3007EE148 /* TheWeather.swift */; };
 		64D80D651BC8731700DE4B8E /* readme.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 64D80D641BC8731700DE4B8E /* readme.rtf */; };
 		64FE9EB51BBF421700F9278C /* RadarWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FE9EB31BBF421700F9278C /* RadarWindow.swift */; };
 /* End PBXBuildFile section */
@@ -44,6 +45,7 @@
 		6480F5C41BF9799E00B9A376 /* LogUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogUtils.swift; sourceTree = "<group>"; };
 		6480F5C61BF995CA00B9A376 /* OpenWeatherMapAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenWeatherMapAPI.swift; sourceTree = "<group>"; };
 		64AA09C81BFAA73F009D6421 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		64ABFFAC1BFEC5B3007EE148 /* TheWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheWeather.swift; sourceTree = "<group>"; };
 		64D80D641BC8731700DE4B8E /* readme.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = readme.rtf; path = ./readme.rtf; sourceTree = "<group>"; };
 		64FE9EB31BBF421700F9278C /* RadarWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RadarWindow.swift; path = ./RadarWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,6 +72,7 @@
 				64554AB61BB5C9BB0033E4C4 /* PreferencesWindow.swift */,
 				64FE9EB31BBF421700F9278C /* RadarWindow.swift */,
 				646AFA391BB186920054A0D1 /* StatusMenuController.swift */,
+				64ABFFAC1BFEC5B3007EE148 /* TheWeather.swift */,
 				646AFA3B1BB18F610054A0D1 /* YahooWeatherAPI.swift */,
 				643B35D91BAE1507003F55E3 /* MainMenu.xib */,
 				64554AB71BB5C9BB0033E4C4 /* PreferencesWindow.xib */,
@@ -172,6 +175,7 @@
 			files = (
 				646819A21BFD34BC009B5804 /* WeatherUnderground.swift in Sources */,
 				6480F5C51BF9799E00B9A376 /* LogUtils.swift in Sources */,
+				64ABFFAD1BFEC5B3007EE148 /* TheWeather.swift in Sources */,
 				64554AB81BB5C9BB0033E4C4 /* PreferencesWindow.swift in Sources */,
 				64FE9EB51BBF421700F9278C /* RadarWindow.swift in Sources */,
 				646AFA3A1BB186920054A0D1 /* StatusMenuController.swift in Sources */,
