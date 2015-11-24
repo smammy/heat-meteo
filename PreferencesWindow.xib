@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15C40a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15C47a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
@@ -37,6 +37,7 @@
                 <outlet property="extendedForecastSingleLine" destination="fUp-Qx-8ht" id="b5v-2Q-n0Z"/>
                 <outlet property="fontLabel" destination="l8I-2I-1h5" id="bFR-Hx-d1w"/>
                 <outlet property="fontSelection" destination="kXB-PQ-mvq" id="Cdz-oG-LBo"/>
+                <outlet property="fontSize" destination="7oR-Tn-Inu" id="YH9-uw-DzC"/>
                 <outlet property="globalUnitsLabel" destination="cPi-G8-dzm" id="0PI-8t-oPX"/>
                 <outlet property="logMessages" destination="SPb-cC-8aq" id="KiS-AR-56Z"/>
                 <outlet property="newVersion" destination="rEe-VA-p2R" id="ia7-Xf-KFe"/>
@@ -233,13 +234,13 @@
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zVw-8Z-rEa">
                         <rect key="frame" x="412" y="445" width="217" height="26"/>
                         <animations/>
-                        <popUpButtonCell key="cell" type="push" title="Yahoo!" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="gs1-Lb-OC0" id="rk4-oq-bDz" userLabel="Yahoo">
+                        <popUpButtonCell key="cell" type="push" title="Item 2" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="eNd-vy-grU" id="rk4-oq-bDz" userLabel="Yahoo">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="9jL-W8-ghe">
                                 <items>
-                                    <menuItem title="Yahoo!" state="on" id="gs1-Lb-OC0"/>
-                                    <menuItem title="Item 2" id="eNd-vy-grU"/>
+                                    <menuItem title="Yahoo!" id="gs1-Lb-OC0"/>
+                                    <menuItem title="Item 2" state="on" id="eNd-vy-grU"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -478,7 +479,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
-                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kXB-PQ-mvq" userLabel="NSFont">
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kXB-PQ-mvq" userLabel="FontName">
                         <rect key="frame" x="412" y="419" width="217" height="26"/>
                         <animations/>
                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="n9a-PU-aTg" userLabel="NSFont">
@@ -496,6 +497,37 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7oR-Tn-Inu" userLabel="FontSize">
+                        <rect key="frame" x="645" y="419" width="58" height="26"/>
+                        <animations/>
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="VVl-At-iY9" userLabel="NSFont">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="FZ5-bJ-BSm">
+                                <items>
+                                    <menuItem title="6" id="MvT-2h-3Pu" userLabel="6"/>
+                                    <menuItem title="7" id="Lyb-1L-zo5" userLabel="7"/>
+                                    <menuItem title="8" id="rbs-PP-0cD" userLabel="8"/>
+                                    <menuItem title="9" id="d1l-2J-lSW" userLabel="9"/>
+                                    <menuItem title="10" id="NfZ-Ry-tlJ" userLabel="10"/>
+                                    <menuItem title="11" id="zJg-bG-iLQ" userLabel="11"/>
+                                    <menuItem title="12" id="Hdk-fp-ToW" userLabel="12"/>
+                                    <menuItem title="13" id="HoM-og-qVf" userLabel="13"/>
+                                    <menuItem title="14" state="on" id="fG8-8j-3eB" userLabel="14"/>
+                                    <menuItem title="15" id="lrz-Pn-UVi" userLabel="15"/>
+                                    <menuItem title="16" id="bxu-uV-s6Z" userLabel="16"/>
+                                    <menuItem title="17" id="Vbq-aV-tLV" userLabel="17"/>
+                                    <menuItem title="18" id="apn-D3-opY" userLabel="18"/>
+                                    <menuItem title="19" id="aGz-XX-jLi" userLabel="19"/>
+                                    <menuItem title="20" id="6sc-q6-4oV" userLabel="20"/>
+                                    <menuItem title="21" id="3vA-aL-c2r" userLabel="21"/>
+                                    <menuItem title="22" id="aGS-Wv-MXf" userLabel="22"/>
+                                    <menuItem title="23" id="xPF-pP-cBI" userLabel="23"/>
+                                    <menuItem title="24" id="vsG-oT-esk" userLabel="24"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
                 </subviews>
                 <animations/>
             </view>

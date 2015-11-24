@@ -79,6 +79,7 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var directionUnit: NSPopUpButton!
     @IBOutlet weak var fontLabel: NSTextField!
     @IBOutlet weak var fontSelection: NSPopUpButton!
+    @IBOutlet weak var fontSize: NSPopUpButton!
     
     var delegate: PreferencesWindowDelegate?
 
@@ -135,7 +136,9 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         speedUnit.selectItemAtIndex(Int(defaults.stringForKey("speedUnit") ?? "0")!)
         pressureUnit.selectItemAtIndex(Int(defaults.stringForKey("pressureUnit") ?? "0")!)
         directionUnit.selectItemAtIndex(Int(defaults.stringForKey("directionUnit") ?? "0")!)
-
+        
+        fontSize.selectItemWithTitle(defaults.stringForKey("fontsize") ?? "14")
+        
         NSApp.activateIgnoringOtherApps(true)
     } // windowDidLoad
     
@@ -177,6 +180,7 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         defaults.setValue(directionUnit.indexOfSelectedItem, forKey: "directionUnit")
         
         defaults.setValue(fontSelection.selectedItem!.title, forKey: "font")
+        defaults.setValue(fontSize.selectedItem!.title, forKey: "fontsize")
         
         defaults.setValue(DEFAULT_PREFERENCE_VERSION, forKey: "preferenceVersion")
         delegate?.preferencesDidUpdate()
