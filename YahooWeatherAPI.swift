@@ -504,11 +504,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: (weatherFields.forecast1Day as String) + " \t" + NSLocalizedString("High_", // Unique key of your choice
-                    value:"High", // Default (English) text
-                    comment:"High") + ": " + formatTemp(weatherFields.forecast1High as String) + " \t" + NSLocalizedString("Low_", // Unique key of your choice
-                        value:"Low", // Default (English) text
-                        comment:"Low") + ": " + formatTemp(weatherFields.forecast1Low as String) + " \t" + (weatherFields.forecast1Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: (weatherFields.forecast1Day as String) + " \t" + formatTemp(weatherFields.forecast1High as String) + "/" + formatTemp(weatherFields.forecast1Low as String) + " \t" + (weatherFields.forecast1Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast1Code as String)
                 } else {
@@ -538,9 +534,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 newItem.target=self
                 extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("High_", // Unique key of your choice
-                    value:"High", // Default (English) text
-                    comment:"High") + ": " + formatTemp(weatherFields.forecast1High as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast1High as String), action: Selector("dummy:"), keyEquivalent: "")
                 newItem.target=self
                 extendedForecast.addItem(newItem)
                 
@@ -556,11 +550,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: (weatherFields.forecast2Day as String) + " \t" + NSLocalizedString("High_", // Unique key of your choice
-                    value:"High", // Default (English) text
-                    comment:"High") + ": " + formatTemp(weatherFields.forecast2High as String) + " \t" + NSLocalizedString("Low_", // Unique key of your choice
-                        value:"Low", // Default (English) text
-                        comment:"Low") + ": " + formatTemp(weatherFields.forecast2Low as String) + " \t" + (weatherFields.forecast2Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: (weatherFields.forecast2Day as String) + " \t" + formatTemp(weatherFields.forecast2High as String) + "/" + formatTemp(weatherFields.forecast2Low as String) + " \t" + (weatherFields.forecast2Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast2Code as String)
                 } else {
@@ -590,9 +580,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 newItem.target=self
                 extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("High_", // Unique key of your choice
-                    value:"High", // Default (English) text
-                    comment:"High") + ": " + formatTemp(weatherFields.forecast2High as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast2High as String), action: Selector("dummy:"), keyEquivalent: "")
                 newItem.target=self
                 extendedForecast.addItem(newItem)
                 
@@ -608,11 +596,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: (weatherFields.forecast3Day as String) + " \t" + NSLocalizedString("High_", // Unique key of your choice
-                    value:"High", // Default (English) text
-                    comment:"High") + ": " + formatTemp(weatherFields.forecast3High as String) + " \t" + NSLocalizedString("Low_", // Unique key of your choice
-                        value:"Low", // Default (English) text
-                        comment:"Low") + ": " + formatTemp(weatherFields.forecast3Low as String) + " \t" + (weatherFields.forecast3Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: (weatherFields.forecast3Day as String) + " \t" + formatTemp(weatherFields.forecast3High as String) + "/" + formatTemp(weatherFields.forecast3Low as String) + " \t" + (weatherFields.forecast3Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast3Code as String)
                 } else {
@@ -642,9 +626,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 newItem.target=self
                 extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("High_", // Unique key of your choice
-                    value:"High", // Default (English) text
-                    comment:"High") + ": " + formatTemp(weatherFields.forecast3High as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast3High as String), action: Selector("dummy:"), keyEquivalent: "")
                 newItem.target=self
                 extendedForecast.addItem(newItem)
                 
@@ -660,11 +642,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: (weatherFields.forecast4Day as String) + " \t" + NSLocalizedString("High_", // Unique key of your choice
-                    value:"High", // Default (English) text
-                    comment:"High") + ": " + formatTemp(weatherFields.forecast4High as String) + " \t" + NSLocalizedString("Low_", // Unique key of your choice
-                        value:"Low", // Default (English) text
-                        comment:"Low") + ": " + formatTemp(weatherFields.forecast4Low as String) + " \t" + (weatherFields.forecast4Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: (weatherFields.forecast4Day as String) + " \t" + formatTemp(weatherFields.forecast4High as String) + "/" + formatTemp(weatherFields.forecast4Low as String) + " \t" + (weatherFields.forecast4Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast4Code as String)
                 } else {
@@ -694,9 +672,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 newItem.target=self
                 extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("High_", // Unique key of your choice
-                    value:"High", // Default (English) text
-                    comment:"High") + ": " + formatTemp(weatherFields.forecast4High as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast4High as String), action: Selector("dummy:"), keyEquivalent: "")
                 newItem.target=self
                 extendedForecast.addItem(newItem)
                 
@@ -712,11 +688,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: (weatherFields.forecast5Day as String) + " \t" + NSLocalizedString("High_", // Unique key of your choice
-                    value:"High", // Default (English) text
-                    comment:"High") + ": " + formatTemp(weatherFields.forecast5High as String) + " \t" + NSLocalizedString("Low_", // Unique key of your choice
-                        value:"Low", // Default (English) text
-                        comment:"Low") + ": " + formatTemp(weatherFields.forecast5Low as String) + " \t" + (weatherFields.forecast5Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: (weatherFields.forecast5Day as String) + " \t" + formatTemp(weatherFields.forecast5High as String) + "/" + formatTemp(weatherFields.forecast5Low as String) + " \t" + (weatherFields.forecast5Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast5Code as String)
                 } else {
@@ -746,9 +718,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 newItem.target=self
                 extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("High_", // Unique key of your choice
-                    value:"High", // Default (English) text
-                    comment:"High") + ": " + formatTemp(weatherFields.forecast5High as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast5High as String), action: Selector("dummy:"), keyEquivalent: "")
                 newItem.target=self
                 extendedForecast.addItem(newItem)
                 
