@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-#set -x
+set -x
 
 TEMPLATE_DMG=dist/template.dmg
 
@@ -13,10 +13,9 @@ MASTER_DMG="build/Meteorologist-${VERSION}.dmg"
 echo ""
 echo "------------------------ Building Project -----------------------"
 echo ""
-xcodebuild -configuration Release
-
-rm  -rf build/Release/Meteorologist.app
-mv build/Release/Meteo2.app build/Release/Meteorologist.app
+#xcodebuild -configuration Release
+#rm  -rf build/Release/Meteorologist.app
+#mv build/Release/Meteo2.app build/Release/Meteorologist.app
 
 if [ ! -f "${TEMPLATE_DMG}" ]
 then

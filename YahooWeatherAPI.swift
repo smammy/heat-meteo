@@ -744,7 +744,10 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         
         DebugLog(String(format:"in updateMenuWithSecondaryLocation: %@", cityName))
 
-        let city = weatherFields.title1.substringFromIndex(16)
+        var city = ""
+        if (weatherFields.title1.length > 16) {
+            city = weatherFields.title1.substringFromIndex(16)
+        }
         var statusTitle = city as String + " " + formatTemp((weatherFields.currentTemp as String))
         if (defaults.stringForKey("displayHumidity")! == "1") {
             statusTitle = statusTitle + "/" + formatHumidity((weatherFields.humidity as String))

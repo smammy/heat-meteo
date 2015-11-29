@@ -104,11 +104,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StatusMenuController.swift"
-            timestampString = "469677544.546198"
+            timestampString = "470375547.607665"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
             landmarkName = "awakeFromNib()"
             landmarkType = "5">
          </BreakpointContent>
@@ -136,11 +136,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenWeatherMapAPI.swift"
-            timestampString = "470163280.789403"
+            timestampString = "470373377.427208"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "895"
-            endingLineNumber = "895"
+            startingLineNumber = "896"
+            endingLineNumber = "896"
             landmarkName = "extendedForecasts(_:cityName:extendedForecastMenu:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -152,7 +152,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenWeatherMapAPI.swift"
-            timestampString = "470163280.789403"
+            timestampString = "470373377.427208"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "969"
+            endingLineNumber = "969"
+            landmarkName = "extendedForecasts(_:cityName:extendedForecastMenu:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OpenWeatherMapAPI.swift"
+            timestampString = "470373377.427208"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "968"
@@ -168,11 +184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenWeatherMapAPI.swift"
-            timestampString = "470163280.789403"
+            timestampString = "470373377.427208"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "967"
-            endingLineNumber = "967"
+            startingLineNumber = "926"
+            endingLineNumber = "926"
             landmarkName = "extendedForecasts(_:cityName:extendedForecastMenu:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -184,27 +200,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenWeatherMapAPI.swift"
-            timestampString = "470163280.789403"
+            timestampString = "470373377.427208"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "925"
-            endingLineNumber = "925"
-            landmarkName = "extendedForecasts(_:cityName:extendedForecastMenu:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OpenWeatherMapAPI.swift"
-            timestampString = "470163280.789403"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1454"
-            endingLineNumber = "1454"
+            startingLineNumber = "1455"
+            endingLineNumber = "1455"
             landmarkName = "showRadar(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -216,12 +216,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenWeatherMapAPI.swift"
-            timestampString = "470163280.789403"
+            timestampString = "470373377.427208"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "425"
-            endingLineNumber = "425"
+            startingLineNumber = "426"
+            endingLineNumber = "426"
             landmarkName = "convertUTCtoEEE(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StatusMenuController.swift"
+            timestampString = "470375547.607665"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
+            landmarkName = "awakeFromNib()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

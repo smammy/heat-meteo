@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a21"
+let DEFAULT_PREFERENCE_VERSION = "a24"
 
 struct WeatherFields {
     
@@ -191,7 +191,6 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
     var statusBarItem : NSStatusItem = NSStatusItem()
     var menu: NSMenu = NSMenu()
     var menuItem : NSMenuItem = NSMenuItem()
-    var webVERSION = ""
     
     // https://gist.github.com/vtardia/3f7d17efd7b258e82b62
     var appInfo: Dictionary<NSObject,AnyObject>
@@ -221,7 +220,9 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         
         let defaults = NSUserDefaults.standardUserDefaults()
 
+        var webVERSION = ""
         let newVersion = defaults.stringForKey("newVersion")
+        var whatChanged = ""
         if ((newVersion != nil) && (newVersion! == "1")) {
             // Check for updates
             if let url = NSURL(string: "http://www.danleys.org/" + "VERSION") {
@@ -239,9 +240,15 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
             
             if (version != webVERSION) {
                 // New version!
+                if let url = NSURL(string: "http://www.danleys.org/" + "CHANGELOG") {
+                    do {
+                        whatChanged = try NSString(contentsOfURL: url, usedEncoding: nil) as String
+                    } catch {
+                    }
+                }
                 let myPopup: NSAlert = NSAlert()
                 myPopup.messageText = NSLocalizedString("NewVersionAvailable_", // Unique key of your choice
-                    value:"A new version of Meteorologist is available!", // Default (English) text
+                    value:"A new version of Meteorologist is available!" + "\n\n" + whatChanged, // Default (English) text
                     comment:"A new version of Meteorologist is available!")
                 myPopup.informativeText = NSLocalizedString("Download?_", // Unique key of your choice
                     value:"Would you like to download it now?", // Default (English) text

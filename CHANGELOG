@@ -1,0 +1,4 @@
+2.0.0.a24
+* Correct a hanging crash in Yahoo weather if no weather data was present.
+* Force new Preference Window Front and Center when loaded.
+* Test display of change log messages.

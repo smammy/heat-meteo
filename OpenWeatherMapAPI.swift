@@ -414,6 +414,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
     }
     
     func convertUTCtoEEE(myTime: String) -> String {
+        // EEE is Mon, Tue, Wed, etc.
         // create dateFormatter with UTC time format
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

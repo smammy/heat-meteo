@@ -21,6 +21,7 @@
 		646AFA3C1BB18F610054A0D1 /* YahooWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646AFA3B1BB18F610054A0D1 /* YahooWeatherAPI.swift */; };
 		6480F5C51BF9799E00B9A376 /* LogUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480F5C41BF9799E00B9A376 /* LogUtils.swift */; };
 		6480F5C71BF995CA00B9A376 /* OpenWeatherMapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480F5C61BF995CA00B9A376 /* OpenWeatherMapAPI.swift */; };
+		64A838671C094E7F00D7E28F /* CHANGELOG in Resources */ = {isa = PBXBuildFile; fileRef = 64A838661C094E7F00D7E28F /* CHANGELOG */; };
 		64AA09C91BFAA73F009D6421 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64AA09C81BFAA73F009D6421 /* Assets.xcassets */; };
 		64ABFFAD1BFEC5B3007EE148 /* TheWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ABFFAC1BFEC5B3007EE148 /* TheWeather.swift */; };
 		64D80D651BC8731700DE4B8E /* readme.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 64D80D641BC8731700DE4B8E /* readme.rtf */; };
@@ -44,6 +45,7 @@
 		646AFA3B1BB18F610054A0D1 /* YahooWeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YahooWeatherAPI.swift; path = ./YahooWeatherAPI.swift; sourceTree = "<group>"; };
 		6480F5C41BF9799E00B9A376 /* LogUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogUtils.swift; sourceTree = "<group>"; };
 		6480F5C61BF995CA00B9A376 /* OpenWeatherMapAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenWeatherMapAPI.swift; sourceTree = "<group>"; };
+		64A838661C094E7F00D7E28F /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		64AA09C81BFAA73F009D6421 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		64ABFFAC1BFEC5B3007EE148 /* TheWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheWeather.swift; sourceTree = "<group>"; };
 		64D80D641BC8731700DE4B8E /* readme.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = readme.rtf; path = ./readme.rtf; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				6424FE201BCB131F00C006B8 /* HowTo.txt */,
 				6424FE211BCB131F00C006B8 /* README.txt */,
 				6424FE221BCB131F00C006B8 /* VERSION */,
+				64A838661C094E7F00D7E28F /* CHANGELOG */,
 				643B35D31BAE1507003F55E3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -154,6 +157,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64A838671C094E7F00D7E28F /* CHANGELOG in Resources */,
 				64D80D651BC8731700DE4B8E /* readme.rtf in Resources */,
 				64554AB91BB5C9BB0033E4C4 /* PreferencesWindow.xib in Resources */,
 				643B35E31BAE18BB003F55E3 /* images in Resources */,

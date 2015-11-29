@@ -91,7 +91,7 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         super.windowDidLoad()
 
         //self.window?.center()
-        //self.window?.makeKeyAndOrderFront(nil)
+        self.window?.makeKeyAndOrderFront(nil)
         self.window?.styleMask = NSTitledWindowMask | NSClosableWindowMask
         
         initDisplay()
