@@ -372,9 +372,18 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         // RH = Relative Humidity (%)
         // V = Wind Speed (mph)
 
-        let temp = Double(sTemperature)!
-        let windspeed = Double(sWindspeed)!
-        let rh = Double(sRH)!
+        var temp = 0.0
+        var windspeed = 0.0
+        var rh = 0.0
+        if (sTemperature != "") {
+            temp = Double(sTemperature)!
+        }
+        if (sWindspeed != "") {
+            windspeed = Double(sWindspeed)!
+        }
+        if (sRH != "") {
+            rh = Double(sRH)!
+        }
 
         var feelsLike = sTemperature
 

@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a24"
+let DEFAULT_PREFERENCE_VERSION = "a25"
 
 struct WeatherFields {
     
@@ -296,10 +296,13 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         }
         statusBarItem.menu = menu
         statusBarItem.image = theCityImage
-        statusBarItem.title = NSLocalizedString("Loading_", // Unique key of your choice
-            value:"Loading", // Default (English) text
-            comment:"Loading") + "..."
         
+        statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+            NSLocalizedString("Loading_", // Unique key of your choice
+                value:"Loading", // Default (English) text
+                comment:"Loading") + "...",
+            attributes:[NSFontAttributeName : menu.font!]))
+
         //Add menuItem to menu
         let newItem : NSMenuItem = NSMenuItem(title: NSLocalizedString("PleaseWait_", // Unique key of your choice
             value:"Please wait while Meteo fetches the weather", // Default (English) text
@@ -362,7 +365,9 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
             if (defaults.stringForKey("displayHumidity")! == "1") {
                 statusTitle = statusTitle + "/" + yahooWeatherAPI.formatHumidity((weatherFields.humidity as String))
             }
-            statusBarItem.title = statusTitle
+            statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                statusTitle,
+                attributes:[NSFontAttributeName : menu.font!]))
             
             yahooWeatherAPI.updateMenuWithPrimaryLocation(weatherFields, cityName: (city), menu: menu)
 
@@ -431,7 +436,9 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
             if (defaults.stringForKey("displayHumidity")! == "1") {
                 statusTitle = statusTitle + "/" + openWeatherMapAPI.formatHumidity((weatherFields.humidity as String))
             }
-            statusBarItem.title = statusTitle
+            statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                statusTitle,
+                attributes:[NSFontAttributeName : menu.font!]))
             
             openWeatherMapAPI.updateMenuWithPrimaryLocation(weatherFields, cityName: (city), menu: menu)
             
