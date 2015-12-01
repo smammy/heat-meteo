@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a25"
+let DEFAULT_PREFERENCE_VERSION = "a27"
 
 struct WeatherFields {
     
@@ -287,21 +287,29 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         //Add statusBarItem
         statusBarItem = statusBar.statusItemWithLength(-1)
         
+        var m = (14 as NSNumber)
+        var font = NSFont(name: "Tahoma", size: 14)
         if ((defaults.stringForKey("font") != nil) &&
             (defaults.stringForKey("fontsize") != nil)) {
-                let i = NSNumberFormatter().numberFromString(defaults.stringForKey("fontsize")!)
-                menu.font = NSFont(name: defaults.stringForKey("font")!, size: CGFloat(i!))
-        } else {
-            menu.font = NSFont(name: "Tahoma", size: 14)
+                m = NSNumberFormatter().numberFromString(defaults.stringForKey("fontsize")!)!
+                font = NSFont(name: defaults.stringForKey("font")!, size: CGFloat(m))
         }
+        menu.font = font
         statusBarItem.menu = menu
         statusBarItem.image = theCityImage
         
+        m = (14 as NSNumber)
+        font = NSFont(name: "Tahoma", size: 14)
+        if ((defaults.stringForKey("menuBarFont") != nil) &&
+            (defaults.stringForKey("menuBarFontsize") != nil)) {
+                m = NSNumberFormatter().numberFromString(defaults.stringForKey("menuBarFontsize")!)!
+                font = NSFont(name: defaults.stringForKey("menuBarFont")!, size: CGFloat(m))
+        }
         statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
             NSLocalizedString("Loading_", // Unique key of your choice
                 value:"Loading", // Default (English) text
                 comment:"Loading") + "...",
-            attributes:[NSFontAttributeName : menu.font!]))
+            attributes:[NSFontAttributeName : font!]))
 
         //Add menuItem to menu
         let newItem : NSMenuItem = NSMenuItem(title: NSLocalizedString("PleaseWait_", // Unique key of your choice
@@ -346,6 +354,14 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         let city7 = defaults.stringForKey("city7")!
         let city8 = defaults.stringForKey("city8")!
 
+        var m = (14 as NSNumber)
+        var font = NSFont(name: "Tahoma", size: 14)
+        if ((defaults.stringForKey("menuBarFont") != nil) &&
+            (defaults.stringForKey("menuBarFontsize") != nil)) {
+                m = NSNumberFormatter().numberFromString(defaults.stringForKey("menuBarFontsize")!)!
+                font = NSFont(name: defaults.stringForKey("menuBarFont")!, size: CGFloat(m))
+        }
+
         if (defaults.stringForKey("weatherSource")! == YAHOO_WEATHER) {
             yahooWeatherAPI.setRadarWind(radarWindow)
             weatherFields = yahooWeatherAPI.beginParsing(city)
@@ -367,7 +383,7 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
             }
             statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                 statusTitle,
-                attributes:[NSFontAttributeName : menu.font!]))
+                attributes:[NSFontAttributeName : font!]))
             
             yahooWeatherAPI.updateMenuWithPrimaryLocation(weatherFields, cityName: (city), menu: menu)
 
@@ -555,6 +571,7 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
     
     @IBAction func preferences(sender: NSMenuItem) {
         //print("Preferences_", terminator: "\n")
+        preferencesWindow.window!.makeKeyAndOrderFront(nil)
         preferencesWindow.showWindow(nil)
     } // dummy
     

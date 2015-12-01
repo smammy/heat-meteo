@@ -78,8 +78,11 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var directionLabel: NSTextField!
     @IBOutlet weak var directionUnit: NSPopUpButton!
     @IBOutlet weak var fontLabel: NSTextField!
-    @IBOutlet weak var fontSelection: NSPopUpButton!
+    @IBOutlet weak var fontName: NSPopUpButton!
     @IBOutlet weak var fontSize: NSPopUpButton!
+    @IBOutlet weak var menuBarFontLabel: NSTextField!
+    @IBOutlet weak var menuBarFontName: NSPopUpButton!
+    @IBOutlet weak var menuBarFontSize: NSPopUpButton!
     
     var delegate: PreferencesWindowDelegate?
 
@@ -103,9 +106,12 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
 
         let defaults = NSUserDefaults.standardUserDefaults()
         
-        fontSelection.addItemsWithTitles(NSFontManager.sharedFontManager().availableFontFamilies)
+        fontName.addItemsWithTitles(NSFontManager.sharedFontManager().availableFontFamilies)
         let familyName = defaults.stringForKey("font") ?? "Tahoma"
-        fontSelection.selectItemWithTitle(familyName)
+        fontName.selectItemWithTitle(familyName)
+        menuBarFontName.addItemsWithTitles(NSFontManager.sharedFontManager().availableFontFamilies)
+        let menuFamilyName = defaults.stringForKey("menuBarFont") ?? "Tahoma"
+        menuBarFontName.selectItemWithTitle(menuFamilyName)
         
         weatherSource.selectItemAtIndex(Int(defaults.stringForKey("weatherSource") ?? YAHOO_WEATHER)!)
 
@@ -138,6 +144,7 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         directionUnit.selectItemAtIndex(Int(defaults.stringForKey("directionUnit") ?? "0")!)
         
         fontSize.selectItemWithTitle(defaults.stringForKey("fontsize") ?? "14")
+        menuBarFontSize.selectItemWithTitle(defaults.stringForKey("menuBarFontsize") ?? "14")
         
         NSApp.activateIgnoringOtherApps(true)
     } // windowDidLoad
@@ -179,8 +186,13 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         defaults.setValue(pressureUnit.indexOfSelectedItem, forKey: "pressureUnit")
         defaults.setValue(directionUnit.indexOfSelectedItem, forKey: "directionUnit")
         
-        defaults.setValue(fontSelection.selectedItem!.title, forKey: "font")
+        defaults.setValue(fontName.selectedItem!.title, forKey: "font")
         defaults.setValue(fontSize.selectedItem!.title, forKey: "fontsize")
+        defaults.setValue(menuBarFontName.selectedItem!.title, forKey: "menuBarFont")
+        defaults.setValue(menuBarFontSize.selectedItem!.title, forKey: "menuBarFontsize")
+        
+        defaults.removeObjectForKey("mennuBarFont");
+        defaults.removeObjectForKey("menn.uBarFontsize");
         
         defaults.setValue(DEFAULT_PREFERENCE_VERSION, forKey: "preferenceVersion")
         delegate?.preferencesDidUpdate()
@@ -322,9 +334,13 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
             comment:"Ordinal")
         // Need default value
         
-        fontLabel.stringValue = NSLocalizedString("Font_", // Unique key of your choice
-            value:"Font", // Default (English) text
-            comment:"Font") + ":"
+        fontLabel.stringValue = NSLocalizedString("DisplayFont_", // Unique key of your choice
+            value:"Display Font", // Default (English) text
+            comment:"Display") + ":"
+        menuBarFontLabel.stringValue = NSLocalizedString("menuBarFont_", // Unique key of your choice
+            value:"Menu Font", // Default (English) text
+            comment:"Menu ont") + ":"
+        
         
     } // initDisplay
 
