@@ -67,7 +67,6 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         weatherFields.date = ""
         weatherFields.latitude = ""
         weatherFields.longitude = ""
-        weatherFields.title1 = ""
         weatherFields.windChill = ""
         weatherFields.windDirection = ""
         weatherFields.windSpeed = ""
@@ -182,22 +181,11 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
     func setImage(weatherCode: String) -> NSImage
     {
         /*
-        6	mixed rain and sleet
-        7	mixed snow and sleet
-        8	freezing drizzle
-        10	freezing rain
-        13	snow flurries               MB-Flurries
-        14	light snow showers
-        17	hail
-        18	sleet                       MB-Sleet
         19	dust
         20	foggy
-        21	haze                        MB-Hazy
         22	smoky
         23	blustery
-        24	windy                       MB-Wind
         25	cold                        Temperature-2
-        35	mixed rain and hail
         36	hot                         Temperature-9
         3200	not available
         
@@ -222,14 +210,21 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         {
             return NSImage(named: "MB-Thunderstorm")!
         }
-        else if ((weatherCode == "9") ||
+        else if ((weatherCode == "6") ||
+            (weatherCode == "8") ||
+            (weatherCode == "9") ||
+            (weatherCode == "10") ||
             (weatherCode == "11") ||
-            (weatherCode == "40") ||
-            (weatherCode == "12"))
+            (weatherCode == "12") ||
+            (weatherCode == "17") ||
+            (weatherCode == "35") ||
+            (weatherCode == "40"))
         {
             return NSImage(named: "MB-Rain")!
         }
         else if ((weatherCode == "5") ||
+            (weatherCode == "7") ||
+            (weatherCode == "14") ||
             (weatherCode == "16") ||
             (weatherCode == "15") ||
             (weatherCode == "41") ||
@@ -239,15 +234,21 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         {
             return NSImage(named: "MB-Snow")!
         }
-        else if ((weatherCode == "5") ||
-            (weatherCode == "16") ||
-            (weatherCode == "15") ||
-            (weatherCode == "41") ||
-            (weatherCode == "42") ||
-            (weatherCode == "43") ||
-            (weatherCode == "46"))
+        else if (weatherCode == "13")
         {
-            return NSImage(named: "MB-Snow")!
+            return NSImage(named: "MB-Flurries")!
+        }
+        else if (weatherCode == "18")
+        {
+            return NSImage(named: "MB-Sleet")!
+        }
+        else if (weatherCode == "21")
+        {
+            return NSImage(named: "MB-Hazy")!
+        }
+        else if (weatherCode == "24")
+        {
+            return NSImage(named: "MB-Wind")!
         }
         else if ((weatherCode == "32") ||
             (weatherCode == "34"))
@@ -386,7 +387,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         } else if (defaults.stringForKey("pressureUnit")! == "3") {
             // Meters/second
             formattedPressure += String(Int((pressure as NSString).doubleValue * 33.8637526)) + " " + NSLocalizedString("hp_", // Unique key of your choice
-                        value:"hb", // Default (English) text
+                        value:"hp", // Default (English) text
                         comment:"HectorPascals")
         }
         return formattedPressure
@@ -736,7 +737,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         radarWindow = radarWindow1
     } // extendedForecasts
     
-    func updateMenuWithSecondaryLocation(weatherFields: WeatherFields, cityName: String, menu: NSMenu) {
+    func updateMenuWithSecondaryLocation(weatherFields: WeatherFields, cityName: String, displayCityName: String, menu: NSMenu) {
         
         let newLocation = NSMenu()
         var newItem : NSMenuItem
@@ -744,11 +745,12 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         
         DebugLog(String(format:"in updateMenuWithSecondaryLocation: %@", cityName))
 
-        var city = ""
-        if (weatherFields.title1.length > 16) {
+        var city = displayCityName
+        if ((city == "") && (weatherFields.title1.length > 16)) {
             city = weatherFields.title1.substringFromIndex(16)
         }
-        var statusTitle = city as String + " " + formatTemp((weatherFields.currentTemp as String))
+
+        var statusTitle = city + " " + formatTemp((weatherFields.currentTemp as String))
         if (defaults.stringForKey("displayHumidity")! == "1") {
             statusTitle = statusTitle + "/" + formatHumidity((weatherFields.humidity as String))
         }
@@ -778,7 +780,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
             newLocation.addItem(NSMenuItem.separatorItem())
         }
         
-        currentConditions(weatherFields, cityName: cityName, currentForecastMenu: currentForecastMenu)
+        currentConditions(weatherFields, cityName: displayCityName, currentForecastMenu: currentForecastMenu)
         
         if (defaults.stringForKey("viewExtendedForecast")! == "1") {
             var extendedForecastMenu = NSMenu()
@@ -793,12 +795,12 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 extendedForecastMenu = newLocation
                 newLocation.addItem(NSMenuItem.separatorItem())
             }
-            extendedForecasts(weatherFields, cityName: cityName, extendedForecastMenu: extendedForecastMenu)
+            extendedForecasts(weatherFields, cityName: displayCityName, extendedForecastMenu: extendedForecastMenu)
         }
         DebugLog(String(format:"leaving updateMenuWithSecondaryLocation: %@", cityName))
     } // updateMenuWithSecondaryLocation
     
-    func updateMenuWithPrimaryLocation(weatherFields: WeatherFields, cityName: String, menu: NSMenu) {
+    func updateMenuWithPrimaryLocation(weatherFields: WeatherFields, cityName: String, displayCityName: String, menu: NSMenu) {
         
         var newItem : NSMenuItem
         DebugLog(String(format:"in updateMenuWithPrimaryLocation: %@", cityName))
@@ -814,8 +816,15 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         {
             let defaults = NSUserDefaults.standardUserDefaults()
 
+            var city = displayCityName
+            if (city == "") {
+                city = weatherFields.title1 as String
+            } else {
+                city = "Yahoo! Weather - " + displayCityName
+            }
+            
             // Need to incorporate currentLink
-            newItem = NSMenuItem(title: (weatherFields.title1 as String), action: Selector("openWeatherURL:"), keyEquivalent: "")
+            newItem = NSMenuItem(title: city, action: Selector("openWeatherURL:"), keyEquivalent: "")
             newItem.target=self
             
             // http://stackoverflow.com/questions/24200888/any-way-to-replace-characters-on-swift-string
@@ -839,7 +848,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 menu.addItem(NSMenuItem.separatorItem())
             }
             
-            currentConditions(weatherFields, cityName: cityName, currentForecastMenu: currentForecastMenu)
+            currentConditions(weatherFields, cityName: displayCityName, currentForecastMenu: currentForecastMenu)
             
             var newItem : NSMenuItem
             newItem = NSMenuItem(title: NSLocalizedString("RadarImage_", // Unique key of your choice
@@ -862,7 +871,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                     extendedForecastMenu = menu
                     menu.addItem(NSMenuItem.separatorItem())
                 }
-                extendedForecasts(weatherFields, cityName: cityName, extendedForecastMenu: extendedForecastMenu)
+                extendedForecasts(weatherFields, cityName: displayCityName, extendedForecastMenu: extendedForecastMenu)
             }
         }
         

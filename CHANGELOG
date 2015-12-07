@@ -1,6 +1,6 @@
-2.0.0.a27
-* Duh, menu isn't spelled mennu.
-2.0.0.a26
-* Add option to set menu bar font.
-2.0.0.a25
-* Correct crash in OpenWeatherMap "Feels Like" calculation if no data was read.
+2.0.0.a29
+* Don't refresh data with blanks if nothing was read from weather source (like a bad connection).
+* Allow alias names for cities
+* Correct pressure for OpenWeatherMap
+* Add missing current icon and temp for secondary locations for OpenWeatherMap
+* OpenWeatherMap icon for mist was showing wind

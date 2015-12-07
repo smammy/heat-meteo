@@ -92,7 +92,6 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         weatherFields.date = ""
         weatherFields.latitude = ""
         weatherFields.longitude = ""
-        weatherFields.title1 = ""
         weatherFields.windChill = ""
         weatherFields.windDirection = ""
         weatherFields.windSpeed = ""
@@ -296,6 +295,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
     
     func setImage(weatherCode: String) -> NSImage
     {
+        // http://openweathermap.org/weather-conditions
         if (weatherCode == "") {
             return NSImage(named: "MB-Sun")!
         }
@@ -322,11 +322,11 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             return NSImage(named: "MB-Moon-Cloud-2")!
         }
         else if ((weatherCode == "09d") ||
-            (weatherCode == "09n")) {
-                return NSImage(named: "MB-Rain")!
-        }
-        else if ((weatherCode == "10d") ||
-            (weatherCode == "10n")) {
+            (weatherCode == "09n") ||
+            (weatherCode == "10d") ||
+            (weatherCode == "10n") ||
+            (weatherCode == "50d") ||
+            (weatherCode == "50n")) {
                 return NSImage(named: "MB-Rain")!
         }
         else if ((weatherCode == "11d") ||
@@ -336,10 +336,6 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         else if ((weatherCode == "13d") ||
             (weatherCode == "13n")) {
                 return NSImage(named: "MB-Snow")!
-        }
-        else if ((weatherCode == "50d") ||
-            (weatherCode == "50n")) {
-                return NSImage(named: "MB-Wind")!
         }
         return NSImage(named: weatherCode)!
     } // setImage
@@ -486,7 +482,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
     func formatPressure(pressure2: String) -> String {
         let defaults = NSUserDefaults.standardUserDefaults()
         var formattedPressure = ""
-        let pressure = String(format: "%.2f", (pressure2 as NSString).doubleValue / 33.8637526)
+        let pressure = String(format: "%.2f", (pressure2 as NSString).doubleValue / 338637.526)
         if (defaults.stringForKey("pressureUnit")! == "0") {
             formattedPressure += pressure + " " + NSLocalizedString("Inches_", // Unique key of your choice
                 value:"Inches", // Default (English) text
@@ -502,7 +498,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         } else if (defaults.stringForKey("pressureUnit")! == "3") {
             // Meters/second
             formattedPressure += String(Int((pressure as NSString).doubleValue * 33.8637526)) + " " + NSLocalizedString("hp_", // Unique key of your choice
-                value:"hb", // Default (English) text
+                value:"hp", // Default (English) text
                 comment:"HectorPascals")
         }
         return formattedPressure
@@ -1082,7 +1078,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         radarWindow = radarWindow1
     } // extendedForecasts
     
-    func updateMenuWithSecondaryLocation(weatherFields: WeatherFields, cityName: String, menu: NSMenu) {
+    func updateMenuWithSecondaryLocation(weatherFields: WeatherFields, cityName: String, displayCityName: String, menu: NSMenu) {
         
         let newLocation = NSMenu()
         var newItem : NSMenuItem
@@ -1090,18 +1086,18 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         
         DebugLog(String(format:"in updateMenuWithSecondaryLocation: %@", cityName))
         
-        let city = weatherFields.title1
-        var statusTitle = city as String + " " + formatTemp((weatherFields.currentTemp as String))
+        var city = displayCityName
+        if (city == "") {
+            city = weatherFields.title1 as String
+        }
+        
+        var statusTitle = city + " " + formatTemp((weatherFields.currentTemp as String))
         if (defaults.stringForKey("displayHumidity")! == "1") {
             statusTitle = statusTitle + "/" + formatHumidity((weatherFields.humidity as String))
         }
         newItem = NSMenuItem(title: statusTitle, action: Selector("openWeatherURL:"), keyEquivalent: "")
         newItem.target=self
         newItem.image = setImage(weatherFields.currentCode as String)
-        
-        // Need to incorporate currentLink
-        newItem = NSMenuItem(title: (weatherFields.title1 as String), action: Selector("openWeatherURL:"), keyEquivalent: "")
-        newItem.target=self
         
         let replaced = String("http://openweathermap.org/city/" +  (locationWOEID as String))
         
@@ -1121,7 +1117,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             newLocation.addItem(NSMenuItem.separatorItem())
         }
         
-        currentConditions(weatherFields, cityName: cityName, currentForecastMenu: currentForecastMenu)
+        currentConditions(weatherFields, cityName: displayCityName, currentForecastMenu: currentForecastMenu)
         
         if (defaults.stringForKey("viewExtendedForecast")! == "1") {
             var extendedForecastMenu = NSMenu()
@@ -1136,16 +1132,21 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 extendedForecastMenu = newLocation
                 newLocation.addItem(NSMenuItem.separatorItem())
             }
-            extendedForecasts(weatherFields, cityName: cityName, extendedForecastMenu: extendedForecastMenu)
+            extendedForecasts(weatherFields, cityName: displayCityName, extendedForecastMenu: extendedForecastMenu)
         }
         DebugLog(String(format:"leaving updateMenuWithSecondaryLocation: %@", cityName))
     } // updateMenuWithSecondaryLocation
     
-    func updateMenuWithPrimaryLocation(weatherFields: WeatherFields, cityName: String, menu: NSMenu) {
+    func updateMenuWithPrimaryLocation(weatherFields: WeatherFields, cityName: String, displayCityName: String, menu: NSMenu) {
         
         var newItem : NSMenuItem
         DebugLog(String(format:"in updateMenuWithPrimaryLocation: %@", cityName))
         
+        var city = displayCityName
+        if (city == "") {
+            city = weatherFields.title1 as String
+        }
+
         menu.removeAllItems()
         if (weatherFields.currentTemp.isEqual(nil) || weatherFields.currentTemp.isEqual(""))
         {
@@ -1158,7 +1159,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             let defaults = NSUserDefaults.standardUserDefaults()
             
             // Need to incorporate currentLink
-            newItem = NSMenuItem(title: "OpenWeatherMap.org - " + (weatherFields.title1 as String), action: Selector("openWeatherURL:"), keyEquivalent: "")
+            newItem = NSMenuItem(title: "OpenWeatherMap.org - " + city, action: Selector("openWeatherURL:"), keyEquivalent: "")
             newItem.target=self
             
             let replaced = String("http://openweathermap.org/city/" +  (locationWOEID as String))
@@ -1177,7 +1178,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 menu.addItem(NSMenuItem.separatorItem())
             }
             
-            currentConditions(weatherFields, cityName: cityName, currentForecastMenu: currentForecastMenu)
+            currentConditions(weatherFields, cityName: displayCityName, currentForecastMenu: currentForecastMenu)
             
             var newItem : NSMenuItem
             newItem = NSMenuItem(title: NSLocalizedString("RadarImage_", // Unique key of your choice
@@ -1201,7 +1202,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                     extendedForecastMenu = menu
                     menu.addItem(NSMenuItem.separatorItem())
                 }
-                extendedForecasts(weatherFields, cityName: cityName, extendedForecastMenu: extendedForecastMenu)
+                extendedForecasts(weatherFields, cityName: displayCityName, extendedForecastMenu: extendedForecastMenu)
             }
         }
         

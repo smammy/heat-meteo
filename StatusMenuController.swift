@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a27"
+let DEFAULT_PREFERENCE_VERSION = "a29"
 
 struct WeatherFields {
     
@@ -175,7 +175,7 @@ struct WeatherFields {
     
     var weatherTag = NSMutableString()
 
-}
+} // WeatherFields
 
 class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDelegate {
     
@@ -183,7 +183,7 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
     var radarWindow: RadarWindow!
     let yahooWeatherAPI = YahooWeatherAPI()     // https://developer.yahoo.com/weather/
     let openWeatherMapAPI = OpenWeatherMapAPI() // http://www.openweathermap.org
-    var myTimer = NSTimer()                     // http://ios-blog.co.uk/tutorials/swift-nstimer-tutorial-lets-create-a-counter-application/
+    //var myTimer = NSTimer()                     // http://ios-blog.co.uk/tutorials/swift-nstimer-tutorial-lets-create-a-counter-application/
     
     let defaults = NSUserDefaults.standardUserDefaults()
 
@@ -305,6 +305,8 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
                 m = NSNumberFormatter().numberFromString(defaults.stringForKey("menuBarFontsize")!)!
                 font = NSFont(name: defaults.stringForKey("menuBarFont")!, size: CGFloat(m))
         }
+        
+        // http://stackoverflow.com/questions/19487369/center-two-different-size-font-vertically-in-a-nsattributedstring
         statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
             NSLocalizedString("Loading_", // Unique key of your choice
                 value:"Loading", // Default (English) text
@@ -345,7 +347,8 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         var controlsMenu = NSMenu()
         var weatherFields: WeatherFields
         let defaults = NSUserDefaults.standardUserDefaults()
-        let city = defaults.stringForKey("city")!
+        
+        var city = defaults.stringForKey("city")!
         let city2 = defaults.stringForKey("city2")!
         let city3 = defaults.stringForKey("city3")!
         let city4 = defaults.stringForKey("city4")!
@@ -353,7 +356,15 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         let city6 = defaults.stringForKey("city6")!
         let city7 = defaults.stringForKey("city7")!
         let city8 = defaults.stringForKey("city8")!
-
+        let displayCity  = defaults.stringForKey("displayCity")!
+        let displayCity2 = defaults.stringForKey("displayCity2")!
+        let displayCity3 = defaults.stringForKey("displayCity3")!
+        let displayCity4 = defaults.stringForKey("displayCity4")!
+        let displayCity5 = defaults.stringForKey("displayCity5")!
+        let displayCity6 = defaults.stringForKey("displayCity6")!
+        let displayCity7 = defaults.stringForKey("displayCity7")!
+        let displayCity8 = defaults.stringForKey("displayCity8")!
+        
         var m = (14 as NSNumber)
         var font = NSFont(name: "Tahoma", size: 14)
         if ((defaults.stringForKey("menuBarFont") != nil) &&
@@ -365,144 +376,157 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         if (defaults.stringForKey("weatherSource")! == YAHOO_WEATHER) {
             yahooWeatherAPI.setRadarWind(radarWindow)
             weatherFields = yahooWeatherAPI.beginParsing(city)
-            
-            if (defaults.stringForKey("displayWeatherIcon")! == "1") {
-                statusBarItem.image = yahooWeatherAPI.setImage(weatherFields.currentCode as String)
-            } else {
-                statusBarItem.image = nil
-            }
-
-            var statusTitle = ""
-            if (defaults.stringForKey("displayCityName")! == "1") {
-                statusTitle = city + " " + yahooWeatherAPI.formatTemp((weatherFields.currentTemp as String))
-            } else {
-                statusTitle = yahooWeatherAPI.formatTemp((weatherFields.currentTemp as String))
-            }
-            if (defaults.stringForKey("displayHumidity")! == "1") {
-                statusTitle = statusTitle + "/" + yahooWeatherAPI.formatHumidity((weatherFields.humidity as String))
-            }
-            statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
-                statusTitle,
-                attributes:[NSFontAttributeName : font!]))
-            
-            yahooWeatherAPI.updateMenuWithPrimaryLocation(weatherFields, cityName: (city), menu: menu)
-
-            if ((city2 != "") ||
-                (city3 != "") ||
-                (city4 != "") ||
-                (city5 != "") ||
-                (city6 != "") ||
-                (city7 != "") ||
-                (city8 != ""))
-            {
-                if (city2 != "")
-                {
-                    weatherFields = yahooWeatherAPI.beginParsing(city2)
-                    yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city2), menu: menu)
+            if (weatherFields.currentTemp != "") {
+                
+                if (displayCity != "") {
+                        city = displayCity
                 }
-                if (city3 != "")
-                {
-                    weatherFields = yahooWeatherAPI.beginParsing(city3)
-                    yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city3), menu: menu)
+                
+                if (defaults.stringForKey("displayWeatherIcon")! == "1") {
+                    statusBarItem.image = yahooWeatherAPI.setImage(weatherFields.currentCode as String)
+                } else {
+                    statusBarItem.image = nil
                 }
-                if (city4 != "")
-                {
-                    weatherFields = yahooWeatherAPI.beginParsing(city4)
-                    yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city4), menu: menu)
+                
+                var statusTitle = ""
+                if (defaults.stringForKey("displayCityName")! == "1") {
+                    statusTitle = city + " " + yahooWeatherAPI.formatTemp((weatherFields.currentTemp as String))
+                } else {
+                    statusTitle = yahooWeatherAPI.formatTemp((weatherFields.currentTemp as String))
                 }
-                if (city5 != "")
-                {
-                    weatherFields = yahooWeatherAPI.beginParsing(city5)
-                    yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city5), menu: menu)
+                if (defaults.stringForKey("displayHumidity")! == "1") {
+                    statusTitle = statusTitle + "/" + yahooWeatherAPI.formatHumidity((weatherFields.humidity as String))
                 }
-                if (city6 != "")
+                statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                    statusTitle,
+                    attributes:[NSFontAttributeName : font!]))
+                
+                yahooWeatherAPI.updateMenuWithPrimaryLocation(weatherFields, cityName: (city), displayCityName: (displayCity), menu: menu)
+                
+                if ((city2 != "") ||
+                    (city3 != "") ||
+                    (city4 != "") ||
+                    (city5 != "") ||
+                    (city6 != "") ||
+                    (city7 != "") ||
+                    (city8 != ""))
                 {
-                    weatherFields = yahooWeatherAPI.beginParsing(city6)
-                    yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city6), menu: menu)
+                    if (city2 != "")
+                    {
+                        weatherFields = yahooWeatherAPI.beginParsing(city2)
+                        yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city2), displayCityName: (displayCity2), menu: menu)
+                    }
+                    if (city3 != "")
+                    {
+                        weatherFields = yahooWeatherAPI.beginParsing(city3)
+                        yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city3), displayCityName: (displayCity3), menu: menu)
+                    }
+                    if (city4 != "")
+                    {
+                        weatherFields = yahooWeatherAPI.beginParsing(city4)
+                        yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city4), displayCityName: (displayCity4), menu: menu)
+                    }
+                    if (city5 != "")
+                    {
+                        weatherFields = yahooWeatherAPI.beginParsing(city5)
+                        yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city5), displayCityName: (displayCity5), menu: menu)
+                    }
+                    if (city6 != "")
+                    {
+                        weatherFields = yahooWeatherAPI.beginParsing(city6)
+                        yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city6), displayCityName: (displayCity6), menu: menu)
+                    }
+                    if (city7 != "")
+                    {
+                        weatherFields = yahooWeatherAPI.beginParsing(city7)
+                        yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city7), displayCityName: (displayCity7), menu: menu)
+                    }
+                    if (city8 != "")
+                    {
+                        weatherFields = yahooWeatherAPI.beginParsing(city8)
+                        yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city8), displayCityName: (displayCity8), menu: menu)
+                    }
+                    
+                    menu.addItem(NSMenuItem.separatorItem())
                 }
-                if (city7 != "")
-                {
-                    weatherFields = yahooWeatherAPI.beginParsing(city7)
-                    yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city7), menu: menu)
-                }
-                if (city8 != "")
-                {
-                    weatherFields = yahooWeatherAPI.beginParsing(city8)
-                    yahooWeatherAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city8), menu: menu)
-                }
-
-                menu.addItem(NSMenuItem.separatorItem())
             }
         } else if (defaults.stringForKey("weatherSource")! == "1") {
             openWeatherMapAPI.setRadarWind(radarWindow)
             weatherFields = openWeatherMapAPI.beginParsing(city)
             
-            if (defaults.stringForKey("displayWeatherIcon")! == "1") {
-                statusBarItem.image = openWeatherMapAPI.setImage(weatherFields.currentCode as String)
-            } else {
-                statusBarItem.image = nil
+            if ((defaults.stringForKey("displayCity") != nil) &&
+                (defaults.stringForKey("displayCity")! != "")) {
+                    city = defaults.stringForKey("displayCity")!
             }
             
-            var statusTitle = ""
-            if (defaults.stringForKey("displayCityName")! == "1") {
-                statusTitle = city + " " + openWeatherMapAPI.formatTemp((weatherFields.currentTemp as String))
-            } else {
-                statusTitle = openWeatherMapAPI.formatTemp((weatherFields.currentTemp as String))
-            }
-            if (defaults.stringForKey("displayHumidity")! == "1") {
-                statusTitle = statusTitle + "/" + openWeatherMapAPI.formatHumidity((weatherFields.humidity as String))
-            }
-            statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
-                statusTitle,
-                attributes:[NSFontAttributeName : menu.font!]))
-            
-            openWeatherMapAPI.updateMenuWithPrimaryLocation(weatherFields, cityName: (city), menu: menu)
-            
-            if ((city2 != "") ||
-                (city3 != "") ||
-                (city4 != "") ||
-                (city5 != "") ||
-                (city6 != "") ||
-                (city7 != "") ||
-                (city8 != ""))
-            {
-                if (city2 != "")
-                {
-                    weatherFields = openWeatherMapAPI.beginParsing(city2)
-                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city2), menu: menu)
-                }
-                if (city3 != "")
-                {
-                    weatherFields = openWeatherMapAPI.beginParsing(city3)
-                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city3), menu: menu)
-                }
-                if (city4 != "")
-                {
-                    weatherFields = openWeatherMapAPI.beginParsing(city4)
-                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city4), menu: menu)
-                }
-                if (city5 != "")
-                {
-                    weatherFields = openWeatherMapAPI.beginParsing(city5)
-                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city5), menu: menu)
-                }
-                if (city6 != "")
-                {
-                    weatherFields = openWeatherMapAPI.beginParsing(city6)
-                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city6), menu: menu)
-                }
-                if (city7 != "")
-                {
-                    weatherFields = openWeatherMapAPI.beginParsing(city7)
-                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city7), menu: menu)
-                }
-                if (city8 != "")
-                {
-                    weatherFields = openWeatherMapAPI.beginParsing(city8)
-                    openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city8), menu: menu)
+            if (weatherFields.currentTemp != "") {
+                if (defaults.stringForKey("displayWeatherIcon")! == "1") {
+                    statusBarItem.image = openWeatherMapAPI.setImage(weatherFields.currentCode as String)
+                } else {
+                    statusBarItem.image = nil
                 }
                 
-                menu.addItem(NSMenuItem.separatorItem())
+                var statusTitle = ""
+                if (defaults.stringForKey("displayCityName")! == "1") {
+                    statusTitle = city + " " + openWeatherMapAPI.formatTemp((weatherFields.currentTemp as String))
+                } else {
+                    statusTitle = openWeatherMapAPI.formatTemp((weatherFields.currentTemp as String))
+                }
+                if (defaults.stringForKey("displayHumidity")! == "1") {
+                    statusTitle = statusTitle + "/" + openWeatherMapAPI.formatHumidity((weatherFields.humidity as String))
+                }
+                statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                    statusTitle,
+                    attributes:[NSFontAttributeName : menu.font!]))
+                
+                openWeatherMapAPI.updateMenuWithPrimaryLocation(weatherFields, cityName: (city), displayCityName: (displayCity), menu: menu)
+                
+                if ((city2 != "") ||
+                    (city3 != "") ||
+                    (city4 != "") ||
+                    (city5 != "") ||
+                    (city6 != "") ||
+                    (city7 != "") ||
+                    (city8 != ""))
+                {
+                    if (city2 != "")
+                    {
+                        weatherFields = openWeatherMapAPI.beginParsing(city2)
+                        openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city2), displayCityName: (displayCity2), menu: menu)
+                    }
+                    if (city3 != "")
+                    {
+                        weatherFields = openWeatherMapAPI.beginParsing(city3)
+                        openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city3), displayCityName: (displayCity3), menu: menu)
+                    }
+                    if (city4 != "")
+                    {
+                        weatherFields = openWeatherMapAPI.beginParsing(city4)
+                        openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city4), displayCityName: (displayCity4), menu: menu)
+                    }
+                    if (city5 != "")
+                    {
+                        weatherFields = openWeatherMapAPI.beginParsing(city5)
+                        openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city5), displayCityName: (displayCity5), menu: menu)
+                    }
+                    if (city6 != "")
+                    {
+                        weatherFields = openWeatherMapAPI.beginParsing(city6)
+                        openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city6), displayCityName: (displayCity6), menu: menu)
+                    }
+                    if (city7 != "")
+                    {
+                        weatherFields = openWeatherMapAPI.beginParsing(city7)
+                        openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city7), displayCityName: (displayCity7), menu: menu)
+                    }
+                    if (city8 != "")
+                    {
+                        weatherFields = openWeatherMapAPI.beginParsing(city8)
+                        openWeatherMapAPI.updateMenuWithSecondaryLocation(weatherFields, cityName: (city8), displayCityName: (displayCity8), menu: menu)
+                    }
+                    
+                    menu.addItem(NSMenuItem.separatorItem())
+                }
             }
         }
 
@@ -534,15 +558,15 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
             comment:"Quit"), action: Selector("terminate:"), keyEquivalent: "q")
         controlsMenu.addItem(newItem)
         
-        let uwTimer = myTimer
-        if uwTimer == myTimer {
-            if uwTimer.valid {
-                uwTimer.invalidate()
-            }
-        }
+        //let uwTimer = myTimer
+        //if uwTimer == myTimer {
+        //    if uwTimer.valid {
+        //        uwTimer.invalidate()
+        //    }
+        //}
         
-        let updateFrequency = defaults.stringForKey("updateFrequency")
-        myTimer = NSTimer.scheduledTimerWithTimeInterval(Double(updateFrequency!)!*60, target:self, selector: Selector("updateWeather"), userInfo: nil, repeats: false)
+        //let updateFrequency = defaults.stringForKey("updateFrequency")
+        //myTimer = NSTimer.scheduledTimerWithTimeInterval(Double(updateFrequency!)!*60, target:self, selector: Selector("updateWeather"), userInfo: nil, repeats: false)
         
     } // updateWeather
     

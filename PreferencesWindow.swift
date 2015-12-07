@@ -37,8 +37,8 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var prefWindows: NSWindow!
     @IBOutlet weak var newVersion: NSButton!
     @IBOutlet weak var logMessages: NSButton!
-    @IBOutlet weak var cityTextField: NSTextField!
     @IBOutlet weak var cityNameLabel: NSTextField!
+    @IBOutlet weak var cityTextField: NSTextField!
     @IBOutlet weak var cityTextField2: NSTextField!
     @IBOutlet weak var cityTextField3: NSTextField!
     @IBOutlet weak var cityTextField4: NSTextField!
@@ -46,6 +46,15 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var cityTextField6: NSTextField!
     @IBOutlet weak var cityTextField7: NSTextField!
     @IBOutlet weak var cityTextField8: NSTextField!
+    @IBOutlet weak var cityDisplayNameLabel: NSTextField!
+    @IBOutlet weak var cityDisplayTextField: NSTextField!
+    @IBOutlet weak var cityDisplayTextField2: NSTextField!
+    @IBOutlet weak var cityDisplayTextField3: NSTextField!
+    @IBOutlet weak var cityDisplayTextField4: NSTextField!
+    @IBOutlet weak var cityDisplayTextField5: NSTextField!
+    @IBOutlet weak var cityDisplayTextField6: NSTextField!
+    @IBOutlet weak var cityDisplayTextField7: NSTextField!
+    @IBOutlet weak var cityDisplayTextField8: NSTextField!
     @IBOutlet weak var weatherSource: NSPopUpButton!
     @IBOutlet weak var weatherSourceLabel: NSTextField!
     @IBOutlet weak var controlsInSubmenu: NSButton!
@@ -53,10 +62,6 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var displayDegreeType: NSButton!
     @IBOutlet weak var displayWeatherIcon: NSButton!
     @IBOutlet weak var displayCityName: NSButton!
-    @IBOutlet weak var displayLocationLabel: NSTextField!
-    @IBOutlet weak var displayMenubar: NSButton!
-    @IBOutlet weak var displayDock: NSButton!
-    @IBOutlet weak var displayBoth: NSButton!
     @IBOutlet weak var currentWeatherInSubmenu: NSButton!
     @IBOutlet weak var viewExtendedForecast: NSButton!
     @IBOutlet weak var extendedForecastInSubmenu: NSButton!
@@ -123,6 +128,15 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         cityTextField6.stringValue          = defaults.stringForKey("city6") ?? ""
         cityTextField7.stringValue          = defaults.stringForKey("city7") ?? ""
         cityTextField8.stringValue          = defaults.stringForKey("city8") ?? ""
+        cityDisplayTextField.stringValue    = defaults.stringForKey("displayCity") ?? ""
+        cityDisplayTextField2.stringValue   = defaults.stringForKey("displayCity2") ?? ""
+        cityDisplayTextField3.stringValue   = defaults.stringForKey("displayCity3") ?? ""
+        cityDisplayTextField4.stringValue   = defaults.stringForKey("displayCity4") ?? ""
+        cityDisplayTextField5.stringValue   = defaults.stringForKey("displayCity5") ?? ""
+        cityDisplayTextField6.stringValue   = defaults.stringForKey("displayCity6") ?? ""
+        cityDisplayTextField7.stringValue   = defaults.stringForKey("displayCity7") ?? ""
+        cityDisplayTextField8.stringValue   = defaults.stringForKey("displayCity8") ?? ""
+        
         updateFrequencyTextField.stringValue = defaults.stringForKey("updateFrequency") ?? DEFAULT_INTERVAL
         controlsInSubmenu.stringValue       = defaults.stringForKey("controlsInSubmenu") ?? "1"
         displayHumidity.stringValue         = defaults.stringForKey("displayHumidity") ?? "1"
@@ -166,6 +180,15 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         defaults.setValue(cityTextField6.stringValue, forKey: "city6")
         defaults.setValue(cityTextField7.stringValue, forKey: "city7")
         defaults.setValue(cityTextField8.stringValue, forKey: "city8")
+        defaults.setValue(cityDisplayTextField.stringValue,  forKey: "displayCity")
+        defaults.setValue(cityDisplayTextField2.stringValue, forKey: "displayCity2")
+        defaults.setValue(cityDisplayTextField3.stringValue, forKey: "displayCity3")
+        defaults.setValue(cityDisplayTextField4.stringValue, forKey: "displayCity4")
+        defaults.setValue(cityDisplayTextField5.stringValue, forKey: "displayCity5")
+        defaults.setValue(cityDisplayTextField6.stringValue, forKey: "displayCity6")
+        defaults.setValue(cityDisplayTextField7.stringValue, forKey: "displayCity7")
+        defaults.setValue(cityDisplayTextField8.stringValue, forKey: "displayCity8")
+
         defaults.setValue(updateFrequencyTextField.stringValue, forKey: "updateFrequency")
         defaults.setValue(controlsInSubmenu.stringValue, forKey: "controlsInSubmenu")
         defaults.setValue(displayHumidity.stringValue, forKey: "displayHumidity")
@@ -205,6 +228,9 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         cityNameLabel.stringValue = NSLocalizedString("CityNames_", // Unique key of your choice
             value:"City Names", // Default (English) text
             comment:"City Names") + ":"
+        cityDisplayNameLabel.stringValue = NSLocalizedString("CityDisplayNames_", // Unique key of your choice
+            value:"Display Names", // Default (English) text
+            comment:"Display Names") + ":"
         updateFrequencyLabel.stringValue = NSLocalizedString("UpdateFrequency_", // Unique key of your choice
             value:"Update Frequency", // Default (English) text
             comment:"Update Frequency") + ":"
