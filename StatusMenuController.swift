@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a29"
+let DEFAULT_PREFERENCE_VERSION = "a31"
 
 struct WeatherFields {
     
@@ -183,7 +183,7 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
     var radarWindow: RadarWindow!
     let yahooWeatherAPI = YahooWeatherAPI()     // https://developer.yahoo.com/weather/
     let openWeatherMapAPI = OpenWeatherMapAPI() // http://www.openweathermap.org
-    //var myTimer = NSTimer()                     // http://ios-blog.co.uk/tutorials/swift-nstimer-tutorial-lets-create-a-counter-application/
+    var myTimer = NSTimer()                     // http://ios-blog.co.uk/tutorials/swift-nstimer-tutorial-lets-create-a-counter-application/
     
     let defaults = NSUserDefaults.standardUserDefaults()
 
@@ -558,15 +558,15 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
             comment:"Quit"), action: Selector("terminate:"), keyEquivalent: "q")
         controlsMenu.addItem(newItem)
         
-        //let uwTimer = myTimer
-        //if uwTimer == myTimer {
-        //    if uwTimer.valid {
-        //        uwTimer.invalidate()
-        //    }
-        //}
+        let uwTimer = myTimer
+        if uwTimer == myTimer {
+            if uwTimer.valid {
+                uwTimer.invalidate()
+            }
+        }
         
-        //let updateFrequency = defaults.stringForKey("updateFrequency")
-        //myTimer = NSTimer.scheduledTimerWithTimeInterval(Double(updateFrequency!)!*60, target:self, selector: Selector("updateWeather"), userInfo: nil, repeats: false)
+        let updateFrequency = defaults.stringForKey("updateFrequency")
+        myTimer = NSTimer.scheduledTimerWithTimeInterval(Double(updateFrequency!)!*60, target:self, selector: Selector("updateWeather"), userInfo: nil, repeats: false)
         
     } // updateWeather
     

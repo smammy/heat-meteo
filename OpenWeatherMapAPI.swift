@@ -324,10 +324,12 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         else if ((weatherCode == "09d") ||
             (weatherCode == "09n") ||
             (weatherCode == "10d") ||
-            (weatherCode == "10n") ||
-            (weatherCode == "50d") ||
-            (weatherCode == "50n")) {
+            (weatherCode == "10n")) {
                 return NSImage(named: "MB-Rain")!
+        }
+        else if ((weatherCode == "50d") ||
+            (weatherCode == "50n")) {
+                return NSImage(named: "MB-Hazy")!
         }
         else if ((weatherCode == "11d") ||
             (weatherCode == "11n")) {
@@ -362,7 +364,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         // http://www.nws.noaa.gov/om/winter/faqs.shtml
         // http://www.srh.noaa.gov/epz/?n=wxcalc_heatindex
         // Wind-chill is calculated when temperatures are at or below 50 F and wind speeds are above 3 mph.
-        // The heat index calculation applies only when the relative humidity is 40% or higher, and the air        temperature is 80 F or higher
+        // The heat index calculation applies only when the relative humidity is 40% or higher, and the air temperature is 80 F or higher
         // where:
         // T = Temperature (° F)
         // RH = Relative Humidity (%)
@@ -398,8 +400,9 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             let HI4 = (6.83783 * (10 ** -3) * (temp ** 2))
             let HI5 = (5.481717 * (10 ** -2) * (rh ** 2))
             let HI6 = (1.22874 * (10 ** -3) * (temp ** 2) * rh)
-            let HI7 = (1.99 * (0.000001) * (temp ** 2) * (rh ** 2))
-            let HI = -42.379 + HI1 + HI2 - HI3 - HI4 - HI5 + HI6 - HI7
+            let HI7 = (8.5282 * (10 ** -4) * temp * (rh ** 2))
+            let HI8 = (1.99 * (0.000001) * (temp ** 2) * (rh ** 2))
+            let HI = -42.379 + HI1 + HI2 - HI3 - HI4 - HI5 + HI6 + HI7 - HI8
             feelsLike = String(format:"%.0f", HI)
         }
         return formatTemp(feelsLike)
@@ -482,7 +485,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
     func formatPressure(pressure2: String) -> String {
         let defaults = NSUserDefaults.standardUserDefaults()
         var formattedPressure = ""
-        let pressure = String(format: "%.2f", (pressure2 as NSString).doubleValue / 338637.526)
+        let pressure = String(format: "%.2f", (pressure2 as NSString).doubleValue / 33.8637526)
         if (defaults.stringForKey("pressureUnit")! == "0") {
             formattedPressure += pressure + " " + NSLocalizedString("Inches_", // Unique key of your choice
                 value:"Inches", // Default (English) text
@@ -1252,7 +1255,9 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             }
             
         } else if (elementName as NSString).isEqualToString("pressure") {
-            weatherFields.pressure.appendString(attributeDict["value"]!)
+            if (weatherFields.pressure == "") {
+                weatherFields.pressure.appendString(attributeDict["value"]!)
+            }
             
         } else if (elementName as NSString).isEqualToString("sun") {
             if (weatherFields.sunrise == "") {
