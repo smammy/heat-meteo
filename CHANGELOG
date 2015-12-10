@@ -1,14 +1,2 @@
-2.0.0.a31
-* Correct Pressure calculation for OpenWeatherMap
-* Change OpenWeatherMap Mist icon from Rain to Fog
-* Correct FeelsLike for higher temps (>80) for OpenWeatherMap
-
-2.0.0.a30
-* Timer was disabled
-
-2.0.0.a29
-* Don't refresh data with blanks if nothing was read from weather source (like a bad connection).
-* Allow alias names for cities
-* Correct pressure for OpenWeatherMap
-* Add missing current icon and temp for secondary locations for OpenWeatherMap
-* OpenWeatherMap icon for mist was showing wind
+2.0.0.a32
+* I think I fixed the preferences not being brought to the front

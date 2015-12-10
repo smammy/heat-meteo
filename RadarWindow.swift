@@ -44,7 +44,8 @@ class RadarWindow: NSWindowController, NSWindowDelegate {
         super.windowDidLoad()
 
         self.window?.center()
-        self.window?.makeKeyAndOrderFront(nil)
+        self.window?.makeKeyAndOrderFront(self)
+        NSApp.activateIgnoringOtherApps(true)
         
         let defaults = NSUserDefaults.standardUserDefaults()
         var ourURL = radarURL

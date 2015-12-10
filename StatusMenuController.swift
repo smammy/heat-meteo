@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a31"
+let DEFAULT_PREFERENCE_VERSION = "a32"
 
 struct WeatherFields {
     
@@ -595,8 +595,8 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
     
     @IBAction func preferences(sender: NSMenuItem) {
         //print("Preferences_", terminator: "\n")
-        preferencesWindow.window!.makeKeyAndOrderFront(nil)
-        preferencesWindow.showWindow(nil)
+        preferencesWindow.window!.makeKeyAndOrderFront(preferencesWindow.window!)
+        NSApp.activateIgnoringOtherApps(true)
     } // dummy
     
     @IBAction func weatherRefresh(sender: NSMenuItem) {

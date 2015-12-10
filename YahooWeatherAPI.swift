@@ -746,8 +746,8 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         DebugLog(String(format:"in updateMenuWithSecondaryLocation: %@", cityName))
 
         var city = displayCityName
-        if ((city == "") && (weatherFields.title1.length > 16)) {
-            city = weatherFields.title1.substringFromIndex(16)
+        if ((city == "") && (weatherFields.title1.length > 17)) {
+            city = weatherFields.title1.substringFromIndex(17)
         }
 
         var statusTitle = city + " " + formatTemp((weatherFields.currentTemp as String))
