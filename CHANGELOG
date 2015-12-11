@@ -1,2 +1,6 @@
+2.0.0.a33
+* Correct a problem with the control section being duplicated if the weather wasn't available on a refresh.
+* Correct use of status bar font for OpenWeatherMap
+
 2.0.0.a32
-* I think I fixed the preferences not being brought to the front
+* Fixed the preferences not being brought to the front

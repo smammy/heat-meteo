@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a32"
+let DEFAULT_PREFERENCE_VERSION = "a33"
 
 struct WeatherFields {
     
@@ -337,6 +337,38 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
 
     } // awakeFromNib
     
+    func addControlOptions()
+    {
+        var controlsMenu = NSMenu()
+        var newItem : NSMenuItem
+        if (defaults.stringForKey("controlsInSubmenu")! == "1") {
+            newItem = NSMenuItem(title: NSLocalizedString("Controls_", // Unique key of your choice
+                value:"Controls", // Default (English) text
+                comment:"Controls"), action: nil, keyEquivalent: "")
+            menu.addItem(newItem)
+            menu.setSubmenu(controlsMenu, forItem: newItem)
+        } else {
+            controlsMenu = menu
+        }
+        newItem = NSMenuItem(title: NSLocalizedString("Refresh_", // Unique key of your choice
+            value:"Refresh", // Default (English) text
+            comment:"Refresh"), action: Selector("weatherRefresh:"), keyEquivalent: "r")
+        newItem.target=self
+        controlsMenu.addItem(newItem)
+        
+        newItem = NSMenuItem(title: NSLocalizedString("Preferences_", // Unique key of your choice
+            value:"Preferences", // Default (English) text
+            comment:"Preferences"), action: Selector("preferences:"), keyEquivalent: ",")
+        newItem.target=self
+        controlsMenu.addItem(newItem)
+        
+        newItem = NSMenuItem(title: NSLocalizedString("Quit_", // Unique key of your choice
+            value:"Quit", // Default (English) text
+            comment:"Quit"), action: Selector("terminate:"), keyEquivalent: "q")
+        controlsMenu.addItem(newItem)
+        
+    } // addControlOptions
+    
     func updateWeather()
     {
         //NSURLCache.sharedURLCache().removeAllCachedResponses()
@@ -344,7 +376,6 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         //NSURLCache.sharedURLCache().memoryCapacity = 0
 
         radarWindow = RadarWindow()
-        var controlsMenu = NSMenu()
         var weatherFields: WeatherFields
         let defaults = NSUserDefaults.standardUserDefaults()
         
@@ -379,7 +410,7 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
             if (weatherFields.currentTemp != "") {
                 
                 if (displayCity != "") {
-                        city = displayCity
+                    city = displayCity
                 }
                 
                 if (defaults.stringForKey("displayWeatherIcon")! == "1") {
@@ -449,17 +480,18 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
                     
                     menu.addItem(NSMenuItem.separatorItem())
                 }
+                addControlOptions()
             }
         } else if (defaults.stringForKey("weatherSource")! == "1") {
             openWeatherMapAPI.setRadarWind(radarWindow)
             weatherFields = openWeatherMapAPI.beginParsing(city)
             
-            if ((defaults.stringForKey("displayCity") != nil) &&
-                (defaults.stringForKey("displayCity")! != "")) {
-                    city = defaults.stringForKey("displayCity")!
-            }
-            
             if (weatherFields.currentTemp != "") {
+                
+                if (displayCity != "") {
+                    city = displayCity
+                }
+                
                 if (defaults.stringForKey("displayWeatherIcon")! == "1") {
                     statusBarItem.image = openWeatherMapAPI.setImage(weatherFields.currentCode as String)
                 } else {
@@ -477,7 +509,7 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
                 }
                 statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                     statusTitle,
-                    attributes:[NSFontAttributeName : menu.font!]))
+                    attributes:[NSFontAttributeName : font!]))
                 
                 openWeatherMapAPI.updateMenuWithPrimaryLocation(weatherFields, cityName: (city), displayCityName: (displayCity), menu: menu)
                 
@@ -527,37 +559,10 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
                     
                     menu.addItem(NSMenuItem.separatorItem())
                 }
+                addControlOptions()
             }
         }
 
-
-        var newItem : NSMenuItem
-        if (defaults.stringForKey("controlsInSubmenu")! == "1") {
-            newItem = NSMenuItem(title: NSLocalizedString("Controls_", // Unique key of your choice
-                value:"Controls", // Default (English) text
-                comment:"Controls"), action: nil, keyEquivalent: "")
-            menu.addItem(newItem)
-            menu.setSubmenu(controlsMenu, forItem: newItem)
-        } else {
-            controlsMenu = menu
-        }
-        newItem = NSMenuItem(title: NSLocalizedString("Refresh_", // Unique key of your choice
-            value:"Refresh", // Default (English) text
-            comment:"Refresh"), action: Selector("weatherRefresh:"), keyEquivalent: "r")
-        newItem.target=self
-        controlsMenu.addItem(newItem)
-        
-        newItem = NSMenuItem(title: NSLocalizedString("Preferences_", // Unique key of your choice
-            value:"Preferences", // Default (English) text
-            comment:"Preferences"), action: Selector("preferences:"), keyEquivalent: ",")
-        newItem.target=self
-        controlsMenu.addItem(newItem)
-        
-        newItem = NSMenuItem(title: NSLocalizedString("Quit_", // Unique key of your choice
-            value:"Quit", // Default (English) text
-            comment:"Quit"), action: Selector("terminate:"), keyEquivalent: "q")
-        controlsMenu.addItem(newItem)
-        
         let uwTimer = myTimer
         if uwTimer == myTimer {
             if uwTimer.valid {
