@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a33"
+let DEFAULT_PREFERENCE_VERSION = "a34"
 
 struct WeatherFields {
     
@@ -320,6 +320,8 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         
         newItem.target=self
         menu.addItem(newItem)
+
+        addControlOptions()
         
         // ToDo: Need a way to make Command-W work on these windows
         radarWindow = RadarWindow()
