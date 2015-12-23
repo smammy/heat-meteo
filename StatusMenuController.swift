@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a34"
+let DEFAULT_PREFERENCE_VERSION = "a37"
 
 struct WeatherFields {
     
@@ -343,7 +343,7 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
     {
         var controlsMenu = NSMenu()
         var newItem : NSMenuItem
-        if (defaults.stringForKey("controlsInSubmenu")! == "1") {
+        if ((defaults.stringForKey("controlsInSubmenu") == nil) || (defaults.stringForKey("controlsInSubmenu")! == "1")) {
             newItem = NSMenuItem(title: NSLocalizedString("Controls_", // Unique key of your choice
                 value:"Controls", // Default (English) text
                 comment:"Controls"), action: nil, keyEquivalent: "")
@@ -361,6 +361,13 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         newItem = NSMenuItem(title: NSLocalizedString("Preferences_", // Unique key of your choice
             value:"Preferences", // Default (English) text
             comment:"Preferences"), action: Selector("preferences:"), keyEquivalent: ",")
+        newItem.target=self
+        controlsMenu.addItem(newItem)
+        
+        // https://gist.github.com/ericdke/75a42dc8d4c5f61df7d9
+        newItem = NSMenuItem(title: NSLocalizedString("Relaunch_", // Unique key of your choice
+            value:"Relaunch", // Default (English) text
+            comment:"Relaunch"), action: Selector("Relaunch:"), keyEquivalent: "`")
         newItem.target=self
         controlsMenu.addItem(newItem)
         
@@ -604,6 +611,14 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         //print("Preferences_", terminator: "\n")
         preferencesWindow.window!.makeKeyAndOrderFront(preferencesWindow.window!)
         NSApp.activateIgnoringOtherApps(true)
+    } // dummy
+    
+    @IBAction func Relaunch(sender: NSMenuItem) {
+        let task = NSTask()
+        task.launchPath = "/bin/sh"
+        task.arguments = ["-c", "sleep 0.2; open \"\(NSBundle.mainBundle().bundlePath)\""]
+        task.launch()
+        NSApplication.sharedApplication().terminate(nil)
     } // dummy
     
     @IBAction func weatherRefresh(sender: NSMenuItem) {

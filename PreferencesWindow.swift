@@ -244,8 +244,8 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
             comment:"Check for new versions on launch")
         
         logMessages.title = NSLocalizedString("logMessages_", // Unique key of your choice
-            value:"Log message to console", // Default (English) text
-            comment:"Log message to console")
+            value:"Log messages to console", // Default (English) text
+            comment:"Log messages to console")
         
         weatherSourceLabel.stringValue = NSLocalizedString("WeatherSource_", // Unique key of your choice
             value:"Weather Source", // Default (English) text
