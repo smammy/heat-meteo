@@ -342,6 +342,18 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         return NSImage(named: weatherCode)!
     } // setImage
     
+    func formatDay(temp: String) -> String {
+        var returnDay = temp
+        if ((temp != "Mon") &&
+            (temp != "Wed")) {
+                returnDay.appendContentsOf(" ")
+        }
+        if (temp == "Fri") {
+            returnDay.appendContentsOf(" ")
+        }
+        return returnDay
+    } // formatDay
+    
     func formatTemp(temp: String) -> String {
         let defaults = NSUserDefaults.standardUserDefaults()
         var formattedTemp = String(Int(((temp as NSString).doubleValue)))
@@ -431,7 +443,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         
         // change to a readable time format and change to local time zone
         dateFormatter.dateFormat = "EEE"
-        return dateFormatter.stringFromDate(date!)
+        return formatDay(dateFormatter.stringFromDate(date!))
     }
     
     func formatWindSpeed(speed2: String, direction: String) -> String {

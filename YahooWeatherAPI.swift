@@ -304,6 +304,18 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         return NSImage()
     } // setImage
     
+    func formatDay(temp: String) -> String {
+        var returnDay = temp
+        if ((temp != "Mon") &&
+            (temp != "Wed")) {
+                returnDay.appendContentsOf(" ")
+        }
+        if (temp == "Fri") {
+                returnDay.appendContentsOf(" ")
+        }
+        return returnDay
+    } // formatDay
+    
     func formatTemp(temp: String) -> String {
         let defaults = NSUserDefaults.standardUserDefaults()
         var formattedTemp = temp
@@ -505,7 +517,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: (weatherFields.forecast1Day as String) + "   \t" + formatTemp(weatherFields.forecast1High as String) + "/" + formatTemp(weatherFields.forecast1Low as String) + " \t" + (weatherFields.forecast1Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: formatDay(weatherFields.forecast1Day as String) + " \t" + formatTemp(weatherFields.forecast1High as String) + "/" + formatTemp(weatherFields.forecast1Low as String) + " \t" + (weatherFields.forecast1Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast1Code as String)
                 } else {
@@ -514,7 +526,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 newItem.target=self
                 extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: (weatherFields.forecast1Day as String) + ", " + formatTemp(weatherFields.forecast1High as String), action: nil, keyEquivalent: "")
+                newItem = NSMenuItem(title: formatDay(weatherFields.forecast1Day as String) + " \t" + formatTemp(weatherFields.forecast1High as String), action: nil, keyEquivalent: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast1Code as String)
@@ -551,7 +563,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: (weatherFields.forecast2Day as String) + "   \t" + formatTemp(weatherFields.forecast2High as String) + "/" + formatTemp(weatherFields.forecast2Low as String) + " \t" + (weatherFields.forecast2Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: formatDay(weatherFields.forecast2Day as String) + " \t" + formatTemp(weatherFields.forecast2High as String) + "/" + formatTemp(weatherFields.forecast2Low as String) + " \t" + (weatherFields.forecast2Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast2Code as String)
                 } else {
@@ -560,7 +572,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 newItem.target=self
                 extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: (weatherFields.forecast2Day as String) + ", " + formatTemp(weatherFields.forecast2High as String), action: nil, keyEquivalent: "")
+                newItem = NSMenuItem(title: formatDay(weatherFields.forecast2Day as String) + " \t" + formatTemp(weatherFields.forecast2High as String), action: nil, keyEquivalent: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast2Code as String)
@@ -597,7 +609,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: (weatherFields.forecast3Day as String) + "   \t" + formatTemp(weatherFields.forecast3High as String) + "/" + formatTemp(weatherFields.forecast3Low as String) + " \t" + (weatherFields.forecast3Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: formatDay(weatherFields.forecast3Day as String) + " \t" + formatTemp(weatherFields.forecast3High as String) + "/" + formatTemp(weatherFields.forecast3Low as String) + " \t" + (weatherFields.forecast3Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast3Code as String)
                 } else {
@@ -606,7 +618,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 newItem.target=self
                 extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: (weatherFields.forecast3Day as String) + ", " + formatTemp(weatherFields.forecast3High as String), action: nil, keyEquivalent: "")
+                newItem = NSMenuItem(title: formatDay(weatherFields.forecast3Day as String) + " \t" + formatTemp(weatherFields.forecast3High as String), action: nil, keyEquivalent: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast3Code as String)
@@ -643,7 +655,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: (weatherFields.forecast4Day as String) + "   \t" + formatTemp(weatherFields.forecast4High as String) + "/" + formatTemp(weatherFields.forecast4Low as String) + " \t" + (weatherFields.forecast4Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: formatDay(weatherFields.forecast4Day as String) + " \t" + formatTemp(weatherFields.forecast4High as String) + "/" + formatTemp(weatherFields.forecast4Low as String) + " \t" + (weatherFields.forecast4Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast4Code as String)
                 } else {
@@ -652,7 +664,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 newItem.target=self
                 extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: (weatherFields.forecast4Day as String) + ", " + formatTemp(weatherFields.forecast4High as String), action: nil, keyEquivalent: "")
+                newItem = NSMenuItem(title: formatDay(weatherFields.forecast4Day as String) + " \t" + formatTemp(weatherFields.forecast4High as String), action: nil, keyEquivalent: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast4Code as String)
@@ -689,7 +701,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: (weatherFields.forecast5Day as String) + "   \t" + formatTemp(weatherFields.forecast5High as String) + "/" + formatTemp(weatherFields.forecast5Low as String) + " \t" + (weatherFields.forecast5Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = NSMenuItem(title: formatDay(weatherFields.forecast5Day as String) + " \t" + formatTemp(weatherFields.forecast5High as String) + "/" + formatTemp(weatherFields.forecast5Low as String) + " \t" + (weatherFields.forecast5Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast5Code as String)
                 } else {
@@ -698,7 +710,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 newItem.target=self
                 extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: (weatherFields.forecast5Day as String) + ", " + formatTemp(weatherFields.forecast5High as String), action: nil, keyEquivalent: "")
+                newItem = NSMenuItem(title: formatDay(weatherFields.forecast5Day as String) + " \t" + formatTemp(weatherFields.forecast5High as String), action: nil, keyEquivalent: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast5Code as String)
