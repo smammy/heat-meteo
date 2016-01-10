@@ -1,6 +1,2 @@
-2.0.0.a39
-* Apply the same date formatting routine to OpenWeather
-2.0.0.a38
-* Tweak 2 for the Extended Forcast display to help alignment with proportional fonts.
-2.0.0.a37
-* Tweak the Extended Forcast display to help alignment with proportional fonts.
+2.0.0.a40
+* Don't report new version if no Internet connection

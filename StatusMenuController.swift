@@ -33,7 +33,7 @@ import Foundation
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a39"
+let DEFAULT_PREFERENCE_VERSION = "a40"
 
 struct WeatherFields {
     
@@ -237,8 +237,8 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
                 webVERSION = ""
             }
             let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
-            
-            if (version != webVERSION) {
+
+            if ((version != webVERSION) && (webVERSION != "")) {
                 // New version!
                 if let url = NSURL(string: "http://www.danleys.org/" + "CHANGELOG") {
                     do {
@@ -280,9 +280,9 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
             }
         }
         
-        var theCityImage = NSImage()
-        //theCityImage = NSApp.applicationIconImage
-        theCityImage = NSImage(named: "Loading-1")!
+        var meteoImage = NSImage()
+        //meteoImage = NSApp.applicationIconImage
+        meteoImage = NSImage(named: "Loading-1")!
         
         //Add statusBarItem
         statusBarItem = statusBar.statusItemWithLength(-1)
@@ -296,7 +296,7 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
         }
         menu.font = font
         statusBarItem.menu = menu
-        statusBarItem.image = theCityImage
+        statusBarItem.image = meteoImage
         
         m = (14 as NSNumber)
         font = NSFont(name: "Tahoma", size: 14)
@@ -306,12 +306,21 @@ class StatusMenuController: NSObject, NSXMLParserDelegate, PreferencesWindowDele
                 font = NSFont(name: defaults.stringForKey("menuBarFont")!, size: CGFloat(m))
         }
         
+        // Todo - Do we have a problem or not?
         // http://stackoverflow.com/questions/19487369/center-two-different-size-font-vertically-in-a-nsattributedstring
-        statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
-            NSLocalizedString("Loading_", // Unique key of your choice
-                value:"Loading", // Default (English) text
-                comment:"Loading") + "...",
-            attributes:[NSFontAttributeName : font!]))
+        if (webVERSION == "") {
+            statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                NSLocalizedString("NetworkFailure_", // Unique key of your choice
+                    value:"No Network", // Default (English) text
+                    comment:"No Network"),
+                attributes:[NSFontAttributeName : font!]))
+        } else {
+            statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                NSLocalizedString("Loading_", // Unique key of your choice
+                    value:"Loading", // Default (English) text
+                    comment:"Loading") + "...",
+                attributes:[NSFontAttributeName : font!]))
+        }
 
         //Add menuItem to menu
         let newItem : NSMenuItem = NSMenuItem(title: NSLocalizedString("PleaseWait_", // Unique key of your choice
