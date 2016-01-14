@@ -418,7 +418,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             feelsLike = String(format:"%.0f", HI)
         }
         return formatTemp(feelsLike)
-    }
+    } // calculateFeelsLike
 
     func convertUTCtoHHMM(myTime: String) -> String {
         // create dateFormatter with UTC time format
@@ -431,7 +431,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         dateFormatter.dateFormat = "h:mm a"
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         return dateFormatter.stringFromDate(date!)
-    }
+    } // convertUTCtoHHMM
     
     func convertUTCtoEEE(myTime: String) -> String {
         // EEE is Mon, Tue, Wed, etc.
@@ -444,7 +444,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         // change to a readable time format and change to local time zone
         dateFormatter.dateFormat = "EEE"
         return formatDay(dateFormatter.stringFromDate(date!))
-    }
+    } // convertUTCtoEEE
     
     func formatWindSpeed(speed2: String, direction: String) -> String {
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -558,62 +558,94 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         }
     } // extendedWeatherIcon
     
+    func myMenuItem(string: String, url: String?, key: String) ->NSMenuItem {
+        
+        var newItem : NSMenuItem
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        let textColor = NSColor(red: CGFloat(Float(defaults.stringForKey("fontRedText")!)!),
+            green: CGFloat(Float(defaults.stringForKey("fontGreenText")!)!),
+            blue: CGFloat(Float(defaults.stringForKey("fontBlueText")!)!),
+            alpha: 1.0)
+        
+        let attributedTitle: NSMutableAttributedString
+        if (defaults.stringForKey("fontTransparency")! == "1") {
+            attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                string,
+                attributes:[NSFontAttributeName : NSFont(name: defaults.stringForKey("font")!, size: CGFloat(Float(NSNumberFormatter().numberFromString(defaults.stringForKey("fontsize")!)!)))!,
+                    NSForegroundColorAttributeName : textColor]))
+        } else {
+            let backgroundColor = NSColor(
+                red: CGFloat(Float(defaults.stringForKey("fontRedBackground")!)!),
+                green: CGFloat(Float(defaults.stringForKey("fontGreenBackground")!)!),
+                blue: CGFloat(Float(defaults.stringForKey("fontBlueBackground")!)!), alpha: 1.0)
+            
+            attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                string,
+                attributes:[NSFontAttributeName : NSFont(name: defaults.stringForKey("font")!, size: CGFloat(Float(NSNumberFormatter().numberFromString(defaults.stringForKey("fontsize")!)!)))!,
+                    NSForegroundColorAttributeName : textColor,
+                    NSBackgroundColorAttributeName : backgroundColor]))
+        }
+        
+        if (url == nil) {
+            newItem = NSMenuItem(title: "", action: nil, keyEquivalent: key)
+        } else {
+            newItem = NSMenuItem(title: "", action: Selector(url!), keyEquivalent: key)
+        }
+        newItem.attributedTitle = attributedTitle
+        newItem.target=self
+        
+        return newItem
+    } // myMenuItem
+    
     func currentConditions(weatherFields: WeatherFields, cityName: String, currentForecastMenu: NSMenu) {
         
         var newItem : NSMenuItem
         
-        newItem = NSMenuItem(title: NSLocalizedString("Temperature_", // Unique key of your choice
+        newItem = myMenuItem(NSLocalizedString("Temperature_", // Unique key of your choice
             value:"Temperature", // Default (English) text
-            comment:"Temperature") + ": " + formatTemp(weatherFields.currentTemp as String), action: Selector("dummy:"), keyEquivalent: "")
-        newItem.target=self
+            comment:"Temperature") + ": " + formatTemp(weatherFields.currentTemp as String), url: "dummy:", key: "")
         currentForecastMenu.addItem(newItem)
         
-        newItem = NSMenuItem(title: NSLocalizedString("FeelsLike_", // Unique key of your choice
+        newItem = myMenuItem(NSLocalizedString("FeelsLike_", // Unique key of your choice
             value:"Feels Like", // Default (English) text
-            comment:"Feels Like") + ": " + calculateFeelsLike((weatherFields.currentTemp as String), sWindspeed: (weatherFields.windSpeed as String), sRH: (weatherFields.humidity as String)), action: Selector("dummy:"), keyEquivalent: "")
-        newItem.target=self
+            comment:"Feels Like") + ": " + calculateFeelsLike((weatherFields.currentTemp as String), sWindspeed: (weatherFields.windSpeed as String), sRH: (weatherFields.humidity as String)), url: "dummy:", key: "")
         currentForecastMenu.addItem(newItem)
         
-        newItem = NSMenuItem(title: NSLocalizedString("Humidity_", // Unique key of your choice
+        newItem = myMenuItem(NSLocalizedString("Humidity_", // Unique key of your choice
             value:"Humidity", // Default (English) text
-            comment:"Humidity_") + ": " + formatHumidity(weatherFields.humidity as String), action: Selector("dummy:"), keyEquivalent: "")
-        newItem.target=self
+            comment:"Humidity_") + ": " + formatHumidity(weatherFields.humidity as String), url: "dummy:", key: "")
         currentForecastMenu.addItem(newItem)
         
-        //newItem = NSMenuItem(title: NSLocalizedString("Visibility_", // Unique key of your choice
+        //newItem = myMenuItem(NSLocalizedString("Visibility_", // Unique key of your choice
         //    value:"Visibility", // Default (English) text
-        //    comment:"Visibility") + ": " + formatVisibility(weatherFields.visibility as String), action: Selector("dummy:"), keyEquivalent: "")
+        //    comment:"Visibility") + ": " + formatVisibility(weatherFields.visibility as String), url: "dummy:", key: "")
         //newItem.target=self
         //currentForecastMenu.addItem(newItem)
         
-        newItem = NSMenuItem(title: NSLocalizedString("Pressure_", // Unique key of your choice
+        newItem = myMenuItem(NSLocalizedString("Pressure_", // Unique key of your choice
             value:"Pressure", // Default (English) text
-            comment:"Pressure") + ": " + formatPressure(weatherFields.pressure as String), action: Selector("dummy:"), keyEquivalent: "")
-        newItem.target=self
+            comment:"Pressure") + ": " + formatPressure(weatherFields.pressure as String), url: "dummy:", key: "")
         currentForecastMenu.addItem(newItem)
         
-        newItem = NSMenuItem(title: NSLocalizedString("Wind_", // Unique key of your choice
+        newItem = myMenuItem(NSLocalizedString("Wind_", // Unique key of your choice
             value:"Wind", // Default (English) text
-            comment:"Wind") + ": " + formatWindSpeed(weatherFields.windSpeed as String, direction: weatherFields.windDirection as String), action: Selector("dummy:"), keyEquivalent: "")
-        newItem.target=self
+            comment:"Wind") + ": " + formatWindSpeed(weatherFields.windSpeed as String, direction: weatherFields.windDirection as String), url: "dummy:", key: "")
         currentForecastMenu.addItem(newItem)
         
-        newItem = NSMenuItem(title: NSLocalizedString("LatLong_", // Unique key of your choice
+        newItem = myMenuItem(NSLocalizedString("LatLong_", // Unique key of your choice
             value:"Lat/Long", // Default (English) text
-            comment:"Lat/Long") + ": " + (weatherFields.latitude as String) + " " + (weatherFields.longitude as String), action: Selector("dummy:"), keyEquivalent: "")
-        newItem.target=self
+            comment:"Lat/Long") + ": " + (weatherFields.latitude as String) + " " + (weatherFields.longitude as String), url: "dummy:", key: "")
         currentForecastMenu.addItem(newItem)
         
-        newItem = NSMenuItem(title: NSLocalizedString("SunriseSunset_", // Unique key of your choice
+        newItem = myMenuItem(NSLocalizedString("SunriseSunset_", // Unique key of your choice
             value:"Sunrise/sunset", // Default (English) text
-            comment:"Sunrise/sunset") + ": " + convertUTCtoHHMM(weatherFields.sunrise as String) + " / " + convertUTCtoHHMM(weatherFields.sunset as String), action: Selector("dummy:"), keyEquivalent: "")
-        newItem.target=self
+            comment:"Sunrise/sunset") + ": " + convertUTCtoHHMM(weatherFields.sunrise as String) + " / " + convertUTCtoHHMM(weatherFields.sunset as String), url: "dummy:", key: "")
         currentForecastMenu.addItem(newItem)
         
-        newItem = NSMenuItem(title: NSLocalizedString("LastUpdate_", // Unique key of your choice
+        newItem = myMenuItem(NSLocalizedString("LastUpdate_", // Unique key of your choice
             value:"Last Update", // Default (English) text
-            comment:"Last Update") + ": " + convertUTCtoHHMM(weatherFields.date as String), action: Selector("dummy:"), keyEquivalent: "")
-        newItem.target=self
+            comment:"Last Update") + ": " + convertUTCtoHHMM(weatherFields.date as String), url: "dummy:", key: "")
         currentForecastMenu.addItem(newItem)
         
     } // currentConditions
@@ -631,16 +663,15 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast1Day as String) + " \t" + formatTemp(weatherFields.forecast1High as String) + "/" + formatTemp(weatherFields.forecast1Low as String) + " \t" + (weatherFields.forecast1Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast1Day as String) + " \t" + formatTemp(weatherFields.forecast1High as String) + "/" + formatTemp(weatherFields.forecast1Low as String) + " \t" + (weatherFields.forecast1Conditions as String), url: "dummy:", key: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast1Code as String)
                 } else {
                     newItem.image = nil
                 }
-                newItem.target=self
-                extendedForecastMenu.addItem(newItem)
+                        extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast1Day as String) + ", " + formatTemp(weatherFields.forecast1High as String), action: nil, keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast1Day as String) + ", " + formatTemp(weatherFields.forecast1High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast1Code as String)
@@ -649,27 +680,23 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Date_", // Unique key of your choice
                     value:"Date", // Default (English) text
-                    comment:"Date") + ": " + (weatherFields.forecast1Date as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Date") + ": " + (weatherFields.forecast1Date as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Forecast_", // Unique key of your choice
                     value:"Forecast", // Default (English) text
-                    comment:"Forecast") + ": " + (weatherFields.forecast1Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Forecast") + ": " + (weatherFields.forecast1Conditions as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast1High as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                newItem = myMenuItem(formatTemp(weatherFields.forecast1High as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Low_", // Unique key of your choice
                     value:"Low", // Default (English) text
-                    comment:"Low") + ": " + formatTemp(weatherFields.forecast1Low as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast1Low as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
             }
         }
         
@@ -677,16 +704,15 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast2Day as String) + " \t" + formatTemp(weatherFields.forecast2High as String) + "/" + formatTemp(weatherFields.forecast2Low as String) + " \t" + (weatherFields.forecast2Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast2Day as String) + " \t" + formatTemp(weatherFields.forecast2High as String) + "/" + formatTemp(weatherFields.forecast2Low as String) + " \t" + (weatherFields.forecast2Conditions as String), url: "dummy:", key: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast2Code as String)
                 } else {
                     newItem.image = nil
                 }
-                newItem.target=self
-                extendedForecastMenu.addItem(newItem)
+                        extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast2Day as String) + ", " + formatTemp(weatherFields.forecast2High as String), action: nil, keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast2Day as String) + ", " + formatTemp(weatherFields.forecast2High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast2Code as String)
@@ -695,27 +721,23 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Date_", // Unique key of your choice
                     value:"Date", // Default (English) text
-                    comment:"Date") + ": " + (weatherFields.forecast2Date as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Date") + ": " + (weatherFields.forecast2Date as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Forecast_", // Unique key of your choice
                     value:"Forecast", // Default (English) text
-                    comment:"Forecast") + ": " + (weatherFields.forecast2Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Forecast") + ": " + (weatherFields.forecast2Conditions as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast2High as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                newItem = myMenuItem(formatTemp(weatherFields.forecast2High as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Low_", // Unique key of your choice
                     value:"Low", // Default (English) text
-                    comment:"Low") + ": " + formatTemp(weatherFields.forecast2Low as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast2Low as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
             }
         }
         
@@ -723,16 +745,15 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast3Day as String) + " \t" + formatTemp(weatherFields.forecast3High as String) + "/" + formatTemp(weatherFields.forecast3Low as String) + " \t" + (weatherFields.forecast3Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast3Day as String) + " \t" + formatTemp(weatherFields.forecast3High as String) + "/" + formatTemp(weatherFields.forecast3Low as String) + " \t" + (weatherFields.forecast3Conditions as String), url: "dummy:", key: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast3Code as String)
                 } else {
                     newItem.image = nil
                 }
-                newItem.target=self
-                extendedForecastMenu.addItem(newItem)
+                        extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast3Day as String) + ", " + formatTemp(weatherFields.forecast3High as String), action: nil, keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast3Day as String) + ", " + formatTemp(weatherFields.forecast3High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast3Code as String)
@@ -741,27 +762,23 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Date_", // Unique key of your choice
                     value:"Date", // Default (English) text
-                    comment:"Date") + ": " + (weatherFields.forecast3Date as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Date") + ": " + (weatherFields.forecast3Date as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Forecast_", // Unique key of your choice
                     value:"Forecast", // Default (English) text
-                    comment:"Forecast") + ": " + (weatherFields.forecast3Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Forecast") + ": " + (weatherFields.forecast3Conditions as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast3High as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                newItem = myMenuItem(formatTemp(weatherFields.forecast3High as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Low_", // Unique key of your choice
                     value:"Low", // Default (English) text
-                    comment:"Low") + ": " + formatTemp(weatherFields.forecast3Low as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast3Low as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
             }
         }
         
@@ -769,16 +786,15 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast4Day as String) + " \t" + formatTemp(weatherFields.forecast4High as String) + "/" + formatTemp(weatherFields.forecast4Low as String) + " \t" + (weatherFields.forecast4Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast4Day as String) + " \t" + formatTemp(weatherFields.forecast4High as String) + "/" + formatTemp(weatherFields.forecast4Low as String) + " \t" + (weatherFields.forecast4Conditions as String), url: "dummy:", key: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast4Code as String)
                 } else {
                     newItem.image = nil
                 }
-                newItem.target=self
-                extendedForecastMenu.addItem(newItem)
+                        extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast4Day as String) + ", " + formatTemp(weatherFields.forecast4High as String), action: nil, keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast4Day as String) + ", " + formatTemp(weatherFields.forecast4High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast4Code as String)
@@ -787,27 +803,23 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Date_", // Unique key of your choice
                     value:"Date", // Default (English) text
-                    comment:"Date") + ": " + (weatherFields.forecast4Date as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Date") + ": " + (weatherFields.forecast4Date as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Forecast_", // Unique key of your choice
                     value:"Forecast", // Default (English) text
-                    comment:"Forecast") + ": " + (weatherFields.forecast4Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Forecast") + ": " + (weatherFields.forecast4Conditions as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast4High as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                newItem = myMenuItem(formatTemp(weatherFields.forecast4High as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Low_", // Unique key of your choice
                     value:"Low", // Default (English) text
-                    comment:"Low") + ": " + formatTemp(weatherFields.forecast4Low as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast4Low as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
             }
         }
         
@@ -815,16 +827,15 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast5Day as String) + " \t" + formatTemp(weatherFields.forecast5High as String) + "/" + formatTemp(weatherFields.forecast5Low as String) + " \t" + (weatherFields.forecast5Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast5Day as String) + " \t" + formatTemp(weatherFields.forecast5High as String) + "/" + formatTemp(weatherFields.forecast5Low as String) + " \t" + (weatherFields.forecast5Conditions as String), url: "dummy:", key: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast5Code as String)
                 } else {
                     newItem.image = nil
                 }
-                newItem.target=self
-                extendedForecastMenu.addItem(newItem)
+                        extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast5Day as String) + ", " + formatTemp(weatherFields.forecast5High as String), action: nil, keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast5Day as String) + ", " + formatTemp(weatherFields.forecast5High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast5Code as String)
@@ -833,27 +844,23 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Date_", // Unique key of your choice
                     value:"Date", // Default (English) text
-                    comment:"Date") + ": " + (weatherFields.forecast5Date as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Date") + ": " + (weatherFields.forecast5Date as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Forecast_", // Unique key of your choice
                     value:"Forecast", // Default (English) text
-                    comment:"Forecast") + ": " + (weatherFields.forecast5Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Forecast") + ": " + (weatherFields.forecast5Conditions as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast5High as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                newItem = myMenuItem(formatTemp(weatherFields.forecast5High as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Low_", // Unique key of your choice
                     value:"Low", // Default (English) text
-                    comment:"Low") + ": " + formatTemp(weatherFields.forecast5Low as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast5Low as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
             }
         }
         
@@ -861,16 +868,15 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast6Day as String) + " \t" + formatTemp(weatherFields.forecast6High as String) + "/" + formatTemp(weatherFields.forecast6Low as String) + " \t" + (weatherFields.forecast6Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast6Day as String) + " \t" + formatTemp(weatherFields.forecast6High as String) + "/" + formatTemp(weatherFields.forecast6Low as String) + " \t" + (weatherFields.forecast6Conditions as String), url: "dummy:", key: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast6Code as String)
                 } else {
                     newItem.image = nil
                 }
-                newItem.target=self
-                extendedForecastMenu.addItem(newItem)
+                        extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast6Day as String) + ", " + formatTemp(weatherFields.forecast6High as String), action: nil, keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast6Day as String) + ", " + formatTemp(weatherFields.forecast6High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast6Code as String)
@@ -879,27 +885,23 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Date_", // Unique key of your choice
                     value:"Date", // Default (English) text
-                    comment:"Date") + ": " + (weatherFields.forecast6Date as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Date") + ": " + (weatherFields.forecast6Date as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Forecast_", // Unique key of your choice
                     value:"Forecast", // Default (English) text
-                    comment:"Forecast") + ": " + (weatherFields.forecast6Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Forecast") + ": " + (weatherFields.forecast6Conditions as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast6High as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                newItem = myMenuItem(formatTemp(weatherFields.forecast6High as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Low_", // Unique key of your choice
                     value:"Low", // Default (English) text
-                    comment:"Low") + ": " + formatTemp(weatherFields.forecast6Low as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast6Low as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
             }
         }
         
@@ -907,16 +909,15 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast7Day as String) + " \t" + formatTemp(weatherFields.forecast7High as String) + "/" + formatTemp(weatherFields.forecast7Low as String) + " \t" + (weatherFields.forecast7Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast7Day as String) + " \t" + formatTemp(weatherFields.forecast7High as String) + "/" + formatTemp(weatherFields.forecast7Low as String) + " \t" + (weatherFields.forecast7Conditions as String), url: "dummy:", key: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast7Code as String)
                 } else {
                     newItem.image = nil
                 }
-                newItem.target=self
-                extendedForecastMenu.addItem(newItem)
+                        extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast7Day as String) + ", " + formatTemp(weatherFields.forecast7High as String), action: nil, keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast7Day as String) + ", " + formatTemp(weatherFields.forecast7High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast7Code as String)
@@ -925,27 +926,23 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Date_", // Unique key of your choice
                     value:"Date", // Default (English) text
-                    comment:"Date") + ": " + (weatherFields.forecast7Date as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Date") + ": " + (weatherFields.forecast7Date as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Forecast_", // Unique key of your choice
                     value:"Forecast", // Default (English) text
-                    comment:"Forecast") + ": " + (weatherFields.forecast7Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Forecast") + ": " + (weatherFields.forecast7Conditions as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast7High as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                newItem = myMenuItem(formatTemp(weatherFields.forecast7High as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Low_", // Unique key of your choice
                     value:"Low", // Default (English) text
-                    comment:"Low") + ": " + formatTemp(weatherFields.forecast7Low as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast7Low as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
             }
         }
         
@@ -953,16 +950,15 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast8Day as String) + " \t" + formatTemp(weatherFields.forecast8High as String) + "/" + formatTemp(weatherFields.forecast8Low as String) + " \t" + (weatherFields.forecast8Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast8Day as String) + " \t" + formatTemp(weatherFields.forecast8High as String) + "/" + formatTemp(weatherFields.forecast8Low as String) + " \t" + (weatherFields.forecast8Conditions as String), url: "dummy:", key: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast8Code as String)
                 } else {
                     newItem.image = nil
                 }
-                newItem.target=self
-                extendedForecastMenu.addItem(newItem)
+                        extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast8Day as String) + ", " + formatTemp(weatherFields.forecast8High as String), action: nil, keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast8Day as String) + ", " + formatTemp(weatherFields.forecast8High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast8Code as String)
@@ -971,27 +967,23 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Date_", // Unique key of your choice
                     value:"Date", // Default (English) text
-                    comment:"Date") + ": " + (weatherFields.forecast8Date as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Date") + ": " + (weatherFields.forecast8Date as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Forecast_", // Unique key of your choice
                     value:"Forecast", // Default (English) text
-                    comment:"Forecast") + ": " + (weatherFields.forecast8Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Forecast") + ": " + (weatherFields.forecast8Conditions as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast8High as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                newItem = myMenuItem(formatTemp(weatherFields.forecast8High as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Low_", // Unique key of your choice
                     value:"Low", // Default (English) text
-                    comment:"Low") + ": " + formatTemp(weatherFields.forecast8Low as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast8Low as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
             }
         }
         
@@ -999,16 +991,15 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast9Day as String) + " \t" + formatTemp(weatherFields.forecast9High as String) + "/" + formatTemp(weatherFields.forecast9Low as String) + " \t" + (weatherFields.forecast9Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast9Day as String) + " \t" + formatTemp(weatherFields.forecast9High as String) + "/" + formatTemp(weatherFields.forecast9Low as String) + " \t" + (weatherFields.forecast9Conditions as String), url: "dummy:", key: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast9Code as String)
                 } else {
                     newItem.image = nil
                 }
-                newItem.target=self
-                extendedForecastMenu.addItem(newItem)
+                        extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast9Day as String) + ", " + formatTemp(weatherFields.forecast9High as String), action: nil, keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast9Day as String) + ", " + formatTemp(weatherFields.forecast9High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast9Code as String)
@@ -1017,27 +1008,23 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Date_", // Unique key of your choice
                     value:"Date", // Default (English) text
-                    comment:"Date") + ": " + (weatherFields.forecast9Date as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Date") + ": " + (weatherFields.forecast9Date as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Forecast_", // Unique key of your choice
                     value:"Forecast", // Default (English) text
-                    comment:"Forecast") + ": " + (weatherFields.forecast9Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Forecast") + ": " + (weatherFields.forecast9Conditions as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast9High as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                newItem = myMenuItem(formatTemp(weatherFields.forecast9High as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Low_", // Unique key of your choice
                     value:"Low", // Default (English) text
-                    comment:"Low") + ": " + formatTemp(weatherFields.forecast9Low as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast9Low as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
             }
         }
         
@@ -1045,16 +1032,15 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             extendedForecast = NSMenu()
             
             if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast10Day as String) + " \t" + formatTemp(weatherFields.forecast10High as String) + "/" + formatTemp(weatherFields.forecast10Low as String) + " \t" + (weatherFields.forecast10Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast10Day as String) + " \t" + formatTemp(weatherFields.forecast10High as String) + "/" + formatTemp(weatherFields.forecast10Low as String) + " \t" + (weatherFields.forecast10Conditions as String), url: "dummy:", key: "")
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast10Code as String)
                 } else {
                     newItem.image = nil
                 }
-                newItem.target=self
-                extendedForecastMenu.addItem(newItem)
+                        extendedForecastMenu.addItem(newItem)
             } else {
-                newItem = NSMenuItem(title: convertUTCtoEEE(weatherFields.forecast10Day as String) + ", " + formatTemp(weatherFields.forecast10High as String), action: nil, keyEquivalent: "")
+                newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast10Day as String) + ", " + formatTemp(weatherFields.forecast10High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast10Code as String)
@@ -1063,27 +1049,23 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Date_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Date_", // Unique key of your choice
                     value:"Date", // Default (English) text
-                    comment:"Date") + ": " + (weatherFields.forecast10Date as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Date") + ": " + (weatherFields.forecast10Date as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Forecast_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Forecast_", // Unique key of your choice
                     value:"Forecast", // Default (English) text
-                    comment:"Forecast") + ": " + (weatherFields.forecast10Conditions as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Forecast") + ": " + (weatherFields.forecast10Conditions as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: formatTemp(weatherFields.forecast10High as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                newItem = myMenuItem(formatTemp(weatherFields.forecast10High as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
                 
-                newItem = NSMenuItem(title: NSLocalizedString("Low_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("Low_", // Unique key of your choice
                     value:"Low", // Default (English) text
-                    comment:"Low") + ": " + formatTemp(weatherFields.forecast10Low as String), action: Selector("dummy:"), keyEquivalent: "")
-                newItem.target=self
-                extendedForecast.addItem(newItem)
+                    comment:"Low") + ": " + formatTemp(weatherFields.forecast10Low as String), url: "dummy:", key: "")
+                        extendedForecast.addItem(newItem)
             }
         }
         DebugLog(String(format:"leaving extendedForecasts: %@", cityName))
@@ -1110,8 +1092,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         if (defaults.stringForKey("displayHumidity")! == "1") {
             statusTitle = statusTitle + "/" + formatHumidity((weatherFields.humidity as String))
         }
-        newItem = NSMenuItem(title: statusTitle, action: Selector("openWeatherURL:"), keyEquivalent: "")
-        newItem.target=self
+        newItem = myMenuItem(statusTitle, url: "openWeatherURL:", key: "")
         newItem.image = setImage(weatherFields.currentCode as String)
         
         let replaced = String("http://openweathermap.org/city/" +  (locationWOEID as String))
@@ -1124,7 +1105,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         var currentForecastMenu = NSMenu()
         
         if (defaults.stringForKey("currentWeatherInSubmenu")! == "1") {
-            newItem = NSMenuItem(title: NSLocalizedString("CurrentConditions_", value:"Current Conditions", comment: "Current Conditions") as String, action: nil, keyEquivalent: "")
+            newItem = myMenuItem(NSLocalizedString("CurrentConditions_", value:"Current Conditions", comment: "Current Conditions") as String, url: nil, key: "")
             newLocation.addItem(newItem)
             newLocation.setSubmenu(currentForecastMenu, forItem: newItem)
         } else {
@@ -1138,9 +1119,9 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             var extendedForecastMenu = NSMenu()
             
             if (defaults.stringForKey("extendedForecastInSubmenu")! == "1") {
-                newItem = NSMenuItem(title: NSLocalizedString("ExtendedForecast_", // Unique key of your choice
+                newItem = myMenuItem(NSLocalizedString("ExtendedForecast_", // Unique key of your choice
                     value:"Extended Forecast", // Default (English) text
-                    comment:"Extended Forecast"), action: nil, keyEquivalent: "")
+                    comment:"Extended Forecast"), url: nil, key: "")
                 newLocation.addItem(newItem)
                 newLocation.setSubmenu(extendedForecastMenu, forItem: newItem)
             } else {
@@ -1174,9 +1155,8 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             let defaults = NSUserDefaults.standardUserDefaults()
             
             // Need to incorporate currentLink
-            newItem = NSMenuItem(title: "OpenWeatherMap.org - " + city, action: Selector("openWeatherURL:"), keyEquivalent: "")
-            newItem.target=self
-            
+            newItem = myMenuItem("OpenWeatherMap.org - " + city, url: "openWeatherURL:", key: "")
+                
             let replaced = String("http://openweathermap.org/city/" +  (locationWOEID as String))
             
             newItem.representedObject = replaced
@@ -1185,7 +1165,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             var currentForecastMenu = NSMenu()
             
             if (defaults.stringForKey("currentWeatherInSubmenu")! == "1") {
-                newItem = NSMenuItem(title: NSLocalizedString("CurrentConditions_", value:"Current Conditions", comment: "Current Conditions") as String, action: nil, keyEquivalent: "")
+                newItem = myMenuItem(NSLocalizedString("CurrentConditions_", value:"Current Conditions", comment: "Current Conditions") as String, url: nil, key: "")
                 menu.addItem(newItem)
                 menu.setSubmenu(currentForecastMenu, forItem: newItem)
             } else {
@@ -1196,11 +1176,10 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             currentConditions(weatherFields, cityName: displayCityName, currentForecastMenu: currentForecastMenu)
             
             var newItem : NSMenuItem
-            newItem = NSMenuItem(title: NSLocalizedString("RadarImage_", // Unique key of your choice
+            newItem = myMenuItem(NSLocalizedString("RadarImage_", // Unique key of your choice
                 value:"Radar Image", // Default (English) text
-                comment:"Radar Image"), action: Selector("showRadar:"), keyEquivalent: "")
-            newItem.target=self
-            let myURL = String("http://openweathermap.org/city/" +  (locationWOEID as String) + "#map")
+                comment:"Radar Image"), url: "showRadar:", key: "")
+                let myURL = String("http://openweathermap.org/city/" +  (locationWOEID as String) + "#map")
             newItem.representedObject = myURL
             currentForecastMenu.addItem(newItem)
             
@@ -1208,9 +1187,9 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
                 var extendedForecastMenu = NSMenu()
                 
                 if (defaults.stringForKey("extendedForecastInSubmenu")! == "1") {
-                    newItem = NSMenuItem(title: NSLocalizedString("ExtendedForecast_", // Unique key of your choice
+                    newItem = myMenuItem(NSLocalizedString("ExtendedForecast_", // Unique key of your choice
                         value:"Extended Forecast", // Default (English) text
-                        comment:"Extended Forecast"), action: nil, keyEquivalent: "")
+                        comment:"Extended Forecast"), url: nil, key: "")
                     menu.addItem(newItem)
                     menu.setSubmenu(extendedForecastMenu, forItem: newItem)
                 } else {

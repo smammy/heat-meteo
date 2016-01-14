@@ -36,10 +36,21 @@ class RadarWindow: NSWindowController, NSWindowDelegate {
 
     var radarURL = "http://www.weather.com/weather/radar/interactive/l/"
 
-    var delegate: PreferencesWindowDelegate?
-    
     var weatherComTag = "USIL0828"
 
+    // Allow Command-W to close the window
+    override func keyDown(theEvent: (NSEvent!))
+    {
+        if theEvent.modifierFlags.contains(.CommandKeyMask) {
+            switch theEvent.charactersIgnoringModifiers! {
+            case "w":
+                self.window?.close()
+            default:
+                break
+            }
+        }
+    }
+    
     override func windowDidLoad() {
         super.windowDidLoad()
 
@@ -61,8 +72,6 @@ class RadarWindow: NSWindowController, NSWindowDelegate {
             comment:"Radar")
         radarDisplayWebView.mainFrame.loadRequest(NSURLRequest(URL: NSURL(string: ourURL)!))
         
-        NSApp.activateIgnoringOtherApps(true)
-
     }
     
     override var windowNibName : String! {
@@ -81,4 +90,4 @@ class RadarWindow: NSWindowController, NSWindowDelegate {
         
     } // radarDisplay
 
-}
+} // class RadarWindow

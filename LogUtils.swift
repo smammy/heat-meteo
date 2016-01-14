@@ -110,4 +110,4 @@ func SetCustomLogFilename(name: String) {
             }
         }
     }
-}
+} // SetCustomLogFilename
