@@ -36,6 +36,9 @@
 // http://www.worldweatheronline.com/api/local-city-town-weather-api.aspx
 // http://www.programmableweb.com/news/top-10-weather-apis/analysis/2014/11/13
 //
+// Preferences have been cached since 10.9
+// https://forums.developer.apple.com/message/65946#65946
+// killall -u $USER cfprefsd
 
 import Cocoa
 import WebKit
@@ -43,7 +46,7 @@ import WebKit
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "a50"
+let DEFAULT_PREFERENCE_VERSION = "2.0.0"
 
 struct WeatherFields {
     
@@ -301,12 +304,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
+        NSURLCache.sharedURLCache().removeAllCachedResponses()
+        NSURLCache.sharedURLCache().diskCapacity = 0
+        NSURLCache.sharedURLCache().memoryCapacity = 0
+        
         var webVERSION = ""
         let newVersion = defaults.stringForKey("newVersion")
         var whatChanged = ""
         if ((newVersion != nil) && (newVersion! == "1")) {
             // Check for updates
-            if let url = NSURL(string: "http://www.danleys.org/" + "VERSION") {
+            if let url = NSURL(string: "http://heat-meteo.sourceforge.net/" + "VERSION2") {
                 do {
                     webVERSION = try NSString(contentsOfURL: url, usedEncoding: nil) as String
                 } catch {
@@ -321,7 +328,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             
             if ((version != webVERSION) && (webVERSION != "")) {
                 // New version!
-                if let url = NSURL(string: "http://www.danleys.org/" + "CHANGELOG") {
+                if let url = NSURL(string: "http://heat-meteo.sourceforge.net/" + "CHANGELOG2") {
                     do {
                         whatChanged = try NSString(contentsOfURL: url, usedEncoding: nil) as String
                     } catch {
@@ -346,13 +353,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                     comment:"Cancel"))
                 let res = myPopup.runModal()
                 if res == NSAlertFirstButtonReturn {
-                    //let myUrl = "http://heat-meteo.sourceforge.net"
-                    let myUrl = "http://www.danleys.org/Meteo2.zip"
+                    let myUrl = "http://heat-meteo.sourceforge.net"
                     
                     if let checkURL = NSURL(string: myUrl as String) {
                         if NSWorkspace.sharedWorkspace().openURL(checkURL) {
                             //print("URL successfully opened:", myUrl, terminator: "\n")
-                            
+                            exit(0)
                         }
                     } else {
                         //print("Invalid URL:", myUrl, terminator: "\n")
@@ -361,11 +367,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             }
         }
         
+        defaultPreferences()
         initWindowPrefs()
-        
-        var theCityImage = NSImage()
-        //theCityImage = NSApp.applicationIconImage
-        theCityImage = NSImage(named: "Loading-1")!
         
         //Add statusBarItem
         statusBarItem = statusBar.statusItemWithLength(-1)
@@ -379,7 +382,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
         menu.font = font
         statusBarItem.menu = menu
-        statusBarItem.image = theCityImage
+        statusBarItem.image = NSImage(named: "Loading-1")!
         
         m = (14 as NSNumber)
         font = NSFont(name: "Tahoma", size: 14)
@@ -414,10 +417,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         menu.addItem(newItem)
         
         addControlOptions()
-        
+        //let preferenceVersion = defaults.stringForKey("preferenceVersion")
         let preferenceVersion = defaults.stringForKey("preferenceVersion")
+        //var preferenceVersion = defaults.stringForKey("preferenceVersion")
+        //preferenceVersion! = ""
         if ((preferenceVersion == nil) || (preferenceVersion! != DEFAULT_PREFERENCE_VERSION)) {
-            self.window!.orderOut(self)
+            //self.window!.orderOut(self)
             self.window!.makeKeyAndOrderFront(self.window!)
             NSApp.activateIgnoringOtherApps(true)
             updateWeather()
@@ -767,7 +772,61 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
     } // openWeatherURL
     
+    func testAndSet(key:String, defaultValue:String) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let d = defaults.stringForKey(key)
+        if (d == nil) {
+            defaults.setValue(defaultValue, forKey: key)
+        }
+    } // testAndSet
+    
+    func defaultPreferences() {
+        
+        testAndSet("weatherSource", defaultValue: YAHOO_WEATHER)
+        
+        testAndSet("city", defaultValue: DEFAULT_CITY)
+        testAndSet("city2", defaultValue: "")
+        testAndSet("city3", defaultValue: "")
+        testAndSet("city4", defaultValue: "")
+        testAndSet("city5", defaultValue: "")
+        testAndSet("city6", defaultValue: "")
+        testAndSet("city7", defaultValue: "")
+        testAndSet("city8", defaultValue: "")
+        testAndSet("displayCity", defaultValue: "")
+        testAndSet("displayCity2", defaultValue: "")
+        testAndSet("displayCity3", defaultValue: "")
+        testAndSet("displayCity4", defaultValue: "")
+        testAndSet("displayCity5", defaultValue: "")
+        testAndSet("displayCity6", defaultValue: "")
+        testAndSet("displayCity7", defaultValue: "")
+        testAndSet("displayCity8", defaultValue: "")
+        
+        testAndSet("updateFrequency", defaultValue: DEFAULT_INTERVAL)
+        testAndSet("controlsInSubmenu", defaultValue: "1")
+        testAndSet("displayHumidity", defaultValue: "1")
+        testAndSet("displayDegreeType", defaultValue: "1")
+        testAndSet("displayWeatherIcon", defaultValue: "1")
+        testAndSet("displayCityName", defaultValue: "1")
+        testAndSet("currentWeatherInSubmenu", defaultValue: "1")
+        testAndSet("viewExtendedForecast", defaultValue: "1")
+        testAndSet("extendedForecastSingleLine", defaultValue: "1")
+        testAndSet("extendedForecastInSubmenu", defaultValue: "1")
+        testAndSet("extendedForecastIcons", defaultValue: "1")
+        testAndSet("newVersion", defaultValue: "1")
+        testAndSet("logMessages", defaultValue: "0")
+
+        testAndSet("degreesUnit", defaultValue: "0")
+        testAndSet("distanceUnit", defaultValue: "0")
+        testAndSet("speedUnit", defaultValue: "0")
+        testAndSet("pressureUnit", defaultValue: "0")
+        testAndSet("directionUnit", defaultValue: "0")
+        
+        testAndSet("preferenceVersion", defaultValue: DEFAULT_PREFERENCE_VERSION)
+
+    } // defaultPreferences
+    
     func initWindowPrefs() {
+        
         initDisplay()
         
         modalDisplay.setFont("font")

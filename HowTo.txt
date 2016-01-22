@@ -10,15 +10,17 @@ To build a production release using Xcode 3:
 ¥ Use SVN to update the project (see below).
 ¥ Run build_dmg.sh. This will create Meteorologist-v.r.m.dmg in the build folder using the pieces above.
 
-¥ Go to https://sourceforge.net/projects/heat-meteo/ and navigate to Project Admin/File Manager.
+¥ Go to https://sourceforge.net/projects/heat-meteo/ and navigate to Files.
 ¥ Create a new folder under Meteo called Meteo v.r.m.
 ¥ Upload the Meteorologist-v.r.m.dmg file (from the build directory) and a README.txt (from the base directory) file.
 ¥ Select the Meteorologist-v.r.m.dmg file and mark it as the default download for Platform: Mac (OS X)
 ¥ Select the README.txt file and click on the Release note checkbox.
 
-¥ Open sftp <yourid>,heat-meteo@web.sourceforge.net
+¥ Open sftp <yourid>,heat-meteo@web.sourceforge.net (/home/project-web/heat-meteo/htdocs)
 ¥ Update version.xml
 ¥ Update index.html
+* Update CHANGELOG2
+* Update VERSION2
 
 Quit and restart your copy of Meteo to make sure everything is looking OK.
 

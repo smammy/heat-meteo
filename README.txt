@@ -1,12 +1,16 @@
 This file could also be called the change log.
 
 v2.0.0
-- Complete re-write into Swift 2. Now requires at least 10.9. Some portions even newer OS's.
-- Weather information is based
--   Yahoo! XML weather feed.
--   OpenWeatherMap.org weather feed.
-- Only support MenuBar mode, no native application menus
+- A whole new Meteorologist
+- Rewritten in Swift for modern OS's
+- Requires 10.9 or greater
+- No longer screen scrapes, uses published XML interfaces
+- XML Weather data from Yahoo!
+- XML Weather data from OpenWeatherMap
+- Sorry you will need to start your list of cities all over
+- Menubar only, no dock support
 - Based on Xcode 7
+
 
 v1.6.1
 - INTEL Only!!!! No more PPC.

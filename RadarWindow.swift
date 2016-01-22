@@ -1,6 +1,6 @@
 //
 //  RadarWindow.swift
-//  Meteo2
+//  Meteorologist
 //
 //  Swift code written by Ed Danley on 9/19/15.
 //  Copyright © 2015 The Meteorologist Group, LLC. All rights reserved.

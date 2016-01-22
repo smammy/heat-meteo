@@ -1,6 +1,6 @@
 //
 //  LogUtils.swift
-//  Meteo2
+//  Meteorologist
 //
 //  Created by Ed Danley on 11/15/15.
 //  Copyright © 2015 The Meteorologist Group, LLC. All rights reserved.

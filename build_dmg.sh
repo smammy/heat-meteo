@@ -1,21 +1,22 @@
 #!/bin/bash
-set -e
-set -x
+#set -e
+#set -x
 
 TEMPLATE_DMG=dist/template.dmg
 
 # "working copy" names for the intermediate dmgs
 WC_DMG=wc.dmg
-WC_DIR=wc
-VERSION=`cat VERSION`
+WC_DIR=/Volumes/Meteorologist
+VERSION=`cat VERSION2`
 SOURCE_FILES="build/Release/Meteorologist.app dist/Readme.rtf"
 MASTER_DMG="build/Meteorologist-${VERSION}.dmg"
+
+rm -rf ./build
+
 echo ""
 echo "------------------------ Building Project -----------------------"
 echo ""
-#xcodebuild -configuration Release
-#rm  -rf build/Release/Meteorologist.app
-#mv build/Release/Meteo2.app build/Release/Meteorologist.app
+xcodebuild -configuration Release
 
 if [ ! -f "${TEMPLATE_DMG}" ]
 then
@@ -27,11 +28,12 @@ echo ""
 echo "------------------------ Copying to Disk Image -----------------------"
 echo ""
 echo "unpacking dmg template"
-mkdir -p "${WC_DIR}"
-hdiutil attach "${WC_DMG}" -noautoopen -quiet -mountpoint "${WC_DIR}"
+
+hdiutil attach "${WC_DMG}" -noautoopen
+
 for i in ${SOURCE_FILES}; do
     echo "copying $i"
-	rm -rf "${WC_DIR}/$i";
+	rm -rf "${WC_DIR}/$(basename $i)";
 	cp -pr $i ${WC_DIR}/;
 done
 

@@ -1,5 +1,0 @@
-2.0.0.a50
-* First off, this is a significant (internal) change. Save your old copy "just in case"
-* Internally some rework was some to improve the code
-* Externally, allow font to be colored
-* Externally, allow Command-W to close Preference Window

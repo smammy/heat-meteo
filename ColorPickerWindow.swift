@@ -1,6 +1,6 @@
 //
 //  ColorPickerWindow.swift
-//  Meteo2
+//  Meteorologist
 //
 //  Swift code written by Ed Danley on 9/19/15.
 //  Copyright © 2015 The Meteorologist Group, LLC. All rights reserved.
@@ -136,14 +136,44 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
         
     } // saveDefaults
     
+    func isDarkMode() ->Bool {
+
+        // Note that this only works for target=10.10
+        
+        let interfaceValue:CFString = "AppleInterfaceStyle" as CFString
+        let property:CFPropertyList? = CFPreferencesCopyValue(interfaceValue, kCFPreferencesAnyApplication, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost)
+        
+        if let light:CFPropertyList = property{
+            if light as! NSString == "Light"{
+                return false
+                //return currentInterface.light
+            }
+            else{
+                return true
+                //return currentInterface.dark
+            }
+        }
+        else{
+            return false
+            //return currentInterface.light
+        }
+    }
+
     func ResetButton() {
         
         fontName.selectItemWithTitle("Tahoma")
         fontSize.selectItemWithTitle("14")
         
-        redTextSlider.doubleValue = 0
-        greenTextSlider.doubleValue = 0
-        blueTextSlider.doubleValue = 0
+        // http://stackoverflow.com/questions/32213334/how-can-i-read-the-user-selection-for-os-x-menu-bar-in-xcode-swift
+        if (isDarkMode()) {
+            redTextSlider.doubleValue = 255
+            greenTextSlider.doubleValue = 255
+            blueTextSlider.doubleValue = 255
+        } else {
+            redTextSlider.doubleValue = 0
+            greenTextSlider.doubleValue = 0
+            blueTextSlider.doubleValue = 0
+        }
         
         redBackgroundSlider.doubleValue = 255
         greenBackgroundSlider.doubleValue = 255
