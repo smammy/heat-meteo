@@ -34,6 +34,7 @@ hdiutil attach "${WC_DMG}" -noautoopen
 for i in ${SOURCE_FILES}; do
     echo "copying $i"
 	rm -rf "${WC_DIR}/$(basename $i)";
+	# read -p "Press [Enter] to continue..."
 	cp -pr $i ${WC_DIR}/;
 done
 
