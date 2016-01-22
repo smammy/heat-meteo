@@ -1,0 +1,327 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6480B10E1C43123900E55BE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480B10D1C43123900E55BE2 /* AppDelegate.swift */; };
+		6480B1101C43123900E55BE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6480B10F1C43123900E55BE2 /* Assets.xcassets */; };
+		6480B1131C43123900E55BE2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6480B1111C43123900E55BE2 /* MainMenu.xib */; };
+		6480B11C1C43172800E55BE2 /* ColorPickerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480B11A1C43172800E55BE2 /* ColorPickerWindow.swift */; };
+		6480B11D1C43172800E55BE2 /* ColorPickerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6480B11B1C43172800E55BE2 /* ColorPickerWindow.xib */; };
+		6480B11F1C43238000E55BE2 /* LogUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480B11E1C43238000E55BE2 /* LogUtils.swift */; };
+		6480B1221C43239E00E55BE2 /* OpenWeatherMapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480B1201C43239E00E55BE2 /* OpenWeatherMapAPI.swift */; };
+		6480B1231C43239E00E55BE2 /* YahooWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480B1211C43239E00E55BE2 /* YahooWeatherAPI.swift */; };
+		6480B1261C4323E100E55BE2 /* RadarWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6480B1241C4323E100E55BE2 /* RadarWindow.xib */; };
+		6480B1271C4323E100E55BE2 /* RadarWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480B1251C4323E100E55BE2 /* RadarWindow.swift */; };
+		6480B12C1C43243A00E55BE2 /* CHANGELOG2 in Resources */ = {isa = PBXBuildFile; fileRef = 6480B1281C43243A00E55BE2 /* CHANGELOG2 */; };
+		6480B12D1C43243A00E55BE2 /* readme.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 6480B1291C43243A00E55BE2 /* readme.rtf */; };
+		6480B12E1C43243A00E55BE2 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6480B12A1C43243A00E55BE2 /* README.txt */; };
+		6480B12F1C43243A00E55BE2 /* VERSION2 in Resources */ = {isa = PBXBuildFile; fileRef = 6480B12B1C43243A00E55BE2 /* VERSION2 */; };
+		6480B1311C43244800E55BE2 /* HowTo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6480B1301C43244800E55BE2 /* HowTo.txt */; };
+		6480B1331C43265100E55BE2 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 6480B1321C43265100E55BE2 /* images */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6480B10A1C43123900E55BE2 /* Meteorologist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meteorologist.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6480B10D1C43123900E55BE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ./AppDelegate.swift; sourceTree = "<group>"; };
+		6480B10F1C43123900E55BE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ./Assets.xcassets; sourceTree = "<group>"; };
+		6480B1121C43123900E55BE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		6480B1141C43123900E55BE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ./Info.plist; sourceTree = "<group>"; };
+		6480B11A1C43172800E55BE2 /* ColorPickerWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorPickerWindow.swift; path = ./ColorPickerWindow.swift; sourceTree = "<group>"; };
+		6480B11B1C43172800E55BE2 /* ColorPickerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColorPickerWindow.xib; path = ./ColorPickerWindow.xib; sourceTree = "<group>"; };
+		6480B11E1C43238000E55BE2 /* LogUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogUtils.swift; path = ./LogUtils.swift; sourceTree = "<group>"; };
+		6480B1201C43239E00E55BE2 /* OpenWeatherMapAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenWeatherMapAPI.swift; path = ./OpenWeatherMapAPI.swift; sourceTree = "<group>"; };
+		6480B1211C43239E00E55BE2 /* YahooWeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YahooWeatherAPI.swift; path = ./YahooWeatherAPI.swift; sourceTree = "<group>"; };
+		6480B1241C4323E100E55BE2 /* RadarWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RadarWindow.xib; path = ./RadarWindow.xib; sourceTree = "<group>"; };
+		6480B1251C4323E100E55BE2 /* RadarWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RadarWindow.swift; path = ./RadarWindow.swift; sourceTree = "<group>"; };
+		6480B1281C43243A00E55BE2 /* CHANGELOG2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG2; sourceTree = "<group>"; };
+		6480B1291C43243A00E55BE2 /* readme.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = readme.rtf; path = ./readme.rtf; sourceTree = "<group>"; };
+		6480B12A1C43243A00E55BE2 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.txt; path = ./README.txt; sourceTree = "<group>"; };
+		6480B12B1C43243A00E55BE2 /* VERSION2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VERSION2; sourceTree = "<group>"; };
+		6480B1301C43244800E55BE2 /* HowTo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = HowTo.txt; path = ./HowTo.txt; sourceTree = "<group>"; };
+		6480B1321C43265100E55BE2 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ./images; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6480B1071C43123900E55BE2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6480B1011C43123900E55BE2 = {
+			isa = PBXGroup;
+			children = (
+				6480B1321C43265100E55BE2 /* images */,
+				6480B10F1C43123900E55BE2 /* Assets.xcassets */,
+				6480B10D1C43123900E55BE2 /* AppDelegate.swift */,
+				6480B1111C43123900E55BE2 /* MainMenu.xib */,
+				6480B11E1C43238000E55BE2 /* LogUtils.swift */,
+				6480B1201C43239E00E55BE2 /* OpenWeatherMapAPI.swift */,
+				6480B1211C43239E00E55BE2 /* YahooWeatherAPI.swift */,
+				6480B11A1C43172800E55BE2 /* ColorPickerWindow.swift */,
+				6480B11B1C43172800E55BE2 /* ColorPickerWindow.xib */,
+				6480B1251C4323E100E55BE2 /* RadarWindow.swift */,
+				6480B1241C4323E100E55BE2 /* RadarWindow.xib */,
+				6480B1141C43123900E55BE2 /* Info.plist */,
+				6480B1301C43244800E55BE2 /* HowTo.txt */,
+				6480B1291C43243A00E55BE2 /* readme.rtf */,
+				6480B12A1C43243A00E55BE2 /* README.txt */,
+				6480B12B1C43243A00E55BE2 /* VERSION2 */,
+				6480B1281C43243A00E55BE2 /* CHANGELOG2 */,
+				6480B10B1C43123900E55BE2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6480B10B1C43123900E55BE2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6480B10A1C43123900E55BE2 /* Meteorologist.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6480B1091C43123900E55BE2 /* Meteorologist */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6480B1171C43123900E55BE2 /* Build configuration list for PBXNativeTarget "Meteorologist" */;
+			buildPhases = (
+				6480B1061C43123900E55BE2 /* Sources */,
+				6480B1071C43123900E55BE2 /* Frameworks */,
+				6480B1081C43123900E55BE2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Meteorologist;
+			productName = Meteorologist;
+			productReference = 6480B10A1C43123900E55BE2 /* Meteorologist.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6480B1021C43123900E55BE2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "The Meteorologist Group, LLC";
+				TargetAttributes = {
+					6480B1091C43123900E55BE2 = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 7WNRPT262U;
+					};
+				};
+			};
+			buildConfigurationList = 6480B1051C43123900E55BE2 /* Build configuration list for PBXProject "Meteorologist" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6480B1011C43123900E55BE2;
+			productRefGroup = 6480B10B1C43123900E55BE2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6480B1091C43123900E55BE2 /* Meteorologist */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6480B1081C43123900E55BE2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6480B1331C43265100E55BE2 /* images in Resources */,
+				6480B12D1C43243A00E55BE2 /* readme.rtf in Resources */,
+				6480B11D1C43172800E55BE2 /* ColorPickerWindow.xib in Resources */,
+				6480B1101C43123900E55BE2 /* Assets.xcassets in Resources */,
+				6480B1261C4323E100E55BE2 /* RadarWindow.xib in Resources */,
+				6480B1131C43123900E55BE2 /* MainMenu.xib in Resources */,
+				6480B12F1C43243A00E55BE2 /* VERSION2 in Resources */,
+				6480B12E1C43243A00E55BE2 /* README.txt in Resources */,
+				6480B12C1C43243A00E55BE2 /* CHANGELOG2 in Resources */,
+				6480B1311C43244800E55BE2 /* HowTo.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6480B1061C43123900E55BE2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6480B1221C43239E00E55BE2 /* OpenWeatherMapAPI.swift in Sources */,
+				6480B11F1C43238000E55BE2 /* LogUtils.swift in Sources */,
+				6480B10E1C43123900E55BE2 /* AppDelegate.swift in Sources */,
+				6480B11C1C43172800E55BE2 /* ColorPickerWindow.swift in Sources */,
+				6480B1271C4323E100E55BE2 /* RadarWindow.swift in Sources */,
+				6480B1231C43239E00E55BE2 /* YahooWeatherAPI.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		6480B1111C43123900E55BE2 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6480B1121C43123900E55BE2 /* Base */,
+			);
+			name = MainMenu.xib;
+			path = Meteorologist;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6480B1151C43123900E55BE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6480B1161C43123900E55BE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		6480B1181C43123900E55BE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = ./Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heat.Meteorologist;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		6480B1191C43123900E55BE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = ./Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heat.Meteorologist;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6480B1051C43123900E55BE2 /* Build configuration list for PBXProject "Meteorologist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6480B1151C43123900E55BE2 /* Debug */,
+				6480B1161C43123900E55BE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6480B1171C43123900E55BE2 /* Build configuration list for PBXNativeTarget "Meteorologist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6480B1181C43123900E55BE2 /* Debug */,
+				6480B1191C43123900E55BE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6480B1021C43123900E55BE2 /* Project object */;
+}
