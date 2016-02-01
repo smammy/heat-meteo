@@ -1,10 +1,4 @@
-2.0.0
-* A whole new Meteorologist
-* Rewritten in Swift for modern OS's
-* Requires 10.9 or greater
-* No longer screen scrapes, uses published XML interfaces
-* XML Weather data from Yahoo!
-* XML Weather data from OpenWeatherMap
-* Sorry you will need to start your list of cities all over
-* Menubar only, no dock support
-* Based on Xcode 7
+2.0.1
+* Ability to select System Font
+* System Font is now the default font
+* Change default font size to 15

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ColorPickerWindow" customModule="Meteo2" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="ColorPickerWindow" customModule="Meteorologist" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundLabel" destination="Hj6-5i-AlA" id="QiQ-mJ-v2V"/>
                 <outlet property="blueBackgroundLabel" destination="YPV-Fc-oKu" id="Mpg-bh-cyO"/>
                 <outlet property="blueBackgroundSlider" destination="zMh-MX-GUN" id="AUv-pQ-lmI"/>
                 <outlet property="blueTextLabel" destination="TpT-Wh-h9b" id="bc4-aX-bqs"/>
                 <outlet property="blueTextSlider" destination="pdu-xf-yLg" id="hpf-vU-jk3"/>
-                <outlet property="closeButton" destination="Y6a-rt-LrZ" id="aaw-Xb-ron"/>
+                <outlet property="closeButton" destination="Y6a-rt-LrZ" id="AWN-LF-8ke"/>
                 <outlet property="fontName" destination="rhl-pP-tHh" id="tr9-1k-XO7"/>
                 <outlet property="fontSize" destination="MAS-ek-Qez" id="IAx-HD-qLt"/>
                 <outlet property="greenBackgroundLabel" destination="Cxe-RY-XwA" id="vqo-t3-i5t"/>
@@ -25,6 +25,7 @@
                 <outlet property="redTextLabel" destination="9kQ-gr-ztj" id="kAy-jT-oD8"/>
                 <outlet property="redTextSlider" destination="2MG-Jh-r4J" id="f7s-bg-REk"/>
                 <outlet property="resetButton" destination="waA-OO-MZL" id="00g-97-X2B"/>
+                <outlet property="systemFontButton" destination="xTv-ih-Qjp" id="3vi-nh-7MV"/>
                 <outlet property="textLabel" destination="Zbj-6R-Zmr" id="t0y-fe-vkc"/>
                 <outlet property="transparentButton" destination="Fdj-mA-Is6" id="BF6-U5-gpX"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
@@ -35,12 +36,22 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="306" height="360"/>
+            <rect key="contentRect" x="196" y="240" width="306" height="406"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="306" height="360"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <rect key="frame" x="0.0" y="0.0" width="306" height="406"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xTv-ih-Qjp" userLabel="System Font">
+                        <rect key="frame" x="18" y="363" width="139" height="25"/>
+                        <buttonCell key="cell" type="check" title="System Font_" bezelStyle="regularSquare" imagePosition="right" alignment="right" inset="2" id="6GZ-LR-aES">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="SystemFontButtonPressed:" target="-2" id="TGE-Oq-ElP"/>
+                        </connections>
+                    </button>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rhl-pP-tHh" userLabel="MenuFontName">
                         <rect key="frame" x="18" y="316" width="210" height="26"/>
                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="RXO-Ce-VUK" userLabel="NSFont">
@@ -54,7 +65,7 @@
                     </popUpButton>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MAS-ek-Qez" userLabel="MenuFontSize">
                         <rect key="frame" x="231" y="316" width="58" height="26"/>
-                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="zRr-rq-zgC" userLabel="NSFont">
+                        <popUpButtonCell key="cell" type="push" title="14" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="cpz-hh-2E2" id="zRr-rq-zgC" userLabel="NSFont">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="UO3-AC-ZP6">
@@ -67,7 +78,7 @@
                                     <menuItem title="11" id="jh9-Lc-Kio" userLabel="11"/>
                                     <menuItem title="12" id="b8p-wW-Euq" userLabel="12"/>
                                     <menuItem title="13" id="lW5-gg-xrp" userLabel="13"/>
-                                    <menuItem title="14" id="cpz-hh-2E2" userLabel="14"/>
+                                    <menuItem title="14" state="on" id="cpz-hh-2E2" userLabel="14"/>
                                     <menuItem title="15" id="zqI-hA-7cN" userLabel="15"/>
                                     <menuItem title="16" id="pNj-Gb-edv" userLabel="16"/>
                                     <menuItem title="17" id="Gif-qt-tN7" userLabel="17"/>
@@ -234,6 +245,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
+            <point key="canvasLocation" x="288" y="423"/>
         </window>
     </objects>
 </document>

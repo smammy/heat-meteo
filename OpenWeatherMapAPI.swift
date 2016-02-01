@@ -476,20 +476,20 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         }
         if (defaults.stringForKey("speedUnit")! == "0") {
             formattedWindSpeed += speed + " " + NSLocalizedString("MPH_", // Unique key of your choice
-                value:"MPH", // Default (English) text
-                comment:"Miles Per Hour")
+                value:"mph", // Default (English) text
+                comment:"miles per hour")
         } else if (defaults.stringForKey("speedUnit")! == "1") {
-            formattedWindSpeed += String(Int((speed as NSString).doubleValue * 1.6094)) + " " + NSLocalizedString("KPH_", // Unique key of your choice
-                value:"KPH", // Default (English) text
-                comment:"Kilometers Per Second")
+            formattedWindSpeed += String(Int((speed as NSString).doubleValue * 1.6094)) + " " + NSLocalizedString("km/h_", // Unique key of your choice
+                value:"km/h", // Default (English) text
+                comment:"kilometer per hour")
         } else if (defaults.stringForKey("speedUnit")! == "2") {
-            formattedWindSpeed += String(Int((speed as NSString).doubleValue * 0.44704)) + " " + NSLocalizedString("MPS_", // Unique key of your choice
-                value:"MPS", // Default (English) text
-                comment:"Meters Per Second")
+            formattedWindSpeed += String(Int((speed as NSString).doubleValue * 0.44704)) + " " + NSLocalizedString("m/s_", // Unique key of your choice
+                value:"m/s", // Default (English) text
+                comment:"meters per second")
         } else if (defaults.stringForKey("speedUnit")! == "3") {
             formattedWindSpeed += String(Int((speed as NSString).doubleValue * 1.15077944802)) + " " + NSLocalizedString("Knots_", // Unique key of your choice
-                value:"Knots", // Default (English) text
-                comment:"Knots")
+                value:"knots", // Default (English) text
+                comment:"knots")
         }
         return formattedWindSpeed
     } // formatWindSpeed
@@ -500,21 +500,21 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         let pressure = String(format: "%.2f", (pressure2 as NSString).doubleValue / 33.8637526)
         if (defaults.stringForKey("pressureUnit")! == "0") {
             formattedPressure += pressure + " " + NSLocalizedString("Inches_", // Unique key of your choice
-                value:"Inches", // Default (English) text
-                comment:"Inches")
+                value:"inches", // Default (English) text
+                comment:"inches")
         } else if (defaults.stringForKey("pressureUnit")! == "1") {
             formattedPressure += String(Int((pressure as NSString).doubleValue * 33.8637526)) + " " + NSLocalizedString("mb_", // Unique key of your choice
-                value:"mb", // Default (English) text
-                comment:"Millibars")
+                value:"mbar", // Default (English) text
+                comment:"millibars")
         } else if (defaults.stringForKey("pressureUnit")! == "2") {
-            formattedPressure += String(Int((pressure as NSString).doubleValue * 3.39)) + " " + NSLocalizedString("kp_", // Unique key of your choice
-                value:"Kb", // Default (English) text
-                comment:"KiloPascals")
+            formattedPressure += String(Int((pressure as NSString).doubleValue * 3.39)) + " " + NSLocalizedString("kPa_", // Unique key of your choice
+                value:"kPa", // Default (English) text
+                comment:"kiloPascal")
         } else if (defaults.stringForKey("pressureUnit")! == "3") {
             // Meters/second
-            formattedPressure += String(Int((pressure as NSString).doubleValue * 33.8637526)) + " " + NSLocalizedString("hp_", // Unique key of your choice
-                value:"hp", // Default (English) text
-                comment:"HectorPascals")
+            formattedPressure += String(Int((pressure as NSString).doubleValue * 33.8637526)) + " " + NSLocalizedString("hPa_", // Unique key of your choice
+                value:"hPa", // Default (English) text
+                comment:"hectoPascal")
         }
         return formattedPressure
     } // formatPressure
@@ -524,21 +524,21 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         var formattedVisibility = ""
         if (defaults.stringForKey("distanceUnit")! == "0") {
             formattedVisibility += distance + " " + NSLocalizedString("Miles_", // Unique key of your choice
-                value:"Miles", // Default (English) text
+                value:"miles", // Default (English) text
                 comment:"Miles (disance)")
         } else if (defaults.stringForKey("distanceUnit")! == "1") {
-            formattedVisibility += String(Int((distance as NSString).doubleValue * 5280.0)) + " " + NSLocalizedString("Ft_", // Unique key of your choice
-                value:"Feet", // Default (English) text
+            formattedVisibility += String(Int((distance as NSString).doubleValue * 5280.0)) + " " + NSLocalizedString("feet_", // Unique key of your choice
+                value:"feet", // Default (English) text
                 comment:"Feet (disance)")
         } else if (defaults.stringForKey("distanceUnit")! == "2") {
-            formattedVisibility += String(Int((distance as NSString).doubleValue * 0.621371192237)) + " " + NSLocalizedString("km_", // Unique key of your choice
-                value:"KiloMeters", // Default (English) text
-                comment:"KiloMeters (disance)")
+            formattedVisibility += String(Int((distance as NSString).doubleValue * 0.621371192237)) + " " + NSLocalizedString("kilometers_", // Unique key of your choice
+                value:"kilometers", // Default (English) text
+                comment:"kilometers (disance)")
         } else if (defaults.stringForKey("distanceUnit")! == "3") {
-            // Meters/second
-            formattedVisibility += String(Int((distance as NSString).doubleValue * 0.000621371192237)) + " " + NSLocalizedString("m_", // Unique key of your choice
-                value:"Meters", // Default (English) text
-                comment:"Meters (disance)")
+            // Meters
+            formattedVisibility += String(Int((distance as NSString).doubleValue * 621.371192237)) + " " + NSLocalizedString("meters_", // Unique key of your choice
+                value:"meters", // Default (English) text
+                comment:"meters (disance)")
         } else {
             // Knots
         }
@@ -558,39 +558,54 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         }
     } // extendedWeatherIcon
     
+    // Same function found in AppDelegate and the weather routines
+    // except AppDelgate also has the routine for defining the fonts
     func myMenuItem(string: String, url: String?, key: String) ->NSMenuItem {
         
         var newItem : NSMenuItem
         let defaults = NSUserDefaults.standardUserDefaults()
-        
-        let textColor = NSColor(red: CGFloat(Float(defaults.stringForKey("fontRedText")!)!),
-            green: CGFloat(Float(defaults.stringForKey("fontGreenText")!)!),
-            blue: CGFloat(Float(defaults.stringForKey("fontBlueText")!)!),
-            alpha: 1.0)
-        
         let attributedTitle: NSMutableAttributedString
-        if (defaults.stringForKey("fontTransparency")! == "1") {
-            attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
-                string,
-                attributes:[NSFontAttributeName : NSFont(name: defaults.stringForKey("font")!, size: CGFloat(Float(NSNumberFormatter().numberFromString(defaults.stringForKey("fontsize")!)!)))!,
-                    NSForegroundColorAttributeName : textColor]))
-        } else {
-            let backgroundColor = NSColor(
-                red: CGFloat(Float(defaults.stringForKey("fontRedBackground")!)!),
-                green: CGFloat(Float(defaults.stringForKey("fontGreenBackground")!)!),
-                blue: CGFloat(Float(defaults.stringForKey("fontBlueBackground")!)!), alpha: 1.0)
-            
-            attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
-                string,
-                attributes:[NSFontAttributeName : NSFont(name: defaults.stringForKey("font")!, size: CGFloat(Float(NSNumberFormatter().numberFromString(defaults.stringForKey("fontsize")!)!)))!,
-                    NSForegroundColorAttributeName : textColor,
-                    NSBackgroundColorAttributeName : backgroundColor]))
-        }
+        
+        //if (defaults.stringForKey("fontRedText") == nil) {
+        //    modalDisplay.setFont("font")
+        //    modalDisplay.initPrefs()
+        //}
+        
+        let m = NSNumberFormatter().numberFromString(defaults.stringForKey("fontsize")!)!
         
         if (url == nil) {
             newItem = NSMenuItem(title: "", action: nil, keyEquivalent: key)
         } else {
             newItem = NSMenuItem(title: "", action: Selector(url!), keyEquivalent: key)
+        }
+        
+        if (defaults.stringForKey("fontDefault") == "1") {
+            attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                string,
+                attributes:[NSFontAttributeName : NSFont.systemFontOfSize(CGFloat(m))]))
+        } else {
+            let textColor = NSColor(red: CGFloat(Float(defaults.stringForKey("fontRedText")!)!),
+                green: CGFloat(Float(defaults.stringForKey("fontGreenText")!)!),
+                blue: CGFloat(Float(defaults.stringForKey("fontBlueText")!)!),
+                alpha: 1.0)
+            
+            if (defaults.stringForKey("fontTransparency")! == "1") {
+                attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                    string,
+                    attributes:[NSFontAttributeName : NSFont(name: defaults.stringForKey("font")!, size: CGFloat(m))!,
+                        NSForegroundColorAttributeName : textColor]))
+            } else {
+                let backgroundColor = NSColor(
+                    red: CGFloat(Float(defaults.stringForKey("fontRedBackground")!)!),
+                    green: CGFloat(Float(defaults.stringForKey("fontGreenBackground")!)!),
+                    blue: CGFloat(Float(defaults.stringForKey("fontBlueBackground")!)!), alpha: 1.0)
+                
+                attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                    string,
+                    attributes:[NSFontAttributeName : NSFont(name: defaults.stringForKey("font")!, size: CGFloat(m))!,
+                        NSForegroundColorAttributeName : textColor,
+                        NSBackgroundColorAttributeName : backgroundColor]))
+            }
         }
         newItem.attributedTitle = attributedTitle
         newItem.target=self

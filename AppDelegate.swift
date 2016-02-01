@@ -46,7 +46,7 @@ import WebKit
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "2.0.0"
+let DEFAULT_PREFERENCE_VERSION = "2.0.1"
 
 struct WeatherFields {
     
@@ -373,23 +373,31 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         //Add statusBarItem
         statusBarItem = statusBar.statusItemWithLength(-1)
         
-        var m = (14 as NSNumber)
-        var font = NSFont(name: "Tahoma", size: 14)
+        var m = (15 as NSNumber)
+        var font = NSFont(name: "Tahoma", size: 15)
         if ((defaults.stringForKey("font") != nil) &&
             (defaults.stringForKey("fontsize") != nil)) {
                 m = NSNumberFormatter().numberFromString(defaults.stringForKey("fontsize")!)!
-                font = NSFont(name: defaults.stringForKey("font")!, size: CGFloat(m))
+                if (defaults.stringForKey("fontDefault") == "1") {
+                    font = NSFont.systemFontOfSize(CGFloat(m))
+                } else {
+                    font = NSFont(name: defaults.stringForKey("font")!, size: CGFloat(m))
+                }
         }
         menu.font = font
         statusBarItem.menu = menu
         statusBarItem.image = NSImage(named: "Loading-1")!
         
-        m = (14 as NSNumber)
-        font = NSFont(name: "Tahoma", size: 14)
+        m = (15 as NSNumber)
+        font = NSFont(name: "Tahoma", size: 15)
         if ((defaults.stringForKey("menuBarFont") != nil) &&
             (defaults.stringForKey("menuBarFontsize") != nil)) {
                 m = NSNumberFormatter().numberFromString(defaults.stringForKey("menuBarFontsize")!)!
-                font = NSFont(name: defaults.stringForKey("menuBarFont")!, size: CGFloat(m))
+                if (defaults.stringForKey("menuBarFontDefault") == "1") {
+                    font = NSFont.systemFontOfSize(CGFloat(m))
+                } else {
+                    font = NSFont(name: defaults.stringForKey("menuBarFont")!, size: CGFloat(m))
+                }
         }
         
         // Todo - Do we have a problem or not?
@@ -417,10 +425,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         menu.addItem(newItem)
         
         addControlOptions()
-        //let preferenceVersion = defaults.stringForKey("preferenceVersion")
         let preferenceVersion = defaults.stringForKey("preferenceVersion")
-        //var preferenceVersion = defaults.stringForKey("preferenceVersion")
-        //preferenceVersion! = ""
         if ((preferenceVersion == nil) || (preferenceVersion! != DEFAULT_PREFERENCE_VERSION)) {
             //self.window!.orderOut(self)
             self.window!.makeKeyAndOrderFront(self.window!)
@@ -432,44 +437,54 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         
     } // awakeFromNib
 
+    // Same function found in AppDelegate and the weather routines
+    // except AppDelgate also has the routine for defining the fonts
     func myMenuItem(string: String, url: String?, key: String) ->NSMenuItem {
         
         var newItem : NSMenuItem
         let defaults = NSUserDefaults.standardUserDefaults()
+        let attributedTitle: NSMutableAttributedString
         
         if (defaults.stringForKey("fontRedText") == nil) {
             modalDisplay.setFont("font")
             modalDisplay.initPrefs()
         }
         
-        let textColor = NSColor(red: CGFloat(Float(defaults.stringForKey("fontRedText")!)!),
-            green: CGFloat(Float(defaults.stringForKey("fontGreenText")!)!),
-            blue: CGFloat(Float(defaults.stringForKey("fontBlueText")!)!),
-            alpha: 1.0)
-        
-        let attributedTitle: NSMutableAttributedString
-        if (defaults.stringForKey("fontTransparency")! == "1") {
-            attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
-                string,
-                attributes:[NSFontAttributeName : NSFont(name: defaults.stringForKey("font")!, size: CGFloat(Float(NSNumberFormatter().numberFromString(defaults.stringForKey("fontsize")!)!)))!,
-                    NSForegroundColorAttributeName : textColor]))
-        } else {
-            let backgroundColor = NSColor(
-                red: CGFloat(Float(defaults.stringForKey("fontRedBackground")!)!),
-                green: CGFloat(Float(defaults.stringForKey("fontGreenBackground")!)!),
-                blue: CGFloat(Float(defaults.stringForKey("fontBlueBackground")!)!), alpha: 1.0)
+        let m = NSNumberFormatter().numberFromString(defaults.stringForKey("fontsize")!)!
 
-            attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
-                string,
-                attributes:[NSFontAttributeName : NSFont(name: defaults.stringForKey("font")!, size: CGFloat(Float(NSNumberFormatter().numberFromString(defaults.stringForKey("fontsize")!)!)))!,
-                    NSForegroundColorAttributeName : textColor,
-                    NSBackgroundColorAttributeName : backgroundColor]))
-        }
-        
         if (url == nil) {
             newItem = NSMenuItem(title: "", action: nil, keyEquivalent: key)
         } else {
             newItem = NSMenuItem(title: "", action: Selector(url!), keyEquivalent: key)
+        }
+
+        if (defaults.stringForKey("fontDefault") == "1") {
+            attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                string,
+                attributes:[NSFontAttributeName : NSFont.systemFontOfSize(CGFloat(m))]))
+        } else {
+            let textColor = NSColor(red: CGFloat(Float(defaults.stringForKey("fontRedText")!)!),
+                green: CGFloat(Float(defaults.stringForKey("fontGreenText")!)!),
+                blue: CGFloat(Float(defaults.stringForKey("fontBlueText")!)!),
+                alpha: 1.0)
+            
+            if (defaults.stringForKey("fontTransparency")! == "1") {
+                attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                    string,
+                    attributes:[NSFontAttributeName : NSFont(name: defaults.stringForKey("font")!, size: CGFloat(m))!,
+                       NSForegroundColorAttributeName : textColor]))
+            } else {
+                let backgroundColor = NSColor(
+                    red: CGFloat(Float(defaults.stringForKey("fontRedBackground")!)!),
+                    green: CGFloat(Float(defaults.stringForKey("fontGreenBackground")!)!),
+                    blue: CGFloat(Float(defaults.stringForKey("fontBlueBackground")!)!), alpha: 1.0)
+                
+                attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                    string,
+                    attributes:[NSFontAttributeName : NSFont(name: defaults.stringForKey("font")!, size: CGFloat(m))!,
+                        NSForegroundColorAttributeName : textColor,
+                        NSBackgroundColorAttributeName : backgroundColor]))
+            }
         }
         newItem.attributedTitle = attributedTitle
         newItem.target=self
@@ -540,12 +555,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let displayCity7 = defaults.stringForKey("displayCity7")!
         let displayCity8 = defaults.stringForKey("displayCity8")!
         
-        var m = (14 as NSNumber)
-        var font = NSFont(name: "Tahoma", size: 14)
+        var m = (15 as NSNumber)
+        var font = NSFont(name: "Tahoma", size: 15)
         if ((defaults.stringForKey("menuBarFont") != nil) &&
             (defaults.stringForKey("menuBarFontsize") != nil)) {
                 m = NSNumberFormatter().numberFromString(defaults.stringForKey("menuBarFontsize")!)!
-                font = NSFont(name: defaults.stringForKey("menuBarFont")!, size: CGFloat(m))
+                if (defaults.stringForKey("menuBarFontDefault") == "1") {
+                    font = NSFont.systemFontOfSize(CGFloat(m))
+                } else {
+                    font = NSFont(name: defaults.stringForKey("menuBarFont")!, size: CGFloat(m))
+                }
         }
         
         if (defaults.stringForKey("weatherSource")! == YAHOO_WEATHER) {
@@ -573,25 +592,31 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                     statusTitle = statusTitle + "/" + yahooWeatherAPI.formatHumidity((weatherFields.humidity as String))
                 }
                 
-                let textColor = NSColor(red: CGFloat(Float(defaults.stringForKey("menuBarFontRedText")!)!),
-                    green: CGFloat(Float(defaults.stringForKey("menuBarFontGreenText")!)!),
-                    blue: CGFloat(Float(defaults.stringForKey("menuBarFontBlueText")!)!), alpha: 1.0)
-                
-                if (defaults.stringForKey("menuBarFontTransparency")! == "1") {
+                if (defaults.stringForKey("menuBarFontDefault") == "1") {
                     statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                         statusTitle,
-                        attributes:[NSFontAttributeName : font!,
-                            NSForegroundColorAttributeName : textColor]))
+                        attributes:[NSFontAttributeName : font!]))
                 } else {
-                    let backgroundColor = NSColor(
-                        red: CGFloat(Float(defaults.stringForKey("menuBarFontRedBackground")!)!),
-                        green: CGFloat(Float(defaults.stringForKey("menuBarFontGreenBackground")!)!),
-                        blue: CGFloat(Float(defaults.stringForKey("menuBarFontBlueBackground")!)!), alpha: 1.0)
-                    statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
-                        statusTitle,
-                        attributes:[NSFontAttributeName : font!,
-                            NSForegroundColorAttributeName : textColor,
-                            NSBackgroundColorAttributeName : backgroundColor]))
+                    let textColor = NSColor(red: CGFloat(Float(defaults.stringForKey("menuBarFontRedText")!)!),
+                        green: CGFloat(Float(defaults.stringForKey("menuBarFontGreenText")!)!),
+                        blue: CGFloat(Float(defaults.stringForKey("menuBarFontBlueText")!)!), alpha: 1.0)
+                    
+                    if (defaults.stringForKey("menuBarFontTransparency")! == "1") {
+                        statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                            statusTitle,
+                            attributes:[NSFontAttributeName : font!,
+                                NSForegroundColorAttributeName : textColor]))
+                    } else {
+                        let backgroundColor = NSColor(
+                            red: CGFloat(Float(defaults.stringForKey("menuBarFontRedBackground")!)!),
+                            green: CGFloat(Float(defaults.stringForKey("menuBarFontGreenBackground")!)!),
+                            blue: CGFloat(Float(defaults.stringForKey("menuBarFontBlueBackground")!)!), alpha: 1.0)
+                        statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                            statusTitle,
+                            attributes:[NSFontAttributeName : font!,
+                                NSForegroundColorAttributeName : textColor,
+                                NSBackgroundColorAttributeName : backgroundColor]))
+                    }
                 }
                 
                 yahooWeatherAPI.updateMenuWithPrimaryLocation(weatherFields, cityName: (city), displayCityName: (displayCity), menu: menu)
@@ -670,25 +695,31 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                     statusTitle = statusTitle + "/" + openWeatherMapAPI.formatHumidity((weatherFields.humidity as String))
                 }
 
-                let textColor = NSColor(red: CGFloat(Float(defaults.stringForKey("menuBarFontRedText")!)!),
-                    green: CGFloat(Float(defaults.stringForKey("menuBarFontGreenText")!)!),
-                    blue: CGFloat(Float(defaults.stringForKey("menuBarFontBlueText")!)!), alpha: 1.0)
-                
-                if (defaults.stringForKey("menuBarFontTransparency")! == "1") {
+                if (defaults.stringForKey("menuBarFontDefault") == "1") {
                     statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                         statusTitle,
-                        attributes:[NSFontAttributeName : font!,
-                            NSForegroundColorAttributeName : textColor]))
+                        attributes:[NSFontAttributeName : font!]))
                 } else {
-                    let backgroundColor = NSColor(
-                        red: CGFloat(Float(defaults.stringForKey("menuBarFontRedBackground")!)!),
-                        green: CGFloat(Float(defaults.stringForKey("menuBarFontGreenBackground")!)!),
-                        blue: CGFloat(Float(defaults.stringForKey("menuBarFontBlueBackground")!)!), alpha: 1.0)
-                    statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
-                        statusTitle,
-                        attributes:[NSFontAttributeName : font!,
-                            NSForegroundColorAttributeName : textColor,
-                            NSBackgroundColorAttributeName : backgroundColor]))
+                    let textColor = NSColor(red: CGFloat(Float(defaults.stringForKey("menuBarFontRedText")!)!),
+                        green: CGFloat(Float(defaults.stringForKey("menuBarFontGreenText")!)!),
+                        blue: CGFloat(Float(defaults.stringForKey("menuBarFontBlueText")!)!), alpha: 1.0)
+                    
+                    if (defaults.stringForKey("menuBarFontTransparency")! == "1") {
+                        statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                            statusTitle,
+                            attributes:[NSFontAttributeName : font!,
+                                NSForegroundColorAttributeName : textColor]))
+                    } else {
+                        let backgroundColor = NSColor(
+                            red: CGFloat(Float(defaults.stringForKey("menuBarFontRedBackground")!)!),
+                            green: CGFloat(Float(defaults.stringForKey("menuBarFontGreenBackground")!)!),
+                            blue: CGFloat(Float(defaults.stringForKey("menuBarFontBlueBackground")!)!), alpha: 1.0)
+                        statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                            statusTitle,
+                            attributes:[NSFontAttributeName : font!,
+                                NSForegroundColorAttributeName : textColor,
+                                NSBackgroundColorAttributeName : backgroundColor]))
+                    }
                 }
                 
                 openWeatherMapAPI.updateMenuWithPrimaryLocation(weatherFields, cityName: (city), displayCityName: (displayCity), menu: menu)
@@ -1023,51 +1054,51 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             value:"Speed", // Default (English) text
             comment:"Speed") + ":"
         speedUnit.itemAtIndex(0)?.title = NSLocalizedString("MilesPerHour_", // Unique key of your choice
-            value:"Miles/Hour", // Default (English) text
-            comment:"Miles/Hour")
+            value:"miles/hour", // Default (English) text
+            comment:"miles/hour")
         speedUnit.itemAtIndex(1)?.title = NSLocalizedString("KMPerHour_", // Unique key of your choice
-            value:"Kilometers/Hour", // Default (English) text
-            comment:"Kilometers/Hour")
+            value:"kilometers/hour", // Default (English) text
+            comment:"kilometers/hour")
         speedUnit.itemAtIndex(2)?.title = NSLocalizedString("MPerSec_", // Unique key of your choice
-            value:"Meters/Second", // Default (English) text
-            comment:"Meters/Second")
+            value:"meters/second", // Default (English) text
+            comment:"meters/second")
         speedUnit.itemAtIndex(3)?.title = NSLocalizedString("Knots_", // Unique key of your choice
-            value:"Knots", // Default (English) text
-            comment:"Knots")
+            value:"knots", // Default (English) text
+            comment:"knots")
         // Need default value
         
         distanceLabel.stringValue = NSLocalizedString("Distance_", // Unique key of your choice
             value:"Distance", // Default (English) text
             comment:"Distance") + ":"
         distanceUnit.itemAtIndex(0)?.title = NSLocalizedString("Miles_", // Unique key of your choice
-            value:"Miles", // Default (English) text
-            comment:"Miles")
+            value:"miles", // Default (English) text
+            comment:"miles")
         distanceUnit.itemAtIndex(1)?.title = NSLocalizedString("Feet_", // Unique key of your choice
-            value:"Feet", // Default (English) text
-            comment:"Feet")
-        distanceUnit.itemAtIndex(2)?.title = NSLocalizedString("Kilometers_", // Unique key of your choice
-            value:"Kilometers", // Default (English) text
-            comment:"Kilometers")
+            value:"feet", // Default (English) text
+            comment:"feet")
+        distanceUnit.itemAtIndex(2)?.title = NSLocalizedString("kilometers_", // Unique key of your choice
+            value:"kilometers", // Default (English) text
+            comment:"kilometers")
         distanceUnit.itemAtIndex(3)?.title = NSLocalizedString("Meters_", // Unique key of your choice
-            value:"Meters", // Default (English) text
-            comment:"Meters")
+            value:"meters", // Default (English) text
+            comment:"meters")
         // Need default value
         
         pressureLabel.stringValue = NSLocalizedString("Pressure_", // Unique key of your choice
             value:"Pressure", // Default (English) text
             comment:"Pressure") + ":"
         pressureUnit.itemAtIndex(0)?.title = NSLocalizedString("Inches_", // Unique key of your choice
-            value:"Inches", // Default (English) text
-            comment:"Inches")
+            value:"inches", // Default (English) text
+            comment:"inches")
         pressureUnit.itemAtIndex(1)?.title = NSLocalizedString("Millibars_", // Unique key of your choice
-            value:"Millibars", // Default (English) text
-            comment:"Millibars")
-        pressureUnit.itemAtIndex(2)?.title = NSLocalizedString("Kilopascals_", // Unique key of your choice
-            value:"Kilopascals", // Default (English) text
-            comment:"Kilopascals")
-        pressureUnit.itemAtIndex(3)?.title = NSLocalizedString("Hectopascals_", // Unique key of your choice
-            value:"Hectopascals", // Default (English) text
-            comment:"Hectopascals")
+            value:"millibars", // Default (English) text
+            comment:"millibars")
+        pressureUnit.itemAtIndex(2)?.title = NSLocalizedString("kiloPascal_", // Unique key of your choice
+            value:"kiloPascal", // Default (English) text
+            comment:"kiloPascal")
+        pressureUnit.itemAtIndex(3)?.title = NSLocalizedString("hectoPascal_", // Unique key of your choice
+            value:"hectoPascal", // Default (English) text
+            comment:"hectoPascal")
         // Need default value
         
         directionLabel.stringValue = NSLocalizedString("Direction_", // Unique key of your choice

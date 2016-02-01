@@ -34,6 +34,7 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
 
     @IBOutlet weak var closeButton: NSButton!
     
+    @IBOutlet weak var systemFontButton: NSButton!
     @IBOutlet weak var fontName: NSPopUpButton!
     @IBOutlet weak var fontSize: NSPopUpButton!
     
@@ -57,7 +58,7 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
     
     @IBOutlet weak var resetButton: NSButton!
     @IBOutlet weak var transparentButton: NSButton!
-    
+
     
     var whichFont = "menuBarFont"
 
@@ -67,37 +68,9 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
         super.windowDidLoad()
         
         self.window!.delegate = self
-        let defaults = NSUserDefaults.standardUserDefaults()
         
         initPrefs()
         initDisplay()
-        
-        fontName.addItemsWithTitles(NSFontManager.sharedFontManager().availableFontFamilies)
-        
-        fontName.selectItemWithTitle(defaults.stringForKey(whichFont)!)
-        fontSize.selectItemWithTitle(defaults.stringForKey(whichFont+"size")!)
-        
-        redTextSlider.doubleValue = Double(defaults.stringForKey(whichFont+"RedText")!)!
-        greenTextSlider.doubleValue = Double(defaults.stringForKey(whichFont+"GreenText")!)!
-        blueTextSlider.doubleValue = Double(defaults.stringForKey(whichFont+"BlueText")!)!
-        
-        redBackgroundSlider.doubleValue = Double(defaults.stringForKey(whichFont+"RedBackground")!)!
-        greenBackgroundSlider.doubleValue = Double(defaults.stringForKey(whichFont+"GreenBackground")!)!
-        blueBackgroundSlider.doubleValue = Double(defaults.stringForKey(whichFont+"BlueBackground")!)!
-        
-        transparentButton.state = Int(defaults.stringForKey(whichFont+"Transparency")!)!
-        
-        if (transparentButton.state == 1) {
-            redBackgroundSlider.enabled = false
-            greenBackgroundSlider.enabled = false
-            blueBackgroundSlider.enabled = false
-        } else {
-            redBackgroundSlider.enabled = true
-            greenBackgroundSlider.enabled = true
-            blueBackgroundSlider.enabled = true
-        }
-        
-        ChangeText()
         
     } // windowDidLoad
     
@@ -123,6 +96,7 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
         
         defaults.setValue(fontName.selectedItem!.title, forKey: whichFont)
         defaults.setValue(fontSize.selectedItem!.title, forKey: whichFont+"size")
+        defaults.setValue(systemFontButton.state, forKey: whichFont+"Default")
         
         defaults.setValue(redTextSlider.doubleValue, forKey: whichFont+"RedText")
         defaults.setValue(greenTextSlider.doubleValue, forKey: whichFont+"GreenText")
@@ -136,44 +110,16 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
         
     } // saveDefaults
     
-    func isDarkMode() ->Bool {
-
-        // Note that this only works for target=10.10
-        
-        let interfaceValue:CFString = "AppleInterfaceStyle" as CFString
-        let property:CFPropertyList? = CFPreferencesCopyValue(interfaceValue, kCFPreferencesAnyApplication, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost)
-        
-        if let light:CFPropertyList = property{
-            if light as! NSString == "Light"{
-                return false
-                //return currentInterface.light
-            }
-            else{
-                return true
-                //return currentInterface.dark
-            }
-        }
-        else{
-            return false
-            //return currentInterface.light
-        }
-    }
-
     func ResetButton() {
         
-        fontName.selectItemWithTitle("Tahoma")
-        fontSize.selectItemWithTitle("14")
+        systemFontButton.state = 1
         
-        // http://stackoverflow.com/questions/32213334/how-can-i-read-the-user-selection-for-os-x-menu-bar-in-xcode-swift
-        if (isDarkMode()) {
-            redTextSlider.doubleValue = 255
-            greenTextSlider.doubleValue = 255
-            blueTextSlider.doubleValue = 255
-        } else {
-            redTextSlider.doubleValue = 0
-            greenTextSlider.doubleValue = 0
-            blueTextSlider.doubleValue = 0
-        }
+        fontName.selectItemWithTitle("Tahoma")
+        fontSize.selectItemWithTitle("15")
+        
+        redTextSlider.doubleValue = 0
+        greenTextSlider.doubleValue = 0
+        blueTextSlider.doubleValue = 0
         
         redBackgroundSlider.doubleValue = 255
         greenBackgroundSlider.doubleValue = 255
@@ -185,39 +131,56 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
         
         transparentButton.state = 1
         
-        ChangeText()
+        systemFontAction()
         
     } // ResetButton
     
     func ChangeText() {
-        var m = (14 as NSNumber)
+        var m = (15 as NSNumber)
         m = NSNumberFormatter().numberFromString(fontSize.selectedItem!.title)!
-        let font = NSFont(name: fontName.selectedItem!.title, size: CGFloat(m))
-        
-        meteorologistLabel.font = font
-        
-        meteorologistLabel.textColor = NSColor(red: CGFloat(redTextSlider.floatValue),
-            green: CGFloat(greenTextSlider.floatValue),
-            blue: CGFloat(blueTextSlider.floatValue), alpha: 1.0)
-        
-        if (transparentButton.state == 1) {
+
+        if (systemFontButton.state == 1) {
+            let font = NSFont.systemFontOfSize(CGFloat(m))
+            meteorologistLabel.font = font
+
+            meteorologistLabel.textColor = NSColor(red: 0, green: 0, blue: 0, alpha: 1.0)
             meteorologistLabel.drawsBackground = false
+            
         } else {
-            meteorologistLabel.drawsBackground = true
-            meteorologistLabel.backgroundColor = NSColor(red: CGFloat(redBackgroundSlider.floatValue),
-                green: CGFloat(greenBackgroundSlider.floatValue),
-                blue: CGFloat(blueBackgroundSlider.floatValue), alpha: 1.0)
+            let font = NSFont(name: fontName.selectedItem!.title, size: CGFloat(m))
+            meteorologistLabel.font = font
+            
+            meteorologistLabel.textColor = NSColor(red: CGFloat(redTextSlider.floatValue),
+                green: CGFloat(greenTextSlider.floatValue),
+                blue: CGFloat(blueTextSlider.floatValue), alpha: 1.0)
+            
+            if (transparentButton.state == 1) {
+                meteorologistLabel.drawsBackground = false
+            } else {
+                meteorologistLabel.drawsBackground = true
+                meteorologistLabel.backgroundColor = NSColor(red: CGFloat(redBackgroundSlider.floatValue),
+                    green: CGFloat(greenBackgroundSlider.floatValue),
+                    blue: CGFloat(blueBackgroundSlider.floatValue), alpha: 1.0)
+            }
         }
     } // ChangeText
     
     func initPrefs() {
         let defaults = NSUserDefaults.standardUserDefaults()
         
+        if (defaults.stringForKey(whichFont+"Default") == nil) {
+            if ((defaults.stringForKey(whichFont) == nil) &&
+                (defaults.stringForKey(whichFont+"size") == nil)) {
+                    defaults.setValue("1", forKey: whichFont+"Default")
+            } else {
+                defaults.setValue("0", forKey: whichFont+"Default")
+            }
+        }
         if (defaults.stringForKey(whichFont) == nil) {
             defaults.setValue("Tahoma", forKey: whichFont)
         }
         if (defaults.stringForKey(whichFont+"size") == nil) {
-            defaults.setValue("14", forKey: whichFont+"size")
+            defaults.setValue("15", forKey: whichFont+"size")
         }
         
         if (defaults.stringForKey(whichFont+"RedText") == nil) {
@@ -247,6 +210,11 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
     } // initPrefs
     
     func initDisplay() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        systemFontButton.title = NSLocalizedString("SystemFont_", // Unique key of your choice
+            value:"System Font", // Default (English) text
+            comment:"System Font")
         textLabel.stringValue = NSLocalizedString("Text_", // Unique key of your choice
             value:"Text", // Default (English) text
             comment:"Text")
@@ -288,7 +256,78 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
             value:"Transparent", // Default (English) text
             comment:"Transparent")
         
+        fontName.addItemsWithTitles(NSFontManager.sharedFontManager().availableFontFamilies)
+        
+        systemFontButton.state = Int(defaults.stringForKey(whichFont+"Default")!)!
+        
+        if (systemFontButton.state == 1) {
+            fontName.enabled = false
+        } else {
+            fontName.enabled = true
+        }
+        
+        fontName.selectItemWithTitle(defaults.stringForKey(whichFont)!)
+        fontSize.selectItemWithTitle(defaults.stringForKey(whichFont+"size")!)
+        
+        redTextSlider.doubleValue = Double(defaults.stringForKey(whichFont+"RedText")!)!
+        greenTextSlider.doubleValue = Double(defaults.stringForKey(whichFont+"GreenText")!)!
+        blueTextSlider.doubleValue = Double(defaults.stringForKey(whichFont+"BlueText")!)!
+        
+        redBackgroundSlider.doubleValue = Double(defaults.stringForKey(whichFont+"RedBackground")!)!
+        greenBackgroundSlider.doubleValue = Double(defaults.stringForKey(whichFont+"GreenBackground")!)!
+        blueBackgroundSlider.doubleValue = Double(defaults.stringForKey(whichFont+"BlueBackground")!)!
+        
+        transparentButton.state = Int(defaults.stringForKey(whichFont+"Transparency")!)!
+        
+        if (transparentButton.state == 1) {
+            redBackgroundSlider.enabled = false
+            greenBackgroundSlider.enabled = false
+            blueBackgroundSlider.enabled = false
+        } else {
+            redBackgroundSlider.enabled = true
+            greenBackgroundSlider.enabled = true
+            blueBackgroundSlider.enabled = true
+        }
+
+        systemFontAction()
+        
     } // initDisplay
+    
+    func systemFontAction() {
+        if (systemFontButton.state == 1) {
+            fontName.enabled = false
+            
+            redBackgroundSlider.enabled = false
+            greenBackgroundSlider.enabled = false
+            blueBackgroundSlider.enabled = false
+            
+            redTextSlider.enabled = false
+            greenTextSlider.enabled = false
+            blueTextSlider.enabled = false
+            
+            transparentButton.enabled = false
+        } else {
+            fontName.enabled = true
+            
+            if (transparentButton.state == 0) {
+                redBackgroundSlider.enabled = true
+                greenBackgroundSlider.enabled = true
+                blueBackgroundSlider.enabled = true
+            }
+            
+            redTextSlider.enabled = true
+            greenTextSlider.enabled = true
+            blueTextSlider.enabled = true
+            
+            transparentButton.enabled = true
+        }
+        
+        ChangeText()
+    }
+    
+    @IBAction func SystemFontButtonPressed(sender: NSButton) {
+        systemFontAction()
+    }
     
     @IBAction func TransparentButtonPressed(sender: NSButton) {
         if (transparentButton.state == 1) {

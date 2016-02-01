@@ -1,5 +1,10 @@
 This file could also be called the change log.
 
+v2.0.1
+* Ability to select System Font
+* System Font is now the default font
+* Change default font size to 15
+
 v2.0.0
 - A whole new Meteorologist
 - Rewritten in Swift for modern OS's
@@ -252,7 +257,7 @@ v1.2.2
 
 v1.2.1
 - Fixed Moon Rise and Moon Set not always showing
-- Fixed Wind not showing in Kilometers per Hour when it should
+- Fixed Wind not showing in kilometer per Hour when it should
 - Added displaying forecast items inline (one line)
 - Added Font size controls for the menu bar
 - Fixed a bug in the Wunderground city search (skipping every other result)
@@ -348,7 +353,7 @@ v1.1.4
 - City codes should no longer get cut off in the two tables
 - Updated the Problems.txt file
 - Added reset defaults button to preferences (no more trashing the Meteorologist.plist file!)
-- Multiple kilometers are now displayed as km instead of kms
+- Multiple kilometer are now displayed as km instead of kms
 - Made display of dates look better (i.e Sun, Sep 22 10:36 PM)
 - Location tables now allow you to resize (although not reorder) their contents
 - Clarified that Dock font/image controls relate to the icon, not the menu
