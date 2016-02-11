@@ -294,14 +294,12 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         else if ((weatherCode == "3200"))
         {
             // Yahoo! doesn't have a code so this really isn't an error
+            return NSImage(named: "MB-Unavailable")!
         }
-        else
-        {
-            print(NSLocalizedString("InvalidWeatherCode_", // Unique key of your choice
-                value:"Invalid weatherCode", // Default (English) text
-                comment:"Invalid weatherCode") + ":", weatherCode, terminator: "\n")
-        }
-        return NSImage()
+        ErrorLog(String(format:NSLocalizedString("InvalidWeatherCode_", // Unique key of your choice
+            value:"Invalid weatherCode", // Default (English) text
+            comment:"Invalid weatherCode") + " : " + weatherCode))
+        return NSImage(named: "MB-Unknown")!
     } // setImage
     
     func formatDay(temp: String) -> String {

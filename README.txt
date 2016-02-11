@@ -1,11 +1,15 @@
 This file could also be called the change log.
 
-v2.0.1
+2.0.2
+* Prevent crash if invalid icon from OpenWeather (display "unknown")
+* Display "unknown" icon from Yahoo if necessary
+
+2.0.1
 * Ability to select System Font
 * System Font is now the default font
 * Change default font size to 15
 
-v2.0.0
+2.0.0
 - A whole new Meteorologist
 - Rewritten in Swift for modern OS's
 - Requires 10.9 or greater

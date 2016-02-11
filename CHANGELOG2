@@ -1,3 +1,6 @@
+2.0.2
+* Prevent crash if invalid icon from OpenWeather (display "unknown")
+* Display "unknown" icon from Yahoo if necessary
 2.0.1
 * Ability to select System Font
 * System Font is now the default font

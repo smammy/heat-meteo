@@ -339,7 +339,12 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             (weatherCode == "13n")) {
                 return NSImage(named: "MB-Snow")!
         }
-        return NSImage(named: weatherCode)!
+
+        ErrorLog(String(format:NSLocalizedString("InvalidWeatherCode_", // Unique key of your choice
+            value:"Invalid weatherCode", // Default (English) text
+            comment:"Invalid weatherCode") + " : " + weatherCode))
+        return NSImage(named: "MB-Unknown")!
+
     } // setImage
     
     func formatDay(temp: String) -> String {

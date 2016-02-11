@@ -46,7 +46,7 @@ import WebKit
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "2.0.1"
+let DEFAULT_PREFERENCE_VERSION = "2.0.2"
 
 struct WeatherFields {
     
