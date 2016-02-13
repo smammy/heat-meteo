@@ -1,20 +1,22 @@
-To build a production release using Xcode 3:
+To build using Xcode 7 (7.2.1):
 
-¥ In Xcode 3.2.6, select the project, then click on Info, then in Archetectures, re-add ppc.
-¥ In Xcode 3.2.6, select the target, then click on Info, then in Archetectures, make sure everything is deleted. This will pickup the project settings.
-¥ÊMake sure the code generated is Universal (Get Info).
-¥ Make sure the VERSION file is updated to the new version.
-¥ Make sure the info.plist is updated to the new version and the build number is reset to 1.
+¥ Open Meteorologist.xcodeproj
+¥ÊSelect the project then click on the General tab. Change the Team dropdown to your Apple Dev account.
+¥ÊTest away.
+¥ Make sure the VERSION2 file is updated.
+¥ Make sure the CHANGELOG2 file is updated.
+¥ Make sure the info.plist is updated.
+¥ Make sure the DEFAULT_PREFERENCE_VERSION value in AppDelegate.swift file is updated (near the top of the code).
 ¥ Make sure README.txt is updated.
-¥ Change project to Deployment and rebuild.
 ¥ Use SVN to update the project (see below).
 ¥ Run build_dmg.sh. This will create Meteorologist-v.r.m.dmg in the build folder using the pieces above.
+
 
 ¥ Go to https://sourceforge.net/projects/heat-meteo/ and navigate to Files.
 ¥ Create a new folder under Meteo called Meteo v.r.m.
 ¥ Upload the Meteorologist-v.r.m.dmg file (from the build directory) and a README.txt (from the base directory) file.
-¥ Select the Meteorologist-v.r.m.dmg file via the Info button and mark it as the default download for Platform: Mac (OS X)
-¥ Select the README.txt file and click on the Release note checkbox.
+¥ Select the Info button for Meteorologist-v.r.m.dmg file and mark it as the default download for Platform: Mac (OS X)
+
 
 ¥ Open sftp <yourid>,heat-meteo@web.sourceforge.net (/home/project-web/heat-meteo/htdocs)
 ¥ Update version.xml
@@ -24,7 +26,9 @@ To build a production release using Xcode 3:
 * Update CHANGELOG2
 * Update VERSION2
 
+
 Quit and restart your copy of Meteo to make sure everything is looking OK.
+
 
 SVN Notes:
 ¥ svn co https://<userid>@heat-meteo.svn.sourceforge.net/svnroot/heat-meteo meteorologist
@@ -34,4 +38,4 @@ SVN Notes:
 ¥ svn rm <module>
 ¥ svn commit -m "description of change"
 
-Note that you will need to check in your trunk or tag code and also Website in the main portion of meteorologist.
+Note that you will need to (SVN) check in your trunk or tag code and also Website in the main portion of meteorologist.
