@@ -1,5 +1,7 @@
+2.0.3
+* OpenWeatherMap returning empty data causing crashes.
 2.0.2
-* Prevent crash if invalid icon from OpenWeather (display "unknown")
+* Prevent crash if invalid icon from OpenWeatherMap (display "unknown")
 * Display "unknown" icon from Yahoo if necessary
 2.0.1
 * Ability to select System Font

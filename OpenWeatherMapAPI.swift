@@ -426,6 +426,9 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
     } // calculateFeelsLike
 
     func convertUTCtoHHMM(myTime: String) -> String {
+        if (myTime == "") {
+            return ""
+        }
         // create dateFormatter with UTC time format
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
@@ -1106,6 +1109,9 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         var city = displayCityName
         if (city == "") {
             city = weatherFields.title1 as String
+        }
+        if (city == "") {
+            city = cityName
         }
         
         var statusTitle = city + " " + formatTemp((weatherFields.currentTemp as String))

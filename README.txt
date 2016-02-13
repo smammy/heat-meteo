@@ -1,5 +1,8 @@
 This file could also be called the change log.
 
+2.0.3
+* OpenWeatherMap returning empty data causing crashes.
+
 2.0.2
 * Prevent crash if invalid icon from OpenWeather (display "unknown")
 * Display "unknown" icon from Yahoo if necessary
