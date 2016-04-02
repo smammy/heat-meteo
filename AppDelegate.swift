@@ -39,6 +39,9 @@
 // Preferences have been cached since 10.9
 // https://forums.developer.apple.com/message/65946#65946
 // killall -u $USER cfprefsd
+//
+// http://stackoverflow.com/questions/26340670/issue-with-genstrings-for-swift-file
+//
 
 import Cocoa
 import WebKit
@@ -46,7 +49,7 @@ import WebKit
 let DEFAULT_CITY = "Cupertino, CA"
 let DEFAULT_INTERVAL = "60"
 let YAHOO_WEATHER = "0"
-let DEFAULT_PREFERENCE_VERSION = "2.0.3"
+let DEFAULT_PREFERENCE_VERSION = "2.0.4"
 
 struct WeatherFields {
     
@@ -335,8 +338,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                     }
                 }
                 let myPopup: NSAlert = NSAlert()
-                myPopup.messageText = NSLocalizedString("NewVersionAvailable_", // Unique key of your choice
-                    value:"A new version of Meteorologist is available!" + "\n\n" + whatChanged, // Default (English) text
+                myPopup.messageText = NSLocalizedString("NewVersionAvailable_",
+                    value:"A new version of Meteorologist is available!" + "\n\n" + whatChanged,
                     comment:"A new version of Meteorologist is available!")
                 myPopup.informativeText = NSLocalizedString("Download?_", // Unique key of your choice
                     value:"Would you like to download it now?", // Default (English) text
@@ -393,6 +396,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         if ((defaults.stringForKey("menuBarFont") != nil) &&
             (defaults.stringForKey("menuBarFontsize") != nil)) {
                 m = NSNumberFormatter().numberFromString(defaults.stringForKey("menuBarFontsize")!)!
+                statusBarItem.image = nil
                 if (defaults.stringForKey("menuBarFontDefault") == "1") {
                     font = NSFont.systemFontOfSize(CGFloat(m))
                 } else {
@@ -419,7 +423,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         //Add menuItem to menu
         let newItem : NSMenuItem = NSMenuItem(title: NSLocalizedString("PleaseWait_", // Unique key of your choice
             value:"Please wait while Meteo fetches the weather", // Default (English) text
-            comment:"Please wait"), action: Selector("dummy:"), keyEquivalent: "")
+            comment:"Please wait"), action: #selector(AppDelegate.dummy(_:)), keyEquivalent: "")
         
         newItem.target=self
         menu.addItem(newItem)
@@ -428,6 +432,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let preferenceVersion = defaults.stringForKey("preferenceVersion")
         if ((preferenceVersion == nil) || (preferenceVersion! != DEFAULT_PREFERENCE_VERSION)) {
             //self.window!.orderOut(self)
+            defaults.setValue(DEFAULT_PREFERENCE_VERSION, forKey: "preferenceVersion")
             self.window!.makeKeyAndOrderFront(self.window!)
             NSApp.activateIgnoringOtherApps(true)
             updateWeather()
@@ -782,7 +787,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
         
         let updateFrequency = defaults.stringForKey("updateFrequency")
-        myTimer = NSTimer.scheduledTimerWithTimeInterval(Double(updateFrequency!)!*60, target:self, selector: Selector("updateWeather"), userInfo: nil, repeats: false)
+        myTimer = NSTimer.scheduledTimerWithTimeInterval(Double(updateFrequency!)!*60, target:self, selector: #selector(AppDelegate.updateWeather), userInfo: nil, repeats: false)
         
     } // updateWeather
     

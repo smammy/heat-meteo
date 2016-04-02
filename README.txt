@@ -1,5 +1,8 @@
 This file could also be called the change log.
 
+2.0.4
+* Correct setting of Preference Version.
+
 2.0.3
 * OpenWeatherMap returning empty data causing crashes.
 

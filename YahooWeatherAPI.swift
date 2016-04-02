@@ -29,6 +29,9 @@
 import Cocoa
 import Foundation
 
+let ConsumerKey = "dj0yJmk9ZGZ6MVN0a1BYUnF0JmQ9WVdrOVRVbEJXV2RWTkc4bWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1mOA--"
+let ConsumerSecret = "5ccc0d61e58514d24eac2f95fad475e270b97b84"
+
 class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
     
     let QUERY_PREFIX1 = "https://query.yahooapis.com/v1/public/yql?q=SELECT%20woeid%20FROM%20geo.places(1)%20WHERE%20text%3D'"
@@ -971,7 +974,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 weatherFields.forecast1High.appendString(attributeDict["high"]!)
                 weatherFields.forecast1Low.appendString(attributeDict["low"]!)
                 weatherFields.forecast1Conditions.appendString(attributeDict["text"]!)
-                iForecastCount++;
+                iForecastCount += 1;
             } else if (iForecastCount == 2) {
                 weatherFields.forecast2Code.appendString(attributeDict["code"]!)
                 weatherFields.forecast2Date.appendString(attributeDict["date"]!)
@@ -979,7 +982,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 weatherFields.forecast2High.appendString(attributeDict["high"]!)
                 weatherFields.forecast2Low.appendString(attributeDict["low"]!)
                 weatherFields.forecast2Conditions.appendString(attributeDict["text"]!)
-                iForecastCount++;
+                iForecastCount += 1;
             } else if (iForecastCount == 3) {
                 weatherFields.forecast3Code.appendString(attributeDict["code"]!)
                 weatherFields.forecast3Date.appendString(attributeDict["date"]!)
@@ -987,7 +990,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 weatherFields.forecast3High.appendString(attributeDict["high"]!)
                 weatherFields.forecast3Low.appendString(attributeDict["low"]!)
                 weatherFields.forecast3Conditions.appendString(attributeDict["text"]!)
-                iForecastCount++;
+                iForecastCount += 1;
             } else if (iForecastCount == 4) {
                 weatherFields.forecast4Code.appendString(attributeDict["code"]!)
                 weatherFields.forecast4Date.appendString(attributeDict["date"]!)
@@ -995,7 +998,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 weatherFields.forecast4High.appendString(attributeDict["high"]!)
                 weatherFields.forecast4Low.appendString(attributeDict["low"]!)
                 weatherFields.forecast4Conditions.appendString(attributeDict["text"]!)
-                iForecastCount++;
+                iForecastCount += 1;
             } else if (iForecastCount == 5) {
                 weatherFields.forecast5Code.appendString(attributeDict["code"]!)
                 weatherFields.forecast5Date.appendString(attributeDict["date"]!)
@@ -1003,7 +1006,7 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
                 weatherFields.forecast5High.appendString(attributeDict["high"]!)
                 weatherFields.forecast5Low.appendString(attributeDict["low"]!)
                 weatherFields.forecast5Conditions.appendString(attributeDict["text"]!)
-                iForecastCount++;
+                iForecastCount += 1;
             }
         }
         DebugLog(String(format:"leaving didStartElement: %@", elementName))

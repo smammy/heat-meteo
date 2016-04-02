@@ -1445,7 +1445,7 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         DebugLog(String(format:"in didEndElement: %@", elementName))
         
         if (elementName as NSString).isEqualToString("time") {
-            iForecastCount++;
+            iForecastCount += 1;
         }
         DebugLog(String(format:"leaving didEndElement: %@", elementName))
     } // parser parser:didEndElement

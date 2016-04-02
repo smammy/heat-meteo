@@ -45,6 +45,7 @@ var original_stderr: Int32?;
     func DebugLog(message: String, file: String = __FILE__, line: Int = __LINE__) {
         let defaults = NSUserDefaults.standardUserDefaults()
         if (defaults.stringForKey("logMessages")! == "1") {
+            // Uncomment this statement for Debug level messages
             //return { NSLog("<Debug>: " + message) }()
         }
     }
