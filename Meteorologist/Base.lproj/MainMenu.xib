@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -61,6 +61,7 @@
                 <outlet property="updateFrequenceMinutesLabel" destination="fLL-pj-pbh" id="b2W-UR-00a"/>
                 <outlet property="updateFrequencyLabel" destination="z6g-wl-2uB" id="JOc-6z-1eF"/>
                 <outlet property="updateFrequencyTextField" destination="M2x-NZ-pkj" id="WTR-Iz-Rbm"/>
+                <outlet property="useNewWeatherIcons" destination="r75-Vf-OMv" id="tE7-OZ-M0B"/>
                 <outlet property="versionTextLabel" destination="yoN-S2-J1g" id="Qqz-o5-Uyq"/>
                 <outlet property="viewExtendedForecast" destination="UDx-ys-QaV" id="ckh-iZ-1Q3"/>
                 <outlet property="weatherSource" destination="4nB-eK-q9d" id="evG-n1-bDs"/>
@@ -72,10 +73,10 @@
         <window title="Meteorologist" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="713" height="480"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="contentRect" x="335" y="390" width="743" height="480"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="713" height="480"/>
+                <rect key="frame" x="0.0" y="0.0" width="743" height="480"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dNU-xY-fc5">
@@ -246,7 +247,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a84-ZU-bgl">
-                        <rect key="frame" x="559" y="282" width="191" height="18"/>
+                        <rect key="frame" x="588" y="323" width="191" height="18"/>
                         <buttonCell key="cell" type="check" title="Display city name_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kRI-JQ-WW2">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -421,7 +422,7 @@
                         </textFieldCell>
                     </textField>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ad6-Bg-1bj">
-                        <rect key="frame" x="422" y="130" width="232" height="18"/>
+                        <rect key="frame" x="423" y="130" width="232" height="18"/>
                         <buttonCell key="cell" type="check" title="Check for new versions on launch_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="9tL-Lo-Tjc">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -447,14 +448,14 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qEC-Rn-aOw">
-                        <rect key="frame" x="559" y="262" width="191" height="18"/>
+                        <rect key="frame" x="588" y="303" width="191" height="18"/>
                         <buttonCell key="cell" type="check" title="Display Humidity_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="uge-XZ-lhp">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oFq-SC-5Xh">
-                        <rect key="frame" x="371" y="262" width="191" height="18"/>
+                        <rect key="frame" x="588" y="282" width="191" height="18"/>
                         <buttonCell key="cell" type="check" title="Display type (C/F)_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="IE1-X4-mQz">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -525,9 +526,16 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r75-Vf-OMv">
+                        <rect key="frame" x="371" y="261" width="171" height="18"/>
+                        <buttonCell key="cell" type="check" title="Use new weather icons_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="efB-If-ZUi">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-842.5" y="426"/>
+            <point key="canvasLocation" x="-827.5" y="426"/>
         </window>
     </objects>
     <resources>

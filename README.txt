@@ -1,5 +1,13 @@
 This file could also be called the change log.
 
+2.0.5
+* Update provided by Eric W., a senior at Longwood University in Virginia (USA).
+* Animated "loading" icon weather information before the animation kicks in.
+* Optional new graphics for the various weather conditions that work well with OS X's new recommendations.
+    Also retina compatible.
+    Default is Yes.
+* Sorry no change for Yahoo yet.
+
 2.0.4
 * Correct setting of Preference Version.
 

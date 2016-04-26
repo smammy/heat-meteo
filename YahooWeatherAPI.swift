@@ -194,141 +194,276 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
         
         */
         
-        if (weatherCode == "0")
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        if (defaults.stringForKey("useNewWeatherIcons")! == "1")
         {
-            return NSImage(named: "Tornado")!
+            if (weatherCode == "0")
+            {
+                return NSImage(named: "Tornado-Dark")!
+            }
+            else if ((weatherCode == "1") ||
+                (weatherCode == "2"))
+            {
+                return NSImage(named: "Hurricane-Dark")!
+            }
+            else if ((weatherCode == "3") ||
+                (weatherCode == "37") ||
+                (weatherCode == "38") ||
+                (weatherCode == "39") ||
+                (weatherCode == "45") ||
+                (weatherCode == "47") ||
+                (weatherCode == "4"))
+            {
+                return NSImage(named: "Thunderstorm-Dark")!
+            }
+            else if ((weatherCode == "6") ||
+                (weatherCode == "8") ||
+                (weatherCode == "9") ||
+                (weatherCode == "10") ||
+                (weatherCode == "11") ||
+                (weatherCode == "12") ||
+                (weatherCode == "17") ||
+                (weatherCode == "35") ||
+                (weatherCode == "40"))
+            {
+                return NSImage(named: "Rain-Dark")!
+            }
+            else if ((weatherCode == "5") ||
+                (weatherCode == "7") ||
+                (weatherCode == "14") ||
+                (weatherCode == "16") ||
+                (weatherCode == "15") ||
+                (weatherCode == "41") ||
+                (weatherCode == "42") ||
+                (weatherCode == "43") ||
+                (weatherCode == "46"))
+            {
+                return NSImage(named: "Snow-Dark")!
+            }
+            else if (weatherCode == "13")
+            {
+                return NSImage(named: "Flurries-Dark")!
+            }
+            else if (weatherCode == "18")
+            {
+                return NSImage(named: "Sleet-Dark")!
+            }
+            else if (weatherCode == "21")
+            {
+                return NSImage(named: "Hazy-Dark")!
+            }
+            else if (weatherCode == "24")
+            {
+                return NSImage(named: "Wind-Dark")!
+            }
+            else if ((weatherCode == "32") ||
+                (weatherCode == "34"))
+            {
+                return NSImage(named: "Sun-Dark")!
+            }
+            else if ((weatherCode == "23") ||
+                (weatherCode == "24"))
+            {
+                return NSImage(named: "Wind-Dark")!
+            }
+            else if ((weatherCode == "31") ||
+                (weatherCode == "33"))
+            {
+                return NSImage(named: "Moon-Dark")!
+            }
+            else if ((weatherCode == "30") ||
+                (weatherCode == "44"))
+            {
+                return NSImage(named: "Sun-Cloud-Dark")!  //Originally Sun-Cloud-1
+            }
+            else if ((weatherCode == "20") ||
+                (weatherCode == "21"))
+            {
+                return NSImage(named: "Hazy-Dark")!
+            }
+            else if ((weatherCode == "26"))
+            {
+                return NSImage(named: "Cloudy-Dark")!
+            }
+            else if ((weatherCode == "27"))
+            {
+                return NSImage(named: "Moon-Cloud-Dark")!  //Originally Moon-Cloud-2
+            }
+            else if ((weatherCode == "28"))
+            {
+                return NSImage(named: "Sun-Cloud-Dark")!  //Originally Sun-Cloud-2
+            }
+            else if ((weatherCode == "29"))
+            {
+                return NSImage(named: "Moon-Cloud-Dark")!  //Originally Moon-Cloud-2
+            }
+            else if ((weatherCode == "3200"))
+            {
+                // Yahoo! doesn't have a code so this really isn't an error
+                return NSImage(named: "Unavailable-Color")!
+            }
+            
+            ErrorLog(String(format:NSLocalizedString("InvalidWeatherCode_", // Unique key of your choice
+                value:"Invalid weatherCode", // Default (English) text
+                comment:"Invalid weatherCode") + " : " + weatherCode))
+            return NSImage(named: "Unknown-Dark")!
         }
-        else if ((weatherCode == "1") ||
-            (weatherCode == "2"))
+        else
         {
-            return NSImage(named: "Hurricane")!
+            if (weatherCode == "0")
+            {
+                return NSImage(named: "Tornado-Color")!
+            }
+            else if ((weatherCode == "1") ||
+                (weatherCode == "2"))
+            {
+                return NSImage(named: "Hurricane-Color")!
+            }
+            else if ((weatherCode == "3") ||
+                (weatherCode == "37") ||
+                (weatherCode == "38") ||
+                (weatherCode == "39") ||
+                (weatherCode == "45") ||
+                (weatherCode == "47") ||
+                (weatherCode == "4"))
+            {
+                return NSImage(named: "Thunderstorm-Color")!
+            }
+            else if ((weatherCode == "6") ||
+                (weatherCode == "8") ||
+                (weatherCode == "9") ||
+                (weatherCode == "10") ||
+                (weatherCode == "11") ||
+                (weatherCode == "12") ||
+                (weatherCode == "17") ||
+                (weatherCode == "35") ||
+                (weatherCode == "40"))
+            {
+                return NSImage(named: "Rain-Color")!
+            }
+            else if ((weatherCode == "5") ||
+                (weatherCode == "7") ||
+                (weatherCode == "14") ||
+                (weatherCode == "16") ||
+                (weatherCode == "15") ||
+                (weatherCode == "41") ||
+                (weatherCode == "42") ||
+                (weatherCode == "43") ||
+                (weatherCode == "46"))
+            {
+                return NSImage(named: "Snow-Color")!
+            }
+            else if (weatherCode == "13")
+            {
+                return NSImage(named: "Flurries-Color")!
+            }
+            else if (weatherCode == "18")
+            {
+                return NSImage(named: "Sleet-Color")!
+            }
+            else if (weatherCode == "21")
+            {
+                return NSImage(named: "Hazy-Color")!
+            }
+            else if (weatherCode == "24")
+            {
+                return NSImage(named: "Wind-Color")!
+            }
+            else if ((weatherCode == "32") ||
+                (weatherCode == "34"))
+            {
+                return NSImage(named: "Sun-Color")!
+            }
+            else if ((weatherCode == "23") ||
+                (weatherCode == "24"))
+            {
+                return NSImage(named: "Wind-Color")!
+            }
+            else if ((weatherCode == "31") ||
+                (weatherCode == "33"))
+            {
+                return NSImage(named: "Moon-Color")!
+            }
+            else if ((weatherCode == "30") ||
+                (weatherCode == "44"))
+            {
+                return NSImage(named: "Sun-Cloud-Color")!  //Originally Sun-Cloud-1
+            }
+            else if ((weatherCode == "20") ||
+                (weatherCode == "21"))
+            {
+                return NSImage(named: "Hazy-Color")!
+            }
+            else if ((weatherCode == "26"))
+            {
+                return NSImage(named: "Cloudy-Color")!
+            }
+            else if ((weatherCode == "27"))
+            {
+                return NSImage(named: "Moon-Cloud-Color")!  //Originally Moon-Cloud-2
+            }
+            else if ((weatherCode == "28"))
+            {
+                return NSImage(named: "Sun-Cloud-Color")!  //Originally Sun-Cloud-2
+            }
+            else if ((weatherCode == "29"))
+            {
+                return NSImage(named: "Moon-Cloud-Color")!  //Originally Moon-Cloud-2
+            }
+            else if ((weatherCode == "3200"))
+            {
+                // Yahoo! doesn't have a code so this really isn't an error
+                return NSImage(named: "Unavailable-Color")!
+            }
+            
+            ErrorLog(String(format:NSLocalizedString("InvalidWeatherCode_", // Unique key of your choice
+                value:"Invalid weatherCode", // Default (English) text
+                comment:"Invalid weatherCode") + " : " + weatherCode))
+            return NSImage(named: "Unknown-Color")!
         }
-        else if ((weatherCode == "3") ||
-            (weatherCode == "37") ||
-            (weatherCode == "38") ||
-            (weatherCode == "39") ||
-            (weatherCode == "45") ||
-            (weatherCode == "47") ||
-            (weatherCode == "4"))
-        {
-            return NSImage(named: "MB-Thunderstorm")!
-        }
-        else if ((weatherCode == "6") ||
-            (weatherCode == "8") ||
-            (weatherCode == "9") ||
-            (weatherCode == "10") ||
-            (weatherCode == "11") ||
-            (weatherCode == "12") ||
-            (weatherCode == "17") ||
-            (weatherCode == "35") ||
-            (weatherCode == "40"))
-        {
-            return NSImage(named: "MB-Rain")!
-        }
-        else if ((weatherCode == "5") ||
-            (weatherCode == "7") ||
-            (weatherCode == "14") ||
-            (weatherCode == "16") ||
-            (weatherCode == "15") ||
-            (weatherCode == "41") ||
-            (weatherCode == "42") ||
-            (weatherCode == "43") ||
-            (weatherCode == "46"))
-        {
-            return NSImage(named: "MB-Snow")!
-        }
-        else if (weatherCode == "13")
-        {
-            return NSImage(named: "MB-Flurries")!
-        }
-        else if (weatherCode == "18")
-        {
-            return NSImage(named: "MB-Sleet")!
-        }
-        else if (weatherCode == "21")
-        {
-            return NSImage(named: "MB-Hazy")!
-        }
-        else if (weatherCode == "24")
-        {
-            return NSImage(named: "MB-Wind")!
-        }
-        else if ((weatherCode == "32") ||
-            (weatherCode == "34"))
-        {
-            return NSImage(named: "MB-Sun")!
-        }
-        else if ((weatherCode == "23") ||
-            (weatherCode == "24"))
-        {
-            return NSImage(named: "MB-Wind")!
-        }
-        else if ((weatherCode == "31") ||
-            (weatherCode == "33"))
-        {
-            return NSImage(named: "MB-Moon")!
-        }
-        else if ((weatherCode == "30") ||
-            (weatherCode == "44"))
-        {
-            return NSImage(named: "MB-Sun-Cloud-1")!
-        }
-        else if ((weatherCode == "20") ||
-            (weatherCode == "21"))
-        {
-            return NSImage(named: "MB-Hazy")!
-        }
-        else if ((weatherCode == "26"))
-        {
-            return NSImage(named: "MB-Cloudy")!
-        }
-        else if ((weatherCode == "27"))
-        {
-            return NSImage(named: "MB-Moon-Cloud-2")!
-        }
-        else if ((weatherCode == "28"))
-        {
-            return NSImage(named: "MB-Sun-Cloud-2")!
-        }
-        else if ((weatherCode == "29"))
-        {
-            return NSImage(named: "MB-Moon-Cloud-2")!
-        }
-        else if ((weatherCode == "3200"))
-        {
-            // Yahoo! doesn't have a code so this really isn't an error
-            return NSImage(named: "MB-Unavailable")!
-        }
-        ErrorLog(String(format:NSLocalizedString("InvalidWeatherCode_", // Unique key of your choice
-            value:"Invalid weatherCode", // Default (English) text
-            comment:"Invalid weatherCode") + " : " + weatherCode))
-        return NSImage(named: "MB-Unknown")!
+        
+        
     } // setImage
     
-    func formatDay(temp: String) -> String {
+    func formatDay(temp: String) -> String
+    {
         var returnDay = temp
-        if ((temp != "Mon") &&
-            (temp != "Wed")) {
+        
+        if ((temp != "Mon") && (temp != "Wed"))
+        {
                 returnDay.appendContentsOf(" ")
         }
-        if (temp == "Fri") {
+        
+        if (temp == "Fri")
+        {
                 returnDay.appendContentsOf(" ")
         }
+        
         return returnDay
     } // formatDay
     
-    func formatTemp(temp: String) -> String {
+    func formatTemp(temp: String) -> String
+    {
         let defaults = NSUserDefaults.standardUserDefaults()
         var formattedTemp = temp
-        if (defaults.stringForKey("degreesUnit")! == "1") {
+        
+        if (defaults.stringForKey("degreesUnit")! == "1")
+        {
             // http://www.rapidtables.com/convert/temperature/how-fahrenheit-to-celsius.htm
             formattedTemp = String(Int(((temp as NSString).doubleValue - 32) / 1.8))
         }
-        formattedTemp += "°"
-        if (defaults.stringForKey("displayDegreeType")! == "1") {
-            if (defaults.stringForKey("degreesUnit")! == "0") {
+        
+        formattedTemp += "° "
+        
+        if (defaults.stringForKey("displayDegreeType")! == "1")
+        {
+            if (defaults.stringForKey("degreesUnit")! == "0")
+            {
                 formattedTemp += "F"
-            } else {
+            }
+            else
+            {
                 formattedTemp += "C"
             }
         }
@@ -338,26 +473,44 @@ class YahooWeatherAPI: NSObject, NSXMLParserDelegate {
     func formatWindSpeed(speed: String, direction: String) -> String {
         let defaults = NSUserDefaults.standardUserDefaults()
         var formattedWindSpeed = direction + "° @ "
-        if (defaults.stringForKey("directionUnit")! == "1") {
+        if (defaults.stringForKey("directionUnit")! == "1")
+        {
             var windDirection = direction
             let iDirection = Int((direction as NSString).doubleValue)
-            if (iDirection <= 22) {
+            if (iDirection <= 22)
+            {
                 windDirection = "N"
-            } else if (iDirection <= 67) {
+            }
+            else if (iDirection <= 67)
+            {
                 windDirection = "NE"
-            } else if (iDirection <= 112) {
+            }
+            else if (iDirection <= 112)
+            {
                 windDirection = "E"
-            } else if (iDirection <= 147) {
+            }
+            else if (iDirection <= 147)
+            {
                 windDirection = "SE"
-            } else if (iDirection <= 202) {
+            }
+            else if (iDirection <= 202)
+            {
                 windDirection = "S"
-            } else if (iDirection <= 247) {
+            }
+            else if (iDirection <= 247)
+            {
                 windDirection = "SW"
-            } else if (iDirection <= 292) {
+            }
+            else if (iDirection <= 292)
+            {
                 windDirection = "W"
-            } else if (iDirection <= 337) {
+            }
+            else if (iDirection <= 337)
+            {
                 windDirection = "NW"
-            } else {
+            }
+            else
+            {
                 windDirection = "N"
             }
             formattedWindSpeed = windDirection + " @ "

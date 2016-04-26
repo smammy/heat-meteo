@@ -44,18 +44,24 @@ import Foundation
 
 // http://stackoverflow.com/questions/24196689/how-to-get-the-power-of-some-integer-in-swift-language
 // Put this at file level anywhere in your project
-infix operator ** { associativity left precedence 160 }
-func ** (radix: Double, power: Double) -> Double {
+infix operator ** {
+    associativity left precedence 160
+}
+func ** (radix: Double, power: Double) -> Double
+{
     return pow(radix, power)
 }
-func ** (radix: Int,    power: Int   ) -> Double {
+func ** (radix: Int,    power: Int   ) -> Double
+{
     return pow(Double(radix), Double(power))
 }
-func ** (radix: Float,  power: Float ) -> Double {
+func ** (radix: Float,  power: Float ) -> Double
+{
     return pow(Double(radix), Double(power))
 }
 
-class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
+class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate
+{
     
     let QUERY_PREFIX1 = "http://api.openweathermap.org/data/2.5/weather?q="
     let QUERY_SUFFIX1a = "&appid="
@@ -84,7 +90,8 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
     
     var radarWindow = RadarWindow()
     
-    func beginParsing(inputCity: String) -> WeatherFields {
+    func beginParsing(inputCity: String) -> WeatherFields
+    {
         
         DebugLog(String(format:"in beginParsing: %@", inputCity))
         
@@ -295,89 +302,178 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
     
     func setImage(weatherCode: String) -> NSImage
     {
-        // http://openweathermap.org/weather-conditions
-        if (weatherCode == "") {
-            return NSImage(named: "MB-Sun")!
-        }
-        else if (weatherCode == "01d") {
-            return NSImage(named: "MB-Sun")!
-        }
-        else if (weatherCode == "01n") {
-            return NSImage(named: "MB-Moon")!
-        }
-        else if (weatherCode == "02d") {
-            return NSImage(named: "MB-Sun-Cloud-1")!
-        }
-        else if (weatherCode == "02n") {
-            return NSImage(named: "MB-Moon-Cloud-1")!
-        }
-        else if ((weatherCode == "03d") ||
-                 (weatherCode == "03n")) {
-            return NSImage(named: "MB-Cloudy")!
-        }
-        else if (weatherCode == "04d") {
-            return NSImage(named: "MB-Sun-Cloud-2")!
-        }
-        else if (weatherCode == "04n") {
-            return NSImage(named: "MB-Moon-Cloud-2")!
-        }
-        else if ((weatherCode == "09d") ||
+        let defaults = NSUserDefaults.standardUserDefaults()
+
+        if (defaults.stringForKey("useNewWeatherIcons")! == "1")
+        {
+            // http://openweathermap.org/weather-conditions
+            if (weatherCode == "") {
+                return NSImage(named: "Sun-Dark")!
+            }
+            else if (weatherCode == "01d")
+            {
+                return NSImage(named: "Sun-Dark")!
+            }
+            else if (weatherCode == "01n")
+            {
+                return NSImage(named: "Moon-Dark")!
+            }
+            else if (weatherCode == "02d")
+            {
+                return NSImage(named: "Sun-Cloud-Dark")!
+            }
+            else if (weatherCode == "02n")
+            {
+                return NSImage(named: "Moon-Cloud-Dark")!
+            }
+            else if ((weatherCode == "03d") ||
+            (weatherCode == "03n"))
+            {
+                return NSImage(named: "Cloudy-Dark")!
+            }
+            else if (weatherCode == "04d")
+            {
+                return NSImage(named: "Sun-Cloud-Dark")!
+            }
+            else if (weatherCode == "04n")
+            {
+                return NSImage(named: "Moon-Cloud-Dark")!
+            }
+            else if ((weatherCode == "09d") ||
             (weatherCode == "09n") ||
             (weatherCode == "10d") ||
-            (weatherCode == "10n")) {
-                return NSImage(named: "MB-Rain")!
-        }
-        else if ((weatherCode == "50d") ||
-            (weatherCode == "50n")) {
-                return NSImage(named: "MB-Hazy")!
-        }
-        else if ((weatherCode == "11d") ||
-            (weatherCode == "11n")) {
-                return NSImage(named: "MB-Thunderstorm")!
-        }
-        else if ((weatherCode == "13d") ||
-            (weatherCode == "13n")) {
-                return NSImage(named: "MB-Snow")!
-        }
-
-        ErrorLog(String(format:NSLocalizedString("InvalidWeatherCode_", // Unique key of your choice
+            (weatherCode == "10n"))
+            {
+                return NSImage(named: "Rain-Dark")!
+            }
+            else if ((weatherCode == "50d") ||
+            (weatherCode == "50n"))
+            {
+                return NSImage(named: "Hazy-Dark")!
+            }
+            else if ((weatherCode == "11d") ||
+            (weatherCode == "11n"))
+            {
+                return NSImage(named: "Thunderstorm-Dark")!
+            }
+            else if ((weatherCode == "13d") ||
+            (weatherCode == "13n"))
+            {
+                return NSImage(named: "Snow-Dark")!
+            }
+            
+            ErrorLog(String(format:NSLocalizedString("InvalidWeatherCode_", // Unique key of your choice
             value:"Invalid weatherCode", // Default (English) text
             comment:"Invalid weatherCode") + " : " + weatherCode))
-        return NSImage(named: "MB-Unknown")!
+            return NSImage(named: "Unknown-Dark")!
+        }
+        else
+        {
+            // http://openweathermap.org/weather-conditions
+            if (weatherCode == "") {
+                return NSImage(named: "Sun-Color")!
+            }
+            else if (weatherCode == "01d")
+            {
+                return NSImage(named: "Sun-Color")!
+            }
+            else if (weatherCode == "01n")
+            {
+                return NSImage(named: "Moon-Color")!
+            }
+            else if (weatherCode == "02d")
+            {
+                return NSImage(named: "Sun-Cloud-Color")!
+            }
+            else if (weatherCode == "02n")
+            {
+                return NSImage(named: "Moon-Cloud-Color")!
+            }
+            else if ((weatherCode == "03d") ||
+            (weatherCode == "03n"))
+            {
+                return NSImage(named: "Cloudy-Color")!
+            }
+            else if (weatherCode == "04d")
+            {
+                return NSImage(named: "Sun-Cloud-Color")!
+            }
+            else if (weatherCode == "04n")
+            {
+                return NSImage(named: "Moon-Cloud-Color")!
+            }
+            else if ((weatherCode == "09d") ||
+            (weatherCode == "09n") ||
+            (weatherCode == "10d") ||
+            (weatherCode == "10n"))
+            {
+                return NSImage(named: "Rain-Color")!
+            }
+            else if ((weatherCode == "50d") ||
+            (weatherCode == "50n"))
+            {
+                return NSImage(named: "Hazy-Color")!
+            }
+            else if ((weatherCode == "11d") ||
+            (weatherCode == "11n"))
+            {
+                return NSImage(named: "Thunderstorm-Color")!
+            }
+            else if ((weatherCode == "13d") ||
+            (weatherCode == "13n"))
+            {
+                return NSImage(named: "Snow-Color")!
+            }
+            
+            ErrorLog(String(format:NSLocalizedString("InvalidWeatherCode_", // Unique key of your choice
+            value:"Invalid weatherCode", // Default (English) text
+            comment:"Invalid weatherCode") + " : " + weatherCode))
+            return NSImage(named: "Unknown-Color")!
+        }
 
     } // setImage
     
-    func formatDay(temp: String) -> String {
+    func formatDay(temp: String) -> String
+    {
         var returnDay = temp
         if ((temp != "Mon") &&
-            (temp != "Wed")) {
+            (temp != "Wed"))
+        {
                 returnDay.appendContentsOf(" ")
         }
-        if (temp == "Fri") {
+        if (temp == "Fri")
+        {
             returnDay.appendContentsOf(" ")
         }
         return returnDay
     } // formatDay
     
-    func formatTemp(temp: String) -> String {
+    func formatTemp(temp: String) -> String
+    {
         let defaults = NSUserDefaults.standardUserDefaults()
         var formattedTemp = String(Int(((temp as NSString).doubleValue)))
-        if (defaults.stringForKey("degreesUnit")! == "1") {
+        if (defaults.stringForKey("degreesUnit")! == "1")
+        {
             // http://www.rapidtables.com/convert/temperature/how-fahrenheit-to-celsius.htm
             formattedTemp = String(Int(((temp as NSString).doubleValue - 32) / 1.8))
         }
         formattedTemp += "°"
-        if (defaults.stringForKey("displayDegreeType")! == "1") {
-            if (defaults.stringForKey("degreesUnit")! == "0") {
+        if (defaults.stringForKey("displayDegreeType")! == "1")
+        {
+            if (defaults.stringForKey("degreesUnit")! == "0")
+            {
                 formattedTemp += "F"
-            } else {
+            }
+            else
+            {
                 formattedTemp += "C"
             }
         }
         return formattedTemp
     } // formatTemp
     
-    func calculateFeelsLike(sTemperature: String, sWindspeed: String, sRH: String) -> String {
+    func calculateFeelsLike(sTemperature: String, sWindspeed: String, sRH: String) -> String
+    {
         // http://www.nws.noaa.gov/om/winter/faqs.shtml
         // http://www.srh.noaa.gov/epz/?n=wxcalc_heatindex
         // Wind-chill is calculated when temperatures are at or below 50 F and wind speeds are above 3 mph.
@@ -390,26 +486,32 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         var temp = 0.0
         var windspeed = 0.0
         var rh = 0.0
-        if (sTemperature != "") {
+        if (sTemperature != "")
+        {
             temp = Double(sTemperature)!
         }
-        if (sWindspeed != "") {
+        if (sWindspeed != "")
+        {
             windspeed = Double(sWindspeed)!
         }
-        if (sRH != "") {
+        if (sRH != "")
+        {
             rh = Double(sRH)!
         }
 
         var feelsLike = sTemperature
 
-        if ((temp < 50) && (windspeed > 3)) {
+        if ((temp < 50) && (windspeed > 3))
+        {
             // Windchill (ºF) = 35.74 + 0.6215T - 35.75(V^0.16) + 0.4275T(V^0.16)
             let Windchill1 = (0.6215 * temp)
             let Windchill2 = (35.75 * (windspeed ** 0.16))
             let Windchill3 = (0.4275 * temp * (windspeed ** 0.16))
             let Windchill = 35.74 + Windchill1 - Windchill2 + Windchill3
             feelsLike = String(format:"%.0f", Windchill)
-        } else if ((temp > 80) && (rh > 40)) {
+        }
+        else if ((temp > 80) && (rh > 40))
+        {
             // Heat Index = − 42.379 + (2.04901523 × T ) + (10.14333127 × rh) − (0.22475541 × T × rh) − (6.83783×10−3×T2) − (5.481717 × 10−2 × rh2) + (1.22874 × 10−3 × T2 × rh) + (8.5282×10−4 × T × rh2) − (1.99×10−6 × T2 × rh2)
             let HI1 = (2.04901523 * temp )
             let HI2 = (10.14333127 * rh)
@@ -425,8 +527,10 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         return formatTemp(feelsLike)
     } // calculateFeelsLike
 
-    func convertUTCtoHHMM(myTime: String) -> String {
-        if (myTime == "") {
+    func convertUTCtoHHMM(myTime: String) -> String
+    {
+        if (myTime == "")
+        {
             return ""
         }
         // create dateFormatter with UTC time format
@@ -441,7 +545,8 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         return dateFormatter.stringFromDate(date!)
     } // convertUTCtoHHMM
     
-    func convertUTCtoEEE(myTime: String) -> String {
+    func convertUTCtoEEE(myTime: String) -> String
+    {
         // EEE is Mon, Tue, Wed, etc.
         // create dateFormatter with UTC time format
         let dateFormatter = NSDateFormatter()
@@ -454,47 +559,73 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         return formatDay(dateFormatter.stringFromDate(date!))
     } // convertUTCtoEEE
     
-    func formatWindSpeed(speed2: String, direction: String) -> String {
+    func formatWindSpeed(speed2: String, direction: String) -> String
+    {
         let defaults = NSUserDefaults.standardUserDefaults()
         var formattedWindSpeed = String(Int(((direction as NSString).doubleValue))) + "° @ "
         let speed = String(Int(((speed2 as NSString).doubleValue)))
-        if (defaults.stringForKey("directionUnit")! == "1") {
+        if (defaults.stringForKey("directionUnit")! == "1")
+        {
             var windDirection = direction
             let iDirection = Int((direction as NSString).doubleValue)
-            if (iDirection <= 22) {
+            if (iDirection <= 22)
+            {
                 windDirection = "N"
-            } else if (iDirection <= 67) {
+            }
+            else if (iDirection <= 67)
+            {
                 windDirection = "NE"
-            } else if (iDirection <= 112) {
+            }
+            else if (iDirection <= 112)
+            {
                 windDirection = "E"
-            } else if (iDirection <= 147) {
+            }
+            else if (iDirection <= 147)
+            {
                 windDirection = "SE"
-            } else if (iDirection <= 202) {
+            }
+            else if (iDirection <= 202)
+            {
                 windDirection = "S"
-            } else if (iDirection <= 247) {
+            }
+            else if (iDirection <= 247)
+            {
                 windDirection = "SW"
-            } else if (iDirection <= 292) {
+            }
+            else if (iDirection <= 292)
+            {
                 windDirection = "W"
-            } else if (iDirection <= 337) {
+            }
+            else if (iDirection <= 337)
+            {
                 windDirection = "NW"
-            } else {
+            }
+            else
+            {
                 windDirection = "N"
             }
             formattedWindSpeed = windDirection + " @ "
         }
-        if (defaults.stringForKey("speedUnit")! == "0") {
+        if (defaults.stringForKey("speedUnit")! == "0")
+        {
             formattedWindSpeed += speed + " " + NSLocalizedString("MPH_", // Unique key of your choice
                 value:"mph", // Default (English) text
                 comment:"miles per hour")
-        } else if (defaults.stringForKey("speedUnit")! == "1") {
+        }
+        else if (defaults.stringForKey("speedUnit")! == "1")
+        {
             formattedWindSpeed += String(Int((speed as NSString).doubleValue * 1.6094)) + " " + NSLocalizedString("km/h_", // Unique key of your choice
                 value:"km/h", // Default (English) text
                 comment:"kilometer per hour")
-        } else if (defaults.stringForKey("speedUnit")! == "2") {
+        }
+        else if (defaults.stringForKey("speedUnit")! == "2")
+        {
             formattedWindSpeed += String(Int((speed as NSString).doubleValue * 0.44704)) + " " + NSLocalizedString("m/s_", // Unique key of your choice
                 value:"m/s", // Default (English) text
                 comment:"meters per second")
-        } else if (defaults.stringForKey("speedUnit")! == "3") {
+        }
+        else if (defaults.stringForKey("speedUnit")! == "3")
+        {
             formattedWindSpeed += String(Int((speed as NSString).doubleValue * 1.15077944802)) + " " + NSLocalizedString("Knots_", // Unique key of your choice
                 value:"knots", // Default (English) text
                 comment:"knots")
@@ -502,23 +633,31 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         return formattedWindSpeed
     } // formatWindSpeed
     
-    func formatPressure(pressure2: String) -> String {
+    func formatPressure(pressure2: String) -> String
+    {
         let defaults = NSUserDefaults.standardUserDefaults()
         var formattedPressure = ""
         let pressure = String(format: "%.2f", (pressure2 as NSString).doubleValue / 33.8637526)
-        if (defaults.stringForKey("pressureUnit")! == "0") {
+        if (defaults.stringForKey("pressureUnit")! == "0")
+        {
             formattedPressure += pressure + " " + NSLocalizedString("Inches_", // Unique key of your choice
                 value:"inches", // Default (English) text
                 comment:"inches")
-        } else if (defaults.stringForKey("pressureUnit")! == "1") {
+        }
+        else if (defaults.stringForKey("pressureUnit")! == "1")
+        {
             formattedPressure += String(Int((pressure as NSString).doubleValue * 33.8637526)) + " " + NSLocalizedString("mb_", // Unique key of your choice
                 value:"mbar", // Default (English) text
                 comment:"millibars")
-        } else if (defaults.stringForKey("pressureUnit")! == "2") {
+        }
+        else if (defaults.stringForKey("pressureUnit")! == "2")
+        {
             formattedPressure += String(Int((pressure as NSString).doubleValue * 3.39)) + " " + NSLocalizedString("kPa_", // Unique key of your choice
                 value:"kPa", // Default (English) text
                 comment:"kiloPascal")
-        } else if (defaults.stringForKey("pressureUnit")! == "3") {
+        }
+        else if (defaults.stringForKey("pressureUnit")! == "3")
+        {
             // Meters/second
             formattedPressure += String(Int((pressure as NSString).doubleValue * 33.8637526)) + " " + NSLocalizedString("hPa_", // Unique key of your choice
                 value:"hPa", // Default (English) text
@@ -530,45 +669,60 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
     func formatVisibility(distance: String) -> String {
         let defaults = NSUserDefaults.standardUserDefaults()
         var formattedVisibility = ""
-        if (defaults.stringForKey("distanceUnit")! == "0") {
+        if (defaults.stringForKey("distanceUnit")! == "0")
+        {
             formattedVisibility += distance + " " + NSLocalizedString("Miles_", // Unique key of your choice
                 value:"miles", // Default (English) text
                 comment:"Miles (disance)")
-        } else if (defaults.stringForKey("distanceUnit")! == "1") {
+        }
+        else if (defaults.stringForKey("distanceUnit")! == "1")
+        {
             formattedVisibility += String(Int((distance as NSString).doubleValue * 5280.0)) + " " + NSLocalizedString("feet_", // Unique key of your choice
                 value:"feet", // Default (English) text
                 comment:"Feet (disance)")
-        } else if (defaults.stringForKey("distanceUnit")! == "2") {
+        }
+        else if (defaults.stringForKey("distanceUnit")! == "2")
+        {
             formattedVisibility += String(Int((distance as NSString).doubleValue * 0.621371192237)) + " " + NSLocalizedString("kilometers_", // Unique key of your choice
                 value:"kilometers", // Default (English) text
                 comment:"kilometers (disance)")
-        } else if (defaults.stringForKey("distanceUnit")! == "3") {
+        }
+        else if (defaults.stringForKey("distanceUnit")! == "3")
+        {
             // Meters
             formattedVisibility += String(Int((distance as NSString).doubleValue * 621.371192237)) + " " + NSLocalizedString("meters_", // Unique key of your choice
                 value:"meters", // Default (English) text
                 comment:"meters (disance)")
-        } else {
+        }
+        else
+        {
             // Knots
         }
         return formattedVisibility
     } // formatVisibility
     
-    func formatHumidity(humidity: String) -> String {
+    func formatHumidity(humidity: String) -> String
+    {
         return humidity + "%"
     } // formatHumidity
     
-    func extendedWeatherIcon(weatherCode: String) -> NSImage {
+    func extendedWeatherIcon(weatherCode: String) -> NSImage
+    {
         let defaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+        if (defaults.stringForKey("extendedForecastIcons")! == "1")
+        {
             return setImage(weatherCode)
-        } else {
+        }
+        else
+        {
             return NSImage()
         }
     } // extendedWeatherIcon
     
     // Same function found in AppDelegate and the weather routines
     // except AppDelgate also has the routine for defining the fonts
-    func myMenuItem(string: String, url: String?, key: String) ->NSMenuItem {
+    func myMenuItem(string: String, url: String?, key: String) ->NSMenuItem
+    {
         
         var newItem : NSMenuItem
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -581,28 +735,37 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         
         let m = NSNumberFormatter().numberFromString(defaults.stringForKey("fontsize")!)!
         
-        if (url == nil) {
+        if (url == nil)
+        {
             newItem = NSMenuItem(title: "", action: nil, keyEquivalent: key)
-        } else {
+        }
+        else
+        {
             newItem = NSMenuItem(title: "", action: Selector(url!), keyEquivalent: key)
         }
         
-        if (defaults.stringForKey("fontDefault") == "1") {
+        if (defaults.stringForKey("fontDefault") == "1")
+        {
             attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                 string,
                 attributes:[NSFontAttributeName : NSFont.systemFontOfSize(CGFloat(m))]))
-        } else {
+        }
+        else
+        {
             let textColor = NSColor(red: CGFloat(Float(defaults.stringForKey("fontRedText")!)!),
                 green: CGFloat(Float(defaults.stringForKey("fontGreenText")!)!),
                 blue: CGFloat(Float(defaults.stringForKey("fontBlueText")!)!),
                 alpha: 1.0)
             
-            if (defaults.stringForKey("fontTransparency")! == "1") {
+            if (defaults.stringForKey("fontTransparency")! == "1")
+            {
                 attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                     string,
                     attributes:[NSFontAttributeName : NSFont(name: defaults.stringForKey("font")!, size: CGFloat(m))!,
                         NSForegroundColorAttributeName : textColor]))
-            } else {
+            }
+            else
+            {
                 let backgroundColor = NSColor(
                     red: CGFloat(Float(defaults.stringForKey("fontRedBackground")!)!),
                     green: CGFloat(Float(defaults.stringForKey("fontGreenBackground")!)!),
@@ -621,7 +784,8 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         return newItem
     } // myMenuItem
     
-    func currentConditions(weatherFields: WeatherFields, cityName: String, currentForecastMenu: NSMenu) {
+    func currentConditions(weatherFields: WeatherFields, cityName: String, currentForecastMenu: NSMenu)
+    {
         
         var newItem : NSMenuItem
         
@@ -673,7 +837,8 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         
     } // currentConditions
     
-    func extendedForecasts(weatherFields: WeatherFields, cityName: String, extendedForecastMenu: NSMenu) {
+    func extendedForecasts(weatherFields: WeatherFields, cityName: String, extendedForecastMenu: NSMenu)
+    {
         
         var newItem : NSMenuItem
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -682,23 +847,33 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
         
         var extendedForecast = NSMenu()
         
-        if (!weatherFields.forecast1Day.isEqual("")) {
+        if (!weatherFields.forecast1Day.isEqual(""))
+        {
             extendedForecast = NSMenu()
             
-            if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
+            if (defaults.stringForKey("extendedForecastSingleLine")! == "1")
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast1Day as String) + " \t" + formatTemp(weatherFields.forecast1High as String) + "/" + formatTemp(weatherFields.forecast1Low as String) + " \t" + (weatherFields.forecast1Conditions as String), url: "dummy:", key: "")
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast1Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                         extendedForecastMenu.addItem(newItem)
-            } else {
+            }
+            else
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast1Day as String) + ", " + formatTemp(weatherFields.forecast1High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast1Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
@@ -723,23 +898,32 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             }
         }
         
-        if (!weatherFields.forecast2Day.isEqual("")) {
+        if (!weatherFields.forecast2Day.isEqual(""))
+        {
             extendedForecast = NSMenu()
             
-            if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
+            if (defaults.stringForKey("extendedForecastSingleLine")! == "1")
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast2Day as String) + " \t" + formatTemp(weatherFields.forecast2High as String) + "/" + formatTemp(weatherFields.forecast2Low as String) + " \t" + (weatherFields.forecast2Conditions as String), url: "dummy:", key: "")
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast2Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                         extendedForecastMenu.addItem(newItem)
-            } else {
+            }
+            else
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast2Day as String) + ", " + formatTemp(weatherFields.forecast2High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
                 if (defaults.stringForKey("extendedForecastIcons")! == "1") {
                     newItem.image=setImage(weatherFields.forecast2Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
@@ -764,23 +948,33 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             }
         }
         
-        if (!weatherFields.forecast3Day.isEqual("")) {
+        if (!weatherFields.forecast3Day.isEqual(""))
+        {
             extendedForecast = NSMenu()
             
-            if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
+            if (defaults.stringForKey("extendedForecastSingleLine")! == "1")
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast3Day as String) + " \t" + formatTemp(weatherFields.forecast3High as String) + "/" + formatTemp(weatherFields.forecast3Low as String) + " \t" + (weatherFields.forecast3Conditions as String), url: "dummy:", key: "")
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast3Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                         extendedForecastMenu.addItem(newItem)
-            } else {
+            }
+            else
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast3Day as String) + ", " + formatTemp(weatherFields.forecast3High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast3Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
@@ -805,23 +999,33 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             }
         }
         
-        if (!weatherFields.forecast4Day.isEqual("")) {
+        if (!weatherFields.forecast4Day.isEqual(""))
+        {
             extendedForecast = NSMenu()
             
-            if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
+            if (defaults.stringForKey("extendedForecastSingleLine")! == "1")
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast4Day as String) + " \t" + formatTemp(weatherFields.forecast4High as String) + "/" + formatTemp(weatherFields.forecast4Low as String) + " \t" + (weatherFields.forecast4Conditions as String), url: "dummy:", key: "")
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast4Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                         extendedForecastMenu.addItem(newItem)
-            } else {
+            }
+            else
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast4Day as String) + ", " + formatTemp(weatherFields.forecast4High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast4Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
@@ -846,23 +1050,33 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             }
         }
         
-        if (!weatherFields.forecast5Day.isEqual("")) {
+        if (!weatherFields.forecast5Day.isEqual(""))
+        {
             extendedForecast = NSMenu()
             
-            if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
+            if (defaults.stringForKey("extendedForecastSingleLine")! == "1")
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast5Day as String) + " \t" + formatTemp(weatherFields.forecast5High as String) + "/" + formatTemp(weatherFields.forecast5Low as String) + " \t" + (weatherFields.forecast5Conditions as String), url: "dummy:", key: "")
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast5Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                         extendedForecastMenu.addItem(newItem)
-            } else {
+            }
+            else
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast5Day as String) + ", " + formatTemp(weatherFields.forecast5High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast5Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
@@ -887,23 +1101,33 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             }
         }
         
-        if (!weatherFields.forecast6Day.isEqual("")) {
+        if (!weatherFields.forecast6Day.isEqual(""))
+        {
             extendedForecast = NSMenu()
             
-            if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
+            if (defaults.stringForKey("extendedForecastSingleLine")! == "1")
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast6Day as String) + " \t" + formatTemp(weatherFields.forecast6High as String) + "/" + formatTemp(weatherFields.forecast6Low as String) + " \t" + (weatherFields.forecast6Conditions as String), url: "dummy:", key: "")
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast6Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                         extendedForecastMenu.addItem(newItem)
-            } else {
+            }
+            else
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast6Day as String) + ", " + formatTemp(weatherFields.forecast6High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast6Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)
@@ -928,23 +1152,33 @@ class OpenWeatherMapAPI: NSObject, NSXMLParserDelegate {
             }
         }
         
-        if (!weatherFields.forecast7Day.isEqual("")) {
+        if (!weatherFields.forecast7Day.isEqual(""))
+        {
             extendedForecast = NSMenu()
             
-            if (defaults.stringForKey("extendedForecastSingleLine")! == "1") {
+            if (defaults.stringForKey("extendedForecastSingleLine")! == "1")
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast7Day as String) + " \t" + formatTemp(weatherFields.forecast7High as String) + "/" + formatTemp(weatherFields.forecast7Low as String) + " \t" + (weatherFields.forecast7Conditions as String), url: "dummy:", key: "")
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast7Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                         extendedForecastMenu.addItem(newItem)
-            } else {
+            }
+            else
+            {
                 newItem = myMenuItem(convertUTCtoEEE(weatherFields.forecast7Day as String) + ", " + formatTemp(weatherFields.forecast7High as String), url: nil, key: "")
                 extendedForecastMenu.addItem(newItem)
-                if (defaults.stringForKey("extendedForecastIcons")! == "1") {
+                if (defaults.stringForKey("extendedForecastIcons")! == "1")
+                {
                     newItem.image=setImage(weatherFields.forecast7Code as String)
-                } else {
+                }
+                else
+                {
                     newItem.image = nil
                 }
                 extendedForecastMenu.setSubmenu(extendedForecast, forItem: newItem)

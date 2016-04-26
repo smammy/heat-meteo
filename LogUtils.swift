@@ -14,35 +14,35 @@ var logFileHandle: NSFileHandle?
 var original_stderr: Int32?;
 
 #if DEBUG_1
-    func DebugLog(message: String, file: String = __FILE__, line: Int = __LINE__) {
+    func DebugLog(message: String, file: String = #file, line: Int = #line) {
         let defaults = NSUserDefaults.standardUserDefaults()
         if (defaults.stringForKey("logMessages")! == "1") {
             return { NSLog("<Debug>: " + message + " [" + file + ":%i]", line) }()
         }
     }
     
-    func InfoLog(message: String, file: String = __FILE__, line: Int = __LINE__) {
+    func InfoLog(message: String, file: String = #file, line: Int = #line) {
         let defaults = NSUserDefaults.standardUserDefaults()
         if (defaults.stringForKey("logMessages")! == "1") {
             return { NSLog("<Info>: " + message + " [" + file + ":%i]", line) }()
         }
     }
     
-    func WarningLog(message: String, file: String = __FILE__, line: Int = __LINE__) {
+    func WarningLog(message: String, file: String = #file, line: Int = #line) {
         let defaults = NSUserDefaults.standardUserDefaults()
         if (defaults.stringForKey("logMessages")! == "1") {
             return { NSLog("<Warning>: " + message + " [" + file + ":%i]", line) }()
         }
     }
     
-    func ErrorLog(message: String, file: String = __FILE__, line: Int = __LINE__) {
+    func ErrorLog(message: String, file: String = #file, line: Int = #line) {
         let defaults = NSUserDefaults.standardUserDefaults()
         if (defaults.stringForKey("logMessages")! == "1") {
             return { NSLog("<Error>: " + message + " [" + file + ":%i]", line) }()
         }
     }
 #else
-    func DebugLog(message: String, file: String = __FILE__, line: Int = __LINE__) {
+    func DebugLog(message: String, file: String = #file, line: Int = #line) {
         let defaults = NSUserDefaults.standardUserDefaults()
         if (defaults.stringForKey("logMessages")! == "1") {
             // Uncomment this statement for Debug level messages
@@ -50,21 +50,21 @@ var original_stderr: Int32?;
         }
     }
     
-    func InfoLog(message: String, file: String = __FILE__, line: Int = __LINE__) {
+    func InfoLog(message: String, file: String = #file, line: Int = #line) {
         let defaults = NSUserDefaults.standardUserDefaults()
         if (defaults.stringForKey("logMessages")! == "1") {
             return { NSLog("<Info>: " + message) }()
         }
     }
     
-    func WarningLog(message: String, file: String = __FILE__, line: Int = __LINE__) {
+    func WarningLog(message: String, file: String = #file, line: Int = #line) {
         let defaults = NSUserDefaults.standardUserDefaults()
         if (defaults.stringForKey("logMessages")! == "1") {
             return { NSLog("<Warning>: " + message) }()
         }
     }
     
-    func ErrorLog(message: String, file: String = __FILE__, line: Int = __LINE__) {
+    func ErrorLog(message: String, file: String = #file, line: Int = #line) {
         //let defaults = NSUserDefaults.standardUserDefaults()
         //if (defaults.stringForKey("logMessages")! == "1") {
             return { NSLog("<Error>: " + message) }()
