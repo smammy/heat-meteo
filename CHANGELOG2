@@ -5,14 +5,3 @@
     Also retina compatible.
     Default is Yes.
 * Sorry no change for Yahoo yet.
-2.0.4
-* Correct setting of Preference Version.
-2.0.3
-* OpenWeatherMap returning empty data causing crashes.
-2.0.2
-* Prevent crash if invalid icon from OpenWeatherMap (display "unknown")
-* Display "unknown" icon from Yahoo if necessary
-2.0.1
-* Ability to select System Font
-* System Font is now the default font
-* Change default font size to 15
