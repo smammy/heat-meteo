@@ -34,14 +34,20 @@ class RadarWindow: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var radarDisplayWebView: WebView!
     @IBOutlet weak var radarWind: NSWindow!
 
-    var radarURL = "http://www.weather.com/weather/radar/interactive/l/"
+    let radarURL = "http://www.weather.com/weather/radar/interactive/l/"
+    
+    // THIS NEEDS LOTS OF WORK - RIGHT NOW IS HARD CODED TO WEATHER.COM
+    // THIS NEEDS LOTS OF WORK - RIGHT NOW IS HARD CODED TO WEATHER.COM
+    // THIS NEEDS LOTS OF WORK - RIGHT NOW IS HARD CODED TO WEATHER.COM
+    // THIS NEEDS LOTS OF WORK - RIGHT NOW IS HARD CODED TO WEATHER.COM
+    // THIS NEEDS LOTS OF WORK - RIGHT NOW IS HARD CODED TO WEATHER.COM
 
-    var weatherComTag = "USIL0828"
+    var weatherComTag = "60565"
 
     // Allow Command-W to close the window
-    override func keyDown(theEvent: (NSEvent!))
+    override func keyDown(with theEvent: (NSEvent!))
     {
-        if theEvent.modifierFlags.contains(.CommandKeyMask) {
+        if theEvent.modifierFlags.contains(.command) {
             switch theEvent.charactersIgnoringModifiers! {
             case "w":
                 self.window?.close()
@@ -56,21 +62,38 @@ class RadarWindow: NSWindowController, NSWindowDelegate {
 
         self.window?.center()
         self.window?.makeKeyAndOrderFront(self)
-        NSApp.activateIgnoringOtherApps(true)
+        NSApp.activate(ignoringOtherApps: true)
         
-        let defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = UserDefaults.standard
         var ourURL = radarURL
-        if (defaults.stringForKey("weatherSource")! == YAHOO_WEATHER) {
-            ourURL.appendContentsOf(weatherComTag)
+        
+        let weatherDataSource = defaults.string(forKey: "weatherSource_1")!
+
+        if (weatherDataSource == YAHOO_WEATHER) {
+            ourURL.append(weatherComTag)
         }
-        else if (defaults.stringForKey("weatherSource")! == "1") {
-            ourURL = weatherComTag
+        else if (weatherDataSource == OPENWEATHERMAP) {
+            ourURL.append(weatherComTag)
+        }
+        else if (weatherDataSource == WEATHERUNDERGROUND) {
+            ourURL.append(weatherComTag)
+        }
+        else{
+            let i = Int(defaults.string(forKey: "weatherSource")!)! + 1
+            // Something bad should happen to let the developer know this option hasn't been implemented ...
+            let ErrorMsg = String(format:"Radar option %d hasn't been implemented", i)
+            ErrorLog(ErrorMsg)
+            let alert:NSAlert = NSAlert()
+            alert.messageText = ErrorMsg
+            alert.informativeText = "Contact the developer and choose another weather source"
+            alert.runModal()
+            //self.window!.makeKeyAndOrderFront(self.window!)
         }
         
         radarWind.title = NSLocalizedString("Radar_", // Unique key of your choice
             value:"Radar", // Default (English) text
             comment:"Radar")
-        radarDisplayWebView.mainFrame.loadRequest(NSURLRequest(URL: NSURL(string: ourURL)!))
+        radarDisplayWebView.mainFrame.load(URLRequest(url: URL(string: ourURL)!))
         
     }
     
@@ -81,10 +104,10 @@ class RadarWindow: NSWindowController, NSWindowDelegate {
     override func windowWillLoad() {
     }
     
-    func windowWillClose(notification: NSNotification) {
+    func windowWillClose(_ notification: Notification) {
     }
 
-    func radarDisplay(weatherTag: String) {
+    func radarDisplay(_ weatherTag: String) {
         
         weatherComTag = weatherTag
         

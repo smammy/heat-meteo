@@ -1,7 +1,23 @@
-2.0.5
-* Update provided by Eric W., a senior at Longwood University in Virginia (USA).
-* Animated "loading" icon weather information before the animation kicks in.
-* Optional new graphics for the various weather conditions that work well with OS X's new recommendations.
-    Also retina compatible.
-    Default is Yes.
-* Sorry no change for Yahoo yet.
+3.0.0
+*
+* STOP!!! - Don't update without reading and understanding this upgrade. Also recommend that you keep the prior version and turn off version checks if you aren't comfortable with this change.
+*
+* Rather than trying to be all things for everybody for all weather stations for all locations, Meteo is now geared to be specific the particular weather service selected.
+*   Each user will needs an API key for each weather source so the usage for one person doesn't infringe on another.
+*   Also the Input City Name is specific to the service. For example WeatherUnderground will require IL/NAPERVILLE where the Input city for TheWeather.com would be 157281. Experimentation with search city names will be required.
+*   A new Display City field will be used to provide a "pretty" output display.
+* Upgraded Swift syntax to version 3 (still supports 10.9 and up)
+* Switch weather source internal format from XML to json where possible
+* Add TheWeather.com, WeatherUnderground, AerisWeather, and WorldWeatherOnline as data sources
+*   WeatherUnderground is the recommended API for Weather.com
+*   OpenWeatherMap now requires an API key
+*   No change to Yahoo
+*   Recommended weather sources are OpenWeatherMap,WeatherUnderground, AerisWeather, or Yahoo
+*   All except for Yahoo require individual API keys for each service so users don't step on each other - See the preference pane for additional information
+*   Yahoo is still squirrely but seems to be stable lately
+*   TheWeather.com is forecast only, no current weather.
+* Add mmHg option for barometric pressure
+* Add option to rotate cities (on same schedule as weather refresh)
+* Add option to limit forecast days
+* Add option for startup delay to allow for computers using WiFi (default is 10 seconds - change to 0 for immediate launch)
+* Correct a crash if the non-system font (default TAHOMA) was disabled or otherwise not available

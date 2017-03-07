@@ -10,7 +10,7 @@
 
 import Foundation
 
-var logFileHandle: NSFileHandle?
+var logFileHandle: FileHandle?
 var original_stderr: Int32?;
 
 #if DEBUG_1
@@ -42,29 +42,29 @@ var original_stderr: Int32?;
         }
     }
 #else
-    func DebugLog(message: String, file: String = #file, line: Int = #line) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.stringForKey("logMessages")! == "1") {
+    func DebugLog(_ message: String, file: String = #file, line: Int = #line) {
+        let defaults = UserDefaults.standard
+        if (defaults.string(forKey: "logMessages")! == "1") {
             // Uncomment this statement for Debug level messages
             //return { NSLog("<Debug>: " + message) }()
         }
     }
     
-    func InfoLog(message: String, file: String = #file, line: Int = #line) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.stringForKey("logMessages")! == "1") {
+    func InfoLog(_ message: String, file: String = #file, line: Int = #line) {
+        let defaults = UserDefaults.standard
+        if (defaults.string(forKey: "logMessages")! == "1") {
             return { NSLog("<Info>: " + message) }()
         }
     }
     
-    func WarningLog(message: String, file: String = #file, line: Int = #line) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.stringForKey("logMessages")! == "1") {
+    func WarningLog(_ message: String, file: String = #file, line: Int = #line) {
+        let defaults = UserDefaults.standard
+        if (defaults.string(forKey: "logMessages")! == "1") {
             return { NSLog("<Warning>: " + message) }()
         }
     }
     
-    func ErrorLog(message: String, file: String = #file, line: Int = #line) {
+    func ErrorLog(_ message: String, file: String = #file, line: Int = #line) {
         //let defaults = NSUserDefaults.standardUserDefaults()
         //if (defaults.stringForKey("logMessages")! == "1") {
             return { NSLog("<Error>: " + message) }()
@@ -74,33 +74,33 @@ var original_stderr: Int32?;
 
 
 // Redirect log to /Library/Logs/<AppName>.log
-func SetCustomLogFilename(name: String) {
+func SetCustomLogFilename(_ name: String) {
     
-    var logDirectory: NSURL
+    var logDirectory: URL
     // Search log directory path
     do {
-        try logDirectory = NSFileManager.defaultManager().URLForDirectory(NSSearchPathDirectory.LibraryDirectory, inDomain: NSSearchPathDomainMask.UserDomainMask, appropriateForURL: nil, create: true).URLByAppendingPathComponent("Logs/")
+        try logDirectory = FileManager.default.url(for: FileManager.SearchPathDirectory.libraryDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("Logs/")
     } catch {
         return
     }
 
     // Calculate full log file path
-    if let logFilePath = logDirectory.URLByAppendingPathComponent(String(format:"%@.log", name)) as NSURL! {
+    if let logFilePath = logDirectory.appendingPathComponent(String(format:"%@.log", name)) as URL! {
         
         // Save STDERR
-        let stderr = NSFileHandle.fileHandleWithStandardError()
-        original_stderr = dup(stderr.fileDescriptor)
+        let stderr = FileHandle.standardError
+        original_stderr = dup(stderr.fileDescriptor);
         
         // Create an empty log file at path, NSFileHandle doesn't do it!
-        if !NSFileManager.defaultManager().isWritableFileAtPath(logFilePath.path!) {
+        if !FileManager.default.isWritableFile(atPath: logFilePath.path) {
             do {
-                try "".writeToFile(logFilePath.path!, atomically: true, encoding: NSUTF8StringEncoding)
+                try "".write(toFile: logFilePath.path, atomically: true, encoding: String.Encoding.utf8)
             } catch {
                 return
             }
         }
         
-        if let logFileHandle = NSFileHandle(forWritingAtPath: logFilePath.path!) {
+        if let logFileHandle = FileHandle(forWritingAtPath: logFilePath.path) {
             
             // (Try to) Redirect STDERR to log file
             let err:Int32? = dup2(logFileHandle.fileDescriptor, stderr.fileDescriptor)
