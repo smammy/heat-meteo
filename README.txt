@@ -1,5 +1,15 @@
 This file could also be called the change log.
 
+3.0.1
+*
+* STOP!!! - Don't update without reading and understanding the 3.x update. Also recommend that you keep the prior version and turn off version checks if you aren't 100% comfortable with this version.
+*
+* Fix launch failure on 10.9 systems
+* Add French localizations (any other offers?)
+* Add "Loading..." display to the startup delay
+* Change default WeatherSource back to Yahoo!.
+*
+
 3.0.0
 *
 * STOP!!! - Don't update without reading and understanding this upgrade. Also recommend that you keep the prior version and turn off version checks if you aren't comfortable with this change.

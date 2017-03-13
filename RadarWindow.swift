@@ -90,9 +90,7 @@ class RadarWindow: NSWindowController, NSWindowDelegate {
             //self.window!.makeKeyAndOrderFront(self.window!)
         }
         
-        radarWind.title = NSLocalizedString("Radar_", // Unique key of your choice
-            value:"Radar", // Default (English) text
-            comment:"Radar")
+        radarWind.title = localizedString(forKey: "Radar_")
         radarDisplayWebView.mainFrame.load(URLRequest(url: URL(string: ourURL)!))
         
     }

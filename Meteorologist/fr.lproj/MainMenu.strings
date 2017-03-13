@@ -1,0 +1,837 @@
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "064-jF-Irz"; */
+"064-jF-Irz.title" = "Hide Others";
+
+/* Class = "NSMenuItem"; title = "\tRight to Left"; ObjectID = "0c2-Bl-J66"; */
+"0c2-Bl-J66.title" = "\tRight to Left";
+
+/* Class = "NSMenuItem"; title = "Item 3"; ObjectID = "0i1-3f-MGz"; */
+"0i1-3f-MGz.title" = "Item 3";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "0kn-8Q-UA7"; */
+"0kn-8Q-UA7.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Print…"; ObjectID = "0tH-3s-Ons"; */
+"0tH-3s-Ons.title" = "Print…";
+
+/* Class = "NSTextFieldCell"; title = "Speed:_"; ObjectID = "11a-LH-VYD"; */
+"11a-LH-VYD.title" = "Speed:_";
+
+/* Class = "NSTextFieldCell"; title = "30"; ObjectID = "132-nt-VYj"; */
+"132-nt-VYj.title" = "30";
+
+/* Class = "NSMenuItem"; title = "Ligatures"; ObjectID = "1T9-gb-CJZ"; */
+"1T9-gb-CJZ.title" = "Ligatures";
+
+/* Class = "NSButtonCell"; title = "https://developer.yahoo.com/weather/"; ObjectID = "20H-zl-iZS"; */
+"20H-zl-iZS.title" = "https://developer.yahoo.com/weather/";
+
+/* Class = "NSMenuItem"; title = "Substitutions"; ObjectID = "2Sh-UQ-pfe"; */
+"2Sh-UQ-pfe.title" = "Substitutions";
+
+/* Class = "NSMenuItem"; title = "Find…"; ObjectID = "2YN-xS-goB"; */
+"2YN-xS-goB.title" = "Find…";
+
+/* Class = "NSButtonCell"; title = "Use new weather icons_"; ObjectID = "2bp-5o-aIl"; */
+"2bp-5o-aIl.title" = "Use new weather icons_";
+
+/* Class = "NSMenuItem"; title = "10"; ObjectID = "3HM-wL-Ggb"; */
+"3HM-wL-Ggb.title" = "10";
+
+/* Class = "NSButtonCell"; title = "http://api.theweather.com"; ObjectID = "3Jh-8v-cLR"; */
+"3Jh-8v-cLR.title" = "http://api.theweather.com";
+
+/* Class = "NSMenuItem"; title = "8"; ObjectID = "3f0-2J-USB"; */
+"3f0-2J-USB.title" = "8";
+
+/* Class = "NSMenuItem"; title = "Item 1"; ObjectID = "3kZ-sQ-Exc"; */
+"3kZ-sQ-Exc.title" = "Item 1";
+
+/* Class = "NSMenu"; title = "Font"; ObjectID = "3rZ-e4-oN9"; */
+"3rZ-e4-oN9.title" = "Font";
+
+/* Class = "NSMenuItem"; title = "Open Recent"; ObjectID = "4UR-4h-7YV"; */
+"4UR-4h-7YV.title" = "Open Recent";
+
+/* Class = "NSMenu"; title = "View"; ObjectID = "4iI-4y-ziY"; */
+"4iI-4y-ziY.title" = "View";
+
+/* Class = "NSButtonCell"; title = "Extended forecast icons_"; ObjectID = "4wi-RG-hzU"; */
+"4wi-RG-hzU.title" = "Extended forecast icons_";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "4yU-l8-EQD"; */
+"4yU-l8-EQD.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "3"; ObjectID = "5gL-xx-7Ii"; */
+"5gL-xx-7Ii.title" = "3";
+
+/* Class = "NSMenuItem"; title = "Align Right"; ObjectID = "5jV-gs-L8y"; */
+"5jV-gs-L8y.title" = "Align Right";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "6VO-Wj-rJi"; */
+"6VO-Wj-rJi.title" = "Item 2";
+
+/* Class = "NSTextFieldCell"; title = "API Key Signup:_"; ObjectID = "6Ve-9D-BEG"; */
+"6Ve-9D-BEG.title" = "API Key Signup:_";
+
+/* Class = "NSTextFieldCell"; title = "Distance:_"; ObjectID = "6gU-Ch-qOX"; */
+"6gU-Ch-qOX.title" = "Distance:_";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "6sg-Rf-aBr"; */
+"6sg-Rf-aBr.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Close"; ObjectID = "6vh-19-PNX"; */
+"6vh-19-PNX.title" = "Close";
+
+/* Class = "NSMenuItem"; title = "Cut"; ObjectID = "7QR-OG-Ms5"; */
+"7QR-OG-Ms5.title" = "Cut";
+
+/* Class = "NSTextFieldCell"; title = "Display Font:_"; ObjectID = "7dc-L0-15G"; */
+"7dc-L0-15G.title" = "Display Font:_";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "7kt-wa-cmx"; */
+"7kt-wa-cmx.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "11"; ObjectID = "7tg-Zu-K0h"; */
+"7tg-Zu-K0h.title" = "11";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "8dL-X8-i6I"; */
+"8dL-X8-i6I.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Paste and Match Style"; ObjectID = "8hD-Uw-vBa"; */
+"8hD-Uw-vBa.title" = "Paste and Match Style";
+
+/* Class = "NSMenuItem"; title = "Jump to Selection"; ObjectID = "8yN-po-lw6"; */
+"8yN-po-lw6.title" = "Jump to Selection";
+
+/* Class = "NSMenuItem"; title = "Smart Quotes"; ObjectID = "90R-Lk-ywq"; */
+"90R-Lk-ywq.title" = "Smart Quotes";
+
+/* Class = "NSTextFieldCell"; title = "Update frequence:_"; ObjectID = "9A6-D4-PuW"; */
+"9A6-D4-PuW.title" = "Update frequence:_";
+
+/* Class = "NSMenuItem"; title = "Smaller"; ObjectID = "9Pn-VY-gCU"; */
+"9Pn-VY-gCU.title" = "Smaller";
+
+/* Class = "NSButtonCell"; title = "Check for new versions on launch_"; ObjectID = "9tL-Lo-Tjc"; */
+"9tL-Lo-Tjc.title" = "Check for new versions on launch_";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "9zm-Bu-NSk"; */
+"9zm-Bu-NSk.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "AMl-b9-C8l"; */
+"AMl-b9-C8l.title" = "Item 2";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client Secret if required"; ObjectID = "AX4-PL-86e"; */
+"AX4-PL-86e.ibShadowedToolTip" = "Client Secret if required";
+
+/* Class = "NSMenuItem"; title = "Item 1"; ObjectID = "Adb-fJ-7t4"; */
+"Adb-fJ-7t4.title" = "Item 1";
+
+/* Class = "NSTextFieldCell"; title = "Cupertino, CA"; ObjectID = "Ani-gO-CzI"; */
+"Ani-gO-CzI.title" = "Cupertino, CA";
+
+/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "B6E-aL-ZF8"; */
+"B6E-aL-ZF8.title" = "Bring All to Front";
+
+/* Class = "NSMenuItem"; title = "View"; ObjectID = "BQi-tE-XvX"; */
+"BQi-tE-XvX.title" = "View";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "BU0-CE-Eq9"; */
+"BU0-CE-Eq9.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Justify"; ObjectID = "BXG-RQ-yH9"; */
+"BXG-RQ-yH9.title" = "Justify";
+
+/* Class = "NSButtonCell"; title = "Current weather in submenu_"; ObjectID = "BqW-CY-yi9"; */
+"BqW-CY-yi9.title" = "Current weather in submenu_";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "CH2-bT-QhG"; */
+"CH2-bT-QhG.title" = "Item 2";
+
+/* Class = "NSTextFieldCell"; title = "API Key 1:_"; ObjectID = "Ct3-mG-ExL"; */
+"Ct3-mG-ExL.title" = "API Key 1:_";
+
+/* Class = "NSMenuItem"; title = "Check Spelling While Typing"; ObjectID = "CzS-B6-luQ"; */
+"CzS-B6-luQ.title" = "Check Spelling While Typing";
+
+/* Class = "NSMenuItem"; title = "Inches"; ObjectID = "D5x-zU-JNP"; */
+"D5x-zU-JNP.title" = "Inches";
+
+/* Class = "NSTextFieldCell"; title = "minutes_"; ObjectID = "DCT-N5-8Zm"; */
+"DCT-N5-8Zm.title" = "minutes_";
+
+/* Class = "NSMenuItem"; title = "Align Left"; ObjectID = "DEq-Xi-72u"; */
+"DEq-Xi-72u.title" = "Align Left";
+
+/* Class = "NSMenuItem"; title = "\tDefault"; ObjectID = "DHt-us-9Jm"; */
+"DHt-us-9Jm.title" = "\tDefault";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "DKm-m6-i5f"; */
+"DKm-m6-i5f.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Text Replacement"; ObjectID = "DQD-VR-MUV"; */
+"DQD-VR-MUV.title" = "Text Replacement";
+
+/* Class = "NSTextFieldCell"; title = "Direction_"; ObjectID = "DU4-s7-6lS"; */
+"DU4-s7-6lS.title" = "Direction_";
+
+/* Class = "NSMenuItem"; title = "Data Detectors"; ObjectID = "Dig-fP-x46"; */
+"Dig-fP-x46.title" = "Data Detectors";
+
+/* Class = "NSMenu"; title = "Spelling"; ObjectID = "Dwt-O1-2rm"; */
+"Dwt-O1-2rm.title" = "Spelling";
+
+/* Class = "NSMenuItem"; title = "12"; ObjectID = "Dzy-A8-9fe"; */
+"Dzy-A8-9fe.title" = "12";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client ID, Affiliate ID, or API Key"; ObjectID = "EKR-hc-xO4"; */
+"EKR-hc-xO4.ibShadowedToolTip" = "Client ID, Affiliate ID, or API Key";
+
+/* Class = "NSMenuItem"; title = "Find"; ObjectID = "EpZ-Z3-GfB"; */
+"EpZ-Z3-GfB.title" = "Find";
+
+/* Class = "NSMenuItem"; title = "Degrees"; ObjectID = "FCA-wh-Chg"; */
+"FCA-wh-Chg.title" = "Degrees";
+
+/* Class = "NSMenuItem"; title = "Paste Style"; ObjectID = "Fbs-Kc-t7x"; */
+"Fbs-Kc-t7x.title" = "Paste Style";
+
+/* Class = "NSButtonCell"; title = "https://home.openweathermap.org/users/sign_up"; ObjectID = "Fjh-cZ-cdl"; */
+"Fjh-cZ-cdl.title" = "https://home.openweathermap.org/users/sign_up";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Fnn-DH-aIu"; */
+"Fnn-DH-aIu.title" = "Show All";
+
+/* Class = "NSMenuItem"; title = "Show Toolbar"; ObjectID = "Fnv-xp-QqC"; */
+"Fnv-xp-QqC.title" = "Show Toolbar";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "Fos-Kr-1b3"; */
+"Fos-Kr-1b3.title" = "Item 2";
+
+/* Class = "NSTextFieldCell"; title = "10"; ObjectID = "GPT-0q-c4R"; */
+"GPT-0q-c4R.title" = "10";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "GdG-L3-idK"; */
+"GdG-L3-idK.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Italic"; ObjectID = "H3D-0H-0ep"; */
+"H3D-0H-0ep.title" = "Italic";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "H6q-lb-208"; */
+"H6q-lb-208.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "HMa-VQ-QmA"; */
+"HMa-VQ-QmA.title" = "Edit";
+
+/* Class = "NSMenuItem"; title = "Loosen"; ObjectID = "HrE-UT-YkM"; */
+"HrE-UT-YkM.title" = "Loosen";
+
+/* Class = "NSMenuItem"; title = "Font"; ObjectID = "IDj-e1-zQl"; */
+"IDj-e1-zQl.title" = "Font";
+
+/* Class = "NSButtonCell"; title = "Display type (C/F)_"; ObjectID = "IE1-X4-mQz"; */
+"IE1-X4-mQz.title" = "Display type (C/F)_";
+
+/* Class = "NSMenuItem"; title = "Raise"; ObjectID = "ITi-aG-cP5"; */
+"ITi-aG-cP5.title" = "Raise";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "IjK-IJ-zhY"; */
+"IjK-IJ-zhY.title" = "Item 2";
+
+/* Class = "NSButtonCell"; title = "Log message to console_"; ObjectID = "Iu2-wB-1EP"; */
+"Iu2-wB-1EP.title" = "Log message to console_";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client Secret if required"; ObjectID = "Jch-eL-lQh"; */
+"Jch-eL-lQh.ibShadowedToolTip" = "Client Secret if required";
+
+/* Class = "NSMenuItem"; title = "Tighten"; ObjectID = "JhK-ua-P1O"; */
+"JhK-ua-P1O.title" = "Tighten";
+
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "JuA-bO-h1K"; */
+"JuA-bO-h1K.title" = "Main Menu";
+
+/* Class = "NSButtonCell"; title = "https://sourceforge.net/projects/heat-meteo/"; ObjectID = "KAo-IP-7nM"; */
+"KAo-IP-7nM.title" = "https://sourceforge.net/projects/heat-meteo/";
+
+/* Class = "NSMenuItem"; title = "Use None"; ObjectID = "KSs-io-kl7"; */
+"KSs-io-kl7.title" = "Use None";
+
+/* Class = "NSMenuItem"; title = "Revert to Saved"; ObjectID = "KY8-gu-FcW"; */
+"KY8-gu-FcW.title" = "Revert to Saved";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "Kgm-wR-4Iz"; */
+"Kgm-wR-4Iz.title" = "Item 2";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client ID, Affiliate ID, or API Key"; ObjectID = "Kms-Fv-A68"; */
+"Kms-Fv-A68.ibShadowedToolTip" = "Client ID, Affiliate ID, or API Key";
+
+/* Class = "NSMenuItem"; title = "Format"; ObjectID = "Ksf-Ly-Tcw"; */
+"Ksf-Ly-Tcw.title" = "Format";
+
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "LK1-QH-Qek"; */
+"LK1-QH-Qek.title" = "Preferences…";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "LS0-Oo-F9D"; */
+"LS0-Oo-F9D.title" = "Item 2";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client ID, Affiliate ID, or API Key"; ObjectID = "LdF-ma-OyX"; */
+"LdF-ma-OyX.ibShadowedToolTip" = "Client ID, Affiliate ID, or API Key";
+
+/* Class = "NSMenuItem"; title = "Save…"; ObjectID = "M1P-Ie-r6p"; */
+"M1P-Ie-r6p.title" = "Save…";
+
+/* Class = "NSMenu"; title = "Open Recent"; ObjectID = "M27-kc-UEV"; */
+"M27-kc-UEV.title" = "Open Recent";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "M5r-Sq-oVq"; */
+"M5r-Sq-oVq.title" = "Item 2";
+
+/* Class = "NSTextFieldCell"; title = "No FREE accounts - Typical location is \"city state\"_"; ObjectID = "MAt-Ql-Iq1"; */
+"MAt-Ql-Iq1.title" = "No FREE accounts - Typical location is \"city state\"_";
+
+/* Class = "NSMenuItem"; title = "Writing Direction"; ObjectID = "MAy-bo-PsR"; */
+"MAy-bo-PsR.title" = "Writing Direction";
+
+/* Class = "NSMenuItem"; title = "Capitalize"; ObjectID = "Mav-hV-S0q"; */
+"Mav-hV-S0q.title" = "Capitalize";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "NTK-o4-NpP"; */
+"NTK-o4-NpP.title" = "Item 2";
+
+/* Class = "NSTextFieldCell"; title = "Typical location is \"city name\", no API Key required at this time_"; ObjectID = "Nxt-jT-UB6"; */
+"Nxt-jT-UB6.title" = "Typical location is \"city name\", no API Key required at this time_";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "O8A-Y4-z2G"; */
+"O8A-Y4-z2G.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Miles"; ObjectID = "OJg-ti-FmN"; */
+"OJg-ti-FmN.title" = "Miles";
+
+/* Class = "NSMenuItem"; title = "Center"; ObjectID = "ORN-Yj-inx"; */
+"ORN-Yj-inx.title" = "Center";
+
+/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "OfF-Ih-Vwv"; */
+"OfF-Ih-Vwv.title" = "Undo";
+
+/* Class = "NSMenuItem"; title = "Baseline"; ObjectID = "P8F-08-S20"; */
+"P8F-08-S20.title" = "Baseline";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "Prq-4K-33k"; */
+"Prq-4K-33k.title" = "Item 2";
+
+/* Class = "NSTextFieldCell"; title = "Global Units:_"; ObjectID = "Q21-MU-iaj"; */
+"Q21-MU-iaj.title" = "Global Units:_";
+
+/* Class = "NSMenuItem"; title = "Speech"; ObjectID = "Q77-Wa-ZOX"; */
+"Q77-Wa-ZOX.title" = "Speech";
+
+/* Class = "NSMenuItem"; title = "Use None"; ObjectID = "Q9M-xS-IY7"; */
+"Q9M-xS-IY7.title" = "Use None";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "QPJ-Vn-AgD"; */
+"QPJ-Vn-AgD.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Item 3"; ObjectID = "Qom-f5-x6L"; */
+"Qom-f5-x6L.title" = "Item 3";
+
+/* Class = "NSWindow"; title = "Meteorologist"; ObjectID = "QvC-M9-y7g"; */
+"QvC-M9-y7g.title" = "Meteorologist";
+
+/* Class = "NSMenu"; title = "Window"; ObjectID = "QxV-Kv-E9y"; */
+"QxV-Kv-E9y.title" = "Window";
+
+/* Class = "NSMenuItem"; title = "Hide NewApplication"; ObjectID = "RBY-Gm-fde"; */
+"RBY-Gm-fde.title" = "Hide NewApplication";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "RHg-93-3ew"; */
+"RHg-93-3ew.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "6"; ObjectID = "RJC-b4-vDU"; */
+"RJC-b4-vDU.title" = "6";
+
+/* Class = "NSButtonCell"; title = "https://www.wunderground.com/weather/api/"; ObjectID = "SBs-fD-aLh"; */
+"SBs-fD-aLh.title" = "https://www.wunderground.com/weather/api/";
+
+/* Class = "NSMenu"; title = "Services"; ObjectID = "STh-jN-gj2"; */
+"STh-jN-gj2.title" = "Services";
+
+/* Class = "NSTextFieldCell"; title = "City name/location code:_"; ObjectID = "SWW-9J-Oa2"; */
+"SWW-9J-Oa2.title" = "City name/location code:_";
+
+/* Class = "NSTextFieldCell"; title = "Typical location is \"lat long\"_"; ObjectID = "SaI-Dx-uDh"; */
+"SaI-Dx-uDh.title" = "Typical location is \"lat long\"_";
+
+/* Class = "NSMenuItem"; title = "Lower"; ObjectID = "SgG-lP-pqz"; */
+"SgG-lP-pqz.title" = "Lower";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client ID, Affiliate ID, or API Key"; ObjectID = "Sku-vB-OlW"; */
+"Sku-vB-OlW.ibShadowedToolTip" = "Client ID, Affiliate ID, or API Key";
+
+/* Class = "NSMenuItem"; title = "Window"; ObjectID = "SnJ-2E-p3G"; */
+"SnJ-2E-p3G.title" = "Window";
+
+/* Class = "NSMenuItem"; title = "Text"; ObjectID = "Ss6-WN-NIz"; */
+"Ss6-WN-NIz.title" = "Text";
+
+/* Class = "NSMenuItem"; title = "Transformations"; ObjectID = "Ua7-mW-9Js"; */
+"Ua7-mW-9Js.title" = "Transformations";
+
+/* Class = "NSMenuItem"; title = "About NewApplication"; ObjectID = "Udb-4U-Uzv"; */
+"Udb-4U-Uzv.title" = "About NewApplication";
+
+/* Class = "NSMenuItem"; title = "Check Document Now"; ObjectID = "Uym-Sr-LZW"; */
+"Uym-Sr-LZW.title" = "Check Document Now";
+
+/* Class = "NSMenuItem"; title = "Item 1"; ObjectID = "V7m-sp-An4"; */
+"V7m-sp-An4.title" = "Item 1";
+
+/* Class = "NSMenuItem"; title = "Subscript"; ObjectID = "VAG-Kr-HtB"; */
+"VAG-Kr-HtB.title" = "Subscript";
+
+/* Class = "NSTextFieldCell"; title = "Max Forecast Days:_"; ObjectID = "VT0-7v-XSg"; */
+"VT0-7v-XSg.title" = "Max Forecast Days:_";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "VVU-8c-1ag"; */
+"VVU-8c-1ag.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Use All"; ObjectID = "WU9-7Y-6Bq"; */
+"WU9-7Y-6Bq.title" = "Use All";
+
+/* Class = "NSMenuItem"; title = "Paragraph"; ObjectID = "WWi-6H-Rg8"; */
+"WWi-6H-Rg8.title" = "Paragraph";
+
+/* Class = "NSMenuItem"; title = "9"; ObjectID = "We7-Nn-w5r"; */
+"We7-Nn-w5r.title" = "9";
+
+/* Class = "NSMenuItem"; title = "Miles/Hour"; ObjectID = "X00-Y9-kVp"; */
+"X00-Y9-kVp.title" = "Miles/Hour";
+
+/* Class = "NSTextFieldCell"; title = "Display name:_"; ObjectID = "X17-JU-6uM"; */
+"X17-JU-6uM.title" = "Display name:_";
+
+/* Class = "NSMenuItem"; title = "Copy Style"; ObjectID = "XlK-Ev-zbg"; */
+"XlK-Ev-zbg.title" = "Copy Style";
+
+/* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "XnC-Y4-YPw"; */
+"XnC-Y4-YPw.title" = "Zoom";
+
+/* Class = "NSMenuItem"; title = "Selection"; ObjectID = "Xvy-Ql-wnv"; */
+"Xvy-Ql-wnv.title" = "Selection";
+
+/* Class = "NSTextFieldCell"; title = "Forecast only, no current conditions - Typical location is \"city number\"_"; ObjectID = "Xyh-07-g4k"; */
+"Xyh-07-g4k.title" = "Forecast only, no current conditions - Typical location is \"city number\"_";
+
+/* Class = "NSMenuItem"; title = "Smart Links"; ObjectID = "Y5B-xd-8wg"; */
+"Y5B-xd-8wg.title" = "Smart Links";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client ID, Affiliate ID, or API Key"; ObjectID = "YKo-g8-2GG"; */
+"YKo-g8-2GG.ibShadowedToolTip" = "Client ID, Affiliate ID, or API Key";
+
+/* Class = "NSMenuItem"; title = "NewApplication Help"; ObjectID = "YM3-mi-yaq"; */
+"YM3-mi-yaq.title" = "NewApplication Help";
+
+/* Class = "NSMenuItem"; title = "Start Speaking"; ObjectID = "YNQ-Sh-Lfb"; */
+"YNQ-Sh-Lfb.title" = "Start Speaking";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "YTg-r9-79D"; */
+"YTg-r9-79D.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Item 3"; ObjectID = "YbS-la-hkr"; */
+"YbS-la-hkr.title" = "Item 3";
+
+/* Class = "NSMenuItem"; title = "Fahrenheit"; ObjectID = "Z0a-Vl-Oja"; */
+"Z0a-Vl-Oja.title" = "Fahrenheit";
+
+/* Class = "NSButtonCell"; title = "https://www.aerisweather.com/develop/"; ObjectID = "Z1O-j7-dEE"; */
+"Z1O-j7-dEE.title" = "https://www.aerisweather.com/develop/";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client Secret if required"; ObjectID = "ZfE-G0-3qq"; */
+"ZfE-G0-3qq.ibShadowedToolTip" = "Client Secret if required";
+
+/* Class = "NSMenuItem"; title = "Delete"; ObjectID = "a7l-nh-vfc"; */
+"a7l-nh-vfc.title" = "Delete";
+
+/* Class = "NSMenuItem"; title = "Services"; ObjectID = "a7t-x5-78m"; */
+"a7t-x5-78m.title" = "Services";
+
+/* Class = "NSMenuItem"; title = "13"; ObjectID = "aeB-Qf-may"; */
+"aeB-Qf-may.title" = "13";
+
+/* Class = "NSMenuItem"; title = "Open…"; ObjectID = "azD-LS-7gW"; */
+"azD-LS-7gW.title" = "Open…";
+
+/* Class = "NSMenuItem"; title = "Stop Speaking"; ObjectID = "bDa-B6-AuH"; */
+"bDa-B6-AuH.title" = "Stop Speaking";
+
+/* Class = "NSButtonCell"; title = "Extended forecast in submenu_"; ObjectID = "bPO-ho-LLR"; */
+"bPO-ho-LLR.title" = "Extended forecast in submenu_";
+
+/* Class = "NSMenuItem"; title = "1"; ObjectID = "bWP-cs-iPc"; */
+"bWP-cs-iPc.title" = "1";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client Secret if required"; ObjectID = "blT-pp-OOm"; */
+"blT-pp-OOm.ibShadowedToolTip" = "Client Secret if required";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "cZD-ff-6DP"; */
+"cZD-ff-6DP.title" = "Help";
+
+/* Class = "NSMenuItem"; title = "\tRight to Left"; ObjectID = "d34-nl-46B"; */
+"d34-nl-46B.title" = "\tRight to Left";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "dLZ-Eu-kJJ"; */
+"dLZ-Eu-kJJ.title" = "Item 2";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client Secret if required"; ObjectID = "djc-Ep-kje"; */
+"djc-Ep-kje.ibShadowedToolTip" = "Client Secret if required";
+
+/* Class = "NSMenuItem"; title = "Check Grammar With Spelling"; ObjectID = "dwy-im-hnB"; */
+"dwy-im-hnB.title" = "Check Grammar With Spelling";
+
+/* Class = "NSTextFieldCell"; title = "Typical location is \"lat long\"_"; ObjectID = "e6B-B1-MxU"; */
+"e6B-B1-MxU.title" = "Typical location is \"lat long\"_";
+
+/* Class = "NSMenuItem"; title = "Item 1"; ObjectID = "eFn-LP-vZV"; */
+"eFn-LP-vZV.title" = "Item 1";
+
+/* Class = "NSMenuItem"; title = "File"; ObjectID = "eKL-ks-enY"; */
+"eKL-ks-enY.title" = "File";
+
+/* Class = "NSMenuItem"; title = "Show Fonts"; ObjectID = "eN4-eE-C3b"; */
+"eN4-eE-C3b.title" = "Show Fonts";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "edx-cz-WPf"; */
+"edx-cz-WPf.title" = "Item 2";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client ID, Affiliate ID, or API Key"; ObjectID = "fED-iR-vYf"; */
+"fED-iR-vYf.ibShadowedToolTip" = "Client ID, Affiliate ID, or API Key";
+
+/* Class = "NSMenuItem"; title = "Find Previous"; ObjectID = "fGu-OC-8TF"; */
+"fGu-OC-8TF.title" = "Find Previous";
+
+/* Class = "NSMenuItem"; title = "\tLeft to Right"; ObjectID = "fIw-an-4F4"; */
+"fIw-an-4F4.title" = "\tLeft to Right";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "fUp-56-M9k"; */
+"fUp-56-M9k.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "\tDefault"; ObjectID = "fkg-ZO-fSW"; */
+"fkg-ZO-fSW.title" = "\tDefault";
+
+/* Class = "NSMenuItem"; title = "\tLeft to Right"; ObjectID = "fn9-5n-jrd"; */
+"fn9-5n-jrd.title" = "\tLeft to Right";
+
+/* Class = "NSMenuItem"; title = "Paste Ruler"; ObjectID = "fsP-9x-rCQ"; */
+"fsP-9x-rCQ.title" = "Paste Ruler";
+
+/* Class = "NSMenuItem"; title = "Item 3"; ObjectID = "g76-BR-9SQ"; */
+"g76-BR-9SQ.title" = "Item 3";
+
+/* Class = "NSMenuItem"; title = "5"; ObjectID = "gOa-OQ-SPU"; */
+"gOa-OQ-SPU.title" = "5";
+
+/* Class = "NSMenuItem"; title = "Show Spelling and Grammar"; ObjectID = "gYr-wQ-2dx"; */
+"gYr-wQ-2dx.title" = "Show Spelling and Grammar";
+
+/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "gaI-0d-BJz"; */
+"gaI-0d-BJz.title" = "Minimize";
+
+/* Class = "NSTextFieldCell"; title = "Weather Source:_"; ObjectID = "ggY-pt-iS5"; */
+"ggY-pt-iS5.title" = "Weather Source:_";
+
+/* Class = "NSMenuItem"; title = "Item 3"; ObjectID = "gie-tE-zPH"; */
+"gie-tE-zPH.title" = "Item 3";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "gls-E2-UY6"; */
+"gls-E2-UY6.title" = "Item 2";
+
+/* Class = "NSMenu"; title = "File"; ObjectID = "h2Z-0d-nZQ"; */
+"h2Z-0d-nZQ.title" = "File";
+
+/* Class = "NSMenuItem"; title = "Correct Spelling Automatically"; ObjectID = "h4G-6V-Awm"; */
+"h4G-6V-Awm.title" = "Correct Spelling Automatically";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "h7H-9P-FjL"; */
+"h7H-9P-FjL.title" = "Help";
+
+/* Class = "NSMenuItem"; title = "Item 1"; ObjectID = "hAq-u6-IYl"; */
+"hAq-u6-IYl.title" = "Item 1";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client Secret if required"; ObjectID = "hHd-hb-cHA"; */
+"hHd-hb-cHA.ibShadowedToolTip" = "Client Secret if required";
+
+/* Class = "NSMenuItem"; title = "Copy Ruler"; ObjectID = "hJg-qx-BPM"; */
+"hJg-qx-BPM.title" = "Copy Ruler";
+
+/* Class = "NSButtonCell"; title = "https://developer.worldweatheronline.com"; ObjectID = "hZs-8Q-nJV"; */
+"hZs-8Q-nJV.title" = "https://developer.worldweatheronline.com";
+
+/* Class = "NSMenu"; title = "Find"; ObjectID = "ha8-oo-VXu"; */
+"ha8-oo-VXu.title" = "Find";
+
+/* Class = "NSMenuItem"; title = "Spelling and Grammar"; ObjectID = "hxD-qI-dyP"; */
+"hxD-qI-dyP.title" = "Spelling and Grammar";
+
+/* Class = "NSButtonCell"; title = "Show controls in submenu_"; ObjectID = "iPX-Wc-ryu"; */
+"iPX-Wc-ryu.title" = "Show controls in submenu_";
+
+/* Class = "NSMenuItem"; title = "Page Setup…"; ObjectID = "iWH-DI-4Bl"; */
+"iWH-DI-4Bl.title" = "Page Setup…";
+
+/* Class = "NSMenu"; title = "NewApplication"; ObjectID = "izQ-IE-8PL"; */
+"izQ-IE-8PL.title" = "NewApplication";
+
+/* Class = "NSMenu"; title = "Baseline"; ObjectID = "j1v-Y1-AAJ"; */
+"j1v-Y1-AAJ.title" = "Baseline";
+
+/* Class = "NSTextFieldCell"; title = "Typical location is \"city, state\"_"; ObjectID = "jOK-p2-iQy"; */
+"jOK-p2-iQy.title" = "Typical location is \"city, state\"_";
+
+/* Class = "NSTextFieldCell"; title = "Pressure:_"; ObjectID = "k7H-c6-a2P"; */
+"k7H-c6-a2P.title" = "Pressure:_";
+
+/* Class = "NSButtonCell"; title = "Display city name_"; ObjectID = "kRI-JQ-WW2"; */
+"kRI-JQ-WW2.title" = "Display city name_";
+
+/* Class = "NSMenuItem"; title = "Use Default"; ObjectID = "ku3-Rn-aDQ"; */
+"ku3-Rn-aDQ.title" = "Use Default";
+
+/* Class = "NSButtonCell"; title = "Rotate weather locations"; ObjectID = "kvB-yI-i09"; */
+"kvB-yI-i09.title" = "Rotate weather locations";
+
+/* Class = "NSMenuItem"; title = "New"; ObjectID = "l0D-Dm-jwE"; */
+"l0D-Dm-jwE.title" = "New";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "lBP-SZ-UQS"; */
+"lBP-SZ-UQS.title" = "Item 2";
+
+/* Class = "NSButtonCell"; title = "Set Font_"; ObjectID = "lE7-9k-oXn"; */
+"lE7-9k-oXn.title" = "Set Font_";
+
+/* Class = "NSTextFieldCell"; title = "seconds_"; ObjectID = "lFw-1I-wuL"; */
+"lFw-1I-wuL.title" = "seconds_";
+
+/* Class = "NSMenuItem"; title = "Smart Copy/Paste"; ObjectID = "lV6-SN-GZL"; */
+"lV6-SN-GZL.title" = "Smart Copy/Paste";
+
+/* Class = "NSMenuItem"; title = "Kern"; ObjectID = "lXR-aZ-96J"; */
+"lXR-aZ-96J.title" = "Kern";
+
+/* Class = "NSMenuItem"; title = "4"; ObjectID = "lYT-I6-e5J"; */
+"lYT-I6-e5J.title" = "4";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "lhO-81-e5n"; */
+"lhO-81-e5n.title" = "Item 2";
+
+/* Class = "NSMenu"; title = "Format"; ObjectID = "m5r-Jz-oQc"; */
+"m5r-Jz-oQc.title" = "Format";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "mTb-aE-pvD"; */
+"mTb-aE-pvD.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Bigger"; ObjectID = "mfk-yV-NE3"; */
+"mfk-yV-NE3.title" = "Bigger";
+
+/* Class = "NSMenu"; title = "Substitutions"; ObjectID = "mpd-dE-ZSZ"; */
+"mpd-dE-ZSZ.title" = "Substitutions";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "niT-kc-Krg"; */
+"niT-kc-Krg.title" = "Item 2";
+
+/* Class = "NSButtonCell"; title = "Set Font_"; ObjectID = "o4E-dP-r9H"; */
+"o4E-dP-r9H.title" = "Set Font_";
+
+/* Class = "NSMenuItem"; title = "Use Default"; ObjectID = "o4U-ub-xON"; */
+"o4U-ub-xON.title" = "Use Default";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "o5o-3n-H5P"; */
+"o5o-3n-H5P.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "14"; ObjectID = "oOt-tx-dA0"; */
+"oOt-tx-dA0.title" = "14";
+
+/* Class = "NSMenuItem"; title = "Show Ruler"; ObjectID = "oSv-yN-pHq"; */
+"oSv-yN-pHq.title" = "Show Ruler";
+
+/* Class = "NSMenuItem"; title = "Find and Replace…"; ObjectID = "oZQ-Zu-Bku"; */
+"oZQ-Zu-Bku.title" = "Find and Replace…";
+
+/* Class = "NSMenu"; title = "Writing Direction"; ObjectID = "oam-9N-MNy"; */
+"oam-9N-MNy.title" = "Writing Direction";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client Secret if required"; ObjectID = "omM-SF-K0q"; */
+"omM-SF-K0q.ibShadowedToolTip" = "Client Secret if required";
+
+/* Class = "NSMenu"; title = "Speech"; ObjectID = "ovR-v0-aCZ"; */
+"ovR-v0-aCZ.title" = "Speech";
+
+/* Class = "NSMenuItem"; title = "Item 1"; ObjectID = "p2c-YT-anv"; */
+"p2c-YT-anv.title" = "Item 1";
+
+/* Class = "NSMenu"; title = "Transformations"; ObjectID = "pO3-0n-S3S"; */
+"pO3-0n-S3S.title" = "Transformations";
+
+/* Class = "NSMenu"; title = "Ligatures"; ObjectID = "pbE-kc-EWc"; */
+"pbE-kc-EWc.title" = "Ligatures";
+
+/* Class = "NSMenuItem"; title = "Quit NewApplication"; ObjectID = "psT-9r-aNK"; */
+"psT-9r-aNK.title" = "Quit NewApplication";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "qD6-i3-eHP"; */
+"qD6-i3-eHP.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Item 1"; ObjectID = "qET-Mk-I31"; */
+"qET-Mk-I31.title" = "Item 1";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client ID, Affiliate ID, or API Key"; ObjectID = "qFQ-Wg-huI"; */
+"qFQ-Wg-huI.ibShadowedToolTip" = "Client ID, Affiliate ID, or API Key";
+
+/* Class = "NSMenuItem"; title = "NewApplication"; ObjectID = "ql0-fR-uQK"; */
+"ql0-fR-uQK.title" = "NewApplication";
+
+/* Class = "NSTextFieldCell"; title = "Degrees:_"; ObjectID = "qm5-kv-UrX"; */
+"qm5-kv-UrX.title" = "Degrees:_";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client ID, Affiliate ID, or API Key"; ObjectID = "qwD-ui-VwV"; */
+"qwD-ui-VwV.ibShadowedToolTip" = "Client ID, Affiliate ID, or API Key";
+
+/* Class = "NSMenuItem"; title = "Underline"; ObjectID = "r3b-q2-R7r"; */
+"r3b-q2-R7r.title" = "Underline";
+
+/* Class = "NSMenu"; title = "Edit"; ObjectID = "rIl-jP-Cwg"; */
+"rIl-jP-Cwg.title" = "Edit";
+
+/* Class = "NSButtonCell"; title = "https://darksky.net/dev/"; ObjectID = "rRB-sa-t85"; */
+"rRB-sa-t85.title" = "https://darksky.net/dev/";
+
+/* Class = "NSMenuItem"; title = "Find Next"; ObjectID = "rXB-Bl-8tb"; */
+"rXB-Bl-8tb.title" = "Find Next";
+
+/* Class = "NSMenuItem"; title = "Use Default"; ObjectID = "rgf-gK-yhu"; */
+"rgf-gK-yhu.title" = "Use Default";
+
+/* Class = "NSMenu"; title = "Kern"; ObjectID = "ruL-DD-RvI"; */
+"ruL-DD-RvI.title" = "Kern";
+
+/* Class = "NSMenuItem"; title = "Make Lower Case"; ObjectID = "sTf-aC-TKp"; */
+"sTf-aC-TKp.title" = "Make Lower Case";
+
+/* Class = "NSMenuItem"; title = "Clear Menu"; ObjectID = "sVh-IF-pZb"; */
+"sVh-IF-pZb.title" = "Clear Menu";
+
+/* Class = "NSMenuItem"; title = "7"; ObjectID = "sck-R3-Kxe"; */
+"sck-R3-Kxe.title" = "7";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "slp-Iv-Rtk"; */
+"slp-Iv-Rtk.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Save As…"; ObjectID = "smS-L8-uMJ"; */
+"smS-L8-uMJ.title" = "Save As…";
+
+/* Class = "NSMenuItem"; title = "Show Colors"; ObjectID = "tA4-XK-Kd6"; */
+"tA4-XK-Kd6.title" = "Show Colors";
+
+/* Class = "NSMenuItem"; title = "Redo"; ObjectID = "tIW-Mb-Bs0"; */
+"tIW-Mb-Bs0.title" = "Redo";
+
+/* Class = "NSMenuItem"; title = "Make Upper Case"; ObjectID = "tPO-aO-6Z8"; */
+"tPO-aO-6Z8.title" = "Make Upper Case";
+
+/* Class = "NSMenuItem"; title = "Smart Dashes"; ObjectID = "tc5-q4-bS9"; */
+"tc5-q4-bS9.title" = "Smart Dashes";
+
+/* Class = "NSMenuItem"; title = "2"; ObjectID = "tuh-mq-Ugr"; */
+"tuh-mq-Ugr.title" = "2";
+
+/* Class = "NSButtonCell"; title = "Extended forecast single line_"; ObjectID = "u0w-e0-CBZ"; */
+"u0w-e0-CBZ.title" = "Extended forecast single line_";
+
+/* Class = "NSMenuItem"; title = "Item 3"; ObjectID = "u1g-zP-MTK"; */
+"u1g-zP-MTK.title" = "Item 3";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "uIJ-dW-fui"; */
+"uIJ-dW-fui.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "uWX-1Z-0D9"; */
+"uWX-1Z-0D9.title" = "Item 2";
+
+/* Class = "NSButtonCell"; title = "Display weather icon_"; ObjectID = "uYo-Iq-y3w"; */
+"uYo-Iq-y3w.title" = "Display weather icon_";
+
+/* Class = "NSButtonCell"; title = "Display Humidity_"; ObjectID = "uge-XZ-lhp"; */
+"uge-XZ-lhp.title" = "Display Humidity_";
+
+/* Class = "NSMenu"; title = "Text"; ObjectID = "uiL-Qf-8wP"; */
+"uiL-Qf-8wP.title" = "Text";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "v1s-Cr-DCy"; */
+"v1s-Cr-DCy.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Item 3"; ObjectID = "vMb-5T-GVl"; */
+"vMb-5T-GVl.title" = "Item 3";
+
+/* Class = "NSMenuItem"; title = "Copy"; ObjectID = "vPV-Uk-leT"; */
+"vPV-Uk-leT.title" = "Copy";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "vRJ-r0-7yY"; */
+"vRJ-r0-7yY.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "vST-f3-YVJ"; */
+"vST-f3-YVJ.title" = "Item 2";
+
+/* Class = "NSTextFieldCell"; title = "Version x.x.x"; ObjectID = "vSq-PJ-8vr"; */
+"vSq-PJ-8vr.title" = "Version x.x.x";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "vaJ-8r-UAI"; */
+"vaJ-8r-UAI.title" = "Item 2";
+
+/* Class = "NSTextFieldCell"; title = "API Key 2:_"; ObjectID = "vcg-7L-AXP"; */
+"vcg-7L-AXP.title" = "API Key 2:_";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "vm7-S3-z5h"; */
+"vm7-S3-z5h.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Customize Toolbar…"; ObjectID = "vnf-5P-63v"; */
+"vnf-5P-63v.title" = "Customize Toolbar…";
+
+/* Class = "NSMenuItem"; title = "Superscript"; ObjectID = "wCj-dd-JnC"; */
+"wCj-dd-JnC.title" = "Superscript";
+
+/* Class = "NSButtonCell"; title = "View extended forecast_"; ObjectID = "weo-Gb-vAL"; */
+"weo-Gb-vAL.title" = "View extended forecast_";
+
+/* Class = "NSTextFieldCell"; title = "Launch Delay:_"; ObjectID = "xEH-o1-9t7"; */
+"xEH-o1-9t7.title" = "Launch Delay:_";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "xIE-m5-rc3"; */
+"xIE-m5-rc3.title" = "Item 2";
+
+/* Class = "NSTextFieldCell"; title = "Typical location is \"city,state\" (no space) or \"lat long\" - uses 2 API Keys_"; ObjectID = "xJr-iO-IVk"; */
+"xJr-iO-IVk.title" = "Typical location is \"city,state\" (no space) or \"lat long\" - uses 2 API Keys_";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Client Secret if required"; ObjectID = "xRd-i0-T8F"; */
+"xRd-i0-T8F.ibShadowedToolTip" = "Client Secret if required";
+
+/* Class = "NSMenuItem"; title = "Show Substitutions"; ObjectID = "xjq-Bi-6nx"; */
+"xjq-Bi-6nx.title" = "Show Substitutions";
+
+/* Class = "NSMenuItem"; title = "Use Selection for Find"; ObjectID = "yNL-pP-Uqc"; */
+"yNL-pP-Uqc.title" = "Use Selection for Find";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "yXU-br-Dxw"; */
+"yXU-br-Dxw.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Bold"; ObjectID = "yhp-NH-uIu"; */
+"yhp-NH-uIu.title" = "Bold";
+
+/* Class = "NSMenuItem"; title = "Item 1"; ObjectID = "zUO-Rz-hrD"; */
+"zUO-Rz-hrD.title" = "Item 1";
+
+/* Class = "NSTextFieldCell"; title = "Menu Font:_"; ObjectID = "zlt-OF-gRl"; */
+"zlt-OF-gRl.title" = "Menu Font:_";
+
+/* Class = "NSMenuItem"; title = "Select All"; ObjectID = "zpe-QT-H5g"; */
+"zpe-QT-H5g.title" = "Select All";
+
+/* Class = "NSMenuItem"; title = "Paste"; ObjectID = "zxf-rH-V6R"; */
+"zxf-rH-V6R.title" = "Paste";

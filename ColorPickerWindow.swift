@@ -221,49 +221,23 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
     func initDisplay() {
         let defaults = UserDefaults.standard
         
-        systemFontButton.title = NSLocalizedString("SystemFont_", // Unique key of your choice
-            value:"System Font", // Default (English) text
-            comment:"System Font")
-        textLabel.stringValue = NSLocalizedString("Text_", // Unique key of your choice
-            value:"Text", // Default (English) text
-            comment:"Text")
-        backgroundLabel.stringValue = NSLocalizedString("Background_", // Unique key of your choice
-            value:"Background", // Default (English) text
-            comment:"Background")
-        meteorologistLabel.stringValue = NSLocalizedString("Meteorologist_", // Unique key of your choice
-            value:"Meteorologist", // Default (English) text
-            comment:"Meteorologist")
+        systemFontButton.title = localizedString(forKey: "SystemFont_")
+        textLabel.stringValue = localizedString(forKey: "Text_")
+        backgroundLabel.stringValue = localizedString(forKey: "Background_")
+        meteorologistLabel.stringValue = localizedString(forKey: "Meteorologist_")
         
-        redTextLabel.stringValue = NSLocalizedString("Red_", // Unique key of your choice
-            value:"Red", // Default (English) text
-            comment:"Red")
-        redBackgroundLabel.stringValue = NSLocalizedString("Red_", // Unique key of your choice
-            value:"Red", // Default (English) text
-            comment:"Red")
-        greenTextLabel.stringValue = NSLocalizedString("Green_", // Unique key of your choice
-            value:"Green", // Default (English) text
-            comment:"Green")
-        greenBackgroundLabel.stringValue = NSLocalizedString("Green_", // Unique key of your choice
-            value:"Green", // Default (English) text
-            comment:"Green")
-        blueTextLabel.stringValue = NSLocalizedString("Blue_", // Unique key of your choice
-            value:"Blue", // Default (English) text
-            comment:"Blue")
-        blueBackgroundLabel.stringValue = NSLocalizedString("Blue_", // Unique key of your choice
-            value:"Blue", // Default (English) text
-            comment:"Blue")
+        redTextLabel.stringValue = localizedString(forKey: "Red_")
+        redBackgroundLabel.stringValue = localizedString(forKey: "Red_")
+        greenTextLabel.stringValue = localizedString(forKey: "Green_")
+        greenBackgroundLabel.stringValue = localizedString(forKey: "Green_")
+        blueTextLabel.stringValue = localizedString(forKey: "Blue_")
+        blueBackgroundLabel.stringValue = localizedString(forKey: "Blue_")
         
-        resetButton.title = NSLocalizedString("Reset_", // Unique key of your choice
-            value:"Reset", // Default (English) text
-            comment:"Reset")
+        resetButton.title = localizedString(forKey: "Reset_")
         
-        closeButton.title = NSLocalizedString("Close_", // Unique key of your choice
-            value:"Close", // Default (English) text
-            comment:"Close")
+        closeButton.title = localizedString(forKey: "Close_")
         
-        transparentButton.title = NSLocalizedString("Transparent_", // Unique key of your choice
-            value:"Transparent", // Default (English) text
-            comment:"Transparent")
+        transparentButton.title = localizedString(forKey: "Transparent_")
         
         fontName.addItems(withTitles: NSFontManager.shared().availableFontFamilies)
         

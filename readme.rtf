@@ -7,57 +7,34 @@
 \margl1440\margr1440\vieww17720\viewh14020\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
-\f0\fs24 \cf0 As many of you have come to realize, the weather.com feed that Meteorologist has been using is dying a slow and painful death.\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-{\field{\*\fldinst{HYPERLINK "http://feedback.weather.com/knowledgebase/articles/35599-why-is-the-weather-com-xml-data-feed-being-retired"}}{\fldrslt \cf0 http://feedback.weather.com/knowledgebase/articles/35599-why-is-the-weather-com-xml-data-feed-being-retired}}\
-(And yes I know that Meteorologist doesn\'92t really use the XML feed.)\
-\
-Anyway, I love Meteorologist and wanted it to continue. I also am a geek programmer and wanted to learn Apples new programming language Swift. So I decided to re-write Meteorologist into Swift. I also decided to modernize it with a more modern XML parser. To that extent, this new copy requires OS 10.9 or higher. (Sorry all of you 10.4 and 10.6 users - you can continue to use the older version.)\
-\
-I\'92ve looked around at a couple of free weather feeds that are available and settled on Yahoo!\'92s. Interesting it is based on weather.com. There are a couple of others I know of that can be picked up later.\
-\
-Anyway, I\'92ve reached the stage where I think this is a workable alpha copy. Note I said alpha. This isn\'92t even beta yet so if you\'92re squeamish about beta software, don\'92t even think of this copy. It\'92s crash free on my test systems.\
-\
-What\'92s the difference? This copy has many features missing entirely. You can see them listed below. One of the biggest missing features is 
-\i\b multiple cities
-\i0\b0 . I know it\'92s missing so no need to tell me. As you can see below, I'm looking for feedback on which features are important and which aren't, and kind of a priority list in other people's mind. Honestly I don't expect much consensus.\
-\
-In the true spirit of Open Source and Meteorologist, I do intent to publish the source when it's done. That will come later. But if you really want to see it now, let me know.\
-\
-This new version of Meteorologist starts over and doesn't interfere with the old copy. For now I'm calling the new app 
-\b Meteo2
-\b0 . The preferences are separate from Meteorologist so nothing is imported, you have to start from scratch. But it also means you can have easily have both running in parallel.\
-\
-I also used my developer account to "sign" the software so it shouldn't require any special permissions to run the app.\
-\
-I'm hosting the alpha copy privately, not on SourceForge. You should be able to get it by clicking {\field{\*\fldinst{HYPERLINK "http://www.danleys.org/Meteo2.zip"}}{\fldrslt http://www.danleys.org/Meteo2.zip}}. You will need to unzip it and copy it to wherever you want to keep it for now. I\'92ll be posting here as I continue to update it.\
-\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-
-\b\fs28 \cf0 ToDo/Bug List
+\f0\b\fs28 \cf0 ToDo/Bug List
 \b0\fs24 \
 * Now requires 10.9 or newer (some features require even newer OS\'92s)\
 	* What works and what doesn\'92t on older OS\'92s?\
 \
-* localization (ready?) - Not sure what the next step is with Xcode 7.\
-* do we need localization for date abbreviations (Mon, Tue, Wed, etc.)? (see alternative language testing below)\
+* localization started - French only for now\
+* do we need localization for date abbreviations (Mon, Tue, Wed, etc.)?\
+* localize weather forecast (partially complete)\
 \
 * display location (\strike \strikec0 Menubar\strike0\striked0  vs. Dock vs. Both) - does anybody use Dock view?\
 \
 * watch out for missing weather icons - look in log for message\
 \
-* animate loading weather icon?\
-* animate refreshing weather icon?\
-\
-* Testing in alternative languages (like Spanish with English words) - check for dates and \'93Yahoo! Weather\'94\
+\strike \strikec0 * animate loading weather icon?\
+\strike0\striked0 * animate refreshing weather icon?\
+\strike \strikec0 * rotating locations\
+* limit forecast days\
+\strike0\striked0 \
+\strike \strikec0 * Testing in alternative languages (like Spanish with English words) - check for dates and \'93Yahoo! Weather\'94\
 * actual product link in preference pane\
-* preference pane with 
+\strike0\striked0 * preference pane with 
 \b tabs
 \b0 \
-* city - choice of weather source\
-* dynamic city name list (not limited to 8?)\
+\strike \strikec0 * city - choice of weather source\
+\strike0\striked0 * dynamic city name list (not limited to 8?)\
 * There is some sort of memory link - possibly with NSTimer?\
-\strike \strikec0 \
+* Give API key only once for a given weather source\
+* Paid version with keys provided? Mac App Store?\strike \strikec0 \
 \
 * Alternate names for cities\
 * Font for menu bar itself\
@@ -67,10 +44,8 @@ I'm hosting the alpha copy privately, not on SourceForge. You should be able to 
 * version check\strike0\striked0 \
 \strike \strikec0 * multiple cities (8 max? - old Meteorologist crashed when adding 9th)\
 * code sign\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-\cf0 \strike0\striked0 * \strike \strikec0 rewritten into Swift 2 with modern XML parser\strike0\striked0 \
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-\cf0 \strike \strikec0 * radar image\strike0\striked0 \
+\strike0\striked0 * \strike \strikec0 rewritten into Swift 2 with modern XML parser\strike0\striked0 \
+\strike \strikec0 * radar image\strike0\striked0 \
 \strike \strikec0 * global units: Temp, Wind, Visibility, Pressure, etc\
 * about\
 * refresh timer\strike0\striked0 \
@@ -86,8 +61,7 @@ I'm hosting the alpha copy privately, not on SourceForge. You should be able to 
 * extended icons\
 * extended forecasts on one line\strike0\striked0 \
 \strike \strikec0 * controls in submenu\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-\cf0 \strike0\striked0 \
+\strike0\striked0 \
 \pard\pardeftab720\partightenfactor0
 
 \fs28 \cf2 \expnd0\expndtw0\kerning0

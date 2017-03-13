@@ -82,9 +82,7 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         if (data == nil)
         {
             weatherFields.currentTemp = "9999"
-            weatherFields.latitude = NSLocalizedString("InvalidKey_", // Unique key of your choice
-                value:"Invalid API Key or Location", // Default (English) text
-                comment:"Invalid API Key")
+            weatherFields.latitude = localizedString(forKey: "InvalidKey_")
             return weatherFields
         }
         

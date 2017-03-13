@@ -1,12 +1,11 @@
-To build using Xcode 7 (7.2.1):
+To build using Xcode 8 (8.2.1):
 
 • Open Meteorologist.xcodeproj
 • Select the project then click on the General tab. Change the Team dropdown to your Apple Dev account.
 • Test away.
 • Make sure the VERSION2 file is updated.
 • Make sure the CHANGELOG2 file is updated.
-• Make sure the info.plist is updated.
-• Make sure the DEFAULT_PREFERENCE_VERSION value in AppDelegate.swift file is updated (near the top of the code).
+• Make sure the version (Bundle versions string, short) in info.plist is updated.
 • Make sure README.txt is updated.
 • Use SVN to update the project (see below).
 • Run build_dmg.sh. This will create Meteorologist-v.r.m.dmg in the build folder using the pieces above.
@@ -14,15 +13,20 @@ To build using Xcode 7 (7.2.1):
 
 • Go to https://sourceforge.net/projects/heat-meteo/ and navigate to Files.
 • Create a new folder under Meteo called Meteo v.r.m.
-• Upload the Meteorologist-v.r.m.dmg file (from the build directory) and a README.txt (from the base directory) file.
+• Upload the Meteorologist-v.r.m.dmg file (from the build directory).
+• Upload the README.txt (from the base directory) file.
 • Select the Info button for Meteorologist-v.r.m.dmg file and mark it as the default download for Platform: Mac (OS X)
 
 
 • Open sftp <yourid>,heat-meteo@web.sourceforge.net (/home/project-web/heat-meteo/htdocs)
+—— ../Website folder ———
 • Update version.xml
+• Update faq.html
 • Update index.html
 	For index.html, create a new section at the top of the main page describing the changes. In the detail second below, create an entirely new “fix” section, describe the change again, and update the link to point to the new version. If you highlight and duplicate the previous “fix”, you can do a CHANGE ALL in the selected section to pick up all changes. Finally, update the “Download latest version” section in the upper right of the page (near the top of the HTML).
+• Update faq.html (upper left corner)
 
+—— ./trunk folder ———
 * Update CHANGELOG2
 * Update VERSION2
 
