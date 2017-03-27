@@ -436,6 +436,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 do
                 {
                     webVERSION = try NSString(contentsOf: url, usedEncoding: nil) as String
+                    webVERSION = webVERSION.replacingOccurrences(of: "\n", with: "", options: .regularExpression)
                 }
                 catch
                 {
