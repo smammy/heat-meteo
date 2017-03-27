@@ -150,3 +150,10 @@
 "Light rain" = "Légère pluie";
 
 "NoInternetConnectivity_" = "Pas de connexion Internet. Utilisation de données en cache.";
+
+"Partly cloudy until afternoon." = "Partiellement nuageux jusqu'à l'après-midi.";
+"ProvidedBy_" = "Fourni par";
+"High_" = "Haute";
+"Low_" = "Faible";
+"Forecast_" = "Prévoir";
+"Date_" = "Rendez-vous amoureux";

@@ -1919,41 +1919,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             {
                 city = weatherFields.title1 as String
             }
-            else
-            {
-                if (weatherDataSource == YAHOO_WEATHER)
-                {
-                    city = displayCityName + "\t\tYahoo! Weather"
-                }
-                else if (weatherDataSource == OPENWEATHERMAP)
-                {
-                    city = displayCityName + "\t\tOpenWeatherMap"
-                }
-                else if (weatherDataSource == WEATHERUNDERGROUND)
-                {
-                    city = displayCityName + "\t\tWeather Underground"
-                }
-                else if (weatherDataSource == DARKSKY)
-                {
-                    city = displayCityName + "\t\tPowered by DarkSky"
-                }
-                else if (weatherDataSource == AERISWEATHER)
-                {
-                    city = displayCityName + "\t\tAERIS Weather"
-                }
-                else if (weatherDataSource == WORLDWEATHERONLINE)
-                {
-                    city = displayCityName + "\t\tWorld Weather Online"
-                }
-                else if (weatherDataSource == APIXU)
-                {
-                    city = displayCityName + "\t\tAPIXU"
-                }
-                else
-                {
-                    city = displayCityName + "\t\tWeatherSource unknown"
-                }
-            }
             
             // Need to incorporate currentLink
             newItem = myMenuItem(city, url: "openWeatherURL:", key: "")
@@ -1968,6 +1933,46 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             newItem.representedObject = replaced
             menu.addItem(newItem)
             
+            var statusTitle = String()
+            if (weatherDataSource == YAHOO_WEATHER)
+            {
+                statusTitle = localizedString(forKey: "ProvidedBy_") + " Yahoo!"
+            }
+            else if (weatherDataSource == OPENWEATHERMAP)
+            {
+                statusTitle = localizedString(forKey: "ProvidedBy_") + " OpenWeather"
+            }
+            else if (weatherDataSource == THEWEATHER)
+            {
+                statusTitle = localizedString(forKey: "ProvidedBy_") + " TheWeather"
+            }
+            else if (weatherDataSource == WEATHERUNDERGROUND)
+            {
+                statusTitle = localizedString(forKey: "ProvidedBy_") + " WUnderground"
+            }
+            else if (weatherDataSource == DARKSKY)
+            {
+                statusTitle = localizedString(forKey: "ProvidedBy_") + " Dark Sky"
+            }
+            else if (weatherDataSource == AERISWEATHER)
+            {
+                statusTitle = localizedString(forKey: "ProvidedBy_") + " AERIS Weather"
+            }
+            else if (weatherDataSource == WORLDWEATHERONLINE)
+            {
+                statusTitle = localizedString(forKey: "ProvidedBy_") + " World Weather Online"
+            }
+            else if (weatherDataSource == APIXU)
+            {
+                statusTitle = localizedString(forKey: "ProvidedBy_") + " APIXU"
+            }
+            else
+            {
+                statusTitle = "WeatherSource unknown"
+            }
+            newItem = myMenuItem(statusTitle, url: "", key: "")
+            menu.addItem(newItem)
+
             var currentForecastMenu = NSMenu()
             
             if (defaults.string(forKey: "currentWeatherInSubmenu")! == "1") {
@@ -2037,43 +2042,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             }
         }
         
-        if (weatherDataSource == YAHOO_WEATHER)
-        {
-            statusTitle = statusTitle + "\t\tYahoo!"
-        }
-        else if (weatherDataSource == OPENWEATHERMAP)
-        {
-            statusTitle = statusTitle + "\t\tOpenWeather"
-        }
-        else if (weatherDataSource == THEWEATHER)
-        {
-            statusTitle = statusTitle + "\t\tTheWeather"
-        }
-        else if (weatherDataSource == WEATHERUNDERGROUND)
-        {
-            statusTitle = statusTitle + "\t\tWUnderground"
-        }
-        else if (weatherDataSource == DARKSKY)
-        {
-            statusTitle = statusTitle + "\t\tDark Sky"
-        }
-        else if (weatherDataSource == AERISWEATHER)
-        {
-            statusTitle = statusTitle + "\t\tAERIS Weather"
-        }
-        else if (weatherDataSource == WORLDWEATHERONLINE)
-        {
-            statusTitle = statusTitle + "\t\tWorld Weather Online"
-        }
-        else if (weatherDataSource == APIXU)
-        {
-            statusTitle = statusTitle + "\t\tAPIXU"
-        }
-        else
-        {
-            statusTitle = statusTitle + "\t\tWeatherSource unknown"
-        }
-        
         newItem = myMenuItem(statusTitle, url: "openWeatherURL:", key: "")
         if (weatherFields.currentCode != "") {
             newItem.image = setImage(weatherFields.currentCode as String, weatherDataSource: weatherDataSource)
@@ -2104,6 +2072,44 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             newLocation.addItem(NSMenuItem.separator())
         }
         
+        if (weatherDataSource == YAHOO_WEATHER)
+        {
+            statusTitle = localizedString(forKey: "ProvidedBy_") + " Yahoo!"
+        }
+        else if (weatherDataSource == OPENWEATHERMAP)
+        {
+            statusTitle = localizedString(forKey: "ProvidedBy_") + " OpenWeather"
+        }
+        else if (weatherDataSource == THEWEATHER)
+        {
+            statusTitle = localizedString(forKey: "ProvidedBy_") + " TheWeather"
+        }
+        else if (weatherDataSource == WEATHERUNDERGROUND)
+        {
+            statusTitle = localizedString(forKey: "ProvidedBy_") + " WUnderground"
+        }
+        else if (weatherDataSource == DARKSKY)
+        {
+            statusTitle = localizedString(forKey: "ProvidedBy_") + " Dark Sky"
+        }
+        else if (weatherDataSource == AERISWEATHER)
+        {
+            statusTitle = localizedString(forKey: "ProvidedBy_") + " AERIS Weather"
+        }
+        else if (weatherDataSource == WORLDWEATHERONLINE)
+        {
+            statusTitle = localizedString(forKey: "ProvidedBy_") + " World Weather Online"
+        }
+        else if (weatherDataSource == APIXU)
+        {
+            statusTitle = localizedString(forKey: "ProvidedBy_") + " APIXU"
+        }
+        else
+        {
+            statusTitle = "WeatherSource unknown"
+        }
+        currentForecastMenu.addItem(myMenuItem(statusTitle, url: "", key: ""))
+        
         currentConditions(weatherFields, cityName: displayCityName, currentForecastMenu: currentForecastMenu)
         
         if ((defaults.string(forKey: "viewExtendedForecast")! == "1") &&
@@ -2132,7 +2138,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         }
         
         if (weatherFields.windSpeed != "") {
-            currentForecastMenu.addItem(myMenuItem(localizedString(forKey: "FeelsLike_") + ": " + formatTemp(weatherFields.currentTemp as String), url: "dummy:", key: ""))
+            currentForecastMenu.addItem(myMenuItem(localizedString(forKey: "FeelsLike_") + ": " + calculateFeelsLike(weatherFields.currentTemp, sWindspeed: weatherFields.windSpeed, sRH: weatherFields.humidity), url: "dummy:", key: ""))
         }
         
         if (weatherFields.humidity != "") {

@@ -150,3 +150,10 @@
 "Light rain shower" = "Light rain shower";
 "Light rain" = "Light rain";
 "NoInternetConnectivity_" = "No Internet Connectivity. Using cached data.";
+
+"Partly cloudy until afternoon." = "Partly cloudy until afternoon.";
+"ProvidedBy_" = "Provided by";
+"High_" = "High";
+"Low_" = "Low";
+"Forecast_" = "Forecast";
+"Date_" = "Date";
