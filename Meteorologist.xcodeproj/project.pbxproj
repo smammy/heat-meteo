@@ -11,6 +11,7 @@
 		643C89EA1CD19F45000589F1 /* WeatherUndergroundAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C89E81CD19F45000589F1 /* WeatherUndergroundAPI.swift */; };
 		644573F51D52E84E00735B6E /* AERISWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644573F31D52E84E00735B6E /* AERISWeatherAPI.swift */; };
 		644573F61D52E84E00735B6E /* WorldWeatherOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644573F41D52E84E00735B6E /* WorldWeatherOnline.swift */; };
+		646893991E861D5D005B22B4 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646893981E861D5D005B22B4 /* Reachability.swift */; };
 		6480B10E1C43123900E55BE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480B10D1C43123900E55BE2 /* AppDelegate.swift */; };
 		6480B1101C43123900E55BE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6480B10F1C43123900E55BE2 /* Assets.xcassets */; };
 		6480B1131C43123900E55BE2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6480B1111C43123900E55BE2 /* MainMenu.xib */; };
@@ -30,6 +31,7 @@
 		64B85DBE1D52AFFB0049E719 /* DarkSkyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B85DBD1D52AFFB0049E719 /* DarkSkyAPI.swift */; };
 		64B8B8721E7450BE00F0CB39 /* Default.strings in Resources */ = {isa = PBXBuildFile; fileRef = 64B8B8741E7450BE00F0CB39 /* Default.strings */; };
 		64B8B8771E74543700F0CB39 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 64B8B8791E74543700F0CB39 /* Localizable.strings */; };
+		64DD17FE1E7B556200A0AC41 /* APIXU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64DD17FD1E7B556200A0AC41 /* APIXU.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,7 @@
 		643C89E81CD19F45000589F1 /* WeatherUndergroundAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherUndergroundAPI.swift; sourceTree = "<group>"; };
 		644573F31D52E84E00735B6E /* AERISWeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AERISWeatherAPI.swift; sourceTree = "<group>"; };
 		644573F41D52E84E00735B6E /* WorldWeatherOnline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldWeatherOnline.swift; sourceTree = "<group>"; };
+		646893981E861D5D005B22B4 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		6480B10A1C43123900E55BE2 /* Meteorologist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meteorologist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6480B10D1C43123900E55BE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ./AppDelegate.swift; sourceTree = "<group>"; };
 		6480B10F1C43123900E55BE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ./Assets.xcassets; sourceTree = "<group>"; };
@@ -60,6 +63,7 @@
 		64B85DBD1D52AFFB0049E719 /* DarkSkyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkSkyAPI.swift; sourceTree = "<group>"; };
 		64B8B8731E7450BE00F0CB39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Default.strings; sourceTree = "<group>"; };
 		64B8B8781E74543700F0CB39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		64DD17FD1E7B556200A0AC41 /* APIXU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIXU.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,7 @@
 				6480B10F1C43123900E55BE2 /* Assets.xcassets */,
 				6480B10D1C43123900E55BE2 /* AppDelegate.swift */,
 				6480B1111C43123900E55BE2 /* MainMenu.xib */,
+				646893981E861D5D005B22B4 /* Reachability.swift */,
 				6480B11E1C43238000E55BE2 /* LogUtils.swift */,
 				6480B1211C43239E00E55BE2 /* YahooWeatherAPI.swift */,
 				6480B1201C43239E00E55BE2 /* OpenWeatherMapAPI.swift */,
@@ -90,6 +95,7 @@
 				64B85DBD1D52AFFB0049E719 /* DarkSkyAPI.swift */,
 				644573F31D52E84E00735B6E /* AERISWeatherAPI.swift */,
 				644573F41D52E84E00735B6E /* WorldWeatherOnline.swift */,
+				64DD17FD1E7B556200A0AC41 /* APIXU.swift */,
 				6480B11A1C43172800E55BE2 /* ColorPickerWindow.swift */,
 				6480B11B1C43172800E55BE2 /* ColorPickerWindow.xib */,
 				6480B1251C4323E100E55BE2 /* RadarWindow.swift */,
@@ -200,12 +206,14 @@
 				6480B1221C43239E00E55BE2 /* OpenWeatherMapAPI.swift in Sources */,
 				6480B11F1C43238000E55BE2 /* LogUtils.swift in Sources */,
 				64B85DBE1D52AFFB0049E719 /* DarkSkyAPI.swift in Sources */,
+				64DD17FE1E7B556200A0AC41 /* APIXU.swift in Sources */,
 				644573F51D52E84E00735B6E /* AERISWeatherAPI.swift in Sources */,
 				6480B10E1C43123900E55BE2 /* AppDelegate.swift in Sources */,
 				6480B11C1C43172800E55BE2 /* ColorPickerWindow.swift in Sources */,
 				643C89E91CD19F45000589F1 /* TheWeatherAPI.swift in Sources */,
 				6480B1271C4323E100E55BE2 /* RadarWindow.swift in Sources */,
 				6480B1231C43239E00E55BE2 /* YahooWeatherAPI.swift in Sources */,
+				646893991E861D5D005B22B4 /* Reachability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

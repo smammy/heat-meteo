@@ -3,7 +3,7 @@ To build using Xcode 8 (8.2.1):
 ¥ Open Meteorologist.xcodeproj
 ¥ÊSelect the project then click on the General tab. Change the Team dropdown to your Apple Dev account.
 ¥ÊTest away.
-¥ Make sure the VERSION2 file is updated.
+¥ Make sure the VERSION2 file is updated (do not end with CRLF).
 ¥ Make sure the CHANGELOG2 file is updated.
 ¥ Make sure the version (Bundle versions string, short) in info.plist is updated.
 ¥ Make sure README.txt is updated.

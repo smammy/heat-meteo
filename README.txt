@@ -1,8 +1,13 @@
 This file could also be called the change log.
 
-3.0.1
+3.0.2
 *
-* STOP!!! - Don't update without reading and understanding the 3.x update. Also recommend that you keep the prior version and turn off version checks if you aren't 100% comfortable with this version.
+* Improve French localization
+* Add weather source APIXU.com
+* Add weather source DarkSky.net (no key required)
+* Display cached weather information if network connection is lost (not 100% working)
+
+3.0.1
 *
 * Fix launch failure on 10.9 systems
 * Add French localizations (any other offers?)
@@ -12,8 +17,8 @@ This file could also be called the change log.
 
 3.0.0
 *
-* STOP!!! - Don't update without reading and understanding this upgrade. Also recommend that you keep the prior version and turn off version checks if you aren't comfortable with this change.
-*
+* STOP!!! - Don't update without reading and understanding the 3.x update. Also recommend that you keep the prior version and turn off version checks if you aren't 100% comfortable with this version.
+
 * Rather than trying to be all things for everybody for all weather stations for all locations, Meteo is now geared to be specific the particular weather service selected.
 *   Each user will needs an API key for each weather source so the usage for one person doesn't infringe on another.
 *   Also the Input City Name is specific to the service. For example WeatherUnderground will require IL/NAPERVILLE where the Input city for TheWeather.com would be 157281. Experimentation with search city names will be required.

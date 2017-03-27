@@ -62,9 +62,11 @@ let THEWEATHER = "2"
 let WEATHERUNDERGROUND = "3"
 let AERISWEATHER = "4"
 let WORLDWEATHERONLINE = "5"
-let DARKSKY = "6" // Had to remove Dark Sky because Meteorologist violated their Terms of Service - Can't require users to get their own key.
+let APIXU = "6"
+let DARKSKY = "7"
 
 var DEFAULT_PREFERENCE_VERSION = String()
+var NoInternetConnectivity = Int()
 
 // http://stackoverflow.com/questions/24196689/how-to-get-the-power-of-some-integer-in-swift-language
 // Put this at file level anywhere in your project
@@ -106,7 +108,7 @@ struct WeatherFields {
     var latitude = String()
     var longitude = String()
     
-    var windChill = String()
+    //var windChill = String()
     var windSpeed = String()
     var windDirection = String()
     
@@ -117,19 +119,19 @@ struct WeatherFields {
     var sunrise = String()
     var sunset = String()
     
-    var currentCode = String()
     var currentLink = String()
     var currentTemp = String()
-    var currentConditions = String()
+    var currentCode = String()          // Abbreviated Conditions
+    var currentConditions = String()    // Full Conditions
     
     // http://stackoverflow.com/questions/30430550/how-to-create-an-empty-array-in-swift
     var forecastCounter = 0
-    var forecastCode = [String]()
     var forecastDate = [String]()
     var forecastDay = [String]()
     var forecastHigh = [String]()
     var forecastLow = [String]()
-    var forecastConditions = [String]()
+    var forecastCode = [String]()       // Abbreviated Conditions
+    var forecastConditions = [String]() // Full Condition
 
     var URL = String()
     
@@ -251,6 +253,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     @IBOutlet weak var aerisLocation: NSTextField!
     @IBOutlet weak var worldWeatherLocation: NSTextField!
     @IBOutlet weak var darkSkyLocation: NSTextField!
+    @IBOutlet weak var APIXULocation: NSTextField!
     
     @IBOutlet weak var theWeatherURL: NSButton!
     @IBOutlet weak var openWeatherMapURL: NSButton!
@@ -259,6 +262,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     @IBOutlet weak var aerisURL: NSButton!
     @IBOutlet weak var worldWeatherURL: NSButton!
     @IBOutlet weak var darkSkyURL: NSButton!
+    @IBOutlet weak var apixuURL: NSButton!
     
     var buttonPresses = 0;
     
@@ -278,6 +282,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     let darkSkyAPI = DarkSkyAPI()
     let aerisWeatherAPI = AerisWeatherAPI()
     let worldWeatherOnlineAPI = WorldWeatherOnlineAPI()
+    let ApiXUApi = APIXUAPI()
     
     var myTimer = Timer()                     // http://ios-blog.co.uk/tutorials/swift-nstimer-tutorial-lets-create-a-counter-application/
     var loadTimer: Timer!  //For loading animation
@@ -346,9 +351,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
          * -DAPP_STORE
          */
 
-        darkSkyLocation.isHidden = true
-        darkSkyURL.isHidden = true
-        
         #if APP_STORE
             API_Key_Data1_1.isHidden = true
             API_Key_Data2_1.isHidden = true
@@ -375,7 +377,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             wundergroundLocation.isHidden = true
             aerisLocation.isHidden = true
             worldWeatherLocation.isHidden = true
-            darkSkyLocation.isHidden = true
             theWeatherURL.isHidden = true
             openWeatherMapURL.isHidden = true
             yahooURL.isHidden = true
@@ -383,6 +384,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             aerisURL.isHidden = true
             worldWeatherURL.isHidden = true
             darkSkyURL.isHidden = true
+            apixuURL.isHidden = true
         #else
         #endif
         
@@ -720,7 +722,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         weatherFields.date = ""
         weatherFields.latitude = ""
         weatherFields.longitude = ""
-        weatherFields.windChill = ""
         weatherFields.windDirection = ""
         weatherFields.windSpeed = ""
         weatherFields.humidity = ""
@@ -844,8 +845,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         {
             darkSkyAPI.setRadarWind(radarWindow)
             weatherFields = darkSkyAPI.beginParsing(city[whichWeatherFirst],
-                                                       APIKey1: APIKey1[whichWeatherFirst],
-                                                       APIKey2: APIKey2[whichWeatherFirst])
+                                                    APIKey1: APIKey1[whichWeatherFirst],
+                                                    APIKey2: APIKey2[whichWeatherFirst])
         }
         else if (weatherDataSource[whichWeatherFirst] == AERISWEATHER)
         {
@@ -860,6 +861,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             weatherFields = worldWeatherOnlineAPI.beginParsing(city[whichWeatherFirst],
                                                                APIKey1: APIKey1[whichWeatherFirst],
                                                                APIKey2: APIKey2[whichWeatherFirst])
+        }
+        else if (weatherDataSource[whichWeatherFirst] == APIXU)
+        {
+            ApiXUApi.setRadarWind(radarWindow)
+            weatherFields = ApiXUApi.beginParsing(city[whichWeatherFirst],
+                                                  APIKey1: APIKey1[whichWeatherFirst],
+                                                  APIKey2: APIKey2[whichWeatherFirst])
         }
         else
         {
@@ -880,148 +888,207 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             loadTimer = nil;
         }
         
-        if (weatherFields.currentTemp != "")
+        if (isConnectedToNetwork())
         {
-            
-            if (displayCity[whichWeatherFirst] == "")
+            NoInternetConnectivity = 0
+            if (weatherFields.currentTemp != "")
             {
-                displayCity[whichWeatherFirst] = city[whichWeatherFirst]
-            }
-            
-            if (defaults.string(forKey: "displayWeatherIcon")! == "1")
-            {
-                statusBarItem.image = nil
                 
-                statusBarItem.image = setImage(weatherFields.currentCode as String, weatherDataSource: weatherDataSource[whichWeatherFirst])
-            }
-            else
-            {
-                if (loadTimer != nil)
+                if (displayCity[whichWeatherFirst] == "")
                 {
-                    loadTimer.invalidate();
-                    loadTimer = nil;
+                    displayCity[whichWeatherFirst] = city[whichWeatherFirst]
                 }
                 
-                statusBarItem.image = nil
-            }
-            
-            var statusTitle = ""
-            
-            if (defaults.string(forKey: "displayCityName")! == "1")
-            {
-                statusTitle = displayCity[whichWeatherFirst] + " " + formatTemp((weatherFields.currentTemp as String))
-            }
-            else
-            {
-                statusTitle = formatTemp((weatherFields.currentTemp as String))
-            }
-            
-            if (defaults.string(forKey: "displayHumidity")! == "1")
-            {
-                statusTitle = statusTitle + "/" + formatHumidity((weatherFields.humidity as String))
-            }
-            
-            if (defaults.string(forKey: "menuBarFontDefault") == "1")
-            {
-                statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string: statusTitle,
-                                                                                                                      attributes:[NSFontAttributeName : font!]))
-            }
-            else
-            {
-                var textColor = NSColor()
-                if #available(iOS 10, *)
+                if (defaults.string(forKey: "displayWeatherIcon")! == "1")
                 {
-                    ErrorLog(String(format:"iOS 10b", self.appName))
-                    textColor = NSColor(red: CGFloat(Float(defaults.string(forKey: "menuBarFontRedText")!)!)/255,
-                                        green: CGFloat(Float(defaults.string(forKey: "menuBarFontGreenText")!)!)/255,
-                                        blue: CGFloat(Float(defaults.string(forKey: "menuBarFontBlueText")!)!)/255, alpha: 1.0)
+                    statusBarItem.image = nil
+                    
+                    statusBarItem.image = setImage(weatherFields.currentCode as String, weatherDataSource: weatherDataSource[whichWeatherFirst])
                 }
                 else
                 {
-                    ErrorLog(String(format:"iOS 9b", self.appName))
-                    textColor = NSColor(red: CGFloat(Float(defaults.string(forKey: "fontRedText")!)!),
-                                        green: CGFloat(Float(defaults.string(forKey: "fontGreenText")!)!),
-                                        blue: CGFloat(Float(defaults.string(forKey: "fontBlueText")!)!),
-                                        alpha: 1.0)
+                    if (loadTimer != nil)
+                    {
+                        loadTimer.invalidate();
+                        loadTimer = nil;
+                    }
+                    
+                    statusBarItem.image = nil
                 }
                 
-                if (defaults.string(forKey: "menuBarFontTransparency")! == "1")
+                var statusTitle = ""
+                
+                if (defaults.string(forKey: "displayCityName")! == "1")
+                {
+                    statusTitle = displayCity[whichWeatherFirst] + " " + formatTemp((weatherFields.currentTemp as String))
+                }
+                else
+                {
+                    statusTitle = formatTemp((weatherFields.currentTemp as String))
+                }
+                
+                if (defaults.string(forKey: "displayHumidity")! == "1")
+                {
+                    statusTitle = statusTitle + "/" + formatHumidity((weatherFields.humidity as String))
+                }
+                
+                if (defaults.string(forKey: "menuBarFontDefault") == "1")
                 {
                     statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string: statusTitle,
-                                                                                                                          attributes:[NSFontAttributeName : font!,
-                                                                                                                                      NSForegroundColorAttributeName : textColor]))
+                                                                                                                          attributes:[NSFontAttributeName : font!]))
                 }
                 else
                 {
-                    var backgroundColor = NSColor()
+                    var textColor = NSColor()
                     if #available(iOS 10, *)
                     {
-                        backgroundColor = NSColor(
-                            red: CGFloat(Float(defaults.string(forKey: "menuBarFontRedBackground")!)!)/255,
-                            green: CGFloat(Float(defaults.string(forKey: "menuBarFontGreenBackground")!)!)/255,
-                            blue: CGFloat(Float(defaults.string(forKey: "menuBarFontBlueBackground")!)!)/255, alpha: 1.0)
+                        ErrorLog(String(format:"iOS 10b", self.appName))
+                        textColor = NSColor(red: CGFloat(Float(defaults.string(forKey: "menuBarFontRedText")!)!)/255,
+                                            green: CGFloat(Float(defaults.string(forKey: "menuBarFontGreenText")!)!)/255,
+                                            blue: CGFloat(Float(defaults.string(forKey: "menuBarFontBlueText")!)!)/255, alpha: 1.0)
                     }
                     else
                     {
-                        backgroundColor = NSColor(
-                            red: CGFloat(Float(defaults.string(forKey: "menuBarFontRedBackground")!)!),
-                            green: CGFloat(Float(defaults.string(forKey: "menuBarFontGreenBackground")!)!),
-                            blue: CGFloat(Float(defaults.string(forKey: "menuBarFontBlueBackground")!)!), alpha: 1.0)
+                        ErrorLog(String(format:"iOS 9b", self.appName))
+                        textColor = NSColor(red: CGFloat(Float(defaults.string(forKey: "fontRedText")!)!),
+                                            green: CGFloat(Float(defaults.string(forKey: "fontGreenText")!)!),
+                                            blue: CGFloat(Float(defaults.string(forKey: "fontBlueText")!)!),
+                                            alpha: 1.0)
                     }
-                    statusBarItem.attributedTitle =
-                        NSMutableAttributedString(attributedString: NSMutableAttributedString(string: statusTitle,
-                                                                                              attributes:[NSFontAttributeName : font!,
-                                                                                                          NSForegroundColorAttributeName : textColor,
-                                                                                                          NSBackgroundColorAttributeName : backgroundColor]))
+                    
+                    if (defaults.string(forKey: "menuBarFontTransparency")! == "1")
+                    {
+                        statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string: statusTitle,
+                                                                                                                              attributes:[NSFontAttributeName : font!,
+                                                                                                                                          NSForegroundColorAttributeName : textColor]))
+                    }
+                    else
+                    {
+                        var backgroundColor = NSColor()
+                        if #available(iOS 10, *)
+                        {
+                            backgroundColor = NSColor(
+                                red: CGFloat(Float(defaults.string(forKey: "menuBarFontRedBackground")!)!)/255,
+                                green: CGFloat(Float(defaults.string(forKey: "menuBarFontGreenBackground")!)!)/255,
+                                blue: CGFloat(Float(defaults.string(forKey: "menuBarFontBlueBackground")!)!)/255, alpha: 1.0)
+                        }
+                        else
+                        {
+                            backgroundColor = NSColor(
+                                red: CGFloat(Float(defaults.string(forKey: "menuBarFontRedBackground")!)!),
+                                green: CGFloat(Float(defaults.string(forKey: "menuBarFontGreenBackground")!)!),
+                                blue: CGFloat(Float(defaults.string(forKey: "menuBarFontBlueBackground")!)!), alpha: 1.0)
+                        }
+                        statusBarItem.attributedTitle =
+                            NSMutableAttributedString(attributedString: NSMutableAttributedString(string: statusTitle,
+                                                                                                  attributes:[NSFontAttributeName : font!,
+                                                                                                              NSForegroundColorAttributeName : textColor,
+                                                                                                              NSBackgroundColorAttributeName : backgroundColor]))
+                    }
                 }
             }
-        }
         
-        updateMenuWithPrimaryLocation(weatherFields, cityName: (city[whichWeatherFirst]), displayCityName: (displayCity[whichWeatherFirst]), menu: menu, weatherDataSource: weatherDataSource[whichWeatherFirst])
-        
-        var bFirstTime = 0
-        var secondarys = whichWeatherFirst + 1
-        if (secondarys > 7)
-        {
-            secondarys = 0
-        }
-
-        while (secondarys != whichWeatherFirst)
-        {
-            if (city[secondarys] != "")
-            {
-                if (bFirstTime == 0)
-                {
-                    menu.addItem(NSMenuItem.separator())
-                }
-                bFirstTime = 1
-                
-                if (displayCity[secondarys] == "")
-                {
-                    displayCity[secondarys] = city[secondarys]
-                }
-                
-                weatherFields = processWeatherSource(weatherDataSource[secondarys],
-                                                     inputCity: city[secondarys],
-                                                     displayCity: displayCity[secondarys],
-                                                     APIKey1: APIKey1[secondarys],
-                                                     APIKey2: APIKey2[secondarys])
-                updateMenuWithSecondaryLocation(weatherFields,
-                                                cityName: (city[secondarys]),
-                                                displayCityName: (displayCity[secondarys]),
-                                                menu: menu,
-                                                weatherDataSource: weatherDataSource[secondarys])
-            }
-            secondarys = secondarys + 1
+            updateMenuWithPrimaryLocation(weatherFields, cityName: (city[whichWeatherFirst]), displayCityName: (displayCity[whichWeatherFirst]), menu: menu, weatherDataSource: weatherDataSource[whichWeatherFirst])
+            
+            var bFirstTime = 0
+            var secondarys = whichWeatherFirst + 1
             if (secondarys > 7)
             {
                 secondarys = 0
             }
+            
+            while (secondarys != whichWeatherFirst)
+            {
+                if (city[secondarys] != "")
+                {
+                    if (bFirstTime == 0)
+                    {
+                        menu.addItem(NSMenuItem.separator())
+                    }
+                    bFirstTime = 1
+                    
+                    if (displayCity[secondarys] == "")
+                    {
+                        displayCity[secondarys] = city[secondarys]
+                    }
+                    
+                    weatherFields = processWeatherSource(weatherDataSource[secondarys],
+                                                         inputCity: city[secondarys],
+                                                         displayCity: displayCity[secondarys],
+                                                         APIKey1: APIKey1[secondarys],
+                                                         APIKey2: APIKey2[secondarys])
+                    updateMenuWithSecondaryLocation(weatherFields,
+                                                    cityName: (city[secondarys]),
+                                                    displayCityName: (displayCity[secondarys]),
+                                                    menu: menu,
+                                                    weatherDataSource: weatherDataSource[secondarys])
+                }
+                secondarys = secondarys + 1
+                if (secondarys > 7)
+                {
+                    secondarys = 0
+                }
+            }
+            
+            menu.addItem(NSMenuItem.separator())
+            
+            addControlOptions()
         }
-        
-        menu.addItem(NSMenuItem.separator())
-    
-        addControlOptions()
+        else
+        {
+            if (NoInternetConnectivity == 0)
+            {
+                var textColor = NSColor()
+                if #available(iOS 10, *)
+                {
+                    ErrorLog(String(format:"iOS 10", self.appName))
+                    textColor = NSColor(red: CGFloat(1),
+                                        green: CGFloat(1),
+                                        blue: CGFloat(1),
+                                        alpha: 1.0)
+                }
+                else
+                {
+                    ErrorLog(String(format:"iOS 9", self.appName))
+                    textColor = NSColor(red: CGFloat(255),
+                                        green: CGFloat(255),
+                                        blue: CGFloat(255),
+                                        alpha: 1.0)
+                }
+                
+                var backgroundColor = NSColor()
+                if #available(iOS 10, *)
+                {
+                    backgroundColor = NSColor(
+                        red: CGFloat(0),
+                        green: CGFloat(0),
+                        blue: CGFloat(0),
+                        alpha: 1.0)
+                }
+                else
+                {
+                    backgroundColor = NSColor(
+                        red: CGFloat(0),
+                        green: CGFloat(0),
+                        blue: CGFloat(0),
+                        alpha: 1.0)
+                }
+                
+                let attributedTitle: NSMutableAttributedString
+                attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
+                    localizedString(forKey: "NoInternetConnectivity_"),
+                                                                                                        attributes:[NSFontAttributeName : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(m))!,
+                                                                                                                    NSForegroundColorAttributeName : textColor,
+                                                                                                                    NSBackgroundColorAttributeName : backgroundColor]))
+
+                let newItem = NSMenuItem()
+                newItem.attributedTitle = attributedTitle
+                newItem.target=self
+                menu.addItem(newItem)
+                
+                NoInternetConnectivity = 1
+            }
+        }
 
         let uwTimer = myTimer
         if uwTimer == myTimer
@@ -1091,8 +1158,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         {
             worldWeatherOnlineAPI.setRadarWind(radarWindow)
             weatherFields = worldWeatherOnlineAPI.beginParsing(inputCity,
-                                                         APIKey1: APIKey1,
-                                                         APIKey2: APIKey2)
+                                                               APIKey1: APIKey1,
+                                                               APIKey2: APIKey2)
+        }
+        else if (weatherDataSource == APIXU)
+        {
+            ApiXUApi.setRadarWind(radarWindow)
+            weatherFields =
+                ApiXUApi.beginParsing(inputCity,
+                                                               APIKey1: APIKey1,
+                                                               APIKey2: APIKey2)
         }
         else
         {
@@ -1450,10 +1525,30 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             {
                 imageName = "Rain"
             }
+        } else if (weatherDataSource == APIXU)
+        {
+            if (((weatherCode == "Sunny")) ||
+                ((weatherCode == "Clear/Sunny")) ||
+                ((weatherCode == "Clear")))
+            {
+                imageName = "Sun"
+            }
+            else if ((weatherCode == "Overcast") ||
+                (weatherCode == "ns_cloudy") ||
+                (weatherCode == "cloudy"))
+            {
+                imageName = "Cloudy"
+            }
+            else if ((weatherCode == "Light rain shower") ||
+                (weatherCode == "Moderate rain") ||
+                (weatherCode == "Patchy rain possible") ||
+                (weatherCode == "Moderate or heavy rain shower") ||
+                (weatherCode == "Light drizzle"))
+            {
+                imageName = "Rain"
+            }
         } else if (weatherDataSource == WORLDWEATHERONLINE)
         {
-            let _ = weatherCode
-
             if (((weatherCode == "Sunny")) ||
                 ((weatherCode == "Clear/Sunny")) ||
                 ((weatherCode == "Clear")))
@@ -1462,6 +1557,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             }
             else if ((weatherCode == "Snow") ||
                 (weatherCode == "snow") ||
+                (weatherCode == "Snow, Mist") ||
+                (weatherCode == "freezing rain") ||
                 (weatherCode == "Blizzard") ||
                 (weatherCode == "blizzard") ||
                 (weatherCode == "Sleet") ||
@@ -1551,16 +1648,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     func formatDay(_ temp: String) -> String
     {
-        var returnDay = temp
+        let returnDay = temp
         
         if ((temp != "Mon") && (temp != "Wed"))
         {
-            returnDay.append(" ")
+            //returnDay.append(" ")
         }
-        
-        if (temp == "Fri")
+        else if (temp == "Fri")
         {
-            returnDay.append(" ")
+            //returnDay.append(" ")
         }
         
         return returnDay
@@ -1848,6 +1944,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 {
                     city = displayCityName + "\t\tWorld Weather Online"
                 }
+                else if (weatherDataSource == APIXU)
+                {
+                    city = displayCityName + "\t\tAPIXU"
+                }
                 else
                 {
                     city = displayCityName + "\t\tWeatherSource unknown"
@@ -1963,6 +2063,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         else if (weatherDataSource == WORLDWEATHERONLINE)
         {
             statusTitle = statusTitle + "\t\tWorld Weather Online"
+        }
+        else if (weatherDataSource == APIXU)
+        {
+            statusTitle = statusTitle + "\t\tAPIXU"
         }
         else
         {
@@ -2092,7 +2196,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 
                 if (defaults.string(forKey: "extendedForecastSingleLine")! == "1") {
                     var menuString = "";
-                    menuString = menuString + formatDay(weatherFields.forecastDay[i] as String) + " \t"
+                    menuString = menuString + localizedString(forKey: formatDay(weatherFields.forecastDay[i] as String)) + " \t"
                     menuString = menuString + formatTemp(weatherFields.forecastHigh[i] as String) + "/" + formatTemp(weatherFields.forecastLow[i] as String) + " \t"
                     menuString = menuString + localizedString(forKey: (weatherFields.forecastConditions[i] as String))
                     newItem = myMenuItem(menuString, url: "dummy:", key: "")
@@ -2104,7 +2208,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                     extendedForecastMenu.addItem(newItem)
                 } else {
                     
-                    newItem = myMenuItem(formatDay(weatherFields.forecastDay[i] as String) + " \t" + formatTemp(weatherFields.forecastHigh[i] as String), url: nil, key: "")
+                    newItem = myMenuItem(localizedString(forKey: formatDay(weatherFields.forecastDay[i] as String)) + " \t" + formatTemp(weatherFields.forecastHigh[i] as String), url: nil, key: "")
                     extendedForecastMenu.addItem(newItem)
                     if (defaults.string(forKey: "extendedForecastIcons")! == "1") {
                         newItem.image=setImage(weatherFields.forecastCode[i] as String, weatherDataSource: weatherDataSource)
@@ -2513,20 +2617,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         aerisLocation.stringValue = localizedString(forKey: "aerisLocation_") + ":"
         worldWeatherLocation.stringValue = localizedString(forKey: "worldWeatherLocation_")
         darkSkyLocation.stringValue = localizedString(forKey: "darkSkyLocation_")
+        APIXULocation.stringValue = localizedString(forKey: "APIXULocation_")
 
     } // initDisplay
     
     func InitWeatherSourceButton(weatherSourceButton: NSPopUpButton)
     {
-        weatherSourceButton.item(at: 0)?.title = localizedString(forKey: "Yahoo!_")
-        weatherSourceButton.item(at: 1)?.title = localizedString(forKey: "OpenWeatherMap_")
-        weatherSourceButton.item(at: 2)?.title = localizedString(forKey: "TheWeather.com_")
-        weatherSourceButton.item(at: 3)?.title = localizedString(forKey: "WeatherUnderground_")
-        weatherSourceButton.item(at: 4)?.title = localizedString(forKey: "AERISWeather_")
-        weatherSourceButton.item(at: 5)?.title = localizedString(forKey: "WorldWeatherOnline_")
-        /*
-         weatherSourceButton.item(at: 6)?.title = localizedString(forKey: "DarkSky_")
-         */
+        weatherSourceButton.addItem(withTitle: localizedString(forKey: "Yahoo!_") )
+        weatherSourceButton.addItem(withTitle: localizedString(forKey: "OpenWeatherMap_") )
+        weatherSourceButton.addItem(withTitle: localizedString(forKey: "TheWeather.com_") )
+        weatherSourceButton.addItem(withTitle: localizedString(forKey: "WeatherUnderground_") )
+        weatherSourceButton.addItem(withTitle: localizedString(forKey: "AERISWeather_") )
+        weatherSourceButton.addItem(withTitle: localizedString(forKey: "WorldWeatherOnline_") )
+        weatherSourceButton.addItem(withTitle: localizedString(forKey: "APIXU_") )
+        weatherSourceButton.addItem(withTitle: localizedString(forKey: "DarkSky_") )
     } // InitWeatherSourceButton
     
     @IBAction func DisplayFontPressed(_ sender: NSButton)

@@ -38,8 +38,6 @@
 // BASE_URL = https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE
 //            https://api.forecast.io/forecast/bb43283728a3651382261467731dbb94/37.8267,-122.423
 //
-//  !!!!! JSON !!!!!!
-//
 
 import Cocoa
 import Foundation
@@ -61,11 +59,18 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         
         weatherFields.forecastCounter = 0
         
+        var APIKey = APIKey1
+        
+        if (APIKey == "")
+        {
+            APIKey = "bb43283728a3651382261467731dbb94"
+        }
+        
         AppDelegate().initWeatherFields(weatherFields: &weatherFields)
         
         parseURL = ""
         parseURL.append(QUERY_PREFIX1)
-        parseURL.append(APIKey1)
+        parseURL.append(APIKey)     // For now, not using user key
         parseURL.append("/")
         escapedCity = inputCity
         //escapedCity = escapedCity.replacingOccurrences(of: ",", with: "/")
@@ -108,8 +113,6 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         guard
             let latitude = object["latitude"] as? Float,
             let longitude = object["longitude"] as? Float,
-            //let timezone = object["timezone"] as? String,
-            //let offset = object["offset"] as? Float,
             let c = object["currently"] as? [String: AnyObject],
             let d = object["daily"] as? [String: AnyObject]
             else
@@ -126,20 +129,10 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
                 let time = current["time"] as? Float,
                 let summary = current["summary"] as? String,
                 let icon = current["icon"] as? String,
-                //let nearestStormDistance = current["nearestStormDistance"] as? Float,
-                //let nearestStormBearing = current["nearestStormBearing"] as? Float,
-                //let precipIntensity = current["precipIntensity"] as? Float,
-                //let precipIntensityError = current["precipIntensityError"] as? Float,
-                //let precipProbability = current["precipProbability"] as? Float,
                 let temperature = current["temperature"] as? Float,
-                let apparentTemperature = current["apparentTemperature"] as? Float,
-                //let dewPoint = current["dewPoint"] as? Float,
                 let humidity = current["humidity"] as? Float,
                 let windSpeed = current["windSpeed"] as? Float,
                 let windBearing = current["windBearing"] as? Float,
-                //let visibility = current["visibility"] as? Float,
-                //let cloudCover = current["cloudCover"] as? Float,
-                //let ozone = current["ozone"] as? Float,
                 let pressure = current["pressure"] as? Float
                 else {
                     _ = "error"
@@ -155,7 +148,6 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
             
             weatherFields.date = dateFormatter.string(from: date as Date)
 
-            weatherFields.windChill = NSString(format: "%.2f", apparentTemperature) as String
             weatherFields.windSpeed = NSString(format: "%.2f", windSpeed) as String
             weatherFields.windDirection = NSString(format: "%.2f", windBearing) as String
             weatherFields.humidity = NSString(format: "%.0f", humidity * 100.0) as String
@@ -187,11 +179,6 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
                     let summary = dat["summary"] as? String,
                     let sunriseTime = dat["sunriseTime"] as? Float,
                     let sunsetTime = dat["sunsetTime"] as? Float,
-                    //let dewPoint = dat["dewPoint"] as? Float,
-                    //let humidity = dat["humidity"] as? Float,
-                    //let windSpeed = dat["windSpeed"] as? Float,
-                    //let windBearing = dat["windBearing"] as? Float,
-                    //let visibility = dat["visibility"] as? Float,
                     let temperatureMin = dat["temperatureMin"] as? Float,
                     let temperatureMax = dat["temperatureMax"] as? Float,
                     //let pressure = dat["pressure"] as? Float,

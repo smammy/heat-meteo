@@ -1,6 +1,11 @@
-3.0.1
+3.0.2
 
-* STOP!!! - Don't update without reading and understanding the 3.x update. Also recommend that you keep the prior version and turn off version checks if you aren't 100% comfortable with this version.
+* Improve French localizations
+* Add weather source APIXU.com
+* Add weather source DarkSky.net
+* Display cached weather information if network connection is lost (not 100% working)
+
+3.0.1
 
 * Fix launch failure on 10.9 systems
 * Add French localizations (any other volunteers?)
@@ -8,6 +13,8 @@
 * Change default weather source back to Yahoo! (no API key necessary for now).
 
 3.0.0
+
+* STOP!!! - Don't update without reading and understanding the 3.x update. Also recommend that you keep the prior version and turn off version checks if you aren't 100% comfortable with this version.
 
 * Rather than trying to be all things for everybody for all weather stations for all locations, Meteo is now geared to be specific the particular weather service selected.
 *   Each user will needs an API key for each weather source so the usage for one person doesn't infringe on another.

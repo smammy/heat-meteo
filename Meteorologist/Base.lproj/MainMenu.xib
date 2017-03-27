@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16E183b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16E191a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
@@ -11,6 +11,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Meteorologist" customModuleProvider="target">
             <connections>
+                <outlet property="APIXULocation" destination="NEk-21-VFg" id="BR9-bq-Bjw"/>
                 <outlet property="API_Key_Data1_1" destination="qFQ-Wg-huI" id="6wd-Uf-IGT"/>
                 <outlet property="API_Key_Data1_2" destination="LdF-ma-OyX" id="JQT-gR-tHD"/>
                 <outlet property="API_Key_Data1_3" destination="qwD-ui-VwV" id="ZOT-dW-5jx"/>
@@ -31,6 +32,7 @@
                 <outlet property="API_Key_Label2" destination="EUb-hB-ylO" id="WVz-mM-rZC"/>
                 <outlet property="aerisLocation" destination="2yO-9B-iLB" id="O0f-zb-UyS"/>
                 <outlet property="apiKeyLabel" destination="jwR-He-O8z" id="2mH-2o-pHD"/>
+                <outlet property="apixuURL" destination="Uty-kY-qzx" id="7hh-sJ-GJ2"/>
                 <outlet property="cityDisplayNameLabel" destination="B34-x3-7Ds" id="yI3-eI-uEm"/>
                 <outlet property="cityDisplayTextField" destination="VbY-IF-NvA" id="gxu-Al-kKD"/>
                 <outlet property="cityDisplayTextField2" destination="Vrl-Pt-qFS" id="vcp-9u-GGp"/>
@@ -110,14 +112,14 @@
         <window title="Meteorologist" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="1141" height="741"/>
+            <rect key="contentRect" x="335" y="390" width="1141" height="776"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="1141" height="741"/>
+                <rect key="frame" x="0.0" y="0.0" width="1141" height="776"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hua-N2-q9h" userLabel="Label City Name">
-                        <rect key="frame" x="18" y="704" width="166" height="17"/>
+                        <rect key="frame" x="18" y="739" width="166" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="City name/location code:_" id="SWW-9J-Oa2">
                             <font key="font" metaFont="system"/>
@@ -126,7 +128,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B34-x3-7Ds" userLabel="Label City Display Name">
-                        <rect key="frame" x="184" y="702" width="166" height="17"/>
+                        <rect key="frame" x="184" y="737" width="166" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Display name:_" id="X17-JU-6uM">
                             <font key="font" metaFont="system"/>
@@ -135,7 +137,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fBa-p2-7uA" userLabel="Label Weather Source">
-                        <rect key="frame" x="359" y="703" width="216" height="17"/>
+                        <rect key="frame" x="359" y="738" width="216" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Weather Source:_" id="ggY-pt-iS5">
                             <font key="font" metaFont="system"/>
@@ -144,7 +146,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="die-77-guQ" userLabel="Label API Key 1 Name">
-                        <rect key="frame" x="574" y="704" width="214" height="17"/>
+                        <rect key="frame" x="574" y="739" width="214" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="API Key 1:_" id="Ct3-mG-ExL">
                             <font key="font" metaFont="system"/>
@@ -153,7 +155,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EUb-hB-ylO" userLabel="Label API Key 2 Name">
-                        <rect key="frame" x="798" y="703" width="212" height="17"/>
+                        <rect key="frame" x="798" y="738" width="212" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="API Key 2:_" id="vcg-7L-AXP">
                             <font key="font" metaFont="system"/>
@@ -162,7 +164,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dNU-xY-fc5" userLabel="City Name-1">
-                        <rect key="frame" x="20" y="674" width="162" height="22"/>
+                        <rect key="frame" x="20" y="709" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="Cupertino, CA" drawsBackground="YES" id="Ani-gO-CzI">
                             <font key="font" metaFont="system"/>
@@ -171,7 +173,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VbY-IF-NvA" userLabel="Display Name-1">
-                        <rect key="frame" x="186" y="674" width="162" height="22"/>
+                        <rect key="frame" x="186" y="709" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="X7D-dA-UHt">
                             <font key="font" metaFont="system"/>
@@ -180,25 +182,16 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nB-eK-q9d" userLabel="weatherSource-1">
-                        <rect key="frame" x="359" y="670" width="217" height="26"/>
+                        <rect key="frame" x="359" y="705" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="p2c-YT-anv" id="5s7-CN-rl7" userLabel="weatherSource">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="5s7-CN-rl7" userLabel="weatherSource">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="aO0-33-XuL">
-                                <items>
-                                    <menuItem title="Item 1" state="on" id="p2c-YT-anv" userLabel="Item 1"/>
-                                    <menuItem title="Item 2" id="RHg-93-3ew"/>
-                                    <menuItem title="Item 2" id="gls-E2-UY6" userLabel="Item 3"/>
-                                    <menuItem title="Item 2" id="6sg-Rf-aBr" userLabel="Item 4"/>
-                                    <menuItem title="Item 2" id="niT-kc-Krg" userLabel="Item 5"/>
-                                    <menuItem title="Item 2" id="6VO-Wj-rJi" userLabel="Item 6"/>
-                                </items>
-                            </menu>
+                            <menu key="menu" id="aO0-33-XuL"/>
                         </popUpButtonCell>
                     </popUpButton>
                     <textField toolTip="Client ID, Affiliate ID, or API Key" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qFQ-Wg-huI" userLabel="API Key 1-1">
-                        <rect key="frame" x="576" y="673" width="210" height="22"/>
+                        <rect key="frame" x="576" y="708" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Vpb-JI-Wxd">
                             <font key="font" metaFont="system"/>
@@ -207,7 +200,7 @@
                         </textFieldCell>
                     </textField>
                     <textField toolTip="Client Secret if required" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="djc-Ep-kje" userLabel="API Key 2-1">
-                        <rect key="frame" x="800" y="673" width="210" height="22"/>
+                        <rect key="frame" x="800" y="708" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="fbc-nq-zkX">
                             <font key="font" metaFont="system"/>
@@ -216,7 +209,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dB8-qF-rVH" userLabel="City Name-2">
-                        <rect key="frame" x="20" y="649" width="162" height="22"/>
+                        <rect key="frame" x="20" y="684" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Ail-v0-SGq">
                             <font key="font" metaFont="system"/>
@@ -225,7 +218,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vrl-Pt-qFS" userLabel="Display Name-2">
-                        <rect key="frame" x="186" y="648" width="162" height="22"/>
+                        <rect key="frame" x="186" y="683" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="zKE-CK-nJw">
                             <font key="font" metaFont="system"/>
@@ -234,25 +227,16 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gqL-jf-6An" userLabel="weatherSource-2">
-                        <rect key="frame" x="359" y="645" width="217" height="26"/>
+                        <rect key="frame" x="359" y="680" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="qET-Mk-I31" id="opv-Tm-oR9" userLabel="weatherSource">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="opv-Tm-oR9" userLabel="weatherSource">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="ieA-8Y-ymz">
-                                <items>
-                                    <menuItem title="Item 1" state="on" id="qET-Mk-I31" userLabel="Item 1"/>
-                                    <menuItem title="Item 2" id="M5r-Sq-oVq"/>
-                                    <menuItem title="Item 2" id="YTg-r9-79D" userLabel="Item 3"/>
-                                    <menuItem title="Item 2" id="NTK-o4-NpP" userLabel="Item 4"/>
-                                    <menuItem title="Item 2" id="dLZ-Eu-kJJ" userLabel="Item 5"/>
-                                    <menuItem title="Item 2" id="AMl-b9-C8l" userLabel="Item 6"/>
-                                </items>
-                            </menu>
+                            <menu key="menu" id="ieA-8Y-ymz"/>
                         </popUpButtonCell>
                     </popUpButton>
                     <textField toolTip="Client ID, Affiliate ID, or API Key" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LdF-ma-OyX" userLabel="API Key 1-2">
-                        <rect key="frame" x="576" y="648" width="210" height="22"/>
+                        <rect key="frame" x="576" y="683" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1ID-97-d9S">
                             <font key="font" metaFont="system"/>
@@ -261,7 +245,7 @@
                         </textFieldCell>
                     </textField>
                     <textField toolTip="Client Secret if required" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xRd-i0-T8F" userLabel="API Key 2-2">
-                        <rect key="frame" x="800" y="648" width="210" height="22"/>
+                        <rect key="frame" x="800" y="683" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="epd-h7-IRP">
                             <font key="font" metaFont="system"/>
@@ -270,7 +254,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k1i-XC-Zep" userLabel="City Name-3">
-                        <rect key="frame" x="20" y="624" width="162" height="22"/>
+                        <rect key="frame" x="20" y="659" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="kOL-Yl-36g">
                             <font key="font" metaFont="system"/>
@@ -279,7 +263,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jtz-dL-tul" userLabel="Display Name-3">
-                        <rect key="frame" x="186" y="623" width="162" height="22"/>
+                        <rect key="frame" x="186" y="658" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1k1-wJ-FMN">
                             <font key="font" metaFont="system"/>
@@ -288,25 +272,16 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cXF-pu-bvT" userLabel="weatherSource-3">
-                        <rect key="frame" x="359" y="620" width="217" height="26"/>
+                        <rect key="frame" x="359" y="655" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3kZ-sQ-Exc" id="alc-DS-1kv" userLabel="weatherSource">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="alc-DS-1kv" userLabel="weatherSource">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="LwF-WA-ZrU">
-                                <items>
-                                    <menuItem title="Item 1" state="on" id="3kZ-sQ-Exc" userLabel="Item 1"/>
-                                    <menuItem title="Item 2" id="uIJ-dW-fui"/>
-                                    <menuItem title="Item 2" id="yXU-br-Dxw" userLabel="Item 3"/>
-                                    <menuItem title="Item 2" id="slp-Iv-Rtk" userLabel="Item 4"/>
-                                    <menuItem title="Item 2" id="o5o-3n-H5P" userLabel="Item 5"/>
-                                    <menuItem title="Item 2" id="7kt-wa-cmx" userLabel="Item 6"/>
-                                </items>
-                            </menu>
+                            <menu key="menu" id="LwF-WA-ZrU"/>
                         </popUpButtonCell>
                     </popUpButton>
                     <textField toolTip="Client ID, Affiliate ID, or API Key" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qwD-ui-VwV" userLabel="API Key 1-3">
-                        <rect key="frame" x="576" y="623" width="210" height="22"/>
+                        <rect key="frame" x="576" y="658" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="B6W-UJ-g7w">
                             <font key="font" metaFont="system"/>
@@ -315,7 +290,7 @@
                         </textFieldCell>
                     </textField>
                     <textField toolTip="Client Secret if required" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hHd-hb-cHA" userLabel="API Key 2-3">
-                        <rect key="frame" x="800" y="623" width="210" height="22"/>
+                        <rect key="frame" x="800" y="658" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="dIh-FB-CQd">
                             <font key="font" metaFont="system"/>
@@ -324,7 +299,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1DZ-07-bLy" userLabel="City Name-4">
-                        <rect key="frame" x="20" y="599" width="162" height="22"/>
+                        <rect key="frame" x="20" y="634" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="zth-pO-9FG">
                             <font key="font" metaFont="system"/>
@@ -333,7 +308,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Izw-Lc-DtW" userLabel="Display Name-4">
-                        <rect key="frame" x="186" y="598" width="162" height="22"/>
+                        <rect key="frame" x="186" y="633" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="8Ed-45-CCY">
                             <font key="font" metaFont="system"/>
@@ -342,25 +317,16 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xyi-Hw-YKt" userLabel="weatherSource-4">
-                        <rect key="frame" x="359" y="595" width="217" height="26"/>
+                        <rect key="frame" x="359" y="630" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="hAq-u6-IYl" id="Y2H-fC-BdI" userLabel="weatherSource">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Y2H-fC-BdI" userLabel="weatherSource">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="SZV-Lm-YMi">
-                                <items>
-                                    <menuItem title="Item 1" state="on" id="hAq-u6-IYl" userLabel="Item 1"/>
-                                    <menuItem title="Item 2" id="IjK-IJ-zhY"/>
-                                    <menuItem title="Item 2" id="BU0-CE-Eq9" userLabel="Item 3"/>
-                                    <menuItem title="Item 2" id="mTb-aE-pvD" userLabel="Item 4"/>
-                                    <menuItem title="Item 2" id="H6q-lb-208" userLabel="Item 5"/>
-                                    <menuItem title="Item 2" id="lhO-81-e5n" userLabel="Item 6"/>
-                                </items>
-                            </menu>
+                            <menu key="menu" id="SZV-Lm-YMi"/>
                         </popUpButtonCell>
                     </popUpButton>
                     <textField toolTip="Client ID, Affiliate ID, or API Key" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YKo-g8-2GG" userLabel="API Key 1-4">
-                        <rect key="frame" x="576" y="598" width="210" height="22"/>
+                        <rect key="frame" x="576" y="633" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="bAM-Iu-JSO">
                             <font key="font" metaFont="system"/>
@@ -369,7 +335,7 @@
                         </textFieldCell>
                     </textField>
                     <textField toolTip="Client Secret if required" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="blT-pp-OOm" userLabel="API Key 2-4">
-                        <rect key="frame" x="800" y="598" width="210" height="22"/>
+                        <rect key="frame" x="800" y="633" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Col-uK-K69">
                             <font key="font" metaFont="system"/>
@@ -378,7 +344,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P2u-1F-l8N" userLabel="City Name-5">
-                        <rect key="frame" x="20" y="574" width="162" height="22"/>
+                        <rect key="frame" x="20" y="609" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="zOJ-IN-J7c">
                             <font key="font" metaFont="system"/>
@@ -387,7 +353,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cf1-kh-Tp2" userLabel="Display Name-5">
-                        <rect key="frame" x="186" y="573" width="162" height="22"/>
+                        <rect key="frame" x="186" y="608" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="6DX-1p-vx1">
                             <font key="font" metaFont="system"/>
@@ -396,25 +362,16 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BVH-gb-81Y" userLabel="weatherSource-5">
-                        <rect key="frame" x="359" y="570" width="217" height="26"/>
+                        <rect key="frame" x="359" y="605" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="V7m-sp-An4" id="oyd-3G-bXz" userLabel="weatherSource">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="oyd-3G-bXz" userLabel="weatherSource">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="Ch1-dH-xSt">
-                                <items>
-                                    <menuItem title="Item 1" state="on" id="V7m-sp-An4" userLabel="Item 1"/>
-                                    <menuItem title="Item 2" id="GdG-L3-idK"/>
-                                    <menuItem title="Item 2" id="8dL-X8-i6I" userLabel="Item 3"/>
-                                    <menuItem title="Item 2" id="v1s-Cr-DCy" userLabel="Item 4"/>
-                                    <menuItem title="Item 2" id="4yU-l8-EQD" userLabel="Item 5"/>
-                                    <menuItem title="Item 2" id="LS0-Oo-F9D" userLabel="Item 6"/>
-                                </items>
-                            </menu>
+                            <menu key="menu" id="Ch1-dH-xSt"/>
                         </popUpButtonCell>
                     </popUpButton>
                     <textField toolTip="Client ID, Affiliate ID, or API Key" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kms-Fv-A68" userLabel="API Key 1-5">
-                        <rect key="frame" x="576" y="573" width="210" height="22"/>
+                        <rect key="frame" x="576" y="608" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="ECw-aF-YGE">
                             <font key="font" metaFont="system"/>
@@ -423,7 +380,7 @@
                         </textFieldCell>
                     </textField>
                     <textField toolTip="Client Secret if required" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AX4-PL-86e" userLabel="API Key 2-5">
-                        <rect key="frame" x="800" y="573" width="210" height="22"/>
+                        <rect key="frame" x="800" y="608" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="SWn-C8-1j5">
                             <font key="font" metaFont="system"/>
@@ -432,7 +389,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ac-WS-eeO" userLabel="City Name-6">
-                        <rect key="frame" x="20" y="549" width="162" height="22"/>
+                        <rect key="frame" x="20" y="584" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="b2C-wr-S1q">
                             <font key="font" metaFont="system"/>
@@ -441,7 +398,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H5k-zq-1ce" userLabel="Display Name-6">
-                        <rect key="frame" x="186" y="548" width="162" height="22"/>
+                        <rect key="frame" x="186" y="583" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="6DP-XG-dxq">
                             <font key="font" metaFont="system"/>
@@ -450,25 +407,16 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xSi-f3-kWk" userLabel="weatherSource-6">
-                        <rect key="frame" x="359" y="545" width="217" height="26"/>
+                        <rect key="frame" x="359" y="580" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Adb-fJ-7t4" id="iB0-fp-7VT" userLabel="weatherSource">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="iB0-fp-7VT" userLabel="weatherSource">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="hfG-Sk-cjY">
-                                <items>
-                                    <menuItem title="Item 1" state="on" id="Adb-fJ-7t4" userLabel="Item 1"/>
-                                    <menuItem title="Item 2" id="edx-cz-WPf"/>
-                                    <menuItem title="Item 2" id="VVU-8c-1ag" userLabel="Item 3"/>
-                                    <menuItem title="Item 2" id="DKm-m6-i5f" userLabel="Item 4"/>
-                                    <menuItem title="Item 2" id="vaJ-8r-UAI" userLabel="Item 5"/>
-                                    <menuItem title="Item 2" id="QPJ-Vn-AgD" userLabel="Item 6"/>
-                                </items>
-                            </menu>
+                            <menu key="menu" id="hfG-Sk-cjY"/>
                         </popUpButtonCell>
                     </popUpButton>
                     <textField toolTip="Client ID, Affiliate ID, or API Key" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sku-vB-OlW" userLabel="API Key 1-6">
-                        <rect key="frame" x="577" y="547" width="210" height="22"/>
+                        <rect key="frame" x="577" y="582" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="pe8-8a-gRr">
                             <font key="font" metaFont="system"/>
@@ -477,7 +425,7 @@
                         </textFieldCell>
                     </textField>
                     <textField toolTip="Client Secret if required" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZfE-G0-3qq" userLabel="API Key 2-6">
-                        <rect key="frame" x="800" y="548" width="210" height="22"/>
+                        <rect key="frame" x="800" y="583" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="t6s-Kb-Vsy">
                             <font key="font" metaFont="system"/>
@@ -486,7 +434,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Reb-eR-Quc" userLabel="City Name-7">
-                        <rect key="frame" x="20" y="524" width="162" height="22"/>
+                        <rect key="frame" x="20" y="559" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1BD-TY-X0u">
                             <font key="font" metaFont="system"/>
@@ -495,7 +443,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PVJ-wL-JDF" userLabel="Display Name-7">
-                        <rect key="frame" x="186" y="523" width="162" height="22"/>
+                        <rect key="frame" x="186" y="558" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Gyb-mH-qIZ">
                             <font key="font" metaFont="system"/>
@@ -504,25 +452,16 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uzP-UN-aPq" userLabel="weatherSource-7">
-                        <rect key="frame" x="359" y="520" width="217" height="26"/>
+                        <rect key="frame" x="359" y="555" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zUO-Rz-hrD" id="l1H-UC-M4Y" userLabel="weatherSource">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="l1H-UC-M4Y" userLabel="weatherSource">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="lrv-hf-dEI">
-                                <items>
-                                    <menuItem title="Item 1" state="on" id="zUO-Rz-hrD" userLabel="Item 1"/>
-                                    <menuItem title="Item 2" id="uWX-1Z-0D9"/>
-                                    <menuItem title="Item 2" id="xIE-m5-rc3" userLabel="Item 3"/>
-                                    <menuItem title="Item 2" id="vRJ-r0-7yY" userLabel="Item 4"/>
-                                    <menuItem title="Item 2" id="fUp-56-M9k" userLabel="Item 5"/>
-                                    <menuItem title="Item 2" id="Prq-4K-33k" userLabel="Item 6"/>
-                                </items>
-                            </menu>
+                            <menu key="menu" id="lrv-hf-dEI"/>
                         </popUpButtonCell>
                     </popUpButton>
                     <textField toolTip="Client ID, Affiliate ID, or API Key" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EKR-hc-xO4" userLabel="API Key 1-7">
-                        <rect key="frame" x="576" y="523" width="210" height="22"/>
+                        <rect key="frame" x="576" y="558" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="2yp-Re-zWc">
                             <font key="font" metaFont="system"/>
@@ -531,7 +470,7 @@
                         </textFieldCell>
                     </textField>
                     <textField toolTip="Client Secret if required" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="omM-SF-K0q" userLabel="API Key 2-7">
-                        <rect key="frame" x="800" y="523" width="210" height="22"/>
+                        <rect key="frame" x="800" y="558" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Edt-sX-ign">
                             <font key="font" metaFont="system"/>
@@ -540,7 +479,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KVC-f8-WaV" userLabel="City Name-8">
-                        <rect key="frame" x="20" y="499" width="162" height="22"/>
+                        <rect key="frame" x="20" y="534" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="FTa-Mm-UJ8">
                             <font key="font" metaFont="system"/>
@@ -549,7 +488,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Md8-jC-aLm" userLabel="Display Name-8">
-                        <rect key="frame" x="186" y="498" width="162" height="22"/>
+                        <rect key="frame" x="186" y="533" width="162" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1qs-Of-PRO">
                             <font key="font" metaFont="system"/>
@@ -558,25 +497,16 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KEf-Vc-ZYf" userLabel="weatherSource-8">
-                        <rect key="frame" x="359" y="495" width="217" height="26"/>
+                        <rect key="frame" x="359" y="530" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="eFn-LP-vZV" id="wG0-La-Znz" userLabel="weatherSource">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="wG0-La-Znz" userLabel="weatherSource">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="72y-rx-4Vy">
-                                <items>
-                                    <menuItem title="Item 1" state="on" id="eFn-LP-vZV" userLabel="Item 1"/>
-                                    <menuItem title="Item 2" id="vm7-S3-z5h"/>
-                                    <menuItem title="Item 2" id="vST-f3-YVJ" userLabel="Item 3"/>
-                                    <menuItem title="Item 2" id="lBP-SZ-UQS" userLabel="Item 4"/>
-                                    <menuItem title="Item 2" id="CH2-bT-QhG" userLabel="Item 5"/>
-                                    <menuItem title="Item 2" id="Kgm-wR-4Iz" userLabel="Item 6"/>
-                                </items>
-                            </menu>
+                            <menu key="menu" id="72y-rx-4Vy"/>
                         </popUpButtonCell>
                     </popUpButton>
                     <textField toolTip="Client ID, Affiliate ID, or API Key" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fED-iR-vYf" userLabel="API Key 1-8">
-                        <rect key="frame" x="576" y="497" width="210" height="22"/>
+                        <rect key="frame" x="576" y="532" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1JX-Fz-Vpi">
                             <font key="font" metaFont="system"/>
@@ -585,7 +515,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sMb-vM-4gv" userLabel="Label Menu Bar Font">
-                        <rect key="frame" x="-2" y="472" width="133" height="17"/>
+                        <rect key="frame" x="-2" y="507" width="133" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Menu Font:_" id="zlt-OF-gRl">
                             <font key="font" metaFont="system"/>
@@ -594,7 +524,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nGz-AX-iMW">
-                        <rect key="frame" x="131" y="462" width="223" height="32"/>
+                        <rect key="frame" x="131" y="497" width="223" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Set Font_" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lE7-9k-oXn">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -605,7 +535,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1J2-Iq-9Q4" userLabel="Label Display Font">
-                        <rect key="frame" x="-1" y="444" width="132" height="17"/>
+                        <rect key="frame" x="-1" y="479" width="132" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Display Font:_" id="7dc-L0-15G">
                             <font key="font" metaFont="system"/>
@@ -614,7 +544,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XrV-4p-ydz" userLabel="Display Font Button">
-                        <rect key="frame" x="130" y="435" width="223" height="32"/>
+                        <rect key="frame" x="130" y="470" width="223" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Set Font_" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="o4E-dP-r9H">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -625,7 +555,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z6g-wl-2uB" userLabel="Label Update Frequency">
-                        <rect key="frame" x="-1" y="407" width="159" height="26"/>
+                        <rect key="frame" x="-1" y="442" width="159" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Update frequence:_" id="9A6-D4-PuW">
                             <font key="font" metaFont="system"/>
@@ -634,7 +564,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M2x-NZ-pkj" userLabel="Update Frequency Field">
-                        <rect key="frame" x="164" y="414" width="28" height="22"/>
+                        <rect key="frame" x="164" y="449" width="28" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="30" drawsBackground="YES" id="132-nt-VYj">
                             <font key="font" metaFont="system"/>
@@ -643,7 +573,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fLL-pj-pbh" userLabel="Label Update Frequence Minutes">
-                        <rect key="frame" x="198" y="416" width="89" height="17"/>
+                        <rect key="frame" x="198" y="451" width="89" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="minutes_" id="DCT-N5-8Zm">
                             <font key="font" metaFont="system"/>
@@ -652,7 +582,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i1W-be-7pM" userLabel="Label Update Frequency">
-                        <rect key="frame" x="-2" y="383" width="160" height="26"/>
+                        <rect key="frame" x="-2" y="418" width="160" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Launch Delay:_" id="xEH-o1-9t7">
                             <font key="font" metaFont="system"/>
@@ -661,7 +591,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="csb-eN-8pa" userLabel="Update Frequency Field">
-                        <rect key="frame" x="164" y="390" width="28" height="22"/>
+                        <rect key="frame" x="164" y="425" width="28" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="10" drawsBackground="YES" id="GPT-0q-c4R">
                             <font key="font" metaFont="system"/>
@@ -670,7 +600,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKH-v9-tPv" userLabel="Label Update Frequence Minutes">
-                        <rect key="frame" x="198" y="392" width="89" height="17"/>
+                        <rect key="frame" x="198" y="427" width="89" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="seconds_" id="lFw-1I-wuL">
                             <font key="font" metaFont="system"/>
@@ -679,7 +609,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1OC-2a-a2I" userLabel="Label Global Units">
-                        <rect key="frame" x="18" y="342" width="104" height="17"/>
+                        <rect key="frame" x="18" y="377" width="104" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Global Units:_" id="Q21-MU-iaj">
                             <font key="font" metaFont="system"/>
@@ -688,7 +618,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dZ-i6-bxb" userLabel="Label Degrees">
-                        <rect key="frame" x="18" y="319" width="104" height="17"/>
+                        <rect key="frame" x="18" y="354" width="104" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Degrees:_" id="qm5-kv-UrX">
                             <font key="font" metaFont="system"/>
@@ -697,7 +627,7 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JQ2-9P-suz">
-                        <rect key="frame" x="131" y="314" width="217" height="26"/>
+                        <rect key="frame" x="131" y="349" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="Fahrenheit" bezelStyle="rounded" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Z0a-Vl-Oja" id="qAt-2h-ccU">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -711,7 +641,7 @@
                         </popUpButtonCell>
                     </popUpButton>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JH6-bw-2q7" userLabel="Label Distance">
-                        <rect key="frame" x="18" y="294" width="104" height="17"/>
+                        <rect key="frame" x="18" y="329" width="104" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Distance:_" id="6gU-Ch-qOX">
                             <font key="font" metaFont="system"/>
@@ -720,7 +650,7 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hm2-gA-ooB">
-                        <rect key="frame" x="131" y="289" width="217" height="26"/>
+                        <rect key="frame" x="131" y="324" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="Miles" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="OJg-ti-FmN" id="FYQ-aY-sgB">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -736,7 +666,7 @@
                         </popUpButtonCell>
                     </popUpButton>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MYy-6t-6ZZ" userLabel="Label Speed">
-                        <rect key="frame" x="18" y="269" width="104" height="17"/>
+                        <rect key="frame" x="18" y="304" width="104" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Speed:_" id="11a-LH-VYD">
                             <font key="font" metaFont="system"/>
@@ -745,7 +675,7 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UZm-hD-cwn">
-                        <rect key="frame" x="131" y="264" width="217" height="26"/>
+                        <rect key="frame" x="131" y="299" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="Miles/Hour" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="X00-Y9-kVp" id="TKz-em-e87">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -761,7 +691,7 @@
                         </popUpButtonCell>
                     </popUpButton>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SL0-Og-5Jf" userLabel="Label Pressure">
-                        <rect key="frame" x="23" y="245" width="104" height="17"/>
+                        <rect key="frame" x="23" y="280" width="104" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Pressure:_" id="k7H-c6-a2P">
                             <font key="font" metaFont="system"/>
@@ -770,7 +700,7 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Paq-HJ-nM1">
-                        <rect key="frame" x="131" y="239" width="217" height="26"/>
+                        <rect key="frame" x="131" y="274" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="Inches" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="D5x-zU-JNP" id="6ZG-pB-xci">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -787,7 +717,7 @@
                         </popUpButtonCell>
                     </popUpButton>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7XZ-Vm-1Fl" userLabel="Label Direction">
-                        <rect key="frame" x="23" y="219" width="104" height="17"/>
+                        <rect key="frame" x="23" y="254" width="104" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Direction_" id="DU4-s7-6lS">
                             <font key="font" metaFont="system"/>
@@ -796,7 +726,7 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xnb-H1-W6C" userLabel="Direction Unit">
-                        <rect key="frame" x="131" y="213" width="217" height="26"/>
+                        <rect key="frame" x="131" y="248" width="217" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="Degrees" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="FCA-wh-Chg" id="qm2-B3-vaI" userLabel="Direection">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -810,7 +740,7 @@
                         </popUpButtonCell>
                     </popUpButton>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y29-eb-O86">
-                        <rect key="frame" x="359" y="472" width="224" height="18"/>
+                        <rect key="frame" x="359" y="507" width="224" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Current weather in submenu_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="BqW-CY-yi9">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -818,7 +748,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a5p-if-6gI">
-                        <rect key="frame" x="359" y="452" width="224" height="18"/>
+                        <rect key="frame" x="359" y="487" width="224" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Show controls in submenu_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="iPX-Wc-ryu">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -826,7 +756,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="msU-RW-U6K">
-                        <rect key="frame" x="359" y="433" width="224" height="18"/>
+                        <rect key="frame" x="359" y="468" width="224" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Display weather icon_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="uYo-Iq-y3w">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -834,7 +764,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RdL-mQ-nf6">
-                        <rect key="frame" x="818" y="472" width="287" height="18"/>
+                        <rect key="frame" x="818" y="507" width="287" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Extended forecast in submenu_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="bPO-ho-LLR">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -842,7 +772,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fQB-Yr-XdY">
-                        <rect key="frame" x="818" y="452" width="287" height="18"/>
+                        <rect key="frame" x="818" y="487" width="287" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Extended forecast icons_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4wi-RG-hzU">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -850,7 +780,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tmh-T9-GIK">
-                        <rect key="frame" x="818" y="433" width="287" height="18"/>
+                        <rect key="frame" x="818" y="468" width="287" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Extended forecast single line_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="u0w-e0-CBZ">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -858,7 +788,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ad6-Bg-1bj">
-                        <rect key="frame" x="818" y="381" width="287" height="18"/>
+                        <rect key="frame" x="818" y="416" width="287" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Check for new versions on launch_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="9tL-Lo-Tjc">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -866,7 +796,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r8N-cu-RPP">
-                        <rect key="frame" x="359" y="414" width="224" height="18"/>
+                        <rect key="frame" x="359" y="449" width="224" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Use new weather icons_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2bp-5o-aIl">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -874,7 +804,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9HY-NA-cQg">
-                        <rect key="frame" x="359" y="382" width="299" height="18"/>
+                        <rect key="frame" x="359" y="417" width="299" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Log message to console_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Iu2-wB-1EP">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -882,12 +812,12 @@
                         </buttonCell>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cWg-ob-OCE">
-                        <rect key="frame" x="593" y="308" width="152" height="63"/>
+                        <rect key="frame" x="593" y="343" width="152" height="63"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Meteo-Logo" id="ToQ-R2-9K5"/>
                     </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yoN-S2-J1g" userLabel="Label Version Text">
-                        <rect key="frame" x="798" y="308" width="156" height="17"/>
+                        <rect key="frame" x="798" y="343" width="156" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Version x.x.x" id="vSq-PJ-8vr">
                             <font key="font" metaFont="system"/>
@@ -896,7 +826,7 @@
                         </textFieldCell>
                     </textField>
                     <textField toolTip="Client Secret if required" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jch-eL-lQh" userLabel="API Key 2-8">
-                        <rect key="frame" x="799" y="497" width="210" height="22"/>
+                        <rect key="frame" x="799" y="532" width="210" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="sVb-5B-wO9">
                             <font key="font" metaFont="system"/>
@@ -905,7 +835,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j1W-Qh-Frh" userLabel="Text Note1">
-                        <rect key="frame" x="328" y="162" width="626" height="17"/>
+                        <rect key="frame" x="328" y="197" width="626" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Forecast only, no current conditions - Typical location is &quot;city number&quot;_" id="Xyh-07-g4k">
                             <font key="font" metaFont="system"/>
@@ -914,7 +844,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FvU-i8-37E" userLabel="Text Note2">
-                        <rect key="frame" x="328" y="137" width="626" height="17"/>
+                        <rect key="frame" x="328" y="172" width="626" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Typical location is &quot;city, state&quot;_" id="jOK-p2-iQy">
                             <font key="font" metaFont="system"/>
@@ -923,7 +853,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cO0-3e-1MQ" userLabel="Text Note3">
-                        <rect key="frame" x="328" y="112" width="626" height="17"/>
+                        <rect key="frame" x="328" y="147" width="626" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Typical location is &quot;city name&quot;, no API Key required at this time_" id="Nxt-jT-UB6">
                             <font key="font" metaFont="system"/>
@@ -932,7 +862,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p5M-Da-ZTc" userLabel="Text Note5">
-                        <rect key="frame" x="328" y="87" width="621" height="17"/>
+                        <rect key="frame" x="328" y="122" width="621" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Typical location is &quot;lat long&quot;_" id="SaI-Dx-uDh">
                             <font key="font" metaFont="system"/>
@@ -941,7 +871,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2yO-9B-iLB" userLabel="Text Note6">
-                        <rect key="frame" x="328" y="62" width="626" height="17"/>
+                        <rect key="frame" x="328" y="97" width="626" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Typical location is &quot;city,state&quot; (no space) or &quot;lat long&quot; - uses 2 API Keys_" id="xJr-iO-IVk">
                             <font key="font" metaFont="system"/>
@@ -950,7 +880,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xgp-hF-BdA" userLabel="Text Note7">
-                        <rect key="frame" x="328" y="37" width="626" height="17"/>
+                        <rect key="frame" x="328" y="72" width="626" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="No FREE accounts - Typical location is &quot;city state&quot;_" id="MAt-Ql-Iq1">
                             <font key="font" metaFont="system"/>
@@ -959,7 +889,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jwR-He-O8z" userLabel="Label Global Units">
-                        <rect key="frame" x="18" y="178" width="312" height="22"/>
+                        <rect key="frame" x="18" y="213" width="312" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="API Key Signup:_" id="6Ve-9D-BEG">
                             <font key="font" metaFont="system"/>
@@ -968,7 +898,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qRU-Ua-ZWs">
-                        <rect key="frame" x="518" y="287" width="302" height="19"/>
+                        <rect key="frame" x="518" y="322" width="302" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="recessed" title="https://sourceforge.net/projects/heat-meteo/" bezelStyle="recessed" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KAo-IP-7nM">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -979,7 +909,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FMy-yB-X0Y">
-                        <rect key="frame" x="13" y="159" width="302" height="19"/>
+                        <rect key="frame" x="13" y="194" width="302" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="recessed" title="http://api.theweather.com" bezelStyle="recessed" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3Jh-8v-cLR">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -990,7 +920,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wGb-ap-eso">
-                        <rect key="frame" x="13" y="136" width="315" height="19"/>
+                        <rect key="frame" x="13" y="171" width="315" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="recessed" title="https://home.openweathermap.org/users/sign_up" bezelStyle="recessed" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fjh-cZ-cdl">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -1001,7 +931,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gOD-Xu-hKK">
-                        <rect key="frame" x="13" y="111" width="246" height="19"/>
+                        <rect key="frame" x="13" y="146" width="246" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="recessed" title="https://developer.yahoo.com/weather/" bezelStyle="recessed" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="20H-zl-iZS">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -1012,7 +942,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dil-xl-4ZL">
-                        <rect key="frame" x="13" y="85" width="292" height="19"/>
+                        <rect key="frame" x="13" y="120" width="292" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="recessed" title="https://www.wunderground.com/weather/api/" bezelStyle="recessed" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SBs-fD-aLh">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -1023,7 +953,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GFs-8m-fz0">
-                        <rect key="frame" x="13" y="61" width="258" height="19"/>
+                        <rect key="frame" x="13" y="96" width="258" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="recessed" title="https://www.aerisweather.com/develop/" bezelStyle="recessed" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Z1O-j7-dEE">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -1034,7 +964,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PgN-yS-zVx">
-                        <rect key="frame" x="13" y="36" width="271" height="19"/>
+                        <rect key="frame" x="13" y="71" width="271" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="recessed" title="https://developer.worldweatheronline.com" bezelStyle="recessed" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hZs-8Q-nJV">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -1045,7 +975,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j4P-k2-7u7" userLabel="Label Max Forecast">
-                        <rect key="frame" x="-1" y="370" width="159" height="17"/>
+                        <rect key="frame" x="-1" y="405" width="159" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Max Forecast Days:_" id="VT0-7v-XSg">
                             <font key="font" metaFont="system"/>
@@ -1054,7 +984,7 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IDU-be-OcO">
-                        <rect key="frame" x="162" y="365" width="56" height="26"/>
+                        <rect key="frame" x="162" y="400" width="56" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="1" bezelStyle="rounded" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="bWP-cs-iPc" id="wFa-Nx-jZP" userLabel="MaxForecastDays">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1104,7 +1034,7 @@
                         </popUpButtonCell>
                     </popUpButton>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7SB-25-SAM" userLabel="Text Note7">
-                        <rect key="frame" x="328" y="11" width="626" height="17"/>
+                        <rect key="frame" x="328" y="20" width="626" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" title="Typical location is &quot;lat long&quot;_" id="e6B-B1-MxU">
                             <font key="font" metaFont="system"/>
@@ -1113,9 +1043,9 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NBI-97-MKP">
-                        <rect key="frame" x="13" y="10" width="162" height="19"/>
+                        <rect key="frame" x="13" y="19" width="162" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="recessed" title="https://darksky.net/dev/" bezelStyle="recessed" alignment="left" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rRB-sa-t85">
+                        <buttonCell key="cell" type="recessed" title="https://darksky.net/dev/" bezelStyle="recessed" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rRB-sa-t85">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="systemBold" size="12"/>
                         </buttonCell>
@@ -1124,7 +1054,7 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6ci-Sz-6PT">
-                        <rect key="frame" x="817" y="416" width="288" height="18"/>
+                        <rect key="frame" x="817" y="451" width="288" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Rotate weather locations" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kvB-yI-i09">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1132,7 +1062,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a84-ZU-bgl">
-                        <rect key="frame" x="587" y="471" width="215" height="18"/>
+                        <rect key="frame" x="587" y="506" width="215" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Display city name_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kRI-JQ-WW2">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1140,7 +1070,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qEC-Rn-aOw">
-                        <rect key="frame" x="586" y="451" width="216" height="18"/>
+                        <rect key="frame" x="586" y="486" width="216" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Display Humidity_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="uge-XZ-lhp">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1148,7 +1078,7 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oFq-SC-5Xh">
-                        <rect key="frame" x="586" y="432" width="216" height="18"/>
+                        <rect key="frame" x="586" y="467" width="216" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Display type (C/F)_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="IE1-X4-mQz">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1156,16 +1086,36 @@
                         </buttonCell>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UDx-ys-QaV">
-                        <rect key="frame" x="586" y="413" width="216" height="18"/>
+                        <rect key="frame" x="586" y="448" width="216" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="View extended forecast_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="weo-Gb-vAL">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEk-21-VFg" userLabel="Text Note7">
+                        <rect key="frame" x="328" y="46" width="626" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" title="Typical location is &quot;lat long&quot;_" id="jpw-zr-CZM">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uty-kY-qzx">
+                        <rect key="frame" x="13" y="45" width="156" height="19"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="recessed" title="https://www.apixu.com" bezelStyle="recessed" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mCY-nT-GlX">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                            <font key="font" metaFont="systemBold" size="12"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="launchLink:" target="Voe-Tx-rLC" id="FKV-px-Tqm"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-1464.5" y="36.5"/>
+            <point key="canvasLocation" x="-1464.5" y="54"/>
         </window>
         <menu title="Main Menu" systemMenu="main" id="JuA-bO-h1K">
             <items>
