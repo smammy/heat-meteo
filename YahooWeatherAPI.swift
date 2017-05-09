@@ -121,7 +121,7 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
                 else {
                     _ = "error"
                     return }
-            weatherFields.date = created
+            weatherFields.date = created.substring(to: created.index(before: created.endIndex))
             
             for r in [results] {
                 guard
@@ -142,6 +142,10 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
                             return }
                     weatherFields.title1 = title
                     weatherFields.URL = link
+                    let index = link.index(link.startIndex, offsetBy: 63)
+                    if (weatherFields.URL.substring(to: index) == "http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*") {
+                        weatherFields.URL = link.substring(from: index)
+                    }
                     
                     for w in [wind] {
                         guard

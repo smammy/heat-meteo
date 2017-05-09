@@ -36,7 +36,7 @@
 //
 // API Key = bb43283728a3651382261467731dbb94
 // BASE_URL = https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE
-//            https://api.forecast.io/forecast/bb43283728a3651382261467731dbb94/37.8267,-122.423
+//            https://api.forecast.io/forecast/bb43283728a3651382261467731dbb94/37.8267,-122.423?exclude=minutely,hourly,alerts,flags&lang=en&units=us
 //
 
 import Cocoa
@@ -45,7 +45,8 @@ import Foundation
 class DarkSkyAPI: NSObject, XMLParserDelegate
 {
     let QUERY_PREFIX1 = "https://api.forecast.io/forecast/"
-    let QUERY_SUFFIX1 = "?exclude=[minutely,hourly,alerts,flags],lang=[en],unit=[us]"
+    let QUERY_SUFFIX1 = "?exclude=minutely,hourly,alerts,flags&lang="
+    let QUERY_SUFFIX2 = "&units=us"
     
     var escapedCity = String()
     var parseURL = String()
@@ -57,6 +58,13 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
     {
         DebugLog(String(format:"in DarkSkyAPI beginParsing: %@", inputCity))
         
+        let defaults = UserDefaults.standard
+        let updateFrequency = Int(defaults.string(forKey: "updateFrequency")!)
+        if ((updateFrequency! < 60) && (APIKey1 == ""))
+        {
+            defaults.setValue("60", forKey: "updateFrequency")
+        }
+
         weatherFields.forecastCounter = 0
         
         var APIKey = APIKey1
@@ -77,6 +85,9 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         escapedCity = escapedCity.replacingOccurrences(of: " ", with: "")
         parseURL.append(escapedCity)
         parseURL.append(QUERY_SUFFIX1)
+        let languageCode = (Locale.current as NSLocale).object(forKey: .languageCode) as? String
+        parseURL.append(languageCode!)
+        parseURL.append(QUERY_SUFFIX2)
         let url = URL(string: parseURL)
         var data: NSData?
         data = nil

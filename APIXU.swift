@@ -29,7 +29,7 @@
 //
 // Key: 8c67b21afb7d4184ba0235136171603
 //
-// Sample: http://api.apixu.com/v1/forecast.json?key=8c67b21afb7d4184ba0235136171603&q=Naperville,IL
+// Sample: http://api.apixu.com/v1/forecast.json?key=8c67b21afb7d4184ba0235136171603&days=3&q=Naperville,IL
 
 import Cocoa
 import Foundation
@@ -51,89 +51,85 @@ class APIXUAPI: NSObject, XMLParserDelegate
     {
         var workingString = icon
         
-        if (workingString.hasSuffix(" outbreaks in nearby"))
+        if (workingString.hasPrefix("//cdn.apixu.com/weather/64x64/day"))
         {
-            workingString = String(workingString.characters.dropLast(10))
+            workingString = String(workingString.characters.dropFirst(34))
         }
-        
-        if (workingString.hasSuffix(" at times"))
+        if (workingString.hasPrefix("//cdn.apixu.com/weather/64x64/night"))
         {
-            workingString = String(workingString.characters.dropLast(9))
+            workingString = String(workingString.characters.dropFirst(36))
         }
-        
-        if (workingString.hasSuffix(" in area with thunder"))
+        if (workingString.hasSuffix(".png"))
         {
-            workingString = String(workingString.characters.dropLast(21))
+            workingString = String(workingString.characters.dropLast(4))
         }
-        
-        if (workingString.hasSuffix(" of ice pellets"))
+
+        if (workingString == "113")
         {
-            workingString = String(workingString.characters.dropLast(15))
+            workingString = "Sun"
         }
-        
-        if (workingString.hasSuffix(" shower"))
+        else if ((workingString == "119") ||
+            (workingString == "122") ||
+            (workingString == "143") ||
+            (workingString == "248") ||
+            (workingString == "269"))
         {
-            workingString = String(workingString.characters.dropLast(7))
+            workingString = "Cloudy"
         }
-        
-        if (workingString.hasSuffix(" showers"))
+        else if ((workingString == "176") ||
+            (workingString == "182") ||
+            (workingString == "185") ||
+            (workingString == "143") ||
+            (workingString == "263") ||
+            (workingString == "266") ||
+            (workingString == "281") ||
+            (workingString == "284") ||
+            (workingString == "293") ||
+            (workingString == "296") ||
+            (workingString == "299") ||
+            (workingString == "302") ||
+            (workingString == "305") ||
+            (workingString == "308") ||
+            (workingString == "311") ||
+            (workingString == "314") ||
+            (workingString == "317") ||
+            (workingString == "320") ||
+            (workingString == "353") ||
+            (workingString == "356") ||
+            (workingString == "359") ||
+            (workingString == "362") ||
+            (workingString == "365"))
         {
-            workingString = String(workingString.characters.dropLast(8))
+            workingString = "Rain"
         }
-        
-        if (workingString.hasSuffix(" nearby"))
+        else if ((workingString == "179") ||
+            (workingString == "227") ||
+            (workingString == "230") ||
+            (workingString == "323") ||
+            (workingString == "326") ||
+            (workingString == "329") ||
+            (workingString == "332") ||
+            (workingString == "335") ||
+            (workingString == "338") ||
+            (workingString == "350") ||
+            (workingString == "368") ||
+            (workingString == "371") ||
+            (workingString == "374") ||
+            (workingString == "377") ||
+            (workingString == "392") ||
+            (workingString == "395"))
         {
-            workingString = String(workingString.characters.dropLast(7))
+            workingString = "Snow"
         }
-        
-        if (workingString.hasSuffix(" possible"))
+        else if ((workingString == "200") ||
+            (workingString == "386") ||
+            (workingString == "389"))
         {
-            workingString = String(workingString.characters.dropLast(9))
+            workingString = "Thunderstorm"
         }
-        
-        if (workingString.hasPrefix("Patchy "))
+        else if (workingString == "116")
         {
-            workingString = String(workingString.characters.dropFirst(7))
-        }
-        
-        if (workingString.hasPrefix("Partly "))
-        {
-            workingString = String(workingString.characters.dropFirst(7))
-        }
-        
-        if ((workingString.hasPrefix("freezing ")) ||
-            (workingString.hasPrefix("Freezing ")))
-        {
-            workingString = String(workingString.characters.dropFirst(9))
-        }
-        
-        if ((workingString.hasPrefix("heavy ")) ||
-            (workingString.hasPrefix("Heavy ")))
-        {
-            workingString = String(workingString.characters.dropFirst(6))
-        }
-        
-        if ((workingString.hasPrefix("light ")) ||
-            (workingString.hasPrefix("Light ")))
-        {
-            workingString = String(workingString.characters.dropFirst(6))
-        }
-        
-        if ((workingString.hasPrefix("strong ")) ||
-            (workingString.hasPrefix("Strong ")))
-        {
-            workingString = String(workingString.characters.dropFirst(7))
-        }
-        
-        if (workingString.hasPrefix("Moderate "))
-        {
-            workingString = String(workingString.characters.dropFirst(9))
-        }
-        
-        if (workingString.hasPrefix("or "))
-        {
-            workingString = String(workingString.characters.dropFirst(3))
-            workingString = fixIcon(icon: workingString) // Yes recursion
+            workingString = "Sun-Cloud"
         }
         
         return workingString
@@ -175,7 +171,7 @@ class APIXUAPI: NSObject, XMLParserDelegate
         } catch {
             // Handle Error
         }
-        
+
         DebugLog(String(format:"leaving APIXU beginParsing: %@", inputCity))
         
         return weatherFields
@@ -184,6 +180,59 @@ class APIXUAPI: NSObject, XMLParserDelegate
     func setRadarWind(_ radarWindow1: RadarWindow) {
         radarWindow = radarWindow1
     } // setRadarWind
+    
+    func languageConverter(conditions: String) -> String {
+        var intlConditions = conditions
+        let countryCode = (Locale.current as NSLocale).object(forKey: .countryCode) as? String
+        if (countryCode?.caseInsensitiveCompare("US") != ComparisonResult.orderedSame)
+        {
+            // parse http://www.apixu.com/doc/conditions.json
+            // weatherFields.currentConditions
+            // weatherFields.forecastConditions[weatherFields.forecastCounter]
+            let url = URL(string: "http://www.apixu.com/doc/conditions.json")
+            let data = NSData(contentsOf: url!)
+            do {
+                let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
+                if let dictionary = object as? [[String: AnyObject]] {
+                    intlConditions = readJSONObjectConditions(object: dictionary,
+                                                              countryCode: "FR",
+                                                              conditions: conditions)
+                }
+            } catch {
+                // Handle Error
+            }
+        }
+        return intlConditions
+    }// languageConverter
+    
+    func readJSONObjectConditions(object: [[String: AnyObject]],
+                                  countryCode: String,
+                                  conditions: String) -> String {
+        for o in object {
+            guard
+                let day_text = o["day"] as? String,
+                let languages = o["languages"] as? [[String: AnyObject]]
+                else {
+                    _ = "error"
+                    return conditions}
+            if (conditions.caseInsensitiveCompare(day_text) == ComparisonResult.orderedSame)
+            {
+                for l in languages {
+                    guard
+                        let lang_iso = l["lang_iso"] as? String,
+                        let day_text = l["day_text"] as? String
+                        else {
+                            _ = "error"
+                            return conditions}
+                    if (countryCode.caseInsensitiveCompare(lang_iso) == ComparisonResult.orderedSame)
+                    {
+                        return day_text
+                    }
+                }
+            }
+        }
+        return conditions
+    } // readJSONObjectConditions
     
     func readJSONObject(object: [String: AnyObject]) {
         guard
@@ -237,11 +286,12 @@ class APIXUAPI: NSObject, XMLParserDelegate
             
             for cond in [condition] {
                 guard
-                    let icon = cond["text"] as? String
+                    let text = cond["text"] as? String,
+                    let icon = cond["icon"] as? String
                     else {
                         _ = "error"
                         return }
-                weatherFields.currentConditions = icon
+                weatherFields.currentConditions = languageConverter(conditions: text)
                 weatherFields.currentCode = fixIcon(icon: icon)
             }
         }
@@ -284,12 +334,13 @@ class APIXUAPI: NSObject, XMLParserDelegate
                             return }
                     for cond in [condition] {
                         guard
-                            let icon = cond["text"] as? String
+                            let text = cond["text"] as? String,
+                            let icon = cond["icon"] as? String
                             else {
                                 _ = "error"
                                 return }
-                        weatherFields.forecastCode[weatherFields.forecastCounter] = icon
-                        weatherFields.forecastConditions[weatherFields.forecastCounter] = icon
+                        weatherFields.forecastConditions[weatherFields.forecastCounter] = languageConverter(conditions: text)
+                        weatherFields.forecastCode[weatherFields.forecastCounter] = fixIcon(icon: icon)
                     }
                     weatherFields.forecastLow[weatherFields.forecastCounter] = NSString(format: "%.0f", mintempF) as String
                     weatherFields.forecastHigh[weatherFields.forecastCounter] = NSString(format: "%.0f", maxtempF) as String

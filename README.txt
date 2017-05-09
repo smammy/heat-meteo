@@ -1,11 +1,29 @@
 This file could also be called the change log.
 
+3.0.4
+
+* Correct alignment of Forecast weather.
+* Correct link for Yahoo! weather.
+* Correct Wunderground location format.
+* Force DarkSky updates to hourly (far too popular)
+* Add option to reset preferences
+
+3.0.3
+
+* Correct problems with Last Update for Yahoo and OpenWeatherMap
+* Correct -9999 for wind direction for WeatherUnderground
+* Meteorologist is fully localized for French language
+* APIXU now has localized current and forecast conditions (but not other terms)
+* Dark Sky now has localized current and forecast conditions (but not other terms)
+* If you are using Dark Sky, your update frequency will be a minimum of 30 minutes.
+
 3.0.2
 *
 * Improve French localization
 * Add weather source APIXU.com
 * Add weather source DarkSky.net (no key required)
-* Display cached weather information if network connection is lost (not 100% working)
+* Display cached weather information if network connection is lost
+*   Does not detect if you have an IP but router is not connected
 
 3.0.1
 *

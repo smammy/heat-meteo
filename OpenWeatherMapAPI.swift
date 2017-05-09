@@ -67,7 +67,7 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         
         // https://OpenWeatherMap.org
         
-        //weatherQuery = "http://api.openweathermap.org/data/2.5/weather?q=&appid=XYZZY&mode=xml&units=imperial"
+        //weatherQuery = http://api.openweathermap.org/data/2.5/weather?q=IL,%20naperville&appid=d7ae7d44827777c67ab2c00bf9132070&mode=json&units=imperial
         
         parseURL = ""
         parseURL.append(QUERY_PREFIX1)
@@ -174,6 +174,7 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         let main = object["main"] as? [String: AnyObject],
         let wind = object["wind"] as? [String: AnyObject],
         let sys = object["sys"] as? [String: AnyObject],
+        let dt = object["dt"] as? Float,
         let weather = object["weather"] as? [[String: AnyObject]]
         else
         {
@@ -182,6 +183,14 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         }
         weatherFields.title1 = name
         weatherFields.URL = "http://openweathermap.org/city/" + (NSString(format: "%.0f", id) as String)
+        // Convert epoch to DOW
+        let unixdate: Int
+        unixdate = Int(dt)
+        let date = NSDate(timeIntervalSince1970: TimeInterval(unixdate))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        weatherFields.date = dateFormatter.string(from: date as Date)
         
         for xyzzy in [coord] as [[String: AnyObject]] {
             guard

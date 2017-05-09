@@ -167,7 +167,7 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
                 let display_location = xyzzy["display_location"] as? [String: AnyObject],
                 let observation_location = xyzzy["observation_location"] as? [String: AnyObject],
                 let temp_f = xyzzy["temp_f"] as? Float,
-                let wind_degrees = xyzzy["wind_degrees"] as? Float,
+                var wind_degrees = xyzzy["wind_degrees"] as? Float,
                 let wind_mph = xyzzy["wind_mph"] as? Float,
                 let pressure_mb = xyzzy["pressure_mb"] as? String,
                 let weather = xyzzy["weather"] as? String,
@@ -179,6 +179,11 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
                 else {
                     _ = "error"
                     return }
+            if (wind_degrees == -9999)
+            {
+                wind_degrees = 0
+            }
+            
             weatherFields.currentCode = icon
             weatherFields.currentConditions = weather
             weatherFields.currentTemp = NSString(format: "%.2f", temp_f) as String

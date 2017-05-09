@@ -90,6 +90,27 @@ func ** (radix: Float,  power: Float ) -> Double
     return pow(Double(radix), Double(power))
 }
 
+// https://bluelemonbits.com/index.php/2015/08/20/evaluate-string-width-and-return-cgfloat-swift-osx/
+func evaluateStringWidth (textToEvaluate: String) -> CGFloat{
+    
+    let defaults = UserDefaults.standard
+    
+    var font = NSFont()
+    let m = NumberFormatter().number(from: defaults.string(forKey: "fontsize")!)!
+
+    if (defaults.string(forKey: "fontDefault") == "1") {
+        font = NSFont.systemFont(ofSize: CGFloat(m))
+    }
+    else {
+        font = NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(m))!
+    }
+
+    let attributes = NSDictionary(object: font, forKey:NSFontAttributeName as NSCopying)
+    let sizeOfText = textToEvaluate.size(withAttributes: (attributes as! [String : AnyObject]))
+    
+    return sizeOfText.width
+}
+
 func localizedString(forKey key: String) -> String {
     var result = Bundle.main.localizedString(forKey: key, value: nil, table: nil)
     
@@ -103,24 +124,24 @@ func localizedString(forKey key: String) -> String {
 struct WeatherFields {
     
     var title1 = String()
-    var date = String()
+    var date = String()             // In UTC
     
     var latitude = String()
     var longitude = String()
     
     //var windChill = String()
-    var windSpeed = String()
-    var windDirection = String()
+    var windSpeed = String()        // mph
+    var windDirection = String()    // degrees
     
-    var humidity = String()
-    var pressure = String()
-    var visibility = String()
+    var humidity = String()         // percent
+    var pressure = String()         // millibars
+    var visibility = String()       // miles
     
     var sunrise = String()
     var sunset = String()
     
     var currentLink = String()
-    var currentTemp = String()
+    var currentTemp = String()      // *F
     var currentCode = String()          // Abbreviated Conditions
     var currentConditions = String()    // Full Conditions
     
@@ -146,7 +167,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     // https://github.com/soffes/clock-saver/blob/master/ClockDemo/Classes/AppDelegate.swift
     
     @IBOutlet weak var window: NSWindow!
-    //@IBOutlet weak var prefWindows: NSWindow!
     @IBOutlet weak var newVersion: NSButton!
     @IBOutlet weak var logMessages: NSButton!
     
@@ -245,6 +265,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     @IBOutlet weak var versionTextLabel: NSTextField!
     
     @IBOutlet weak var apiKeyLabel: NSTextField!
+    
+    @IBOutlet weak var resetPrefsButton: NSButton!
     
     @IBOutlet weak var theWeatherLocation: NSTextField!
     @IBOutlet weak var openWeatherMapLocation: NSTextField!
@@ -636,9 +658,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             if #available(iOS 10, *)
             {
                 ErrorLog(String(format:"iOS 10", self.appName))
-                textColor = NSColor(red: CGFloat(Float(defaults.string(forKey: "menuBarFontRedText")!)!)/255,
-                                    green: CGFloat(Float(defaults.string(forKey: "menuBarFontGreenText")!)!)/255,
-                                    blue: CGFloat(Float(defaults.string(forKey: "menuBarFontBlueText")!)!)/255, alpha: 1.0)
+                textColor = NSColor(red: CGFloat(Float(defaults.string(forKey: "fontRedText")!)!)/255,
+                                    green: CGFloat(Float(defaults.string(forKey: "fontGreenText")!)!)/255,
+                                    blue: CGFloat(Float(defaults.string(forKey: "fontBlueText")!)!)/255, alpha: 1.0)
             }
             else
             {
@@ -662,16 +684,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 if #available(iOS 10, *)
                 {
                     backgroundColor = NSColor(
-                        red: CGFloat(Float(defaults.string(forKey: "menuBarFontRedBackground")!)!)/255,
-                        green: CGFloat(Float(defaults.string(forKey: "menuBarFontGreenBackground")!)!)/255,
-                        blue: CGFloat(Float(defaults.string(forKey: "menuBarFontBlueBackground")!)!)/255, alpha: 1.0)
+                        red: CGFloat(Float(defaults.string(forKey: "fontRedBackground")!)!)/255,
+                        green: CGFloat(Float(defaults.string(forKey: "fontGreenBackground")!)!)/255,
+                        blue: CGFloat(Float(defaults.string(forKey: "fontBlueBackground")!)!)/255, alpha: 1.0)
                 }
                 else
                 {
                     backgroundColor = NSColor(
-                        red: CGFloat(Float(defaults.string(forKey: "menuBarFontRedBackground")!)!),
-                        green: CGFloat(Float(defaults.string(forKey: "menuBarFontGreenBackground")!)!),
-                        blue: CGFloat(Float(defaults.string(forKey: "menuBarFontBlueBackground")!)!), alpha: 1.0)
+                        red: CGFloat(Float(defaults.string(forKey: "fontRedBackground")!)!),
+                        green: CGFloat(Float(defaults.string(forKey: "fontGreenBackground")!)!),
+                        blue: CGFloat(Float(defaults.string(forKey: "fontBlueBackground")!)!), alpha: 1.0)
                 }
                 
                 attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
@@ -951,9 +973,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                     else
                     {
                         ErrorLog(String(format:"iOS 9b", self.appName))
-                        textColor = NSColor(red: CGFloat(Float(defaults.string(forKey: "fontRedText")!)!),
-                                            green: CGFloat(Float(defaults.string(forKey: "fontGreenText")!)!),
-                                            blue: CGFloat(Float(defaults.string(forKey: "fontBlueText")!)!),
+                        textColor = NSColor(red: CGFloat(Float(defaults.string(forKey: "menuBarFontRedText")!)!),
+                                            green: CGFloat(Float(defaults.string(forKey: "menuBarFontGreenText")!)!),
+                                            blue: CGFloat(Float(defaults.string(forKey: "menuBarFontBlueText")!)!),
                                             alpha: 1.0)
                     }
                     
@@ -1119,7 +1141,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     func processWeatherSource(_ weatherDataSource: String, inputCity: String, displayCity: String, APIKey1: String, APIKey2: String) -> WeatherFields
     {
         if (weatherDataSource == YAHOO_WEATHER) {
-            weatherFields = yahooWeatherAPI.beginParsing(inputCity, displayCity: displayCity, APIKey1: APIKey1, APIKey2: APIKey2)
+            weatherFields = yahooWeatherAPI.beginParsing(inputCity,
+                                                         displayCity: displayCity,
+                                                         APIKey1: APIKey1,
+                                                         APIKey2: APIKey2)
         }
         else if (weatherDataSource == OPENWEATHERMAP)
         {
@@ -1528,65 +1553,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             }
         } else if (weatherDataSource == APIXU)
         {
-            if (((weatherCode == "Sunny")) ||
-                ((weatherCode == "Clear/Sunny")) ||
-                ((weatherCode == "Clear")))
-            {
-                imageName = "Sun"
-            }
-            else if ((weatherCode == "Overcast") ||
-                (weatherCode == "ns_cloudy") ||
-                (weatherCode == "cloudy"))
-            {
-                imageName = "Cloudy"
-            }
-            else if ((weatherCode == "Light rain shower") ||
-                (weatherCode == "Moderate rain") ||
-                (weatherCode == "Patchy rain possible") ||
-                (weatherCode == "Moderate or heavy rain shower") ||
-                (weatherCode == "Light drizzle"))
-            {
-                imageName = "Rain"
-            }
-        } else if (weatherDataSource == WORLDWEATHERONLINE)
-        {
-            if (((weatherCode == "Sunny")) ||
-                ((weatherCode == "Clear/Sunny")) ||
-                ((weatherCode == "Clear")))
-            {
-                imageName = "Sun"
-            }
-            else if ((weatherCode == "Snow") ||
-                (weatherCode == "snow") ||
-                (weatherCode == "Snow, Mist") ||
-                (weatherCode == "freezing rain") ||
-                (weatherCode == "Blizzard") ||
-                (weatherCode == "blizzard") ||
-                (weatherCode == "Sleet") ||
-                (weatherCode == "sleet"))
-            {
-                imageName = "Snow"
-            }
-            else if (((weatherCode == "Overcast")) ||
-                ((weatherCode == "overcast")) ||
-                ((weatherCode == "Cloudy")) ||
-                ((weatherCode == "cloudy")))
-            {
-                imageName = "Sun-Cloud"
-            }
-            else if (weatherCode == "fog")
-            {
-                imageName = "Hazy"
-            }
-            else if ((weatherCode == "drizzle") ||
-                (weatherCode == "Drizzle") ||
-                (weatherCode == "mist") ||
-                (weatherCode == "Mist") ||
-                (weatherCode == "rain") ||
-                (weatherCode == "Rain"))
-            {
-                imageName = "Rain"
-            }
+            imageName = weatherCode
         } else if (weatherDataSource == DARKSKY)
         {
             let _ = weatherCode
@@ -1763,7 +1730,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         
         // change to a readable time format and change to local time zone
         dateFormatter.dateFormat = "h:mm a"
-        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        //dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        dateFormatter.timeZone = TimeZone.ReferenceType.local
         return dateFormatter.string(from: date!)
     } // convertUTCtoHHMM
     
@@ -1934,6 +1902,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             menu.addItem(newItem)
             
             var statusTitle = String()
+            var sourceURL = ""
             if (weatherDataSource == YAHOO_WEATHER)
             {
                 statusTitle = localizedString(forKey: "ProvidedBy_") + " Yahoo!"
@@ -1949,14 +1918,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             else if (weatherDataSource == WEATHERUNDERGROUND)
             {
                 statusTitle = localizedString(forKey: "ProvidedBy_") + " WUnderground"
+                sourceURL = "https://www.wunderground.com/weather/api/d/docs?d=resources/logo-usage-guide"
             }
             else if (weatherDataSource == DARKSKY)
             {
                 statusTitle = localizedString(forKey: "ProvidedBy_") + " Dark Sky"
+                sourceURL = "https://darksky.net/poweredby/"
             }
             else if (weatherDataSource == AERISWEATHER)
             {
                 statusTitle = localizedString(forKey: "ProvidedBy_") + " AERIS Weather"
+                sourceURL = "https://www.aerisweather.com/attribution/"
             }
             else if (weatherDataSource == WORLDWEATHERONLINE)
             {
@@ -1970,7 +1942,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             {
                 statusTitle = "WeatherSource unknown"
             }
-            newItem = myMenuItem(statusTitle, url: "", key: "")
+            if (sourceURL == "")
+            {
+                newItem = myMenuItem(statusTitle, url: nil, key: "")
+            }
+            else
+            {
+                newItem = myMenuItem(statusTitle, url: "openWeatherURL:", key: "")
+                newItem.representedObject = sourceURL
+            }
             menu.addItem(newItem)
 
             var currentForecastMenu = NSMenu()
@@ -2072,6 +2052,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             newLocation.addItem(NSMenuItem.separator())
         }
         
+        var sourceURL = ""
         if (weatherDataSource == YAHOO_WEATHER)
         {
             statusTitle = localizedString(forKey: "ProvidedBy_") + " Yahoo!"
@@ -2087,14 +2068,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         else if (weatherDataSource == WEATHERUNDERGROUND)
         {
             statusTitle = localizedString(forKey: "ProvidedBy_") + " WUnderground"
+            sourceURL = "https://www.wunderground.com/weather/api/d/docs?d=resources/logo-usage-guide"
         }
         else if (weatherDataSource == DARKSKY)
         {
             statusTitle = localizedString(forKey: "ProvidedBy_") + " Dark Sky"
+            sourceURL = "https://darksky.net/poweredby/"
         }
         else if (weatherDataSource == AERISWEATHER)
         {
             statusTitle = localizedString(forKey: "ProvidedBy_") + " AERIS Weather"
+            sourceURL = "https://www.aerisweather.com/attribution/"
         }
         else if (weatherDataSource == WORLDWEATHERONLINE)
         {
@@ -2108,7 +2092,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         {
             statusTitle = "WeatherSource unknown"
         }
-        currentForecastMenu.addItem(myMenuItem(statusTitle, url: "", key: ""))
+        
+        if (sourceURL == "")
+        {
+            newItem = myMenuItem(statusTitle, url: nil, key: "")
+        }
+        else
+        {
+            newItem = myMenuItem(statusTitle, url: "openWeatherURL:", key: "")
+            newItem.representedObject = sourceURL
+        }
+        currentForecastMenu.addItem(newItem)
         
         currentConditions(weatherFields, cityName: displayCityName, currentForecastMenu: currentForecastMenu)
         
@@ -2195,16 +2189,29 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         {
             maxForecastDays = weatherFields.forecastCounter
         }
+
+        let maxHiLowTemps = formatTemp("888") + "/" + formatTemp("888") + " \t"
         
         while (i < maxForecastDays)
         {
             if (!weatherFields.forecastDay[i].isEqual("")) {
                 extendedForecast = NSMenu()
                 
+                var Day = localizedString(forKey: formatDay(weatherFields.forecastDay[i] as String)) + " \t"
+                if (evaluateStringWidth(textToEvaluate: Day) < 30)
+                {
+                    Day = Day + "\t"
+                }
+
                 if (defaults.string(forKey: "extendedForecastSingleLine")! == "1") {
-                    var menuString = "";
-                    menuString = menuString + localizedString(forKey: formatDay(weatherFields.forecastDay[i] as String)) + " \t"
-                    menuString = menuString + formatTemp(weatherFields.forecastHigh[i] as String) + "/" + formatTemp(weatherFields.forecastLow[i] as String) + " \t"
+                    var menuString = ""
+                    menuString = menuString + Day
+                    var HiLowTemps = formatTemp(weatherFields.forecastHigh[i] as String) + "/" + formatTemp(weatherFields.forecastLow[i] as String) + " \t"
+                    if (evaluateStringWidth(textToEvaluate: HiLowTemps) < evaluateStringWidth(textToEvaluate: maxHiLowTemps))
+                    {
+                        HiLowTemps = HiLowTemps + "\t"
+                    }
+                    menuString = menuString + HiLowTemps
                     menuString = menuString + localizedString(forKey: (weatherFields.forecastConditions[i] as String))
                     newItem = myMenuItem(menuString, url: "dummy:", key: "")
                     if (defaults.string(forKey: "extendedForecastIcons")! == "1") {
@@ -2215,7 +2222,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                     extendedForecastMenu.addItem(newItem)
                 } else {
                     
-                    newItem = myMenuItem(localizedString(forKey: formatDay(weatherFields.forecastDay[i] as String)) + " \t" + formatTemp(weatherFields.forecastHigh[i] as String), url: nil, key: "")
+                    newItem = myMenuItem(Day + formatTemp(weatherFields.forecastHigh[i] as String), url: nil, key: "")
                     extendedForecastMenu.addItem(newItem)
                     if (defaults.string(forKey: "extendedForecastIcons")! == "1") {
                         newItem.image=setImage(weatherFields.forecastCode[i] as String, weatherDataSource: weatherDataSource)
@@ -2616,6 +2623,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         fontButton.title = localizedString(forKey: "SetFont_")
         menuBarFontButton.title = localizedString(forKey: "SetFont_")
         
+        resetPrefsButton.title = localizedString(forKey: "resetPreferences_")
+        
         apiKeyLabel.stringValue = localizedString(forKey: "apiKeyLabel_")
         theWeatherLocation.stringValue = localizedString(forKey: "theWeatherLocation_")
         openWeatherMapLocation.stringValue = localizedString(forKey: "openWeatherMapLocation_")
@@ -2688,5 +2697,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     {
         updateWeather()
     } // weatherRefresh
+    
+    @IBAction func resetPreferences(_ sender: NSMenuItem)
+    {
+        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        UserDefaults.standard.synchronize()
+        
+        defaultPreferences()
+
+        initWindowPrefs()
+        
+    } // resetPreferences
     
 } // AppDelegate
