@@ -1,5 +1,11 @@
 This file could also be called the change log.
 
+3.0.5
+
+* Add French translation of: Patchy rain possible and moderate rain
+* Correct code signing issue
+* Update Dark Sky access
+
 3.0.4
 
 * Correct alignment of Forecast weather.

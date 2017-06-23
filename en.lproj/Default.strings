@@ -128,6 +128,7 @@
 "Hurricane" = "Hurricane";
 "light rain" = "light rain";
 "light snow" = "light snow";
+"moderate rain" = "moderate rain";
 "Mostly Cloudy with Scattered Snow Showers" = "Mostly Cloudy with Scattered Snow Showers";
 "Mostly Cloudy with Wintry Mix Likely" = "Mostly Cloudy with Wintry Mix Likely";
 "Mostly Cloudy" = "Mostly Cloudy";
@@ -148,3 +149,5 @@
 "Tornado" = "Tornado";
 
 "resetPreferences_" = "Reset Preferences";
+"Patchy rain possible" = "Patchy rain possible";
+"PoweredBy_" = "Powered by";

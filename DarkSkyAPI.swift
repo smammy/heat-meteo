@@ -34,9 +34,9 @@
 //  Depending on the load the Meteo community puts on this account,
 //   it's possible individuals will need either own API Key.
 //
-// API Key = bb43283728a3651382261467731dbb94
+// API Key = 1f76884583c747841b6dd66979a24b3e
 // BASE_URL = https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE
-//            https://api.forecast.io/forecast/bb43283728a3651382261467731dbb94/37.8267,-122.423?exclude=minutely,hourly,alerts,flags&lang=en&units=us
+//            https://api.forecast.io/forecast/1f76884583c747841b6dd66979a24b3e/37.8267,-122.423?exclude=minutely,hourly,alerts,flags&lang=en&units=us
 //
 
 import Cocoa
@@ -71,7 +71,7 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         
         if (APIKey == "")
         {
-            APIKey = "bb43283728a3651382261467731dbb94"
+            APIKey = "1f76884583c747841b6dd66979a24b3e"
         }
         
         AppDelegate().initWeatherFields(weatherFields: &weatherFields)

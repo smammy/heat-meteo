@@ -1,7 +1,5 @@
-3.0.4
+3.0.5
 
-* Correct alignment of Forecast weather.
-* Correct link for Yahoo! weather.
-* Correct Wunderground location format.
-* Force DarkSky updates to hourly (far too popular)
-* Add option to reset preferences
+* French translation of: Patchy rain possible and moderate rain
+* Correct code signing issue
+* Update Dark Sky access

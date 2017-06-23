@@ -1922,7 +1922,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             }
             else if (weatherDataSource == DARKSKY)
             {
-                statusTitle = localizedString(forKey: "ProvidedBy_") + " Dark Sky"
+                statusTitle = localizedString(forKey: "PoweredBy_") + " Dark Sky"
                 sourceURL = "https://darksky.net/poweredby/"
             }
             else if (weatherDataSource == AERISWEATHER)
@@ -2072,7 +2072,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         }
         else if (weatherDataSource == DARKSKY)
         {
-            statusTitle = localizedString(forKey: "ProvidedBy_") + " Dark Sky"
+            statusTitle = localizedString(forKey: "PoweredBy_") + " Dark Sky"
             sourceURL = "https://darksky.net/poweredby/"
         }
         else if (weatherDataSource == AERISWEATHER)
@@ -2367,6 +2367,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
 
         testAndSet("forecastDays", defaultValue: "4")
 
+        defaults.setValue(DEFAULT_PREFERENCE_VERSION, forKey: "preferenceVersion")
         testAndSet("preferenceVersion", defaultValue: DEFAULT_PREFERENCE_VERSION)
         
     } // defaultPreferences

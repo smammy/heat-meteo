@@ -128,6 +128,7 @@
 "Hurricane" = "Ouragan";
 "light rain" = "Neige pluie";
 "light snow" = "Neige légère";
+"moderate rain" = "Pluie modérée";
 "Mostly Cloudy with Scattered Snow Showers" = "Généralement Nuageux avec Averses de Neige Eparses";
 "Mostly Cloudy with Wintry Mix Likely" = "Généralement Nuageux et Temps Hivernal Probable";
 "Mostly Cloudy" = "Généralement Nuageux";
@@ -148,3 +149,5 @@
 "Tornado" = "Tornade";
 
 "resetPreferences_" = "Remettre à zéro les Préférences";
+"Patchy rain possible" = "Pluies éparses possibles";
+"PoweredBy_" = "Alimenté par";

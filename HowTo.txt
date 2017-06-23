@@ -8,6 +8,7 @@ To build using Xcode 8:
 ¥ Make sure the version (Bundle versions string, short) in info.plist is updated.
 ¥ Make sure README.txt is updated.
 ¥ Use SVN to update the project (see below).
+¥ÊMake sure code signing is: Authority=Developer IDÉ (not Authority=Mac Developer).
 ¥ Run build_dmg.sh. This will create Meteorologist-v.r.m.dmg in the build folder using the pieces above.
 
 
