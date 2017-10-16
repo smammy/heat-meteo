@@ -133,7 +133,7 @@ class TheWeatherAPI: NSObject, XMLParserDelegate
             {
                 var string = attributeDict["value"]!
                 let index = string.index(string.startIndex, offsetBy: 3)
-                string = string.substring(to: index)
+                string = String(string.prefix(upTo: index))
                 weatherFields.forecastDay[weatherFields.forecastCounter].append(string)
                 weatherFields.forecastCounter = weatherFields.forecastCounter + 1
             }

@@ -202,7 +202,7 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
             weatherFields.date = dateFormatter.string(from: date as Date)
             
             // Remove trailing %
-            let truncated = relative_humidity.substring(to: relative_humidity.index(before: relative_humidity.endIndex))
+            let truncated = String(relative_humidity.prefix(upTo: relative_humidity.index(of: "%")!))
             weatherFields.humidity = truncated
             
             for xyzzy in [display_location] {

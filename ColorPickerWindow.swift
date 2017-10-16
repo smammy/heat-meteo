@@ -116,7 +116,7 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
     
     func ResetButton() {
         
-        systemFontButton.state = 1
+        systemFontButton.state = NSControl.StateValue(rawValue: 1)
         
         fontName.selectItem(withTitle: "Tahoma")
         fontSize.selectItem(withTitle: "15")
@@ -133,7 +133,7 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
         greenBackgroundSlider.isEnabled = false
         blueBackgroundSlider.isEnabled = false
         
-        transparentButton.state = 1
+        transparentButton.state = NSControl.StateValue(rawValue: 1)
         
         systemFontAction()
         
@@ -143,8 +143,8 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
         var m = (15 as NSNumber)
         m = NumberFormatter().number(from: fontSize.selectedItem!.title)!
 
-        if (systemFontButton.state == 1) {
-            let font = NSFont.systemFont(ofSize: CGFloat(m))
+        if (systemFontButton.state.rawValue == 1) {
+            let font = NSFont.systemFont(ofSize: CGFloat(truncating: m))
             meteorologistLabel.font = font
 
             meteorologistLabel.textColor = NSColor(red: 0, green: 0, blue: 0, alpha: 1.0)
@@ -155,7 +155,7 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
             let selectedFont = fontName.selectedItem
             if (selectedFont != nil)
             {
-                let font = NSFont(name: fontName.selectedItem!.title, size: CGFloat(m))
+                let font = NSFont(name: fontName.selectedItem!.title, size: CGFloat(truncating: m))
                 meteorologistLabel.font = font
             }
             
@@ -163,7 +163,7 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
                 green: CGFloat(greenTextSlider.floatValue)/255,
                 blue: CGFloat(blueTextSlider.floatValue)/255, alpha: 1.0)
             
-            if (transparentButton.state == 1) {
+            if (transparentButton.state.rawValue == 1) {
                 meteorologistLabel.drawsBackground = false
             } else {
                 meteorologistLabel.drawsBackground = true
@@ -239,11 +239,11 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
         
         transparentButton.title = localizedString(forKey: "Transparent_")
         
-        fontName.addItems(withTitles: NSFontManager.shared().availableFontFamilies)
+        fontName.addItems(withTitles: NSFontManager.shared.availableFontFamilies)
         
-        systemFontButton.state = Int(defaults.string(forKey: whichFont+"Default")!)!
+        systemFontButton.state = NSControl.StateValue(rawValue: Int(defaults.string(forKey: whichFont+"Default")!)!)
         
-        if (systemFontButton.state == 1) {
+        if (systemFontButton.state.rawValue == 1) {
             fontName.isEnabled = false
         } else {
             fontName.isEnabled = true
@@ -260,9 +260,9 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
         greenBackgroundSlider.doubleValue = Double(defaults.string(forKey: whichFont+"GreenBackground")!)!
         blueBackgroundSlider.doubleValue = Double(defaults.string(forKey: whichFont+"BlueBackground")!)!
         
-        transparentButton.state = Int(defaults.string(forKey: whichFont+"Transparency")!)!
+        transparentButton.state = NSControl.StateValue(rawValue: Int(defaults.string(forKey: whichFont+"Transparency")!)!)
         
-        if (transparentButton.state == 1) {
+        if (transparentButton.state.rawValue == 1) {
             redBackgroundSlider.isEnabled = false
             greenBackgroundSlider.isEnabled = false
             blueBackgroundSlider.isEnabled = false
@@ -277,7 +277,7 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
     } // initDisplay
     
     func systemFontAction() {
-        if (systemFontButton.state == 1) {
+        if (systemFontButton.state.rawValue == 1) {
             fontName.isEnabled = false
             
             redBackgroundSlider.isEnabled = false
@@ -292,7 +292,7 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
         } else {
             fontName.isEnabled = true
             
-            if (transparentButton.state == 0) {
+            if (transparentButton.state.rawValue == 0) {
                 redBackgroundSlider.isEnabled = true
                 greenBackgroundSlider.isEnabled = true
                 blueBackgroundSlider.isEnabled = true
@@ -313,7 +313,7 @@ class ColorPickerWindow: NSWindowController, NSWindowDelegate {
     }
     
     @IBAction func TransparentButtonPressed(_ sender: NSButton) {
-        if (transparentButton.state == 1) {
+        if (transparentButton.state.rawValue == 1) {
             redBackgroundSlider.isEnabled = false
             greenBackgroundSlider.isEnabled = false
             blueBackgroundSlider.isEnabled = false

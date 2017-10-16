@@ -1,5 +1,13 @@
 This file could also be called the change log.
 
+3.1.0
+
+* Now written in Swift 4
+* Correct Yahoo date missing leading 0 on time's (7:7 vs 7:07)
+* DarkSky Extended Forecast now displays DOW based on local timezone (vs. UTC)
+* Correct current weather icon display from DarkSky
+* Still supporting 10.9 but this may be the last update
+
 3.0.5
 
 * Add French translation of: Patchy rain possible and moderate rain

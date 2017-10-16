@@ -41,13 +41,14 @@ class RadarWindow: NSWindowController, NSWindowDelegate {
     // THIS NEEDS LOTS OF WORK - RIGHT NOW IS HARD CODED TO WEATHER.COM
     // THIS NEEDS LOTS OF WORK - RIGHT NOW IS HARD CODED TO WEATHER.COM
     // THIS NEEDS LOTS OF WORK - RIGHT NOW IS HARD CODED TO WEATHER.COM
+    // https://maps.darksky.net/@radar,41.735,-88.0949,9
 
     var weatherComTag = "60565"
 
     // Allow Command-W to close the window
     override func keyDown(with theEvent: (NSEvent!))
     {
-        if theEvent.modifierFlags.contains(.command) {
+        if theEvent.modifierFlags.contains(NSEvent.ModifierFlags.command) {
             switch theEvent.charactersIgnoringModifiers! {
             case "w":
                 self.window?.close()
@@ -95,9 +96,11 @@ class RadarWindow: NSWindowController, NSWindowDelegate {
         
     }
     
+    /* TODO
     override var windowNibName : String! {
         return "RadarWindow"
     }
+ */
 
     override func windowWillLoad() {
     }

@@ -99,15 +99,16 @@ func evaluateStringWidth (textToEvaluate: String) -> CGFloat{
     let m = NumberFormatter().number(from: defaults.string(forKey: "fontsize")!)!
 
     if (defaults.string(forKey: "fontDefault") == "1") {
-        font = NSFont.systemFont(ofSize: CGFloat(m))
+        font = NSFont.systemFont(ofSize: CGFloat(truncating: m))
     }
     else {
-        font = NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(m))!
+        font = NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!
     }
 
-    let attributes = NSDictionary(object: font, forKey:NSFontAttributeName as NSCopying)
-    let sizeOfText = textToEvaluate.size(withAttributes: (attributes as! [String : AnyObject]))
-    
+    let attributes = NSDictionary(object: font, forKey:NSAttributedStringKey.font as NSCopying)
+    let sizeOfText = textToEvaluate.size(withAttributes: (attributes as! [NSAttributedStringKey : Any]))
+    //let sizeOfText = textToEvaluate.size(withAttributes: (attributes as! [String : AnyObject]))
+
     return sizeOfText.width
 }
 
@@ -288,11 +289,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     var buttonPresses = 0;
     
-    var modalMenuBar = ColorPickerWindow(windowNibName: "ColorPickerWindow")
-    var modalDisplay = ColorPickerWindow(windowNibName: "ColorPickerWindow")
+    var modalMenuBar = ColorPickerWindow(windowNibName: NSNib.Name(rawValue: "ColorPickerWindow"))
+    var modalDisplay = ColorPickerWindow(windowNibName: NSNib.Name(rawValue: "ColorPickerWindow"))
     var radarWindow: RadarWindow!
     
-    var statusBar = NSStatusBar.system()
+    var statusBar = NSStatusBar.system
     var statusBarItem : NSStatusItem = NSStatusItem()
     var menu: NSMenu = NSMenu()
     var menuItem : NSMenuItem = NSMenuItem()
@@ -413,7 +414,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         statusBarItem = statusBar.statusItem(withLength: -1)
         statusBarItem.menu = menu
         statusBarItem.title = localizedString(forKey: "Loading_") + "..."
-        statusBarItem.image = NSImage(named: "Loading-1")!
+        statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-1"))!
         loadTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(AppDelegate.runTimedCode), userInfo: nil, repeats: true);  //Start animating the menubar icon
 
         let newItem : NSMenuItem = NSMenuItem(title: localizedString(forKey: "PleaseWait_"), action: #selector(AppDelegate.dummy(_:)), keyEquivalent: "")
@@ -447,7 +448,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
 
     } // awakeFromNib
     
-    func launchWeather() {
+    @objc func launchWeather() {
         var webVERSION = ""
         let newVersion = defaults.string(forKey: "newVersion")
         var whatChanged = ""
@@ -489,20 +490,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 let myPopup: NSAlert = NSAlert()
                 myPopup.messageText = localizedString(forKey: "NewVersionAvailable_") + "\n\n" + whatChanged
                 myPopup.informativeText = localizedString(forKey: "Download?_")
-                myPopup.alertStyle = NSAlertStyle.warning
+                myPopup.alertStyle = NSAlert.Style.warning
                 myPopup.addButton(withTitle: localizedString(forKey: "Yes_"))
                 
                 // http://swiftrien.blogspot.com/2015/03/code-sample-swift-nsalert_5.html
                 // If any button is created with the title "Cancel" then that has the key "Escape" associated with it
                 myPopup.addButton(withTitle: localizedString(forKey: "Cancel_"))
                 let res = myPopup.runModal()
-                if res == NSAlertFirstButtonReturn
+                if res == NSApplication.ModalResponse.alertFirstButtonReturn
                 {
                     let myUrl = "http://heat-meteo.sourceforge.net"
                     
                     if let checkURL = URL(string: myUrl as String)
                     {
-                        if NSWorkspace.shared().open(checkURL)
+                        if NSWorkspace.shared.open(checkURL)
                         {
                             //print("URL successfully opened:", myUrl, terminator: "\n")
                             exit(0)
@@ -530,11 +531,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             m = NumberFormatter().number(from: defaults.string(forKey: "fontsize")!)!
             if (defaults.string(forKey: "fontDefault") == "1")
             {
-                font = NSFont.systemFont(ofSize: CGFloat(m))
+                font = NSFont.systemFont(ofSize: CGFloat(truncating: m))
             }
             else
             {
-                font = NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(m))
+                font = NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))
             }
         }
         menu.font = font
@@ -552,11 +553,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             //            statusBarItem.image = nil
             if (defaults.string(forKey: "menuBarFontDefault") == "1")
             {
-                font = NSFont.systemFont(ofSize: CGFloat(m))
+                font = NSFont.systemFont(ofSize: CGFloat(truncating: m))
             }
             else
             {
-                font = NSFont(name: defaults.string(forKey: "menuBarFont")!, size: CGFloat(m))
+                font = NSFont(name: defaults.string(forKey: "menuBarFont")!, size: CGFloat(truncating: m))
             }
         }
         
@@ -566,13 +567,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         {
             statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                 localizedString(forKey: "NetworkFailure_"),
-                                                                                                                  attributes:[NSFontAttributeName : font!]))
+                                                                                                                  attributes:[NSAttributedStringKey.font : font!]))
         }
         else
         {
             statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                 localizedString(forKey: "Loading_") + "...",
-                                                                                                                  attributes:[NSFontAttributeName : font!]))
+                                                                                                                  attributes:[NSAttributedStringKey.font : font!]))
         }
         
         let preferenceVersion = defaults.string(forKey: "preferenceVersion")
@@ -586,39 +587,39 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         updateWeather()
     }
     
-    func runTimedCode()  //Animate the icon while loading
+    @objc func runTimedCode()  //Animate the icon while loading
     {
-        if (statusBarItem.image == NSImage(named: "Loading-8"))
+        if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-8")))
         {
-            statusBarItem.image = NSImage(named: "Loading-1")!
+            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-1"))!
         }
-        else if (statusBarItem.image == NSImage(named: "Loading-1"))
+        else if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-1")))
         {
-            statusBarItem.image = NSImage(named: "Loading-2")!
+            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-2"))!
         }
-        else if (statusBarItem.image == NSImage(named: "Loading-2"))
+        else if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-2")))
         {
-            statusBarItem.image = NSImage(named: "Loading-3")!
+            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-3"))!
         }
-        else if (statusBarItem.image == NSImage(named: "Loading-3"))
+        else if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-3")))
         {
-            statusBarItem.image = NSImage(named: "Loading-4")!
+            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-4"))!
         }
-        else if (statusBarItem.image == NSImage(named: "Loading-4"))
+        else if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-4")))
         {
-            statusBarItem.image = NSImage(named: "Loading-5")!
+            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-5"))!
         }
-        else if (statusBarItem.image == NSImage(named: "Loading-5"))
+        else if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-5")))
         {
-            statusBarItem.image = NSImage(named: "Loading-6")!
+            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-6"))!
         }
-        else if (statusBarItem.image == NSImage(named: "Loading-6"))
+        else if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-6")))
         {
-            statusBarItem.image = NSImage(named: "Loading-7")!
+            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-7"))!
         }
         else
         {
-            statusBarItem.image = NSImage(named: "Loading-8")!
+            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-8"))!
         }
     } // runTimedCode
     
@@ -650,7 +651,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         {
             attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                 string,
-                attributes:[NSFontAttributeName : NSFont.systemFont(ofSize: CGFloat(m))]))
+                                                                                                    attributes:[NSAttributedStringKey.font : NSFont.systemFont(ofSize: CGFloat(truncating: m))]))
         }
         else
         {
@@ -675,8 +676,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             {
                 attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                     string,
-                    attributes:[NSFontAttributeName : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(m))!,
-                        NSForegroundColorAttributeName : textColor]))
+                                                                                                        attributes:[NSAttributedStringKey.font : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!,
+                        NSAttributedStringKey.foregroundColor : textColor]))
             }
             else
             {
@@ -698,9 +699,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 
                 attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                     string,
-                    attributes:[NSFontAttributeName : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(m))!,
-                        NSForegroundColorAttributeName : textColor,
-                        NSBackgroundColorAttributeName : backgroundColor]))
+                                                                                                        attributes:[NSAttributedStringKey.font : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!,
+                        NSAttributedStringKey.foregroundColor : textColor,
+                        NSAttributedStringKey.backgroundColor : backgroundColor]))
             }
         }
         newItem.attributedTitle = attributedTitle
@@ -773,7 +774,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         
     }
     
-    func updateWeather()
+    @objc func updateWeather()
     {
         radarWindow = RadarWindow()
         let defaults = UserDefaults.standard
@@ -826,11 +827,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             m = NumberFormatter().number(from: defaults.string(forKey: "menuBarFontsize")!)!
             if (defaults.string(forKey: "menuBarFontDefault") == "1")
             {
-                font = NSFont.systemFont(ofSize: CGFloat(m))
+                font = NSFont.systemFont(ofSize: CGFloat(truncating: m))
             }
             else
             {
-                font = NSFont(name: defaults.string(forKey: "menuBarFont")!, size: CGFloat(m))
+                font = NSFont(name: defaults.string(forKey: "menuBarFont")!, size: CGFloat(truncating: m))
             }
         }
         
@@ -958,7 +959,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 if (defaults.string(forKey: "menuBarFontDefault") == "1")
                 {
                     statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string: statusTitle,
-                                                                                                                          attributes:[NSFontAttributeName : font!]))
+                                                                                                                          attributes:[NSAttributedStringKey.font : font!]))
                 }
                 else
                 {
@@ -982,8 +983,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                     if (defaults.string(forKey: "menuBarFontTransparency")! == "1")
                     {
                         statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string: statusTitle,
-                                                                                                                              attributes:[NSFontAttributeName : font!,
-                                                                                                                                          NSForegroundColorAttributeName : textColor]))
+                                                                                                                              attributes:[NSAttributedStringKey.font : font!,
+                                                                                                                                          NSAttributedStringKey.foregroundColor : textColor]))
                     }
                     else
                     {
@@ -1004,9 +1005,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                         }
                         statusBarItem.attributedTitle =
                             NSMutableAttributedString(attributedString: NSMutableAttributedString(string: statusTitle,
-                                                                                                  attributes:[NSFontAttributeName : font!,
-                                                                                                              NSForegroundColorAttributeName : textColor,
-                                                                                                              NSBackgroundColorAttributeName : backgroundColor]))
+                                                                                                  attributes:[NSAttributedStringKey.font : font!,
+                                                                                                              NSAttributedStringKey.foregroundColor : textColor,
+                                                                                                              NSAttributedStringKey.backgroundColor : backgroundColor]))
                     }
                 }
             }
@@ -1100,9 +1101,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 let attributedTitle: NSMutableAttributedString
                 attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                     localizedString(forKey: "NoInternetConnectivity_"),
-                                                                                                        attributes:[NSFontAttributeName : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(m))!,
-                                                                                                                    NSForegroundColorAttributeName : textColor,
-                                                                                                                    NSBackgroundColorAttributeName : backgroundColor]))
+                                                                                                        attributes:[NSAttributedStringKey.font : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!,
+                                                                                                                    NSAttributedStringKey.foregroundColor : textColor,
+                                                                                                                    NSAttributedStringKey.backgroundColor : backgroundColor]))
 
                 let newItem = NSMenuItem()
                 newItem.attributedTitle = attributedTitle
@@ -1610,7 +1611,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             imageName = imageName + "-Color"
         }
         
-        return NSImage(named: imageName)!
+        return NSImage(named: NSImage.Name(rawValue: imageName))!
 
     } // setImage
     
@@ -1718,14 +1719,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         {
             return ""
         }
+        
+        // Fix (Yahoo bug) myTime = "7:7 am"
+        var string = myTime
+        let part1 = string.split(separator: ":")
+        let part2 = String(part1[1]).split(separator: " ")
+        if ( 1 == String(part2[0]).count ) {
+            string = String(part1[0]) + ":0" + String(part1[1])
+        }
+        
         // create dateFormatter with UTC time format
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        let date = dateFormatter.date(from: myTime)
+        let date = dateFormatter.date(from: string)
         if (date == nil)
         {
-            return myTime
+            return string
         }
         
         // change to a readable time format and change to local time zone
@@ -2253,18 +2263,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         DebugLog(String(format:"leaving extendedForecasts: %@", cityName))
     } // extendedForecasts
     
-    func dummy(_ sender: NSMenuItem)
+    @objc func dummy(_ sender: NSMenuItem)
     {
         //print("dummy", terminator: "\n")
     } // dummy
     
-    func openWeatherURL(_ menu:NSMenuItem)
+    @objc func openWeatherURL(_ menu:NSMenuItem)
     {
         let myUrl = menu.representedObject as! NSString
         
         if let checkURL = URL(string: myUrl as String)
         {
-            if NSWorkspace.shared().open(checkURL)
+            if NSWorkspace.shared.open(checkURL)
             {
                 print("URL successfully opened:", myUrl, terminator: "\n")
                 
@@ -2276,7 +2286,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         }
     } // openWeatherURL
     
-    func showRadar(_ menu:NSMenuItem) {
+    @objc func showRadar(_ menu:NSMenuItem) {
         
         DebugLog(String(format:"in showRadar\n"))
         
@@ -2536,7 +2546,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         defaults.setValue(DEFAULT_PREFERENCE_VERSION, forKey: "preferenceVersion")
         
         let i = NumberFormatter().number(from: defaults.string(forKey: "fontsize")!)
-        menu.font = NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(i!))
+        menu.font = NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: i!))
         
         updateWeather()
         
@@ -2675,7 +2685,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     @IBAction func launchLink(_ sender: NSButton)
     {
         if let url = URL(string: sender.title) {
-            NSWorkspace.shared().open(url)
+            NSWorkspace.shared.open(url)
         }
     } // dummy
     
@@ -2691,7 +2701,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         task.launchPath = "/bin/sh"
         task.arguments = ["-c", "sleep 0.2; open \"\(Bundle.main.bundlePath)\""]
         task.launch()
-        NSApplication.shared().terminate(nil)
+        NSApplication.shared.terminate(nil)
     } // dummy
     
     @IBAction func weatherRefresh(_ sender: NSMenuItem)

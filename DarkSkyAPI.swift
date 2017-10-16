@@ -54,7 +54,8 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
     var weatherFields = WeatherFields()
 
     var radarWindow = RadarWindow()
-        func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String) -> WeatherFields
+    
+    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String) -> WeatherFields
     {
         DebugLog(String(format:"in DarkSkyAPI beginParsing: %@", inputCity))
         
@@ -200,6 +201,7 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
                     return
                 }
                 
+                // This is for sunrise/sunset for today
                 if (weatherFields.forecastCounter == 0)
                 {
                     // Convert epoch to UTC
@@ -220,9 +222,6 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
                     dateFormatter.timeZone = TimeZone(identifier: "UTC")
                     
                     weatherFields.sunset = dateFormatter.string(from: date as Date)
-
-                    weatherFields.currentCode = icon
-                    //weatherFields.currentLink = NSString(format: "%.2f", temperatureMax) as String
                 }
                 // Convert epoch to UTC
                 let unixdate: Int
@@ -230,14 +229,16 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
                 let date = NSDate(timeIntervalSince1970: TimeInterval(unixdate))
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "E"
-                dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                
+                //dateFormatter.timeZone = TimeZone(identifier: "UTC")
+                dateFormatter.timeZone = TimeZone.ReferenceType.local
+
                 weatherFields.forecastDay[weatherFields.forecastCounter] = dateFormatter.string(from: date as Date)
                 
                 // Convert epoch to DOW
                 dateFormatter.dateFormat = "d MMM yyyy"
-                dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                
+                //dateFormatter.timeZone = TimeZone(identifier: "UTC")
+                dateFormatter.timeZone = TimeZone.ReferenceType.local
+
                 weatherFields.forecastDate[weatherFields.forecastCounter] = dateFormatter.string(from: date as Date)
                 
                 //var forecastDate = [String]()
