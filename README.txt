@@ -1,5 +1,9 @@
 This file could also be called the change log.
 
+3.1.1
+
+* Xcode 9.0.1 fixed the bug with 10.9
+
 3.1.0
 
 * Now written in Swift 4
