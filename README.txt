@@ -1,11 +1,12 @@
 This file could also be called the change log.
 
-3.1.1
+3.1.2
+* Correct a mistake in French translation
 
+3.1.1
 * Xcode 9.0.1 fixed the bug with 10.9
 
 3.1.0
-
 * Now written in Swift 4
 * Correct Yahoo date missing leading 0 on time's (7:7 vs 7:07)
 * DarkSky Extended Forecast now displays DOW based on local timezone (vs. UTC)
@@ -13,13 +14,11 @@ This file could also be called the change log.
 * Still supporting 10.9 but this may be the last update
 
 3.0.5
-
 * Add French translation of: Patchy rain possible and moderate rain
 * Correct code signing issue
 * Update Dark Sky access
 
 3.0.4
-
 * Correct alignment of Forecast weather.
 * Correct link for Yahoo! weather.
 * Correct Wunderground location format.
@@ -27,7 +26,6 @@ This file could also be called the change log.
 * Add option to reset preferences
 
 3.0.3
-
 * Correct problems with Last Update for Yahoo and OpenWeatherMap
 * Correct -9999 for wind direction for WeatherUnderground
 * Meteorologist is fully localized for French language
@@ -36,7 +34,6 @@ This file could also be called the change log.
 * If you are using Dark Sky, your update frequency will be a minimum of 30 minutes.
 
 3.0.2
-*
 * Improve French localization
 * Add weather source APIXU.com
 * Add weather source DarkSky.net (no key required)
@@ -44,7 +41,6 @@ This file could also be called the change log.
 *   Does not detect if you have an IP but router is not connected
 
 3.0.1
-*
 * Fix launch failure on 10.9 systems
 * Add French localizations (any other offers?)
 * Add "Loading..." display to the startup delay
@@ -52,7 +48,6 @@ This file could also be called the change log.
 *
 
 3.0.0
-*
 * STOP!!! - Don't update without reading and understanding the 3.x update. Also recommend that you keep the prior version and turn off version checks if you aren't 100% comfortable with this version.
 
 * Rather than trying to be all things for everybody for all weather stations for all locations, Meteo is now geared to be specific the particular weather service selected.

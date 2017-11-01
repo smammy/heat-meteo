@@ -102,7 +102,7 @@
 "Fri" = "Ven";
 "Sat" = "Sam";
 "Sun" = "Dim";
-"LastUpdate_" = "Dernière";
+"LastUpdate_" = "Dernière mise à jour";
 "APIXU_" = "APIXU";
 "APIXURL_" = "https://www.apixu.com";
 "APIXULocation_" = "Localisation sous forme \"lat long\"";
