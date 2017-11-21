@@ -41,15 +41,18 @@ import Foundation
 
 class OpenWeatherMapAPI: NSObject, XMLParserDelegate
 {
-    let QUERY_PREFIX1 = "http://api.openweathermap.org/data/2.5/weather?q="
+    let QUERY_PREFIX1 = "http://api.openweathermap.org/data/2.5/weather?lat="
+    let QUERY_SUFFIX1c = "&lon="
     let QUERY_SUFFIX1a = "&appid="
     let QUERY_SUFFIX1b = "&mode=json&units=imperial"
     
-    let QUERY_PREFIX2 = "http://api.openweathermap.org/data/2.5/forecast/daily?q="
+    let QUERY_PREFIX2 = "http://api.openweathermap.org/data/2.5/forecast/daily?lat="
+    let QUERY_SUFFIX2c = "&lon="
     let QUERY_SUFFIX2a = "&appid="
     let QUERY_SUFFIX2b = "&mode=json&units=imperial"
     
-    var escapedCity = NSString()
+    var lat = NSString()
+    var lon = NSString()
     var parseURL = String()
     
     var weatherFields = WeatherFields()
@@ -68,23 +71,29 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         // https://OpenWeatherMap.org
         
         //weatherQuery = http://api.openweathermap.org/data/2.5/weather?q=IL,%20naperville&appid=d7ae7d44827777c67ab2c00bf9132070&mode=json&units=imperial
+        //weatherQuery = http://api.openweathermap.org/data/2.5/weather?lat=41.735&lon=-88.2&appid=d7ae7d44827777c67ab2c00bf9132070&mode=json&units=imperial
         
+        // lat = inputCity before "," or " "
+        // lon = inputCity after "," or " "
+        if (inputCity.contains(" ")) {
+            var token = inputCity.components(separatedBy: " ")
+            lat = token[0] as NSString
+            lon = token[1] as NSString
+        } else {
+            var token = inputCity.components(separatedBy: ",")
+            lat = token[0] as NSString
+            lon = token[1] as NSString
+        }
+
         parseURL = ""
         parseURL.append(QUERY_PREFIX1)
-        parseURL.append(inputCity as String)
+        parseURL.append(lat as String)
+        parseURL.append(QUERY_SUFFIX1c)
+        parseURL.append(lon as String)
         parseURL.append(QUERY_SUFFIX1a)
         parseURL.append(APIKey1)
         parseURL.append(QUERY_SUFFIX1b)
-        DebugLog(String(format:"URL for Current conditions OpenWeatherMap: %@\n", parseURL))
-        
-        parseURL = ""
-        parseURL.append(QUERY_PREFIX1)
-        escapedCity = inputCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)! as NSString
-        escapedCity = escapedCity.replacingOccurrences(of: ",", with: "%3D") as NSString
-        parseURL.append(escapedCity as String)
-        parseURL.append(QUERY_SUFFIX1a)
-        parseURL.append(APIKey1)
-        parseURL.append(QUERY_SUFFIX1b)
+        InfoLog(String(format:"URL for Current conditions OpenWeatherMap: %@\n", parseURL))
         
         var url = URL(string: parseURL as String)
         var data: NSData?
@@ -123,20 +132,13 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
 
         parseURL = ""
         parseURL.append(QUERY_PREFIX2)
-        parseURL.append(inputCity as String)
+        parseURL.append(lat as String)
+        parseURL.append(QUERY_SUFFIX2c)
+        parseURL.append(lon as String)
         parseURL.append(QUERY_SUFFIX2a)
         parseURL.append(APIKey1)
         parseURL.append(QUERY_SUFFIX2b)
-        DebugLog(String(format:"URL for Forecast conditions OpenWeatherMap: %@\n", parseURL))
-        
-        parseURL = ""
-        parseURL.append(QUERY_PREFIX2)
-        escapedCity = inputCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)! as NSString
-        escapedCity = escapedCity.replacingOccurrences(of: ",", with: "%3D") as NSString
-        parseURL.append(escapedCity as String)
-        parseURL.append(QUERY_SUFFIX2a)
-        parseURL.append(APIKey1)
-        parseURL.append(QUERY_SUFFIX2b)
+        InfoLog(String(format:"URL for Forecast conditions OpenWeatherMap: %@\n", parseURL))
         
         url = URL(string: parseURL as String)
         data = nil

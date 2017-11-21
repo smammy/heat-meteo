@@ -25,7 +25,7 @@ To build using Xcode 8:
 • Update faq.html
 • Update index.html
 	For index.html, create a new section at the top of the main page describing the changes. In the detail second below, create an entirely new “fix” section, describe the change again, and update the link to point to the new version. If you highlight and duplicate the previous “fix”, you can do a CHANGE ALL in the selected section to pick up all changes. Finally, update the “Download latest version” section in the upper right of the page (near the top of the HTML).
-• Update faq.html (upper left corner)
+    Update faq.html (upper left corner)
 
 —— ./trunk folder ———
 * Update CHANGELOG2

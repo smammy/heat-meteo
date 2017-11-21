@@ -90,6 +90,15 @@ func ** (radix: Float,  power: Float ) -> Double
     return pow(Double(radix), Double(power))
 }
 
+// https://stackoverflow.com/questions/24200888/any-way-to-replace-characters-on-swift-string
+extension String
+{
+    func replace(target: String, withString: String) -> String
+    {
+        return self.replacingOccurrences(of: target, with: withString, options: NSString.CompareOptions.literal, range: nil)
+    }
+}
+
 // https://bluelemonbits.com/index.php/2015/08/20/evaluate-string-width-and-return-cgfloat-swift-osx/
 func evaluateStringWidth (textToEvaluate: String) -> CGFloat{
     
@@ -261,6 +270,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     @IBOutlet weak var extendedForecastInSubmenu: NSButton!
     @IBOutlet weak var extendedForecastIcons: NSButton!
     @IBOutlet weak var extendedForecastSingleLine: NSButton!
+    @IBOutlet weak var extendedForecastDisplayDate: NSButton!
     @IBOutlet weak var rotateWeatherLocations: NSButton!
 
     @IBOutlet weak var versionTextLabel: NSTextField!
@@ -268,6 +278,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     @IBOutlet weak var apiKeyLabel: NSTextField!
     
     @IBOutlet weak var resetPrefsButton: NSButton!
+    @IBOutlet weak var latLongFormat: NSTextField!
     
     @IBOutlet weak var theWeatherLocation: NSTextField!
     @IBOutlet weak var openWeatherMapLocation: NSTextField!
@@ -287,7 +298,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     @IBOutlet weak var darkSkyURL: NSButton!
     @IBOutlet weak var apixuURL: NSButton!
     
-    var buttonPresses = 0;
+     var buttonPresses = 0;
     
     var modalMenuBar = ColorPickerWindow(windowNibName: NSNib.Name(rawValue: "ColorPickerWindow"))
     var modalDisplay = ColorPickerWindow(windowNibName: NSNib.Name(rawValue: "ColorPickerWindow"))
@@ -1904,9 +1915,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             // http://stackoverflow.com/questions/24200888/any-way-to-replace-characters-on-swift-string
             var myURL = ""
             myURL = weatherFields.URL as String
-            let replaced = String(myURL.characters.map {
-                $0 == " " ? "-" : $0
-                })
+            let replaced = myURL.replacingOccurrences(of: " ", with: "-")
+            //let replaced = String(myURL.characters.map {
+            //    $0 == " " ? "-" : $0
+            //    })
             
             newItem.representedObject = replaced
             menu.addItem(newItem)
@@ -2040,10 +2052,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         // http://stackoverflow.com/questions/24200888/any-way-to-replace-characters-on-swift-string
         var myURL = ""
         myURL = weatherFields.URL as String
-        let replaced = String(myURL.characters.map {
-            $0 == " " ? "-" : $0
-            })
-        
+        let replaced = myURL.replacingOccurrences(of: " ", with: "-")
+        //let replaced = String(myURL.characters.map {
+        //    $0 == " " ? "-" : $0
+        //    })
+
         newItem.representedObject = replaced
         menu.addItem(newItem)
         
@@ -2207,10 +2220,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             if (!weatherFields.forecastDay[i].isEqual("")) {
                 extendedForecast = NSMenu()
                 
-                var Day = localizedString(forKey: formatDay(weatherFields.forecastDay[i] as String)) + " \t"
-                if (evaluateStringWidth(textToEvaluate: Day) < 30)
-                {
-                    Day = Day + "\t"
+                var Day = String()
+                if (defaults.string(forKey: "extendedForecastDisplayDate")! == "1") {
+                    Day = localizedString(forKey: formatDay(weatherFields.forecastDate[i] as String)) + " \t"
+                    if (evaluateStringWidth(textToEvaluate: Day) < 45)
+                    {
+                        Day = Day + "\t"
+                    }
+                } else {
+                    Day = localizedString(forKey: formatDay(weatherFields.forecastDay[i] as String)) + " \t"
+                    if (evaluateStringWidth(textToEvaluate: Day) < 30)
+                    {
+                        Day = Day + "\t"
+                    }
                 }
 
                 if (defaults.string(forKey: "extendedForecastSingleLine")! == "1") {
@@ -2243,7 +2265,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                     
                     if (weatherFields.forecastDate[i] != "")
                     {
-                        newItem = myMenuItem(localizedString(forKey: "Date_") + ": " + (weatherFields.forecastDate[i] as String), url: "dummy:", key: "")
+                        if (defaults.string(forKey: "extendedForecastDisplayDate")! == "1") {
+                            // Note that this is backwards (on purpose)
+                            newItem = myMenuItem(localizedString(forKey: "Day_") + ": " + (weatherFields.forecastDay[i] as String), url: "dummy:", key: "")
+                        } else {
+                            newItem = myMenuItem(localizedString(forKey: "Date_") + ": " + (weatherFields.forecastDate[i] as String), url: "dummy:", key: "")
+                        }
                         extendedForecast.addItem(newItem)
                     }
                     
@@ -2365,6 +2392,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         testAndSet("rotateWeatherLocations", defaultValue: "0")
         testAndSet("extendedForecastInSubmenu", defaultValue: "1")
         testAndSet("extendedForecastIcons", defaultValue: "1")
+        testAndSet("extendedForecastDisplayDate", defaultValue: "0")
         testAndSet("newVersion", defaultValue: "1")
         testAndSet("logMessages", defaultValue: "0")
         testAndSet("useNewWeatherIcons", defaultValue: "1")  //Use new weather icons
@@ -2455,6 +2483,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         rotateWeatherLocations.stringValue = defaults.string(forKey: "rotateWeatherLocations") ?? "0"
         extendedForecastInSubmenu.stringValue = defaults.string(forKey: "extendedForecastInSubmenu") ?? "1"
         extendedForecastIcons.stringValue   = defaults.string(forKey: "extendedForecastIcons") ?? "1"
+        extendedForecastDisplayDate.stringValue = defaults.string(forKey: "extendedForecastDisplayDate") ?? "0"
         newVersion.stringValue              = defaults.string(forKey: "newVersion") ?? "1"
         logMessages.stringValue             = defaults.string(forKey: "logMessages") ?? "0"
         
@@ -2532,6 +2561,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         defaults.setValue(rotateWeatherLocations.stringValue, forKey: "rotateWeatherLocations")
         defaults.setValue(extendedForecastInSubmenu.stringValue, forKey: "extendedForecastInSubmenu")
         defaults.setValue(extendedForecastIcons.stringValue, forKey: "extendedForecastIcons")
+        defaults.setValue(extendedForecastDisplayDate.stringValue, forKey: "extendedForecastDisplayDate")
         defaults.setValue(newVersion.stringValue, forKey: "newVersion")
         defaults.setValue(logMessages.stringValue, forKey: "logMessages")
         
@@ -2590,6 +2620,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         viewExtendedForecast.title = localizedString(forKey: "ViewExtendedForecast_")
         extendedForecastInSubmenu.title = localizedString(forKey: "ExtendedForecastInSubmenu_")
         extendedForecastIcons.title = localizedString(forKey: "ExtendedForecastIcons_")
+        extendedForecastDisplayDate.title = localizedString(forKey: "ExtendedForecastDisplayDate_")
         extendedForecastSingleLine.title = localizedString(forKey: "ExtendedForecastSingleLine_")
         rotateWeatherLocations.title = localizedString(forKey: "rotateWeatherLocations_")
         
@@ -2636,6 +2667,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         
         resetPrefsButton.title = localizedString(forKey: "resetPreferences_")
         
+        latLongFormat.stringValue = localizedString(forKey: "LatLongFormat_")
         apiKeyLabel.stringValue = localizedString(forKey: "apiKeyLabel_")
         theWeatherLocation.stringValue = localizedString(forKey: "theWeatherLocation_")
         openWeatherMapLocation.stringValue = localizedString(forKey: "openWeatherMapLocation_")

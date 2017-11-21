@@ -60,7 +60,7 @@
 "NewVersion_" = "Vérifier les mises à jour au lancement";
 "NewVersionAvailable_" = "Une nouvelle version de Meteorologist est disponible !";
 "OpenWeatherMap_" = "OpenWeatherMap";
-"openWeatherMapLocation_" = "Localisation sous forme \"ville, État\"";
+"openWeatherMapLocation_" = "Localisation sous forme \"lat,long\"";
 "Ordinal_" = "Intercardinales";
 "PleaseWait_" = "Veuillez Patienter";
 "Preferences_" = "Préférences";
@@ -151,3 +151,6 @@
 "resetPreferences_" = "Remettre à zéro les Préférences";
 "Patchy rain possible" = "Pluies éparses possibles";
 "PoweredBy_" = "Alimenté par";
+"LatLongFormat_" = "Lat/long sont en degrés suivies des décimales. Par exemple 12.345";
+"ExtendedForecastDisplayDate_" = "Affichage Date dans Prévisions Etendues";
+"Day_" = "Jour";

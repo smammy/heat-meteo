@@ -60,15 +60,17 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
         var workingString = icon
         
         // Remove trailing .png
-        workingString = String(workingString.characters.dropLast(4))
-        
+        //workingString = String(workingString.characters.dropLast(4))
+        workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -4)])
+
         // Remove possible trailing n (rainn vs. rain)
         if (workingString.hasSuffix("rain"))
         {
         }
         else if (workingString.hasSuffix("n"))
         {
-            workingString = String(workingString.characters.dropLast(1))
+            //workingString = String(workingString.characters.dropLast(1))
+            workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -1)])
         }
         
         // Remove possible trailing w (snoww vs. snow)
@@ -77,27 +79,31 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
         }
         else if (workingString.hasSuffix("w"))
         {
-            workingString = String(workingString.characters.dropLast(1))
+            //workingString = String(workingString.characters.dropLast(1))
+            workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -1)])
         }
         
         // Remove possible leading am_ (am_showers)
         if ((workingString.hasPrefix("am_")) ||
             (workingString.hasPrefix("pm_")))
         {
-            workingString = String(workingString.characters.dropFirst(3))
+            //workingString = String(workingString.characters.dropFirst(3))
+            workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 3)..<workingString.endIndex])
         }
         
         // Convert pcloudy or mcloudy to cloudy
         if ((workingString.hasPrefix("pcloudy")) ||
             (workingString.hasPrefix("mcloudy")))
         {
-            workingString = String(workingString.characters.dropFirst(1))
+            //workingString = String(workingString.characters.dropFirst(1))
+            workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 1)..<workingString.endIndex])
         }
 
         // mcloudysf (light snow vs. snow)
         if (workingString.hasSuffix("sf"))
         {
-            workingString = String(workingString.characters.dropLast(1))
+            //workingString = String(workingString.characters.dropLast(1))
+            workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -1)])
         }
 
         return workingString
@@ -116,7 +122,7 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
 
         //parseURL = QUERY_PREFIX1 + (escapedCity as String) + QUERY_SUFFIX1a + APIKey1 + QUERY_SUFFIX1b + APIKey2
         parseURL = QUERY_PREFIX1 + inputCity + QUERY_SUFFIX1a + APIKey1 + QUERY_SUFFIX1b + APIKey2
-        DebugLog(String(format:"URL for observations AerisWeather: %@\n", parseURL))
+        InfoLog(String(format:"URL for observations AerisWeather: %@\n", parseURL))
 
         let url = URL(string: parseURL)
         var data: NSData?
@@ -155,7 +161,7 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
         }
         
         parseURL = QUERY_PREFIX2 + inputCity + QUERY_SUFFIX2a + APIKey1 + QUERY_SUFFIX2b + APIKey2
-        DebugLog(String(format:"URL for forecasts AerisWeather: %@\n", parseURL))
+        InfoLog(String(format:"URL for forecasts AerisWeather: %@\n", parseURL))
 
         
         data = NSData(contentsOf: URL(string: parseURL)!)

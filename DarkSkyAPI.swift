@@ -89,6 +89,7 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         let languageCode = (Locale.current as NSLocale).object(forKey: .languageCode) as? String
         parseURL.append(languageCode!)
         parseURL.append(QUERY_SUFFIX2)
+        InfoLog(String(format:"URL for observations DarkSky: %@\n", parseURL))
         let url = URL(string: parseURL)
         var data: NSData?
         data = nil

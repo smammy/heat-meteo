@@ -54,86 +54,102 @@ class WorldWeatherOnlineAPI: NSObject, XMLParserDelegate
         
         if (workingString.hasSuffix(" outbreaks in nearby"))
         {
-            workingString = String(workingString.characters.dropLast(10))
+            //workingString = String(workingString.characters.dropLast(10))
+            workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -10)])
         }
         
         if (workingString.hasSuffix(" at times"))
         {
-            workingString = String(workingString.characters.dropLast(9))
+            //workingString = String(workingString.characters.dropLast(9))
+            workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -9)])
         }
         
         if (workingString.hasSuffix(" in area with thunder"))
         {
-            workingString = String(workingString.characters.dropLast(21))
+            //workingString = String(workingString.characters.dropLast(21))
+            workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -12)])
         }
         
         if (workingString.hasSuffix(" of ice pellets"))
         {
-            workingString = String(workingString.characters.dropLast(15))
+            //workingString = String(workingString.characters.dropLast(15))
+            workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -15)])
         }
         
         if (workingString.hasSuffix(" shower"))
         {
-            workingString = String(workingString.characters.dropLast(7))
+            //workingString = String(workingString.characters.dropLast(7))
+            workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -7)])
         }
         
         if (workingString.hasSuffix(" showers"))
         {
-            workingString = String(workingString.characters.dropLast(8))
+            //workingString = String(workingString.characters.dropLast(8))
+            workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -8)])
         }
         
         if (workingString.hasSuffix(" nearby"))
         {
-            workingString = String(workingString.characters.dropLast(7))
+            //workingString = String(workingString.characters.dropLast(7))
+            workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -7)])
         }
         
         if (workingString.hasSuffix(" possible"))
         {
-            workingString = String(workingString.characters.dropLast(9))
+            //workingString = String(workingString.characters.dropLast(9))
+            workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -9)])
         }
         
         if (workingString.hasPrefix("Patchy "))
         {
-            workingString = String(workingString.characters.dropFirst(7))
+            //workingString = String(workingString.characters.dropFirst(7))
+            workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 7)..<workingString.endIndex])
         }
         
         if (workingString.hasPrefix("Partly "))
         {
-            workingString = String(workingString.characters.dropFirst(7))
+            //workingString = String(workingString.characters.dropFirst(7))
+            workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 7)..<workingString.endIndex])
         }
         
         if ((workingString.hasPrefix("freezing ")) ||
             (workingString.hasPrefix("Freezing ")))
         {
-            workingString = String(workingString.characters.dropFirst(9))
+            //workingString = String(workingString.characters.dropFirst(9))
+            workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 9)..<workingString.endIndex])
         }
         
         if ((workingString.hasPrefix("heavy ")) ||
             (workingString.hasPrefix("Heavy ")))
         {
-            workingString = String(workingString.characters.dropFirst(6))
+            //workingString = String(workingString.characters.dropFirst(6))
+            workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 6)..<workingString.endIndex])
         }
         
         if ((workingString.hasPrefix("light ")) ||
             (workingString.hasPrefix("Light ")))
         {
-            workingString = String(workingString.characters.dropFirst(6))
+            //workingString = String(workingString.characters.dropFirst(6))
+            workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 6)..<workingString.endIndex])
         }
         
         if ((workingString.hasPrefix("strong ")) ||
             (workingString.hasPrefix("Strong ")))
         {
-            workingString = String(workingString.characters.dropFirst(7))
+            //workingString = String(workingString.characters.dropFirst(7))
+            workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 7)..<workingString.endIndex])
         }
         
         if (workingString.hasPrefix("Moderate "))
         {
-            workingString = String(workingString.characters.dropFirst(9))
+            //workingString = String(workingString.characters.dropFirst(9))
+            workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 9)..<workingString.endIndex])
         }
         
         if (workingString.hasPrefix("or "))
         {
-            workingString = String(workingString.characters.dropFirst(3))
+            //workingString = String(workingString.characters.dropFirst(3))
+            workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 3)..<workingString.endIndex])
             workingString = fixIcon(icon: workingString) // Yes recursion
         }
         
@@ -152,7 +168,7 @@ class WorldWeatherOnlineAPI: NSObject, XMLParserDelegate
         escapedCity = escapedCity.replacingOccurrences(of: ",", with: "%3D") as NSString
         
         parseURL = QUERY_PREFIX1 + (escapedCity as String) + QUERY_SUFFIX1 + APIKey1
-        DebugLog(String(format:"URL for observations WorldWeatherOnline: %@\n", parseURL))
+        InfoLog(String(format:"URL for observations WorldWeatherOnline: %@\n", parseURL))
         
         let url = URL(string: parseURL)
         var data: NSData?

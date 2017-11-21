@@ -60,7 +60,7 @@
 "NewVersion_" = "Check for new versions on launch";
 "NewVersionAvailable_" = "A new version of Meteorologist is available!";
 "OpenWeatherMap_" = "OpenWeatherMap";
-"openWeatherMapLocation_" = "Typical location is \"city, state\"";
+"openWeatherMapLocation_" = "Typical location is \"lat,long\"";
 "Ordinal_" = "Ordinal";
 "PleaseWait_" = "Please Wait";
 "Preferences_" = "Preferences";
@@ -151,3 +151,6 @@
 "resetPreferences_" = "Reset Preferences";
 "Patchy rain possible" = "Patchy rain possible";
 "PoweredBy_" = "Powered by";
+"LatLongFormat_" = "Lat/Long is in degrees dot decimal. For example 12.345";
+"ExtendedForecastDisplayDate_" = "Extended forecast displays date";
+"Day_" = "Day";

@@ -53,15 +53,18 @@ class APIXUAPI: NSObject, XMLParserDelegate
         
         if (workingString.hasPrefix("//cdn.apixu.com/weather/64x64/day"))
         {
-            workingString = String(workingString.characters.dropFirst(34))
+            //workingString = String(workingString.characters.dropFirst(34))
+            workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 34)..<workingString.endIndex])
         }
         if (workingString.hasPrefix("//cdn.apixu.com/weather/64x64/night"))
         {
-            workingString = String(workingString.characters.dropFirst(36))
+            //workingString = String(workingString.characters.dropFirst(36))
+            workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 36)..<workingString.endIndex])
         }
         if (workingString.hasSuffix(".png"))
         {
-            workingString = String(workingString.characters.dropLast(4))
+            //workingString = String(workingString.characters.dropLast(4))
+            workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -4)])
         }
 
         if (workingString == "113")
@@ -147,7 +150,7 @@ class APIXUAPI: NSObject, XMLParserDelegate
         escapedCity = escapedCity.replacingOccurrences(of: ",", with: "%3D") as NSString
         
         parseURL = QUERY_PREFIX1 + APIKey1 + QUERY_SUFFIX1 + (escapedCity as String)
-        DebugLog(String(format:"URL for observations APIXU: %@\n", parseURL))
+        InfoLog(String(format:"URL for observations APIXU: %@\n", parseURL))
         
         let url = URL(string: parseURL)
         var data: NSData?

@@ -74,7 +74,7 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
         escapedCity = inputCity.replacingOccurrences(of: " ", with: "-")
         parseURL.append(escapedCity)
         parseURL.append(QUERY_SUFFIX1)
-        DebugLog(String(format:"Yahoo URL: %@\n", parseURL))
+        InfoLog(String(format:"Yahoo URL: %@\n", parseURL))
 
         let url = URL(string: parseURL as String)
         var data: NSData?

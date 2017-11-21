@@ -74,7 +74,7 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
         parseURL.append(QUERY_SUFFIX1a)
         parseURL.append(inputCity as String)
         parseURL.append(QUERY_SUFFIX1b)
-        DebugLog(String(format:"URL for Current conditions Weather Underground: %@\n", parseURL))
+        InfoLog(String(format:"URL for Current conditions Weather Underground: %@\n", parseURL))
         
         parseURL = ""
         parseURL.append(QUERY_PREFIX1)
@@ -125,7 +125,7 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
         parseURL.append(QUERY_SUFFIX2a)
         parseURL.append(inputCity as String)
         parseURL.append(QUERY_SUFFIX2b)
-        DebugLog(String(format:"URL for Forecast conditions Weather Underground: %@\n", parseURL))
+        InfoLog(String(format:"URL for Forecast conditions Weather Underground: %@\n", parseURL))
         
         parseURL = ""
         parseURL.append(QUERY_PREFIX2)

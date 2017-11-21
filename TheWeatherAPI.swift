@@ -71,7 +71,7 @@ class TheWeatherAPI: NSObject, XMLParserDelegate
         parseURL.append(inputCity as String)
         parseURL.append(QUERY_SUFFIX1)
         parseURL.append(APIKey1)
-        DebugLog(String(format:"URL for Current conditions OpenWeatherMap: %@\n", parseURL))
+        InfoLog(String(format:"URL for Current conditions OpenWeatherMap: %@\n", parseURL))
         
         parseURL = ""
         parseURL.append(QUERY_PREFIX1)
