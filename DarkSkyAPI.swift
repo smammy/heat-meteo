@@ -81,9 +81,16 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         parseURL.append(QUERY_PREFIX1)
         parseURL.append(APIKey)     // For now, not using user key
         parseURL.append("/")
-        escapedCity = inputCity
-        //escapedCity = escapedCity.replacingOccurrences(of: ",", with: "/")
-        escapedCity = escapedCity.replacingOccurrences(of: " ", with: "")
+        // lat = inputCity before "," or " "
+        // lon = inputCity after "," or " "
+        var token = [String]()
+        escapedCity = inputCity.trimmingCharacters(in: .whitespacesAndNewlines)
+        if (escapedCity.contains(" ")) {
+            token = escapedCity.components(separatedBy: " ")
+        } else {
+            token = escapedCity.components(separatedBy: ",")
+        }
+        escapedCity = token[0] + "," + token[1]
         parseURL.append(escapedCity)
         parseURL.append(QUERY_SUFFIX1)
         let languageCode = (Locale.current as NSLocale).object(forKey: .languageCode) as? String

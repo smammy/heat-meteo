@@ -75,12 +75,13 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         
         // lat = inputCity before "," or " "
         // lon = inputCity after "," or " "
-        if (inputCity.contains(" ")) {
-            var token = inputCity.components(separatedBy: " ")
+        let trimmed = inputCity.trimmingCharacters(in: .whitespacesAndNewlines)
+        if (trimmed.contains(" ")) {
+            var token = trimmed.components(separatedBy: " ")
             lat = token[0] as NSString
             lon = token[1] as NSString
         } else {
-            var token = inputCity.components(separatedBy: ",")
+            var token = trimmed.components(separatedBy: ",")
             lat = token[0] as NSString
             lon = token[1] as NSString
         }

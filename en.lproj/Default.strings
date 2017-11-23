@@ -154,3 +154,5 @@
 "LatLongFormat_" = "Lat/Long is in degrees dot decimal. For example 12.345";
 "ExtendedForecastDisplayDate_" = "Extended forecast displays date";
 "Day_" = "Day";
+"notImplemented_" = "Corrupt preference file";
+"contactDeveloper_" = "Recommend deleting ~/Library/Preferences/com.heat.Meteorologist.plist and reboot before relaunching.";

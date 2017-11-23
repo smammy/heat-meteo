@@ -853,7 +853,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                                                          displayCity: displayCity[whichWeatherFirst],
                                                          APIKey1: APIKey1[whichWeatherFirst],
                                                          APIKey2: APIKey2[whichWeatherFirst])
-            
         }
         else if (weatherDataSource[whichWeatherFirst] == OPENWEATHERMAP)
         {
@@ -915,6 +914,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             alert.informativeText = localizedString(forKey: "contactDeveloper_")
             alert.runModal()
             //self.window!.makeKeyAndOrderFront(self.window!)
+            yahooWeatherAPI.setRadarWind(radarWindow)
+            weatherFields = yahooWeatherAPI.beginParsing(city[whichWeatherFirst],
+                                                         displayCity: displayCity[whichWeatherFirst],
+                                                         APIKey1: APIKey1[whichWeatherFirst],
+                                                         APIKey2: APIKey2[whichWeatherFirst])
+            //exit(0)
         }
     
         if (loadTimer != nil)
