@@ -87,11 +87,14 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         escapedCity = inputCity.trimmingCharacters(in: .whitespacesAndNewlines)
         if (escapedCity.contains(" ")) {
             token = escapedCity.components(separatedBy: " ")
-        } else {
+            escapedCity = token[0] + "," + token[1]
+        } else if (escapedCity.contains(",")) {
             token = escapedCity.components(separatedBy: ",")
+            escapedCity = token[0] + "," + token[1]
+        } else {
+            //escapedCity = escapedCity
         }
-        escapedCity = token[0] + "," + token[1]
-        parseURL.append(escapedCity)
+        parseURL.append(escapedCity as String)
         parseURL.append(QUERY_SUFFIX1)
         let languageCode = (Locale.current as NSLocale).object(forKey: .languageCode) as? String
         parseURL.append(languageCode!)

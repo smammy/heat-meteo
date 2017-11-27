@@ -156,3 +156,4 @@
 "Day_" = "Jour";
 "notImplemented_" = "Corrupt preference file";
 "contactDeveloper_" = "Recommend deleting ~/Library/Preferences/com.heat.Meteorologist.plist and reboot before relaunching.";
+"InvalidWeatherCode_" = "Invalid Weather Code";

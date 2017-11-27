@@ -36,10 +36,10 @@ var original_stderr: Int32?;
     }
     
     func ErrorLog(message: String, file: String = #file, line: Int = #line) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.stringForKey("logMessages")! == "1") {
+        //let defaults = NSUserDefaults.standardUserDefaults()
+        //if (defaults.stringForKey("logMessages")! == "1") {
             return { NSLog("<Error>: " + message + " [" + file + ":%i]", line) }()
-        }
+        //}
     }
 #else
     func DebugLog(_ message: String, file: String = #file, line: Int = #line) {

@@ -71,11 +71,24 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
         
         parseURL = ""
         parseURL.append(QUERY_PREFIX1)
-        escapedCity = inputCity.replacingOccurrences(of: " ", with: "-")
+        escapedCity = inputCity.replacingOccurrences(of: ", ", with: ",")
+        escapedCity = escapedCity.replacingOccurrences(of: " ", with: "-")
         parseURL.append(escapedCity)
         parseURL.append(QUERY_SUFFIX1)
+        parseURL = parseURL.replacingOccurrences(of: "%20", with: " ")
+        parseURL = parseURL.replacingOccurrences(of: "%22", with: "\"")
+        parseURL = parseURL.replacingOccurrences(of: "%2F", with: "/")
+        parseURL = parseURL.replacingOccurrences(of: "%3A", with: ":")
+        parseURL = parseURL.replacingOccurrences(of: "%3D", with: "=")
         InfoLog(String(format:"Yahoo URL: %@\n", parseURL))
-
+        
+        parseURL = ""
+        parseURL.append(QUERY_PREFIX1)
+        escapedCity = inputCity.replacingOccurrences(of: ", ", with: ",")
+        escapedCity = escapedCity.replacingOccurrences(of: " ", with: "-")
+        parseURL.append(escapedCity)
+        parseURL.append(QUERY_SUFFIX1)
+        
         let url = URL(string: parseURL as String)
         var data: NSData?
         data = nil

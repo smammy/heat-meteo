@@ -78,10 +78,14 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
         escapedCity = inputCity.trimmingCharacters(in: .whitespacesAndNewlines)
         if (escapedCity.contains(" ")) {
             token = escapedCity.components(separatedBy: " ")
-        } else {
+            escapedCity = token[0] + "," + token[1]
+        } else if (escapedCity.contains(",")) {
             token = escapedCity.components(separatedBy: ",")
+            escapedCity = token[0] + "," + token[1]
+        } else {
+            // escapedCity = "ME/pws:KMEmachi11"
+            //escapedCity = escapedCity
         }
-        escapedCity = token[0] + "," + token[1]
         parseURL.append(escapedCity as String)
         parseURL.append(QUERY_SUFFIX1b)
         InfoLog(String(format:"URL for Current conditions Weather Underground: %@\n", parseURL))
@@ -96,10 +100,13 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
         escapedCity = inputCity.trimmingCharacters(in: .whitespacesAndNewlines)
         if (escapedCity.contains(" ")) {
             token = escapedCity.components(separatedBy: " ")
-        } else {
+            escapedCity = token[0] + "," + token[1]
+        } else if (escapedCity.contains(",")) {
             token = escapedCity.components(separatedBy: ",")
+            escapedCity = token[0] + "," + token[1]
+        } else {
+            //escapedCity = escapedCity
         }
-        escapedCity = token[0] + "," + token[1]
         parseURL.append(escapedCity as String)
         parseURL.append(QUERY_SUFFIX1b)
         
@@ -148,10 +155,13 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
         escapedCity = inputCity.trimmingCharacters(in: .whitespacesAndNewlines)
         if (escapedCity.contains(" ")) {
             token = escapedCity.components(separatedBy: " ")
-        } else {
+            escapedCity = token[0] + "," + token[1]
+        } else if (escapedCity.contains(",")) {
             token = escapedCity.components(separatedBy: ",")
+            escapedCity = token[0] + "," + token[1]
+        } else {
+            //escapedCity = escapedCity
         }
-        escapedCity = token[0] + "," + token[1]
         parseURL.append(escapedCity as String)
         parseURL.append(QUERY_SUFFIX2b)
         InfoLog(String(format:"URL for Forecast conditions Weather Underground: %@\n", parseURL))
@@ -166,10 +176,13 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
         escapedCity = inputCity.trimmingCharacters(in: .whitespacesAndNewlines)
         if (escapedCity.contains(" ")) {
             token = escapedCity.components(separatedBy: " ")
-        } else {
+            escapedCity = token[0] + "," + token[1]
+        } else if (escapedCity.contains(",")) {
             token = escapedCity.components(separatedBy: ",")
+            escapedCity = token[0] + "," + token[1]
+        } else {
+            //escapedCity = escapedCity
         }
-        escapedCity = token[0] + "," + token[1]
         parseURL.append(escapedCity as String)
         parseURL.append(QUERY_SUFFIX2b)
         

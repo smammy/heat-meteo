@@ -1603,6 +1603,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             {
                 imageName = "Hazy"
             }
+            else if (weatherCode == "clear-night")
+            {
+                imageName = "Moon"
+            }
+            else if (weatherCode == "wind")
+            {
+                imageName = "Wind"
+            }
             else if ((weatherCode == "rain") ||
                 (weatherCode == "rain") ||
                 (weatherCode == "chancerain") ||
@@ -1615,7 +1623,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         
         if (imageName == "Unknown")
         {
-            ErrorLog(String(format:localizedString(forKey: "InvalidWeatherCode_") + " : " + weatherCode))
+            ErrorLog(String(format:localizedString(forKey: "InvalidWeatherCode_") + " : weatherDataSource=" + weatherDataSource + ", weatherCode=" + weatherCode))
         }
 
         if (defaults.string(forKey: "useNewWeatherIcons")! == "1")

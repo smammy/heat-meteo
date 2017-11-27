@@ -3,6 +3,7 @@ This file could also be called the change log.
 3.1.3
 * Change in processing for OpenWeatherMap. Location is now lat/long based. All users must update their location.
 * New option to display date instead of day in extended forecast.
+* Fix some DarkSky icons
 
 3.1.2
 * Correct a mistake in French translation
