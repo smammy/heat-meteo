@@ -53,13 +53,9 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
     
     var radarWindow = RadarWindow()
     
-    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String) -> WeatherFields
-    {
+    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
         
         DebugLog(String(format:"in beginParsing: %@", inputCity))
-        
-        AppDelegate().initWeatherFields(weatherFields: &weatherFields)
-        weatherFields.forecastCounter = 0
         
         // https://www.wunderground.com
         
@@ -126,26 +122,26 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
         {
             weatherFields.currentTemp = "9999"
             weatherFields.latitude = localizedString(forKey: "InvalidKey_")
-            return weatherFields
+            return
         }
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObjectE(object: dictionary)
+                readJSONObjectE(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
         }
         if (weatherFields.currentTemp == "9999")
         {
-            return weatherFields
+            return
         }
         
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObject(object: dictionary)
-                readJSONObjectF(object: dictionary)
+                readJSONObject(object: dictionary, weatherFields: &weatherFields)
+                readJSONObjectF(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
@@ -153,14 +149,14 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
                 
         DebugLog(String(format:"leaving beginParsing: %@", inputCity))
         
-        return weatherFields
+        return
     } // beginParsing
     
     func setRadarWind(_ radarWindow1: RadarWindow) {
         radarWindow = radarWindow1
     } // setRadarWind
     
-    func readJSONObject(object: [String: AnyObject]) {
+    func readJSONObject(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
             let current_observation = object["current_observation"] as? [String: AnyObject]
             else {
@@ -232,7 +228,7 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
         }
     } // readJSONObject
     
-    func readJSONObjectE(object: [String: AnyObject]) {
+    func readJSONObjectE(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
             let response = object["response"] as? [String: AnyObject]
             else
@@ -270,7 +266,7 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
         }
     } // readJSONObjectE
     
-    func readJSONObjectF(object: [String: AnyObject]) {
+    func readJSONObjectF(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
             let forecast = object["forecast"] as? [String: AnyObject]
             else

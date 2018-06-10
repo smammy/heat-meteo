@@ -59,14 +59,9 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
     
     var radarWindow = RadarWindow()
     
-    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String) -> WeatherFields
-    {
+    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
         
         DebugLog(String(format:"in beginParsing: %@", inputCity))
-        
-        AppDelegate().initWeatherFields(weatherFields: &weatherFields)
-        
-        weatherFields.forecastCounter = 0
         
         // https://OpenWeatherMap.org
         
@@ -110,25 +105,25 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         {
             weatherFields.currentTemp = "9999"
             weatherFields.latitude = localizedString(forKey: "InvalidKey_")
-            return weatherFields
+            return
         }
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObjectE(object: dictionary)
+                readJSONObjectE(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
         }
         if (weatherFields.currentTemp == "9999")
         {
-            return weatherFields
+            return
         }
         
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObject(object: dictionary)
+                readJSONObject(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
@@ -152,12 +147,12 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         }
         if (data == nil)
         {
-            return weatherFields
+            return
         }
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObjectF(object: dictionary)
+                readJSONObjectF(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
@@ -165,14 +160,14 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         
         DebugLog(String(format:"leaving beginParsing: %@", inputCity))
         
-        return weatherFields
+        return
     } // beginParsing
     
     func setRadarWind(_ radarWindow1: RadarWindow) {
         radarWindow = radarWindow1
     } // setRadarWind
     
-    func readJSONObject(object: [String: AnyObject]) {
+    func readJSONObject(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
         let id = object["id"] as? Double,
         let name = object["name"] as? String,
@@ -280,7 +275,7 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         
     } // readJSONObject
     
-    func readJSONObjectE(object: [String: AnyObject]) {
+    func readJSONObjectE(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
         let cod = object["cod"] as? Double,
         let message = object["message"] as? String
@@ -297,7 +292,7 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         
     } // readJSONObjectE
     
-    func readJSONObjectF(object: [String: AnyObject]) {
+    func readJSONObjectF(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
         let list = object["list"] as? [[String: AnyObject]]
         else

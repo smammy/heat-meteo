@@ -106,18 +106,18 @@ func evaluateStringWidth (textToEvaluate: String) -> CGFloat{
     
     var font = NSFont()
     let m = NumberFormatter().number(from: defaults.string(forKey: "fontsize")!)!
-
+    
     if (defaults.string(forKey: "fontDefault") == "1") {
         font = NSFont.systemFont(ofSize: CGFloat(truncating: m))
     }
     else {
         font = NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!
     }
-
+    
     let attributes = NSDictionary(object: font, forKey:NSAttributedStringKey.font as NSCopying)
     let sizeOfText = textToEvaluate.size(withAttributes: (attributes as! [NSAttributedStringKey : Any]))
     //let sizeOfText = textToEvaluate.size(withAttributes: (attributes as! [String : AnyObject]))
-
+    
     return sizeOfText.width
 }
 
@@ -163,7 +163,7 @@ struct WeatherFields {
     var forecastLow = [String]()
     var forecastCode = [String]()       // Abbreviated Conditions
     var forecastConditions = [String]() // Full Condition
-
+    
     var URL = String()
     
     var weatherTag = String()
@@ -185,19 +185,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     @IBOutlet weak var weatherSourceLabel: NSTextField!
     @IBOutlet weak var API_Key_Label1: NSTextField!
     @IBOutlet weak var API_Key_Label2: NSTextField!
-  
+    
     @IBOutlet weak var cityTextField: NSTextField!
     @IBOutlet weak var cityDisplayTextField: NSTextField!
     @IBOutlet weak var weatherSource_1: NSPopUpButton!
     @IBOutlet weak var API_Key_Data1_1: NSTextField!
     @IBOutlet weak var API_Key_Data2_1: NSTextField!
-
+    
     @IBOutlet weak var cityTextField2: NSTextField!
     @IBOutlet weak var cityDisplayTextField2: NSTextField!
     @IBOutlet weak var weatherSource_2: NSPopUpButton!
     @IBOutlet weak var API_Key_Data1_2: NSTextField!
     @IBOutlet weak var API_Key_Data2_2: NSTextField!
-
+    
     @IBOutlet weak var cityTextField3: NSTextField!
     @IBOutlet weak var cityDisplayTextField3: NSTextField!
     @IBOutlet weak var weatherSource_3: NSPopUpButton!
@@ -255,10 +255,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     @IBOutlet weak var pressureUnit: NSPopUpButton!
     @IBOutlet weak var directionLabel: NSTextField!
     @IBOutlet weak var directionUnit: NSPopUpButton!
-
+    
     @IBOutlet weak var forecastLabel: NSTextField!
     @IBOutlet weak var forecastDays: NSPopUpButton!
-
+    
     @IBOutlet weak var controlsInSubmenu: NSButton!
     @IBOutlet weak var displayHumidity: NSButton!
     @IBOutlet weak var displayDegreeType: NSButton!
@@ -272,7 +272,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     @IBOutlet weak var extendedForecastSingleLine: NSButton!
     @IBOutlet weak var extendedForecastDisplayDate: NSButton!
     @IBOutlet weak var rotateWeatherLocations: NSButton!
-
+    
     @IBOutlet weak var versionTextLabel: NSTextField!
     
     @IBOutlet weak var apiKeyLabel: NSTextField!
@@ -298,7 +298,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     @IBOutlet weak var darkSkyURL: NSButton!
     @IBOutlet weak var apixuURL: NSButton!
     
-     var buttonPresses = 0;
+    var buttonPresses = 0;
     
     var modalMenuBar = ColorPickerWindow(windowNibName: NSNib.Name(rawValue: "ColorPickerWindow"))
     var modalDisplay = ColorPickerWindow(windowNibName: NSNib.Name(rawValue: "ColorPickerWindow"))
@@ -327,7 +327,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     var appInfo: Dictionary<NSObject,AnyObject>
     var appName: String!
     var weatherFields: WeatherFields
-
+    
     var whichWeatherFirst = 0
     
     override init()
@@ -340,7 +340,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         self.appName = appInfo[kCFBundleNameKey] as! String
         
         weatherFields = WeatherFields()
-
+        
         // Init parent
         super.init()
         
@@ -355,7 +355,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         {
             InfoLog(String(format:"Application %@ starting", self.appName))
         }
-
+        
     } // init
     
     func applicationDidFinishLaunching(_ aNotification: Notification)
@@ -379,46 +379,46 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         URLCache.shared.removeAllCachedResponses()
         URLCache.shared.diskCapacity = 0
         URLCache.shared.memoryCapacity = 0
-
+        
         /*
          * Project settings/Target/Build Settings/Swift Compiler - Custom Flags/Other Swift Flags
          * -DAPP_STORE
          */
-
+        
         #if APP_STORE
-            API_Key_Data1_1.isHidden = true
-            API_Key_Data2_1.isHidden = true
-            API_Key_Data1_2.isHidden = true
-            API_Key_Data2_2.isHidden = true
-            API_Key_Data1_3.isHidden = true
-            API_Key_Data2_3.isHidden = true
-            API_Key_Data1_4.isHidden = true
-            API_Key_Data2_4.isHidden = true
-            API_Key_Data1_5.isHidden = true
-            API_Key_Data2_5.isHidden = true
-            API_Key_Data1_6.isHidden = true
-            API_Key_Data2_6.isHidden = true
-            API_Key_Data1_7.isHidden = true
-            API_Key_Data2_7.isHidden = true
-            API_Key_Data1_8.isHidden = true
-            API_Key_Data2_8.isHidden = true
-            API_Key_Label1.isHidden = true
-            API_Key_Label2.isHidden = true
-            apiKeyLabel.isHidden = true
-            theWeatherLocation.isHidden = true
-            openWeatherMapLocation.isHidden = true
-            yahooLocation.isHidden = true
-            wundergroundLocation.isHidden = true
-            aerisLocation.isHidden = true
-            worldWeatherLocation.isHidden = true
-            theWeatherURL.isHidden = true
-            openWeatherMapURL.isHidden = true
-            yahooURL.isHidden = true
-            wundergroundURL.isHidden = true
-            aerisURL.isHidden = true
-            worldWeatherURL.isHidden = true
-            darkSkyURL.isHidden = true
-            apixuURL.isHidden = true
+        API_Key_Data1_1.isHidden = true
+        API_Key_Data2_1.isHidden = true
+        API_Key_Data1_2.isHidden = true
+        API_Key_Data2_2.isHidden = true
+        API_Key_Data1_3.isHidden = true
+        API_Key_Data2_3.isHidden = true
+        API_Key_Data1_4.isHidden = true
+        API_Key_Data2_4.isHidden = true
+        API_Key_Data1_5.isHidden = true
+        API_Key_Data2_5.isHidden = true
+        API_Key_Data1_6.isHidden = true
+        API_Key_Data2_6.isHidden = true
+        API_Key_Data1_7.isHidden = true
+        API_Key_Data2_7.isHidden = true
+        API_Key_Data1_8.isHidden = true
+        API_Key_Data2_8.isHidden = true
+        API_Key_Label1.isHidden = true
+        API_Key_Label2.isHidden = true
+        apiKeyLabel.isHidden = true
+        theWeatherLocation.isHidden = true
+        openWeatherMapLocation.isHidden = true
+        yahooLocation.isHidden = true
+        wundergroundLocation.isHidden = true
+        aerisLocation.isHidden = true
+        worldWeatherLocation.isHidden = true
+        theWeatherURL.isHidden = true
+        openWeatherMapURL.isHidden = true
+        yahooURL.isHidden = true
+        wundergroundURL.isHidden = true
+        aerisURL.isHidden = true
+        worldWeatherURL.isHidden = true
+        darkSkyURL.isHidden = true
+        apixuURL.isHidden = true
         #else
         #endif
         
@@ -427,7 +427,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         statusBarItem.title = localizedString(forKey: "Loading_") + "..."
         statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-1"))!
         loadTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(AppDelegate.runTimedCode), userInfo: nil, repeats: true);  //Start animating the menubar icon
-
+        
         let newItem : NSMenuItem = NSMenuItem(title: localizedString(forKey: "PleaseWait_"), action: #selector(AppDelegate.dummy(_:)), keyEquivalent: "")
         
         newItem.target=self
@@ -447,7 +447,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             {
                 InfoLog(String(format:"Sleeping for a %d seconds to allow WiFi to get started", launchDelay))
             }
-
+            
             // Sleep for a few seconds to allow WiFi to get started
             // ToDo - make this a user parameter
             Timer.scheduledTimer(timeInterval: launchDelay, target: self, selector: #selector(AppDelegate.launchWeather), userInfo: nil, repeats: false)
@@ -456,7 +456,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         {
             launchWeather()
         }
-
+        
     } // awakeFromNib
     
     @objc func launchWeather() {
@@ -688,7 +688,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                     string,
                                                                                                         attributes:[NSAttributedStringKey.font : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!,
-                        NSAttributedStringKey.foregroundColor : textColor]))
+                                                                                                                    NSAttributedStringKey.foregroundColor : textColor]))
             }
             else
             {
@@ -711,8 +711,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                     string,
                                                                                                         attributes:[NSAttributedStringKey.font : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!,
-                        NSAttributedStringKey.foregroundColor : textColor,
-                        NSAttributedStringKey.backgroundColor : backgroundColor]))
+                                                                                                                    NSAttributedStringKey.foregroundColor : textColor,
+                                                                                                                    NSAttributedStringKey.backgroundColor : backgroundColor]))
             }
         }
         newItem.attributedTitle = attributedTitle
@@ -736,14 +736,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             controlsMenu = menu
         }
         newItem = myMenuItem(localizedString(forKey: "Refresh_"), url: "weatherRefresh:", key: "r")
-                controlsMenu.addItem(newItem)
+        controlsMenu.addItem(newItem)
         
         newItem = myMenuItem(localizedString(forKey: "Preferences_"), url: "preferences:", key: ",")
         controlsMenu.addItem(newItem)
         
         // https://gist.github.com/ericdke/75a42dc8d4c5f61df7d9
         newItem = myMenuItem(localizedString(forKey: "Relaunch_"), url: "Relaunch:", key: "`")
-                controlsMenu.addItem(newItem)
+        controlsMenu.addItem(newItem)
         
         newItem = myMenuItem(localizedString(forKey: "Quit_"), url: "terminate:", key: "q")
         newItem.target=nil
@@ -804,7 +804,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         var APIKey2 = [String]()
         
         var i = 0
-
+        
         while (i < 8)
         {
             weatherDataSource.insert(defaults.string(forKey: String(format:"weatherSource_%d", i + 1))!, at: i)
@@ -823,11 +823,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             i = i + 1
         }
         /*
-        var weatherDataSource = defaults.string(forKey: "weatherSource_1")!
-        var city = defaults.string(forKey: "city")!
-        var displayCity  = defaults.string(forKey: "displayCity")!
-        var APIKey1 = defaults.string(forKey: "API_Key_Data1_1")!
-        var APIKey2 = defaults.string(forKey: "API_Key_Data2_1")!
+         var weatherDataSource = defaults.string(forKey: "weatherSource_1")!
+         var city = defaults.string(forKey: "city")!
+         var displayCity  = defaults.string(forKey: "displayCity")!
+         var APIKey1 = defaults.string(forKey: "API_Key_Data1_1")!
+         var APIKey2 = defaults.string(forKey: "API_Key_Data2_1")!
          */
         
         var m = (15 as NSNumber)
@@ -849,59 +849,75 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         if (weatherDataSource[whichWeatherFirst] == YAHOO_WEATHER)
         {
             yahooWeatherAPI.setRadarWind(radarWindow)
-            weatherFields = yahooWeatherAPI.beginParsing(city[whichWeatherFirst],
-                                                         displayCity: displayCity[whichWeatherFirst],
-                                                         APIKey1: APIKey1[whichWeatherFirst],
-                                                         APIKey2: APIKey2[whichWeatherFirst])
+            initWeatherFields(weatherFields: &weatherFields);
+            yahooWeatherAPI.beginParsing(city[whichWeatherFirst],
+                                         displayCity: displayCity[whichWeatherFirst],
+                                         APIKey1: APIKey1[whichWeatherFirst],
+                                         APIKey2: APIKey2[whichWeatherFirst],
+                                         weatherFields: &weatherFields)
         }
         else if (weatherDataSource[whichWeatherFirst] == OPENWEATHERMAP)
         {
             openWeatherMapAPI.setRadarWind(radarWindow)
-            weatherFields = openWeatherMapAPI.beginParsing(city[whichWeatherFirst],
-                                                           APIKey1: APIKey1[whichWeatherFirst],
-                                                           APIKey2: APIKey2[whichWeatherFirst])
+            initWeatherFields(weatherFields: &weatherFields);
+            openWeatherMapAPI.beginParsing(city[whichWeatherFirst],
+                                           APIKey1: APIKey1[whichWeatherFirst],
+                                           APIKey2: APIKey2[whichWeatherFirst],
+                                           weatherFields: &weatherFields)
         }
         else if (weatherDataSource[whichWeatherFirst] == THEWEATHER)
         {
             theWeatherAPI.setRadarWind(radarWindow)
-            weatherFields = theWeatherAPI.beginParsing(city[whichWeatherFirst],
-                                                       APIKey1: APIKey1[whichWeatherFirst],
-                                                       APIKey2: APIKey2[whichWeatherFirst])
+            initWeatherFields(weatherFields: &weatherFields);
+            theWeatherAPI.beginParsing(city[whichWeatherFirst],
+                                       APIKey1: APIKey1[whichWeatherFirst],
+                                       APIKey2: APIKey2[whichWeatherFirst],
+                                       weatherFields: &weatherFields)
         }
         else if (weatherDataSource[whichWeatherFirst] == WEATHERUNDERGROUND)
         {
             weatherUndergroundAPI.setRadarWind(radarWindow)
-            weatherFields = weatherUndergroundAPI.beginParsing(city[whichWeatherFirst],
-                                                               APIKey1: APIKey1[whichWeatherFirst],
-                                                               APIKey2: APIKey2[whichWeatherFirst])
+            initWeatherFields(weatherFields: &weatherFields);
+            weatherUndergroundAPI.beginParsing(city[whichWeatherFirst],
+                                               APIKey1: APIKey1[whichWeatherFirst],
+                                               APIKey2: APIKey2[whichWeatherFirst],
+                                               weatherFields: &weatherFields)
         }
         else if (weatherDataSource[whichWeatherFirst] == DARKSKY)
         {
             darkSkyAPI.setRadarWind(radarWindow)
-            weatherFields = darkSkyAPI.beginParsing(city[whichWeatherFirst],
-                                                    APIKey1: APIKey1[whichWeatherFirst],
-                                                    APIKey2: APIKey2[whichWeatherFirst])
+            initWeatherFields(weatherFields: &weatherFields);
+            darkSkyAPI.beginParsing(city[whichWeatherFirst],
+                                    APIKey1: APIKey1[whichWeatherFirst],
+                                    APIKey2: APIKey2[whichWeatherFirst],
+                                    weatherFields: &weatherFields)
         }
         else if (weatherDataSource[whichWeatherFirst] == AERISWEATHER)
         {
             aerisWeatherAPI.setRadarWind(radarWindow)
-            weatherFields = aerisWeatherAPI.beginParsing(city[whichWeatherFirst],
-                                                         APIKey1: APIKey1[whichWeatherFirst],
-                                                         APIKey2: APIKey2[whichWeatherFirst])
+            initWeatherFields(weatherFields: &weatherFields);
+            aerisWeatherAPI.beginParsing(city[whichWeatherFirst],
+                                         APIKey1: APIKey1[whichWeatherFirst],
+                                         APIKey2: APIKey2[whichWeatherFirst],
+                                         weatherFields: &weatherFields)
         }
         else if (weatherDataSource[whichWeatherFirst] == WORLDWEATHERONLINE)
         {
             worldWeatherOnlineAPI.setRadarWind(radarWindow)
-            weatherFields = worldWeatherOnlineAPI.beginParsing(city[whichWeatherFirst],
-                                                               APIKey1: APIKey1[whichWeatherFirst],
-                                                               APIKey2: APIKey2[whichWeatherFirst])
+            initWeatherFields(weatherFields: &weatherFields);
+            worldWeatherOnlineAPI.beginParsing(city[whichWeatherFirst],
+                                               APIKey1: APIKey1[whichWeatherFirst],
+                                               APIKey2: APIKey2[whichWeatherFirst],
+                                               weatherFields: &weatherFields)
         }
         else if (weatherDataSource[whichWeatherFirst] == APIXU)
         {
             ApiXUApi.setRadarWind(radarWindow)
-            weatherFields = ApiXUApi.beginParsing(city[whichWeatherFirst],
-                                                  APIKey1: APIKey1[whichWeatherFirst],
-                                                  APIKey2: APIKey2[whichWeatherFirst])
+            initWeatherFields(weatherFields: &weatherFields);
+            ApiXUApi.beginParsing(city[whichWeatherFirst],
+                                  APIKey1: APIKey1[whichWeatherFirst],
+                                  APIKey2: APIKey2[whichWeatherFirst],
+                                  weatherFields: &weatherFields)
         }
         else
         {
@@ -915,13 +931,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             alert.runModal()
             //self.window!.makeKeyAndOrderFront(self.window!)
             yahooWeatherAPI.setRadarWind(radarWindow)
-            weatherFields = yahooWeatherAPI.beginParsing(city[whichWeatherFirst],
-                                                         displayCity: displayCity[whichWeatherFirst],
-                                                         APIKey1: APIKey1[whichWeatherFirst],
-                                                         APIKey2: APIKey2[whichWeatherFirst])
+            initWeatherFields(weatherFields: &weatherFields);
+            yahooWeatherAPI.beginParsing(city[whichWeatherFirst],
+                                         displayCity: displayCity[whichWeatherFirst],
+                                         APIKey1: APIKey1[whichWeatherFirst],
+                                         APIKey2: APIKey2[whichWeatherFirst],
+                                         weatherFields: &weatherFields)
             //exit(0)
         }
-    
+        
         if (loadTimer != nil)
         {
             loadTimer.invalidate();
@@ -1027,7 +1045,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                     }
                 }
             }
-        
+            
             updateMenuWithPrimaryLocation(weatherFields, cityName: (city[whichWeatherFirst]), displayCityName: (displayCity[whichWeatherFirst]), menu: menu, weatherDataSource: weatherDataSource[whichWeatherFirst])
             
             var bFirstTime = 0
@@ -1052,11 +1070,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                         displayCity[secondarys] = city[secondarys]
                     }
                     
-                    weatherFields = processWeatherSource(weatherDataSource[secondarys],
-                                                         inputCity: city[secondarys],
-                                                         displayCity: displayCity[secondarys],
-                                                         APIKey1: APIKey1[secondarys],
-                                                         APIKey2: APIKey2[secondarys])
+                    processWeatherSource(weatherDataSource[secondarys],
+                                         inputCity: city[secondarys],
+                                         displayCity: displayCity[secondarys],
+                                         APIKey1: APIKey1[secondarys],
+                                         APIKey2: APIKey2[secondarys],
+                                         weatherFields: &weatherFields)
                     updateMenuWithSecondaryLocation(weatherFields,
                                                     cityName: (city[secondarys]),
                                                     displayCityName: (displayCity[secondarys]),
@@ -1120,7 +1139,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                                                                                                         attributes:[NSAttributedStringKey.font : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!,
                                                                                                                     NSAttributedStringKey.foregroundColor : textColor,
                                                                                                                     NSAttributedStringKey.backgroundColor : backgroundColor]))
-
+                
                 let newItem = NSMenuItem()
                 newItem.attributedTitle = attributedTitle
                 newItem.target=self
@@ -1129,7 +1148,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 NoInternetConnectivity = 1
             }
         }
-
+        
         let uwTimer = myTimer
         if uwTimer == myTimer
         {
@@ -1152,65 +1171,79 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 whichWeatherFirst = 0
             }
         }
-
+        
     } // updateWeather
     
-    func processWeatherSource(_ weatherDataSource: String, inputCity: String, displayCity: String, APIKey1: String, APIKey2: String) -> WeatherFields
-    {
+    func processWeatherSource(_ weatherDataSource: String, inputCity: String, displayCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
         if (weatherDataSource == YAHOO_WEATHER) {
-            weatherFields = yahooWeatherAPI.beginParsing(inputCity,
-                                                         displayCity: displayCity,
-                                                         APIKey1: APIKey1,
-                                                         APIKey2: APIKey2)
+            initWeatherFields(weatherFields: &weatherFields);
+            yahooWeatherAPI.beginParsing(inputCity,
+                                         displayCity: displayCity,
+                                         APIKey1: APIKey1,
+                                         APIKey2: APIKey2,
+                                         weatherFields: &weatherFields)
         }
         else if (weatherDataSource == OPENWEATHERMAP)
         {
-            weatherFields = openWeatherMapAPI.beginParsing(inputCity,
-                                                           APIKey1: APIKey1,
-                                                           APIKey2: APIKey2)
+            initWeatherFields(weatherFields: &weatherFields);
+            openWeatherMapAPI.beginParsing(inputCity,
+                                           APIKey1: APIKey1,
+                                           APIKey2: APIKey2,
+                                           weatherFields: &weatherFields)
         }
         else if (weatherDataSource == THEWEATHER)
         {
             theWeatherAPI.setRadarWind(radarWindow)
-            weatherFields = theWeatherAPI.beginParsing(inputCity,
-                                                       APIKey1: APIKey1,
-                                                       APIKey2: APIKey2)
+            initWeatherFields(weatherFields: &weatherFields);
+            theWeatherAPI.beginParsing(inputCity,
+                                       APIKey1: APIKey1,
+                                       APIKey2: APIKey2,
+                                       weatherFields: &weatherFields)
         }
         else if (weatherDataSource == WEATHERUNDERGROUND)
         {
             weatherUndergroundAPI.setRadarWind(radarWindow)
-            weatherFields = weatherUndergroundAPI.beginParsing(inputCity,
-                                                               APIKey1: APIKey1,
-                                                               APIKey2: APIKey2)
+            initWeatherFields(weatherFields: &weatherFields);
+            weatherUndergroundAPI.beginParsing(inputCity,
+                                               APIKey1: APIKey1,
+                                               APIKey2: APIKey2,
+                                               weatherFields: &weatherFields)
         }
         else if (weatherDataSource == DARKSKY)
         {
             darkSkyAPI.setRadarWind(radarWindow)
-            weatherFields = darkSkyAPI.beginParsing(inputCity,
-                                                       APIKey1: APIKey1,
-                                                       APIKey2: APIKey2)
+            initWeatherFields(weatherFields: &weatherFields);
+            darkSkyAPI.beginParsing(inputCity,
+                                    APIKey1: APIKey1,
+                                    APIKey2: APIKey2,
+                                    weatherFields: &weatherFields)
         }
         else if (weatherDataSource == AERISWEATHER)
         {
             aerisWeatherAPI.setRadarWind(radarWindow)
-            weatherFields = aerisWeatherAPI.beginParsing(inputCity,
-                                                         APIKey1: APIKey1,
-                                                         APIKey2: APIKey2)
+            initWeatherFields(weatherFields: &weatherFields);
+            aerisWeatherAPI.beginParsing(inputCity,
+                                         APIKey1: APIKey1,
+                                         APIKey2: APIKey2,
+                                         weatherFields: &weatherFields)
         }
         else if (weatherDataSource == WORLDWEATHERONLINE)
         {
             worldWeatherOnlineAPI.setRadarWind(radarWindow)
-            weatherFields = worldWeatherOnlineAPI.beginParsing(inputCity,
-                                                               APIKey1: APIKey1,
-                                                               APIKey2: APIKey2)
+            initWeatherFields(weatherFields: &weatherFields);
+            worldWeatherOnlineAPI.beginParsing(inputCity,
+                                               APIKey1: APIKey1,
+                                               APIKey2: APIKey2,
+                                               weatherFields: &weatherFields)
         }
         else if (weatherDataSource == APIXU)
         {
             ApiXUApi.setRadarWind(radarWindow)
-            weatherFields =
-                ApiXUApi.beginParsing(inputCity,
-                                                               APIKey1: APIKey1,
-                                                               APIKey2: APIKey2)
+            initWeatherFields(weatherFields: &weatherFields);
+            ApiXUApi.beginParsing(inputCity,
+                                  APIKey1: APIKey1,
+                                  APIKey2: APIKey2,
+                                  weatherFields: &weatherFields)
         }
         else
         {
@@ -1224,21 +1257,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             alert.runModal()
             //self.window!.makeKeyAndOrderFront(self.window!)
             weatherFields = WeatherFields()
+            initWeatherFields(weatherFields: &weatherFields);
         }
-
-        return weatherFields
+        
+        return
     } // processWeatherSource
     
     func setImage(_ weatherCode: String, weatherDataSource: String) -> NSImage
     {
         /*
-         19	dust
-         20	foggy
-         22	smoky
-         23	blustery
-         25	cold                        Temperature-2
-         36	hot                         Temperature-9
-         3200	not available
+         19    dust
+         20    foggy
+         22    smoky
+         23    blustery
+         25    cold                        Temperature-2
+         36    hot                         Temperature-9
+         3200    not available
          
          */
         
@@ -1574,7 +1608,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         } else if (weatherDataSource == DARKSKY)
         {
             let _ = weatherCode
-
+            
             if ((weatherCode == "clear") ||
                 (weatherCode == "clear-day") ||
                 (weatherCode == "nt_clear") ||
@@ -1619,13 +1653,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             {
                 imageName = "Rain"
             }
+            else if ((weatherCode == "cloudy"))
+            {
+                imageName = "Cloudy"
+            }
         }
         
         if (imageName == "Unknown")
         {
             ErrorLog(String(format:localizedString(forKey: "InvalidWeatherCode_") + " : weatherDataSource=" + weatherDataSource + ", weatherCode=" + weatherCode))
         }
-
+        
         if (defaults.string(forKey: "useNewWeatherIcons")! == "1")
         {
             imageName = imageName + "-Dark"
@@ -1636,7 +1674,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         }
         
         return NSImage(named: NSImage.Name(rawValue: imageName))!
-
+        
     } // setImage
     
     func formatDay(_ temp: String) -> String
@@ -1987,7 +2025,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                 newItem.representedObject = sourceURL
             }
             menu.addItem(newItem)
-
+            
             var currentForecastMenu = NSMenu()
             
             if (defaults.string(forKey: "currentWeatherInSubmenu")! == "1") {
@@ -2039,9 +2077,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         
         var city = displayCityName
         /*
-        if ((city == "") && (weatherFields.title1.length > 17)) {
-            city = weatherFields.title1.substring(from: 17)
-        }
+         if ((city == "") && (weatherFields.title1.length > 17)) {
+         city = weatherFields.title1.substring(from: 17)
+         }
          */
         if (city == "") {
             city = weatherFields.title1
@@ -2069,13 +2107,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         //let replaced = String(myURL.characters.map {
         //    $0 == " " ? "-" : $0
         //    })
-
+        
         newItem.representedObject = replaced
         menu.addItem(newItem)
         
         let newLocation = NSMenu()
         menu.setSubmenu(newLocation, for: newItem)
-
+        
         var currentForecastMenu = NSMenu()
         
         if (defaults.string(forKey: "currentWeatherInSubmenu")! == "1") {
@@ -2157,7 +2195,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             }
             extendedForecasts(weatherFields, cityName: displayCityName, extendedForecastMenu: extendedForecastMenu, weatherDataSource: weatherDataSource)
         }
-
+        
         DebugLog(String(format:"leaving updateMenuWithSecondaryLocation: %@", cityName))
     } // updateMenuWithSecondaryLocation
     
@@ -2225,7 +2263,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         {
             maxForecastDays = weatherFields.forecastCounter
         }
-
+        
         let maxHiLowTemps = formatTemp("888") + "/" + formatTemp("888") + " \t"
         
         while (i < maxForecastDays)
@@ -2247,7 +2285,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
                         Day = Day + "\t"
                     }
                 }
-
+                
                 if (defaults.string(forKey: "extendedForecastSingleLine")! == "1") {
                     var menuString = ""
                     menuString = menuString + Day
@@ -2299,7 +2337,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             }
             i = i + 1
         }
-
+        
         DebugLog(String(format:"leaving extendedForecasts: %@", cityName))
     } // extendedForecasts
     
@@ -2415,9 +2453,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         testAndSet("speedUnit", defaultValue: "0")
         testAndSet("pressureUnit", defaultValue: "0")
         testAndSet("directionUnit", defaultValue: "0")
-
+        
         testAndSet("forecastDays", defaultValue: "4")
-
+        
         defaults.setValue(DEFAULT_PREFERENCE_VERSION, forKey: "preferenceVersion")
         testAndSet("preferenceVersion", defaultValue: DEFAULT_PREFERENCE_VERSION)
         
@@ -2585,7 +2623,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         defaults.setValue(directionUnit.indexOfSelectedItem, forKey: "directionUnit")
         
         defaults.setValue(forecastDays.indexOfSelectedItem, forKey: "forecastDays")
-       
+        
         defaults.setValue(DEFAULT_PREFERENCE_VERSION, forKey: "preferenceVersion")
         
         let i = NumberFormatter().number(from: defaults.string(forKey: "fontsize")!)
@@ -2690,7 +2728,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         worldWeatherLocation.stringValue = localizedString(forKey: "worldWeatherLocation_")
         darkSkyLocation.stringValue = localizedString(forKey: "darkSkyLocation_")
         APIXULocation.stringValue = localizedString(forKey: "APIXULocation_")
-
+        
     } // initDisplay
     
     func InitWeatherSourceButton(weatherSourceButton: NSPopUpButton)
@@ -2760,9 +2798,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         UserDefaults.standard.synchronize()
         
         defaultPreferences()
-
+        
         initWindowPrefs()
         
     } // resetPreferences
     
 } // AppDelegate
+

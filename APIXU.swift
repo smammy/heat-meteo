@@ -138,19 +138,14 @@ class APIXUAPI: NSObject, XMLParserDelegate
         return workingString
     } // fixIcon
     
-    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String) -> WeatherFields
-    {
+    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
         DebugLog(String(format:"in APIXU beginParsing: %@", inputCity))
         
-        weatherFields.forecastCounter = 0
-        
-        AppDelegate().initWeatherFields(weatherFields: &weatherFields)
-
         escapedCity = inputCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)! as NSString
         escapedCity = escapedCity.replacingOccurrences(of: ",", with: "%3D") as NSString
         
         parseURL = QUERY_PREFIX1 + APIKey1 + QUERY_SUFFIX1 + (escapedCity as String)
-        InfoLog(String(format:"URL for observations APIXU: %@\n", parseURL))
+        InfoLog(String(format:"URL for APIXU: %@\n", parseURL))
         
         // https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-website-url
         let url = URL(string: parseURL)
@@ -169,13 +164,13 @@ class APIXUAPI: NSObject, XMLParserDelegate
         {
             weatherFields.currentTemp = "9999"
             weatherFields.latitude = localizedString(forKey: "InvalidKey_")
-            return weatherFields
+            return
         }
         
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObject(object: dictionary)
+                readJSONObject(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
@@ -183,7 +178,7 @@ class APIXUAPI: NSObject, XMLParserDelegate
 
         DebugLog(String(format:"leaving APIXU beginParsing: %@", inputCity))
         
-        return weatherFields
+        return
     } // beginParsing
     
     func setRadarWind(_ radarWindow1: RadarWindow) {
@@ -243,7 +238,7 @@ class APIXUAPI: NSObject, XMLParserDelegate
         return conditions
     } // readJSONObjectConditions
     
-    func readJSONObject(object: [String: AnyObject]) {
+    func readJSONObject(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
             let location = object["location"] as? [String: AnyObject],
             let current = object["current"] as? [String: AnyObject],

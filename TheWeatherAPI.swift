@@ -49,16 +49,11 @@ class TheWeatherAPI: NSObject, XMLParserDelegate
     
     var radarWindow = RadarWindow()
     
-    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String) -> WeatherFields
-    {
+    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
         
         DebugLog(String(format:"in beginParsing: %@", inputCity))
         
-        AppDelegate().initWeatherFields(weatherFields: &weatherFields)
-        
         Parser = XMLParser()
-        
-        weatherFields.forecastCounter = 0
         
         // https://TheWeather.com
         
@@ -71,7 +66,7 @@ class TheWeatherAPI: NSObject, XMLParserDelegate
         parseURL.append(inputCity as String)
         parseURL.append(QUERY_SUFFIX1)
         parseURL.append(APIKey1)
-        InfoLog(String(format:"URL for Current conditions OpenWeatherMap: %@\n", parseURL))
+        InfoLog(String(format:"URL for OpenWeatherMap: %@\n", parseURL))
         
         parseURL = ""
         parseURL.append(QUERY_PREFIX1)
@@ -88,7 +83,7 @@ class TheWeatherAPI: NSObject, XMLParserDelegate
         
         DebugLog(String(format:"leaving beginParsing: %@", inputCity))
         
-        return weatherFields
+        return
     } // beginParsing
     
     func setRadarWind(_ radarWindow1: RadarWindow) {

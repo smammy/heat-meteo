@@ -73,7 +73,7 @@ var original_stderr: Int32?;
 #endif
 
 
-// Redirect log to /Library/Logs/<AppName>.log
+// Redirect log to ~/Library/Logs/<AppName>.log
 func SetCustomLogFilename(_ name: String) {
     
     var logDirectory: URL

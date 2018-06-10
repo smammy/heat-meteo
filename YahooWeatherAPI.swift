@@ -55,13 +55,9 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
     
     var radarWindow = RadarWindow()
     
-    func beginParsing(_ inputCity: String, displayCity: String, APIKey1: String, APIKey2: String) -> WeatherFields {
-        
-        DebugLog(String(format:"in beginParsing: %@", inputCity))
+    func beginParsing(_ inputCity: String, displayCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
 
-        AppDelegate().initWeatherFields(weatherFields: &weatherFields)
-                
-        weatherFields.forecastCounter = 0
+        DebugLog(String(format:"in beginParsing: %@", inputCity))
 
         // https://developer.yahoo.com/weather/
         
@@ -80,7 +76,7 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
         parseURL = parseURL.replacingOccurrences(of: "%2F", with: "/")
         parseURL = parseURL.replacingOccurrences(of: "%3A", with: ":")
         parseURL = parseURL.replacingOccurrences(of: "%3D", with: "=")
-        InfoLog(String(format:"Yahoo URL: %@\n", parseURL))
+        InfoLog(String(format:"URL for Yahoo: %@\n", parseURL))
         
         parseURL = ""
         parseURL.append(QUERY_PREFIX1)
@@ -106,12 +102,12 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
         {
             weatherFields.currentTemp = "9999"
             weatherFields.latitude = localizedString(forKey: "InvalidKey_")
-            return weatherFields
+            return
         }
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObject(object: dictionary)
+                readJSONObject(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
@@ -119,14 +115,14 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
         
         DebugLog(String(format:"leaving beginParsing: %@", inputCity))
 
-        return weatherFields
+        return
     } // beginParsing
     
     func setRadarWind(_ radarWindow1: RadarWindow) {
         radarWindow = radarWindow1
     } // extendedForecasts
  
-    func readJSONObject(object: [String: AnyObject]) {
+    func readJSONObject(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
             let query = object["query"] as? [String: AnyObject]
             else {

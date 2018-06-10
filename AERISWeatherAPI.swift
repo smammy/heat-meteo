@@ -109,13 +109,8 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
         return workingString
     } // fixIcon
     
-    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String) -> WeatherFields
-    {
+    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
         DebugLog(String(format:"in AerisWeatherAPI beginParsing: %@", inputCity))
-        
-        weatherFields.forecastCounter = 0
-        
-        AppDelegate().initWeatherFields(weatherFields: &weatherFields)
         
         //escapedCity = inputCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)! as NSString
         //escapedCity = escapedCity.replacingOccurrences(of: ",", with: "%3D") as NSString
@@ -141,26 +136,26 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
         {
             weatherFields.currentTemp = "9999"
             weatherFields.latitude = localizedString(forKey: "InvalidKey_")
-            return weatherFields
+            return
         }
         
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObjectE(object: dictionary)
+                readJSONObjectE(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
         }
         if (weatherFields.currentTemp == "9999")
         {
-            return weatherFields
+            return
         }
         
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObject(object: dictionary)
+                readJSONObject(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
@@ -175,7 +170,7 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObjectF(object: dictionary)
+                readJSONObjectF(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
@@ -183,14 +178,14 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
         
         DebugLog(String(format:"leaving AerisWeatherAPI beginParsing: %@", inputCity))
         
-        return weatherFields
+        return
     } // beginParsing
     
     func setRadarWind(_ radarWindow1: RadarWindow) {
         radarWindow = radarWindow1
     } // setRadarWind
     
-    func readJSONObject(object: [String: AnyObject]) {
+    func readJSONObject(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
             let response = object["response"] as? [String: AnyObject]
             else {
@@ -287,7 +282,7 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
         }
     } // readJSONObject
     
-    func readJSONObjectE(object: [String: AnyObject]) {
+    func readJSONObjectE(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
             let error = object["error"] as? [String: AnyObject]
             else {
@@ -304,7 +299,7 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
         }
     } // readJSONObjectE
     
-    func readJSONObjectF(object: [String: AnyObject]) {
+    func readJSONObjectF(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
             let response = object["response"] as? [[String: AnyObject]]
             else {

@@ -55,8 +55,7 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
 
     var radarWindow = RadarWindow()
     
-    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String) -> WeatherFields
-    {
+    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
         DebugLog(String(format:"in DarkSkyAPI beginParsing: %@", inputCity))
         
         let defaults = UserDefaults.standard
@@ -66,16 +65,12 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
             defaults.setValue("60", forKey: "updateFrequency")
         }
 
-        weatherFields.forecastCounter = 0
-        
         var APIKey = APIKey1
         
         if (APIKey == "")
         {
             APIKey = "1f76884583c747841b6dd66979a24b3e"
         }
-        
-        AppDelegate().initWeatherFields(weatherFields: &weatherFields)
         
         parseURL = ""
         parseURL.append(QUERY_PREFIX1)
@@ -99,7 +94,7 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         let languageCode = (Locale.current as NSLocale).object(forKey: .languageCode) as? String
         parseURL.append(languageCode!)
         parseURL.append(QUERY_SUFFIX2)
-        InfoLog(String(format:"URL for observations DarkSky: %@\n", parseURL))
+        InfoLog(String(format:"URL for DarkSky: %@\n", parseURL))
 
         // https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-website-url
         let url = URL(string: parseURL)
@@ -118,13 +113,13 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         {
             weatherFields.currentTemp = "9999"
             weatherFields.latitude = localizedString(forKey: "InvalidKey_")
-            return weatherFields
+            return
         }
         
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObject(object: dictionary)
+                readJSONObject(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
@@ -132,14 +127,14 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
 
         DebugLog(String(format:"leaving DarkSkyAPI beginParsing: %@", inputCity))
         
-        return weatherFields
+        return
     } // beginParsing
     
     func setRadarWind(_ radarWindow1: RadarWindow) {
         radarWindow = radarWindow1
     } // setRadarWind
     
-    func readJSONObject(object: [String: AnyObject]) {
+    func readJSONObject(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
             let latitude = object["latitude"] as? Double,
             let longitude = object["longitude"] as? Double,

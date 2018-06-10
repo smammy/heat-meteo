@@ -156,19 +156,14 @@ class WorldWeatherOnlineAPI: NSObject, XMLParserDelegate
         return workingString
     } // fixIcon
     
-    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String) -> WeatherFields
-    {
+    func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
         DebugLog(String(format:"in WorldWeatherOnline beginParsing: %@", inputCity))
         
-        weatherFields.forecastCounter = 0
-        
-        AppDelegate().initWeatherFields(weatherFields: &weatherFields)
-
         escapedCity = inputCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)! as NSString
         escapedCity = escapedCity.replacingOccurrences(of: ",", with: "%3D") as NSString
         
         parseURL = QUERY_PREFIX1 + (escapedCity as String) + QUERY_SUFFIX1 + APIKey1
-        InfoLog(String(format:"URL for observations WorldWeatherOnline: %@\n", parseURL))
+        InfoLog(String(format:"URL for WorldWeatherOnline: %@\n", parseURL))
         
         // https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-website-url
         let url = URL(string: parseURL)
@@ -187,26 +182,26 @@ class WorldWeatherOnlineAPI: NSObject, XMLParserDelegate
         {
             weatherFields.currentTemp = "9999"
             weatherFields.latitude = localizedString(forKey: "InvalidKey_")
-            return weatherFields
+            return
         }
         
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObjectE(object: dictionary)
+                readJSONObjectE(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
         }
         if (weatherFields.currentTemp == "9999")
         {
-            return weatherFields
+            return
         }
         
         do {
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObject(object: dictionary)
+                readJSONObject(object: dictionary, weatherFields: &weatherFields)
             }
         } catch {
             // Handle Error
@@ -214,14 +209,14 @@ class WorldWeatherOnlineAPI: NSObject, XMLParserDelegate
         
         DebugLog(String(format:"leaving WorldWeatherOnline beginParsing: %@", inputCity))
         
-        return weatherFields
+        return
     } // beginParsing
     
     func setRadarWind(_ radarWindow1: RadarWindow) {
         radarWindow = radarWindow1
     } // setRadarWind
     
-    func readJSONObject(object: [String: AnyObject]) {
+    func readJSONObject(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
             let data = object["data"] as? [String: AnyObject]
             else {
@@ -337,7 +332,7 @@ class WorldWeatherOnlineAPI: NSObject, XMLParserDelegate
         }
     } // readJSONObject
     
-    func readJSONObjectE(object: [String: AnyObject]) {
+    func readJSONObjectE(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
             let data = object["data"] as? [[String: AnyObject]]
             else {
