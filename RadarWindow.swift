@@ -46,10 +46,10 @@ class RadarWindow: NSWindowController, NSWindowDelegate {
     var weatherComTag = "60565"
 
     // Allow Command-W to close the window
-    override func keyDown(with theEvent: (NSEvent!))
+    override func keyDown(with theEvent: (NSEvent?))
     {
-        if theEvent.modifierFlags.contains(NSEvent.ModifierFlags.command) {
-            switch theEvent.charactersIgnoringModifiers! {
+        if (theEvent?.modifierFlags.contains(NSEvent.ModifierFlags.command))! {
+            switch theEvent?.charactersIgnoringModifiers! {
             case "w":
                 self.window?.close()
             default:

@@ -100,12 +100,19 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         parseURL.append(languageCode!)
         parseURL.append(QUERY_SUFFIX2)
         InfoLog(String(format:"URL for observations DarkSky: %@\n", parseURL))
+
+        // https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-website-url
         let url = URL(string: parseURL)
         var data: NSData?
         data = nil
         if (url != nil)
         {
-            data = NSData(contentsOf: url!)
+            do {
+                // https://stackoverflow.com/questions/40812416/nsurl-url-and-nsdata-data?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+                data = try Data(contentsOf: url!) as NSData
+            } catch {
+                ErrorLog("\(error)")
+            }
         }
         if (data == nil)
         {
@@ -134,8 +141,8 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
     
     func readJSONObject(object: [String: AnyObject]) {
         guard
-            let latitude = object["latitude"] as? Float,
-            let longitude = object["longitude"] as? Float,
+            let latitude = object["latitude"] as? Double,
+            let longitude = object["longitude"] as? Double,
             let c = object["currently"] as? [String: AnyObject],
             let d = object["daily"] as? [String: AnyObject]
             else
@@ -149,14 +156,14 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         let currently = [c] as [[String: AnyObject]]
         for current in currently {
             guard
-                let time = current["time"] as? Float,
+                let time = current["time"] as? Double,
                 let summary = current["summary"] as? String,
                 let icon = current["icon"] as? String,
-                let temperature = current["temperature"] as? Float,
-                let humidity = current["humidity"] as? Float,
-                let windSpeed = current["windSpeed"] as? Float,
-                let windBearing = current["windBearing"] as? Float,
-                let pressure = current["pressure"] as? Float
+                let temperature = current["temperature"] as? Double,
+                let humidity = current["humidity"] as? Double,
+                let windSpeed = current["windSpeed"] as? Double,
+                let windBearing = current["windBearing"] as? Double,
+                let pressure = current["pressure"] as? Double
                 else {
                     _ = "error"
                     return }
@@ -198,13 +205,13 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
             
             for dat in datum {
                 guard
-                    let time = dat["time"] as? Float,
+                    let time = dat["time"] as? Double,
                     let summary = dat["summary"] as? String,
-                    let sunriseTime = dat["sunriseTime"] as? Float,
-                    let sunsetTime = dat["sunsetTime"] as? Float,
-                    let temperatureMin = dat["temperatureMin"] as? Float,
-                    let temperatureMax = dat["temperatureMax"] as? Float,
-                    //let pressure = dat["pressure"] as? Float,
+                    let sunriseTime = dat["sunriseTime"] as? Double,
+                    let sunsetTime = dat["sunsetTime"] as? Double,
+                    let temperatureMin = dat["temperatureMin"] as? Double,
+                    let temperatureMax = dat["temperatureMax"] as? Double,
+                    //let pressure = dat["pressure"] as? Double,
                     let icon = dat["icon"] as? String
                     else
                 {

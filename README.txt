@@ -1,5 +1,10 @@
 This file could also be called the change log.
 
+3.1.4
+* Add French translations for Blowing Snow
+* Reduce WeatherUnderground calls from 2 to 1 for each city
+* Update to Swift 4.1 (Xcode 9.4)
+
 3.1.3
 * Change in processing for OpenWeatherMap. Location is now lat/long based. All users must update their location.
 * New option to display date instead of day in extended forecast.

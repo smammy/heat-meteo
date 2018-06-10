@@ -96,8 +96,11 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         parseURL.append(QUERY_SUFFIX1b)
         InfoLog(String(format:"URL for Current conditions OpenWeatherMap: %@\n", parseURL))
         
-        var url = URL(string: parseURL as String)
+        // https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-website-url
+        var url = URL(string: parseURL)
         var data: NSData?
+        data = nil
+        url = URL(string: parseURL as String)
         data = nil
         if (url != nil)
         {
@@ -171,13 +174,13 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
     
     func readJSONObject(object: [String: AnyObject]) {
         guard
-        let id = object["id"] as? Float,
+        let id = object["id"] as? Double,
         let name = object["name"] as? String,
         let coord = object["coord"] as? [String: AnyObject],
         let main = object["main"] as? [String: AnyObject],
         let wind = object["wind"] as? [String: AnyObject],
         let sys = object["sys"] as? [String: AnyObject],
-        let dt = object["dt"] as? Float,
+        let dt = object["dt"] as? Double,
         let weather = object["weather"] as? [[String: AnyObject]]
         else
         {
@@ -197,8 +200,8 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         
         for xyzzy in [coord] as [[String: AnyObject]] {
             guard
-            let latitude = xyzzy["lat"] as? Float,
-            let longitude = xyzzy["lon"] as? Float
+            let latitude = xyzzy["lat"] as? Double,
+            let longitude = xyzzy["lon"] as? Double
             else {
                 _ = "error"
                 return }
@@ -208,7 +211,7 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         
         for xyzzy in weather {
             guard
-            //let id = xyzzy["id"] as? Float,
+            //let id = xyzzy["id"] as? Double,
             //let main = xyzzy["main"] as? String,
             let description = xyzzy["description"] as? String,
             let icon = xyzzy["icon"] as? String
@@ -221,13 +224,13 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         
         for xyzzy in [main] {
             guard
-            let temp = xyzzy["temp"] as? Float,
-            let humidity = xyzzy["humidity"] as? Float,
-            //let temp_min = xyzzy["temp_min"] as? Float,
-            //let temp_max = xyzzy["temp_max"] as? Float,
-            //let sea_level = xyzzy["sea_level"] as? Float,
-            //let grnd_level = xyzzy["grnd_level"] as? Float,
-            let pressure = xyzzy["pressure"] as? Float
+            let temp = xyzzy["temp"] as? Double,
+            let humidity = xyzzy["humidity"] as? Double,
+            //let temp_min = xyzzy["temp_min"] as? Double,
+            //let temp_max = xyzzy["temp_max"] as? Double,
+            //let sea_level = xyzzy["sea_level"] as? Double,
+            //let grnd_level = xyzzy["grnd_level"] as? Double,
+            let pressure = xyzzy["pressure"] as? Double
             else {
                 _ = "error"
                 return }
@@ -238,8 +241,8 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         
         for xyzzy in [wind] {
             guard
-            let speed = xyzzy["speed"] as? Float,
-            let deg = xyzzy["deg"] as? Float
+            let speed = xyzzy["speed"] as? Double,
+            let deg = xyzzy["deg"] as? Double
             else {
                 _ = "error"
                 return }
@@ -249,8 +252,8 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         
         for xyzzy in [sys] {
             guard
-            let sunrise = xyzzy["sunrise"] as? Float,
-            let sunset = xyzzy["sunset"] as? Float
+            let sunrise = xyzzy["sunrise"] as? Double,
+            let sunset = xyzzy["sunset"] as? Double
             else {
                 _ = "error"
                 return }
@@ -279,7 +282,7 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
     
     func readJSONObjectE(object: [String: AnyObject]) {
         guard
-        let cod = object["cod"] as? Float,
+        let cod = object["cod"] as? Double,
         let message = object["message"] as? String
         else
         {
@@ -305,7 +308,7 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         
         for xyzzy in list {
             guard
-            let dt = xyzzy["dt"] as? Float,
+            let dt = xyzzy["dt"] as? Double,
             let weather = xyzzy["weather"] as? [[String: AnyObject]],
             let temp = xyzzy["temp"] as? [String: AnyObject]
             else {
@@ -329,8 +332,8 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
             
             for x in [temp] {
                 guard
-                let min = x["min"] as? Float,
-                let max = x["max"] as? Float
+                let min = x["min"] as? Double,
+                let max = x["max"] as? Double
                 else {
                     _ = "error"
                     return }

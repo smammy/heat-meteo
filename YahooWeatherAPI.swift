@@ -89,12 +89,18 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
         parseURL.append(escapedCity)
         parseURL.append(QUERY_SUFFIX1)
         
-        let url = URL(string: parseURL as String)
+        // https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-website-url
+        let url = URL(string: parseURL)
         var data: NSData?
         data = nil
         if (url != nil)
         {
-            data = NSData(contentsOf: url!)
+            do {
+                // https://stackoverflow.com/questions/40812416/nsurl-url-and-nsdata-data?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+                data = try Data(contentsOf: url!) as NSData
+            } catch {
+                ErrorLog("\(error)")
+            }
         }
         if (data == nil)
         {

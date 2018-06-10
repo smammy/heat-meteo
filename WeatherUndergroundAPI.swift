@@ -32,6 +32,7 @@
 //
 // Sample Current: http://api.wunderground.com/api/97eaacd6a89f603b/conditions/q/IL/Naperville.json
 // Sample 10 Day : http://api.wunderground.com/api/97eaacd6a89f603b/forecast10day/q/IL/Naperville.json
+// Combined: http://api.wunderground.com/api/97eaacd6a89f603b/geolookup/conditions/forecast10day/q/IL/Naperville.json
 
 import Foundation
 import Cocoa
@@ -42,11 +43,8 @@ import Foundation
 class WeatherUndergroundAPI: NSObject, XMLParserDelegate
 {
     let QUERY_PREFIX1 = "http://api.wunderground.com/api/"
-    let QUERY_SUFFIX1a = "/conditions/q/"
+    let QUERY_SUFFIX1a = "/geolookup/conditions/forecast10day/q/"
     let QUERY_SUFFIX1b = ".json"
-    let QUERY_PREFIX2 = "http://api.wunderground.com/api/"
-    let QUERY_SUFFIX2a = "/forecast10day/q/"
-    let QUERY_SUFFIX2b = ".json"
     
     var escapedCity = String()
     var parseURL = String()
@@ -88,7 +86,7 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
         }
         parseURL.append(escapedCity as String)
         parseURL.append(QUERY_SUFFIX1b)
-        InfoLog(String(format:"URL for Current conditions Weather Underground: %@\n", parseURL))
+        InfoLog(String(format:"URL for Weather Underground: %@\n", parseURL))
         
         parseURL = ""
         parseURL.append(QUERY_PREFIX1)
@@ -110,12 +108,19 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
         parseURL.append(escapedCity as String)
         parseURL.append(QUERY_SUFFIX1b)
         
-        var url = URL(string: parseURL as String)
+        // TODO: Remove this dummy URL
+        // https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-website-url
+        let url = URL(string: parseURL)
         var data: NSData?
         data = nil
         if (url != nil)
         {
-            data = NSData(contentsOf: url!)
+            do {
+                // https://stackoverflow.com/questions/40812416/nsurl-url-and-nsdata-data?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+                data = try Data(contentsOf: url!) as NSData
+            } catch {
+                ErrorLog("\(error)")
+            }
         }
         if (data == nil)
         {
@@ -140,63 +145,12 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
                 readJSONObject(object: dictionary)
-            }
-        } catch {
-            // Handle Error
-        }
-        
-        parseURL = ""
-        parseURL.append(QUERY_PREFIX2)
-        parseURL.append(APIKey1)
-        parseURL.append(QUERY_SUFFIX2a)
-        // lat = inputCity before "," or " "
-        // lon = inputCity after "," or " "
-        token = [String]()
-        escapedCity = inputCity.trimmingCharacters(in: .whitespacesAndNewlines)
-        if (escapedCity.contains(" ")) {
-            token = escapedCity.components(separatedBy: " ")
-            escapedCity = token[0] + "," + token[1]
-        } else if (escapedCity.contains(",")) {
-            token = escapedCity.components(separatedBy: ",")
-            escapedCity = token[0] + "," + token[1]
-        } else {
-            //escapedCity = escapedCity
-        }
-        parseURL.append(escapedCity as String)
-        parseURL.append(QUERY_SUFFIX2b)
-        InfoLog(String(format:"URL for Forecast conditions Weather Underground: %@\n", parseURL))
-        
-        parseURL = ""
-        parseURL.append(QUERY_PREFIX2)
-        parseURL.append(APIKey1)
-        parseURL.append(QUERY_SUFFIX2a)
-        // lat = inputCity before "," or " "
-        // lon = inputCity after "," or " "
-        token = [String]()
-        escapedCity = inputCity.trimmingCharacters(in: .whitespacesAndNewlines)
-        if (escapedCity.contains(" ")) {
-            token = escapedCity.components(separatedBy: " ")
-            escapedCity = token[0] + "," + token[1]
-        } else if (escapedCity.contains(",")) {
-            token = escapedCity.components(separatedBy: ",")
-            escapedCity = token[0] + "," + token[1]
-        } else {
-            //escapedCity = escapedCity
-        }
-        parseURL.append(escapedCity as String)
-        parseURL.append(QUERY_SUFFIX2b)
-        
-        url = URL(string: parseURL as String)
-        data = NSData(contentsOf: url!)
-        do {
-            let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
-            if let dictionary = object as? [String: AnyObject] {
                 readJSONObjectF(object: dictionary)
             }
         } catch {
             // Handle Error
         }
-        
+                
         DebugLog(String(format:"leaving beginParsing: %@", inputCity))
         
         return weatherFields
@@ -217,9 +171,9 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
             guard
                 let display_location = xyzzy["display_location"] as? [String: AnyObject],
                 let observation_location = xyzzy["observation_location"] as? [String: AnyObject],
-                let temp_f = xyzzy["temp_f"] as? Float,
-                var wind_degrees = xyzzy["wind_degrees"] as? Float,
-                let wind_mph = xyzzy["wind_mph"] as? Float,
+                let temp_f = xyzzy["temp_f"] as? Double,
+                var wind_degrees = xyzzy["wind_degrees"] as? Double,
+                let wind_mph = xyzzy["wind_mph"] as? Double,
                 let pressure_mb = xyzzy["pressure_mb"] as? String,
                 let weather = xyzzy["weather"] as? String,
                 //let visibility_mi = xyzzy["visibility_mi"] as? String,
@@ -286,6 +240,16 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
             _ = "error"
             return
         }
+        
+        /*
+        guard
+            let location = object["location"] as? [String: AnyObject]
+            else
+        {
+            _ = "error"
+            return
+        }
+         */
         
         for xyzzy in [response] {
             guard

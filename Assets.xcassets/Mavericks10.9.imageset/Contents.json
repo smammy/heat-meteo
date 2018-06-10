@@ -2,8 +2,19 @@
   "images" : [
     {
       "idiom" : "universal",
+      "scale" : "1x",
+      "language-direction" : "left-to-right"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "apple-17.png",
       "language-direction" : "right-to-left",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "graphics-feature-set" : "metal1v2",
+      "language-direction" : "left-to-right",
       "scale" : "1x"
     },
     {
@@ -15,8 +26,19 @@
     },
     {
       "idiom" : "universal",
+      "scale" : "2x",
+      "language-direction" : "left-to-right"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "apple-39.png",
       "language-direction" : "right-to-left",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "graphics-feature-set" : "metal1v2",
+      "language-direction" : "left-to-right",
       "scale" : "2x"
     },
     {
@@ -28,8 +50,19 @@
     },
     {
       "idiom" : "universal",
+      "scale" : "3x",
+      "language-direction" : "left-to-right"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "apple-48.png",
       "language-direction" : "right-to-left",
+      "scale" : "3x"
+    },
+    {
+      "idiom" : "universal",
+      "graphics-feature-set" : "metal1v2",
+      "language-direction" : "left-to-right",
       "scale" : "3x"
     },
     {
@@ -41,8 +74,21 @@
     },
     {
       "idiom" : "universal",
+      "language-direction" : "left-to-right",
+      "height-class" : "regular",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "apple-19.png",
       "language-direction" : "right-to-left",
+      "height-class" : "regular",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "graphics-feature-set" : "metal1v2",
+      "language-direction" : "left-to-right",
       "height-class" : "regular",
       "scale" : "1x"
     },
@@ -56,8 +102,21 @@
     },
     {
       "idiom" : "universal",
+      "language-direction" : "left-to-right",
+      "height-class" : "regular",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "apple-37.png",
       "language-direction" : "right-to-left",
+      "height-class" : "regular",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "graphics-feature-set" : "metal1v2",
+      "language-direction" : "left-to-right",
       "height-class" : "regular",
       "scale" : "2x"
     },
@@ -71,8 +130,21 @@
     },
     {
       "idiom" : "universal",
+      "language-direction" : "left-to-right",
+      "height-class" : "regular",
+      "scale" : "3x"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "apple-50.png",
       "language-direction" : "right-to-left",
+      "height-class" : "regular",
+      "scale" : "3x"
+    },
+    {
+      "idiom" : "universal",
+      "graphics-feature-set" : "metal1v2",
+      "language-direction" : "left-to-right",
       "height-class" : "regular",
       "scale" : "3x"
     },
@@ -86,9 +158,22 @@
     },
     {
       "idiom" : "universal",
+      "width-class" : "regular",
+      "language-direction" : "left-to-right",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "apple-21.png",
       "width-class" : "regular",
       "language-direction" : "right-to-left",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "width-class" : "regular",
+      "graphics-feature-set" : "metal1v2",
+      "language-direction" : "left-to-right",
       "scale" : "1x"
     },
     {
@@ -101,9 +186,22 @@
     },
     {
       "idiom" : "universal",
+      "width-class" : "regular",
+      "language-direction" : "left-to-right",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "apple-35.png",
       "width-class" : "regular",
       "language-direction" : "right-to-left",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "width-class" : "regular",
+      "graphics-feature-set" : "metal1v2",
+      "language-direction" : "left-to-right",
       "scale" : "2x"
     },
     {
@@ -116,9 +214,22 @@
     },
     {
       "idiom" : "universal",
+      "width-class" : "regular",
+      "language-direction" : "left-to-right",
+      "scale" : "3x"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "apple-52.png",
       "width-class" : "regular",
       "language-direction" : "right-to-left",
+      "scale" : "3x"
+    },
+    {
+      "idiom" : "universal",
+      "width-class" : "regular",
+      "graphics-feature-set" : "metal1v2",
+      "language-direction" : "left-to-right",
       "scale" : "3x"
     },
     {
@@ -131,9 +242,24 @@
     },
     {
       "idiom" : "universal",
+      "width-class" : "regular",
+      "language-direction" : "left-to-right",
+      "height-class" : "regular",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "apple-23.png",
       "width-class" : "regular",
       "language-direction" : "right-to-left",
+      "height-class" : "regular",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "width-class" : "regular",
+      "graphics-feature-set" : "metal1v2",
+      "language-direction" : "left-to-right",
       "height-class" : "regular",
       "scale" : "1x"
     },
@@ -148,9 +274,24 @@
     },
     {
       "idiom" : "universal",
+      "width-class" : "regular",
+      "language-direction" : "left-to-right",
+      "height-class" : "regular",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "apple-33.png",
       "width-class" : "regular",
       "language-direction" : "right-to-left",
+      "height-class" : "regular",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "width-class" : "regular",
+      "graphics-feature-set" : "metal1v2",
+      "language-direction" : "left-to-right",
       "height-class" : "regular",
       "scale" : "2x"
     },
@@ -165,9 +306,24 @@
     },
     {
       "idiom" : "universal",
+      "width-class" : "regular",
+      "language-direction" : "left-to-right",
+      "height-class" : "regular",
+      "scale" : "3x"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "apple-54.png",
       "width-class" : "regular",
       "language-direction" : "right-to-left",
+      "height-class" : "regular",
+      "scale" : "3x"
+    },
+    {
+      "idiom" : "universal",
+      "width-class" : "regular",
+      "graphics-feature-set" : "metal1v2",
+      "language-direction" : "left-to-right",
       "height-class" : "regular",
       "scale" : "3x"
     },

@@ -152,12 +152,18 @@ class APIXUAPI: NSObject, XMLParserDelegate
         parseURL = QUERY_PREFIX1 + APIKey1 + QUERY_SUFFIX1 + (escapedCity as String)
         InfoLog(String(format:"URL for observations APIXU: %@\n", parseURL))
         
+        // https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-website-url
         let url = URL(string: parseURL)
         var data: NSData?
         data = nil
         if (url != nil)
         {
-            data = NSData(contentsOf: url!)
+            do {
+                // https://stackoverflow.com/questions/40812416/nsurl-url-and-nsdata-data?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+                data = try Data(contentsOf: url!) as NSData
+            } catch {
+                ErrorLog("\(error)")
+            }
         }
         if (data == nil)
         {
@@ -249,8 +255,8 @@ class APIXUAPI: NSObject, XMLParserDelegate
         for l in [location] {
             guard
                 let city = l["name"] as? String,
-                let lat = l["lat"] as? Float,
-                let long = l["lon"] as? Float
+                let lat = l["lat"] as? Double,
+                let long = l["lon"] as? Double
                 else {
                     _ = "error"
                     return }
@@ -262,12 +268,12 @@ class APIXUAPI: NSObject, XMLParserDelegate
         for c in [current] {
             guard
                 let unixdate = c["last_updated_epoch"] as? Int,
-                let temp_F = c["temp_f"] as? Float,
-                let vis_miles = c["vis_miles"] as? Float,
-                let humidity = c["humidity"] as? Float,
-                let pressure = c["pressure_mb"] as? Float,
-                let windspeedMiles = c["wind_mph"] as? Float,
-                let winddirDegree = c["wind_degree"] as? Float,
+                let temp_F = c["temp_f"] as? Double,
+                let vis_miles = c["vis_miles"] as? Double,
+                let humidity = c["humidity"] as? Double,
+                let pressure = c["pressure_mb"] as? Double,
+                let windspeedMiles = c["wind_mph"] as? Double,
+                let winddirDegree = c["wind_degree"] as? Double,
                 let condition = c["condition"] as? [String: AnyObject]
                 else {
                     _ = "error"
@@ -329,8 +335,8 @@ class APIXUAPI: NSObject, XMLParserDelegate
                 
                 for d in [day] {
                     guard
-                        let maxtempF = d["maxtemp_f"] as? Float,
-                        let mintempF = d["mintemp_f"] as? Float,
+                        let maxtempF = d["maxtemp_f"] as? Double,
+                        let mintempF = d["mintemp_f"] as? Double,
                         let condition = d["condition"] as? [String: AnyObject]
                         else {
                             _ = "error"

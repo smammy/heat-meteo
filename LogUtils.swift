@@ -85,7 +85,7 @@ func SetCustomLogFilename(_ name: String) {
     }
 
     // Calculate full log file path
-    if let logFilePath = logDirectory.appendingPathComponent(String(format:"%@.log", name)) as URL! {
+    if let logFilePath = logDirectory.appendingPathComponent(String(format:"%@.log", name)) as URL? {
         
         // Save STDERR
         let stderr = FileHandle.standardError

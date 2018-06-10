@@ -124,13 +124,19 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
         parseURL = QUERY_PREFIX1 + inputCity + QUERY_SUFFIX1a + APIKey1 + QUERY_SUFFIX1b + APIKey2
         InfoLog(String(format:"URL for observations AerisWeather: %@\n", parseURL))
 
+        // https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-website-url
         let url = URL(string: parseURL)
         var data: NSData?
         data = nil
         if (url != nil)
         {
-            data = NSData(contentsOf: url!)
-        }        
+            do {
+                // https://stackoverflow.com/questions/40812416/nsurl-url-and-nsdata-data?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+                data = try Data(contentsOf: url!) as NSData
+            } catch {
+                ErrorLog("\(error)")
+            }
+        }
         if (data == nil)
         {
             weatherFields.currentTemp = "9999"
@@ -202,17 +208,17 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
                     return }
             for ob in [ob2] {
                 guard
-                    let timestamp = ob["timestamp"] as? Float,
-                    let tempF = ob["tempF"] as? Float,
-                    let humidity = ob["humidity"] as? Float,
-                    let pressureMB = ob["pressureMB"] as? Float,
-                    let windMPH = ob["windMPH"] as? Float,
-                    let windDirDEG = ob["windDirDEG"] as? Float,
+                    let timestamp = ob["timestamp"] as? Double,
+                    let tempF = ob["tempF"] as? Double,
+                    let humidity = ob["humidity"] as? Double,
+                    let pressureMB = ob["pressureMB"] as? Double,
+                    let windMPH = ob["windMPH"] as? Double,
+                    let windDirDEG = ob["windDirDEG"] as? Double,
                     let weather = ob["weather"] as? String,
                     //let weatherShort = ob["weatherShort"] as? String,
                     let icon = ob["icon"] as? String,
-                    let sunrise = ob["sunrise"] as? Float,
-                    let sunset = ob["sunset"] as? Float
+                    let sunrise = ob["sunrise"] as? Double,
+                    let sunset = ob["sunset"] as? Double
                     else {
                         _ = "error"
                         return }
@@ -260,8 +266,8 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
                 
                 for l2 in [loc] {
                     guard
-                        let lat = l2["lat"] as? Float,
-                        let long = l2["long"] as? Float
+                        let lat = l2["lat"] as? Double,
+                        let long = l2["long"] as? Double
                         else {
                             _ = "error"
                             return }
@@ -313,9 +319,9 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
                     return }
             for p in periods {
                 guard
-                    let timestamp = p["timestamp"] as? Float,
-                    let maxTempF = p["maxTempF"] as? Float,
-                    let minTempF = p["minTempF"] as? Float,
+                    let timestamp = p["timestamp"] as? Double,
+                    let maxTempF = p["maxTempF"] as? Double,
+                    let minTempF = p["minTempF"] as? Double,
                     let weather = p["weather"] as? String,
                     let icon = p["icon"] as? String
                     else {

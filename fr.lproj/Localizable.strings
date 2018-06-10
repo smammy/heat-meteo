@@ -147,6 +147,7 @@
 "Sunny" = "Soleil";
 "Thunderstorms" = "Orageux";
 "Tornado" = "Tornade";
+"Blowing Snow" = "Neige et Vent";
 
 "resetPreferences_" = "Remettre à zéro les Préférences";
 "Patchy rain possible" = "Pluies éparses possibles";
@@ -157,3 +158,4 @@
 "notImplemented_" = "Corrupt preference file";
 "contactDeveloper_" = "Recommend deleting ~/Library/Preferences/com.heat.Meteorologist.plist and reboot before relaunching.";
 "InvalidWeatherCode_" = "Invalid Weather Code";
+
