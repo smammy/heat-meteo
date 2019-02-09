@@ -34,9 +34,10 @@
 //  Depending on the load the Meteo community puts on this account,
 //   it's possible individuals will need either own API Key.
 //
-// API Key = 1f76884583c747841b6dd66979a24b3e
+// API Key = 1f76884583c747841b6dd66979a24b3e (edwardd20@danleys.org)
+// API Key2 (my personal account - edwardd20@mac.com) e40017609822499c1e04ca9b186c4a2c
 // BASE_URL = https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE
-//            https://api.forecast.io/forecast/1f76884583c747841b6dd66979a24b3e/37.8267,-122.423?exclude=minutely,hourly,alerts,flags&lang=en&units=us
+//            https://api.forecast.io/forecast/e40017609822499c1e04ca9b186c4a2c/37.8267,-122.423?exclude=minutely,hourly,alerts,flags&lang=en&units=us
 //
 
 import Cocoa
@@ -51,8 +52,6 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
     var escapedCity = String()
     var parseURL = String()
     
-    var weatherFields = WeatherFields()
-
     var radarWindow = RadarWindow()
     
     func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
@@ -170,7 +169,8 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
             dateFormatter.timeZone = TimeZone(identifier: "UTC")
-            
+            dateFormatter.timeZone = NSTimeZone.local
+
             weatherFields.date = dateFormatter.string(from: date as Date)
 
             weatherFields.windSpeed = NSString(format: "%.2f", windSpeed) as String
@@ -224,7 +224,8 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
                     var dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
                     dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                    
+                    dateFormatter.timeZone = NSTimeZone.local
+
                     weatherFields.sunrise = dateFormatter.string(from: date as Date)
 
                     // Convert epoch to UTC
@@ -233,7 +234,8 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
                     dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
                     dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                    
+                    dateFormatter.timeZone = NSTimeZone.local
+
                     weatherFields.sunset = dateFormatter.string(from: date as Date)
                 }
                 // Convert epoch to UTC
@@ -244,13 +246,15 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
                 dateFormatter.dateFormat = "E"
                 //dateFormatter.timeZone = TimeZone(identifier: "UTC")
                 dateFormatter.timeZone = TimeZone.ReferenceType.local
+                dateFormatter.timeZone = NSTimeZone.local
 
                 weatherFields.forecastDay[weatherFields.forecastCounter] = dateFormatter.string(from: date as Date)
                 
                 // Convert epoch to DOW
                 dateFormatter.dateFormat = "d MMM yyyy"
-                //dateFormatter.timeZone = TimeZone(identifier: "UTC")
+                //dateFormatter.timeZone = TimeZone(identifier: "UTC")  
                 dateFormatter.timeZone = TimeZone.ReferenceType.local
+                dateFormatter.timeZone = NSTimeZone.local
 
                 weatherFields.forecastDate[weatherFields.forecastCounter] = dateFormatter.string(from: date as Date)
                 

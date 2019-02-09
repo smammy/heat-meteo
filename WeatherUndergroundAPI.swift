@@ -33,6 +33,8 @@
 // Sample Current: http://api.wunderground.com/api/97eaacd6a89f603b/conditions/q/IL/Naperville.json
 // Sample 10 Day : http://api.wunderground.com/api/97eaacd6a89f603b/forecast10day/q/IL/Naperville.json
 // Combined: http://api.wunderground.com/api/97eaacd6a89f603b/geolookup/conditions/forecast10day/q/IL/Naperville.json
+// Danger Will Robinson: https://apicommunity.wunderground.com/weatherapi/topics/end-of-service-for-the-weather-underground-api
+
 
 import Foundation
 import Cocoa
@@ -200,6 +202,7 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
             dateFormatter.timeZone = TimeZone(identifier: "UTC")
+            dateFormatter.timeZone = NSTimeZone.local
             weatherFields.date = dateFormatter.string(from: date as Date)
             
             // Remove trailing %
@@ -334,13 +337,15 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "E"
                         dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                        
+                        dateFormatter.timeZone = NSTimeZone.local
+
                         weatherFields.forecastDay[weatherFields.forecastCounter] = dateFormatter.string(from: date as Date)
 
                         // Convert epoch to DOW
                         dateFormatter.dateFormat = "d MMM yyyy"
                         dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                        
+                        dateFormatter.timeZone = NSTimeZone.local
+
                         weatherFields.forecastDate[weatherFields.forecastCounter] = dateFormatter.string(from: date as Date)
 
                     }

@@ -31,221 +31,323 @@
 import Cocoa
 import Foundation
 
-// aka APIKey1
+// aka APIKey1/Client ID (Consumer Key)
 let ConsumerKey = "dj0yJmk9ZGZ6MVN0a1BYUnF0JmQ9WVdrOVRVbEJXV2RWTkc4bWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1mOA--"
-// aka APIKey2
+// aka APIKey2/Client Secret (Consumer Secret)
 let ConsumerSecret = "5ccc0d61e58514d24eac2f95fad475e270b97b84"
+// App ID
+let appID = "MIAYgU4o"
 
 // Help: https://www.raywenderlich.com/99431/oauth-2-with-swift-tutorial
-//       http://swiftquickstart.blogspot.com/2016/02/oauthswift-tutorial.html
-//       http://samwilskey.com/swift-oauth/
 //
 //       http://stackoverflow.com/questions/36186538/making-yahoo-weather-api-request-with-oauth-1
 //
 
 class YahooWeatherAPI: NSObject, XMLParserDelegate {
     
-    let QUERY_PREFIX1 = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22"
-    let QUERY_SUFFIX1 = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
     
-    var escapedCity = String()
-    var parseURL = String()
+    let QUERY_PREFIX1 = "https://weather-ydn-yql.media.yahoo.com/forecastrss?location="
+    let QUERY_SUFFIX1 = "&u=f&format=json"
+    // Optionally &lat=12.345,&lon=123.456 instead of location=
     
-    var weatherFields = WeatherFields()
+    var element = NSString()
+
+    var localWeatherFields = WeatherFields()
     
     var radarWindow = RadarWindow()
+
+    var data: Data?
     
     func beginParsing(_ inputCity: String, displayCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
 
         DebugLog(String(format:"in beginParsing: %@", inputCity))
 
+        var escapedCity = String()
+        var parseURL = String()
+        
+        //var Parser = XMLParser()
+
         // https://developer.yahoo.com/weather/
         
-        // Should emit "Powered by Yahoo!", https://poweredby.yahoo.com/purple.png
-        //var weatherQuery = NSString()
-        //weatherQuery = "SELECT * FROM weather.forecast WHERE u=c AND woeid = (SELECT woeid FROM geo.places(1) WHERE text='nome, ak')"
+        localWeatherFields = weatherFields
         
         parseURL = ""
         parseURL.append(QUERY_PREFIX1)
         escapedCity = inputCity.replacingOccurrences(of: ", ", with: ",")
         escapedCity = escapedCity.replacingOccurrences(of: " ", with: "-")
+        escapedCity = escapedCity.replacingOccurrences(of: "&", with: "")
         parseURL.append(escapedCity)
         parseURL.append(QUERY_SUFFIX1)
-        parseURL = parseURL.replacingOccurrences(of: "%20", with: " ")
-        parseURL = parseURL.replacingOccurrences(of: "%22", with: "\"")
-        parseURL = parseURL.replacingOccurrences(of: "%2F", with: "/")
-        parseURL = parseURL.replacingOccurrences(of: "%3A", with: ":")
-        parseURL = parseURL.replacingOccurrences(of: "%3D", with: "=")
         InfoLog(String(format:"URL for Yahoo: %@\n", parseURL))
+        //print(String(format:"URL for Yahoo: %@\n", parseURL))
+        var ak1 = APIKey1
+        var ak2 = APIKey2
+        if (ak1 == "") {
+            ak1 = ConsumerKey
+        }
+        if (ak2 == "") {
+            ak2 = ConsumerSecret
+        }
         
-        parseURL = ""
-        parseURL.append(QUERY_PREFIX1)
-        escapedCity = inputCity.replacingOccurrences(of: ", ", with: ",")
-        escapedCity = escapedCity.replacingOccurrences(of: " ", with: "-")
-        parseURL.append(escapedCity)
-        parseURL.append(QUERY_SUFFIX1)
+        // https://github.com/mw99/OhhAuth
+        let cc = (key: ak1, secret: ak2)
+        //let uc = (key: "", secret: "")
+        var req = URLRequest(url: URL(string: parseURL)!)
+        let paras = ["Yahoo-App-Id": appID, "Content-Type": "application/json"]
+        //let paras = ["": ""]
+
+        req.oAuthSign(method: "POST", urlFormParameters: paras, consumerCredentials: cc, userCredentials: nil)
+        //req.timeoutInterval = 3.0
         
-        // https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-website-url
-        let url = URL(string: parseURL)
-        var data: NSData?
-        data = nil
-        if (url != nil)
-        {
-            do {
-                // https://stackoverflow.com/questions/40812416/nsurl-url-and-nsdata-data?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-                data = try Data(contentsOf: url!) as NSData
-            } catch {
-                ErrorLog("\(error)")
+        let group = DispatchGroup()
+        group.enter()
+        let task = URLSession(configuration: .ephemeral).dataTask(with: req) { (data, response, error) in
+            if let error = error {
+                print(error)
+                self.localWeatherFields.currentTemp = "9999"
+                self.localWeatherFields.latitude = error.localizedDescription
             }
+            else if let data = data {
+                //print(String(data: data, encoding: .utf8) ?? "Does not look like a utf8 response :(")
+                self.data = data
+                InfoLog("Data for: " + parseURL)
+                InfoLog(String(decoding: data, as: UTF8.self))
+                //print(String(decoding: data, as: UTF8.self))
+
+                self.processWeatherData(data)
+                
+                if (self.localWeatherFields.forecastCounter == -1) {
+                    self.localWeatherFields.forecastCounter = 0
+                }
+            }
+            group.leave()
         }
-        if (data == nil)
-        {
-            weatherFields.currentTemp = "9999"
-            weatherFields.latitude = localizedString(forKey: "InvalidKey_")
-            return
+        task.resume()
+        group.wait()
+        
+        //self.localWeatherFields.currentTemp = "9999"
+        //self.localWeatherFields.latitude = localizedString(forKey: "Unknown Error")
+        
+        if (self.localWeatherFields.forecastCounter == -1) {
+            self.localWeatherFields.forecastCounter = 0
         }
+        
+        weatherFields = self.localWeatherFields
+
+        DebugLog(String(format:"leaving beginParsing: %@", inputCity))
+    } // beginParsing
+    
+    func processWeatherData(_ data: Data) {
+        localWeatherFields.forecastCounter = 0
         do {
-            let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
+            let object = try JSONSerialization.jsonObject(with: data as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
-                readJSONObject(object: dictionary, weatherFields: &weatherFields)
+                readJSONObject(object: dictionary, weatherFields: &localWeatherFields)
             }
         } catch {
             // Handle Error
         }
-        
-        DebugLog(String(format:"leaving beginParsing: %@", inputCity))
-
-        return
-    } // beginParsing
+    } // processWeatherData
     
+    func convert_Inches_mbar(_ temp: String) -> String
+    {
+        // millibar value = kPa value x 33.8637526
+        let answer = String(Int((temp as NSString).doubleValue * 33.8637526))
+        
+        return answer
+    } // convert_Inches_mbar() -> String
+
     func setRadarWind(_ radarWindow1: RadarWindow) {
         radarWindow = radarWindow1
     } // extendedForecasts
  
+    // MARK: - XML support
+    // XMLParser Methods
+    
+    var inLat = 0
+    var inLong = 0
+    var inLink = 0
+
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+        
+        DebugLog(String(format:"in didStartElement: %@", elementName))
+        element = elementName as NSString
+        
+        // This is for City name lookup
+        if (elementName as NSString).isEqual(to: "yweather:location") {
+            localWeatherFields.title1 = attributeDict["city"]! + attributeDict["region"]!
+        } else if (elementName as NSString).isEqual(to: "yweather:wind") {
+            localWeatherFields.windSpeed = attributeDict["speed"]!
+            localWeatherFields.windDirection = attributeDict["direction"]!
+        } else if (elementName as NSString).isEqual(to: "yweather:atmosphere") {
+            localWeatherFields.humidity = attributeDict["humidity"]!
+            localWeatherFields.pressure = convert_Inches_mbar(attributeDict["pressure"]!)  // Convert Inches to millibars
+            localWeatherFields.visibility = attributeDict["visibility"]!
+        } else if (elementName as NSString).isEqual(to: "yweather:astronomy") {
+            localWeatherFields.sunrise = attributeDict["sunrise"]!
+            localWeatherFields.sunset = attributeDict["sunset"]!
+        } else if (elementName as NSString).isEqual(to: "yweather:condition") {
+            localWeatherFields.date = attributeDict["date"]!
+            localWeatherFields.currentTemp = attributeDict["temp"]!
+            localWeatherFields.currentCode = attributeDict["code"]!
+            localWeatherFields.currentConditions = attributeDict["text"]!
+        } else if (elementName as NSString).isEqual(to: "yweather:forecast") {
+            localWeatherFields.forecastCounter = localWeatherFields.forecastCounter + 1
+            localWeatherFields.forecastDate[localWeatherFields.forecastCounter] = attributeDict["date"]!
+            localWeatherFields.forecastDay[localWeatherFields.forecastCounter] = attributeDict["day"]!
+            localWeatherFields.forecastHigh[localWeatherFields.forecastCounter] = attributeDict["high"]!
+            localWeatherFields.forecastLow[localWeatherFields.forecastCounter] = attributeDict["low"]!
+            localWeatherFields.forecastCode[localWeatherFields.forecastCounter] = attributeDict["code"]!
+            localWeatherFields.forecastConditions[localWeatherFields.forecastCounter] = attributeDict["text"]!
+        } else if (elementName as NSString).isEqual(to: "link") {
+            inLink = 1
+        } else if (elementName as NSString).isEqual(to: "geo:lat") {
+            inLat = 1
+        } else if (elementName as NSString).isEqual(to: "geo:long") {
+            inLong = 1
+
+        }
+        
+        DebugLog(String(format:"leaving didStartElement: %@", elementName))
+    } // parser parser:didStartElement
+    
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        
+        DebugLog(String(format:"in didEndElement: %@", elementName))
+        
+        // This is for City name lookup
+        if (elementName as NSString).isEqual(to: "link") {
+            inLink = 0
+        } else if (elementName as NSString).isEqual(to: "geo:lat") {
+            inLat = 0
+        } else if (elementName as NSString).isEqual(to: "geo:long") {
+            inLong = 0
+
+        }
+        
+        DebugLog(String(format:"leaving didEndElement: %@", elementName))
+    } // parser parser:didEndElement
+    
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        
+        DebugLog(String(format:"in foundCharacters: %@\n", string))
+        
+        if (inLink == 1) {
+            let regex = try! NSRegularExpression(pattern: "^(.*?)\\s*https:\\s*(.*)$", options: .caseInsensitive)
+            if let match = regex.firstMatch(in: string, range: NSRange(string.startIndex ..< string.endIndex, in: string)) {
+                localWeatherFields.URL = "https:" + String(string[Range(match.range(at: 2), in: string)!])
+            }
+        } else if (inLat == 1) {
+            localWeatherFields.latitude = string
+        } else if (inLong == 1) {
+            localWeatherFields.longitude = string
+
+        }
+        
+        DebugLog(String(format:"leaving foundCharacters: %@\n", string))
+    } // parser parser:foundCharacters
+    
+    
+    // MARK: - JSON support
     func readJSONObject(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
-            let query = object["query"] as? [String: AnyObject]
+            //let location = object["location"] as? [String: AnyObject],
+            let co = object["current_observation"] as? [String: AnyObject],
+            let forecasts = object["forecasts"] as? [[String: AnyObject]]
             else {
                 _ = "error"
                 return }
         
-        for q in [query] {
+        for c in [co] {
             guard
-                let created = q["created"] as? String,
-                let results = q["results"] as? [String: AnyObject]
+                let wind = c["wind"] as? [String: AnyObject],
+                let atmosphere = c["atmosphere"] as? [String: AnyObject],
+                let astronomy = c["astronomy"] as? [String: AnyObject],
+                let pubDate = c["pubDate"] as? Int,
+                let condition = c["condition"] as? [String: AnyObject]
                 else {
                     _ = "error"
                     return }
-            weatherFields.date = String(created.prefix(upTo: created.index(before: created.endIndex)))
-
-            for r in [results] {
+            for w in [wind] {
                 guard
-                    let channel = r["channel"] as? [String: AnyObject]
+                    let direction = w["direction"] as? Int,
+                    //let chill = w["chill"] as? Int,
+                    let speed = w["speed"] as? Double
                     else {
                         _ = "error"
                         return }
-                for c in [channel] {
-                    guard
-                        let wind = c["wind"] as? [String: AnyObject],
-                        let atmosphere = c["atmosphere"] as? [String: AnyObject],
-                        let astronomy = c["astronomy"] as? [String: AnyObject],
-                        let item = c["item"] as? [String: AnyObject],
-                        let link = c["link"] as? String,
-                        let title = c["title"] as? String
-                        else {
-                            _ = "error"
-                            return }
-                    weatherFields.title1 = title
-                    weatherFields.URL = link
-                    let index = link.index(link.startIndex, offsetBy: 63)
-                    if (String(weatherFields.URL.prefix(upTo: index)) == "http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*") {
-                        weatherFields.URL = String(link.suffix(from: index))
-                    }
-                    
-                    for w in [wind] {
-                        guard
-                            let direction = w["direction"] as? String,
-                            let speed = w["speed"] as? String
-                            else {
-                                _ = "error"
-                                return }
-                        weatherFields.windSpeed = speed
-                        weatherFields.windDirection = direction
-                    }
-                    
-                    for atmo in [atmosphere] {
-                        guard
-                            let humidity = atmo["humidity"] as? String,
-                            let pressure = atmo["pressure"] as? String
-                            else {
-                                _ = "error"
-                                return }
-                        weatherFields.humidity = humidity
-                        weatherFields.pressure = pressure
-                    }
-                    
-                    for astro in [astronomy] {
-                        guard
-                            let sunrise = astro["sunrise"] as? String,
-                            let sunset = astro["sunset"] as? String
-                            else {
-                                _ = "error"
-                                return }
-                        weatherFields.sunrise = sunrise
-                        weatherFields.sunset = sunset
-                    }
-                    
-                    for i in [item] {
-                        guard
-                            let condition = i["condition"] as? [String: AnyObject],
-                            let forecast = i["forecast"] as? [[String: AnyObject]],
-                            let link = i["link"] as? String,
-                            let lat = i["lat"] as? String,
-                            let long = i["long"] as? String
-                            else {
-                                _ = "error"
-                                return }
-                        weatherFields.currentLink = link
-                        weatherFields.latitude = lat
-                        weatherFields.longitude = long
-                        
-                        for cond in [condition] {
-                            guard
-                                let current = cond["text"] as? String,
-                                let code = cond["code"] as? String,
-                                let temp = cond["temp"] as? String
-                                else {
-                                    _ = "error"
-                                    return }
-                            weatherFields.currentCode = code
-                            weatherFields.currentTemp = temp
-                            weatherFields.currentLink = link
-                            weatherFields.currentConditions = current
-                        }
-                        
-                        for f in forecast {
-                            guard
-                                let fDay = f["day"] as? String,
-                                let fDate = f["date"] as? String,
-                                let fText = f["text"] as? String,
-                                let fCode = f["code"] as? String,
-                                let fHigh = f["high"] as? String,
-                                let fLow = f["low"] as? String
-                                else {
-                                    _ = "error"
-                                    return }
-                            weatherFields.forecastCode[weatherFields.forecastCounter] = fCode
-                            weatherFields.forecastLow[weatherFields.forecastCounter] = fLow
-                            weatherFields.forecastHigh[weatherFields.forecastCounter] = fHigh
-                            weatherFields.forecastDay[weatherFields.forecastCounter] = fDay
-                            weatherFields.forecastDate[weatherFields.forecastCounter] = fDate
-                            weatherFields.forecastConditions[weatherFields.forecastCounter] = fText
-
-                            weatherFields.forecastCounter = weatherFields.forecastCounter + 1
-                        }
-                    }
-                }
+                weatherFields.windSpeed = String(describing: speed)
+                weatherFields.windDirection = String(describing: direction)
             }
+            for atmo in [atmosphere] {
+                guard
+                    let humidity = atmo["humidity"] as? Int,
+                    //let visiblity = atmo["visiblity"] as? Int,
+                    let pressure = atmo["pressure"] as? Double
+                    else {
+                        _ = "error"
+                        return }
+                weatherFields.humidity = String(describing: humidity)
+                weatherFields.pressure = convert_Inches_mbar(String(describing: pressure))
+            }
+            for astro in [astronomy] {
+                guard
+                    let sunrise = astro["sunrise"] as? String,
+                    let sunset = astro["sunset"] as? String
+                    else {
+                        _ = "error"
+                        return }
+                weatherFields.sunrise = sunrise
+                weatherFields.sunset = sunset
+            }
+            for cond in [condition] {
+                guard
+                    let cText = cond["text"] as? String,
+                    let cTemperature = cond["temperature"] as? Int,
+                    let cCode = cond["code"] as? Int
+                    else {
+                        _ = "error"
+                        return }
+                weatherFields.currentCode = String(describing: cCode)
+                weatherFields.currentTemp = String(describing: cTemperature)
+                //weatherFields.currentLink = cLink
+                weatherFields.currentConditions = cText
+            }
+            // Convert epoch to m DDD yyyy
+            let time = NSDate(timeIntervalSince1970: TimeInterval(pubDate))
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "h:mm a"
+            dateFormatter.amSymbol = "AM"
+            dateFormatter.pmSymbol = "PM"
+            weatherFields.date = dateFormatter.string(from: time as Date)
         }
-    } // readJSONObject
+        for f in forecasts {
+            guard
+                let fDay = f["day"] as? String,
+                let fDate = f["date"] as? Int,
+                let fLow = f["low"] as? Int,
+                let fHigh = f["high"] as? Int,
+                let fText = f["text"] as? String,
+                let fCode = f["code"] as? Int
+                else {
+                    _ = "error"
+                    return }
+            weatherFields.forecastCode[weatherFields.forecastCounter] = String(describing: fCode)
+            weatherFields.forecastLow[weatherFields.forecastCounter] = String(describing: fLow)
+            weatherFields.forecastHigh[weatherFields.forecastCounter] = String(describing: fHigh)
+            weatherFields.forecastDay[weatherFields.forecastCounter] = fDay
+            
+            // Convert epoch to m DDD yyyy
+            let date = NSDate(timeIntervalSince1970: TimeInterval(fDate))
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "d MMM yyyy"
+            weatherFields.forecastDate[weatherFields.forecastCounter] = dateFormatter.string(from: date as Date)
+
+            weatherFields.forecastConditions[weatherFields.forecastCounter] = fText
+            
+            weatherFields.forecastCounter = weatherFields.forecastCounter + 1
+            }
+
+        } // readJSONObject
+
 } // class YahooWeatherAPI

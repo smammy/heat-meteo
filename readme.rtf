@@ -1,5 +1,6 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf100
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf200
+{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;\f2\fswiss\fcharset0 Helvetica-BoldOblique;
+}
 {\colortbl;\red255\green255\blue255;\red38\green38\blue38;\red38\green71\blue75;\red14\green14\blue255;
 }
 {\*\expandedcolortbl;;\csgenericrgb\c14902\c14902\c14902;\csgenericrgb\c14902\c27843\c29412;\csgenericrgb\c5490\c5490\c100000;
@@ -8,8 +9,8 @@
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
 \f0\b\fs28 \cf0 ToDo/Bug List
-\b0\fs24 \
-* Now requires 10.9 or newer (some features require even newer OS\'92s)\
+\f1\b0\fs24 \
+* Now requires 10.10 or newer (some features require even newer OS\'92s)\
 	* What works and what doesn\'92t on older OS\'92s?\
 \
 * localization started - French only for now\
@@ -23,8 +24,8 @@
 * animate refreshing weather icon?\
 \
 * preference pane with 
-\b tabs
-\b0 \
+\f0\b tabs
+\f1\b0 \
 * dynamic city name list (not limited to 8?)\
 * There is some sort of memory link - possibly with NSTimer?\
 * Give API key only once for a given weather source\
@@ -35,8 +36,8 @@
 \fs28 \cf2 \expnd0\expndtw0\kerning0
 \
 
-\b\fs30 Flow Logic
-\b0\fs28 \
+\f0\b\fs30 Flow Logic
+\f1\b0\fs28 \
 \
 Version 2 of Meteorologist is initially based on the menuBar app by Brad at {\field{\*\fldinst{HYPERLINK "http://footle.org/WeatherBar/"}}{\fldrslt http://footle.org/WeatherBar/}}.\
 The use is NSXMLParser came as a result of not getting a working copy of curl handle working with the original Meteorologist.\
@@ -45,10 +46,8 @@ AppDelegate.swift is the starting point but never really used.\
 It contains a list of websites where I gathered and learn how to do all of this in Swift (2).\
 \
 The main driver is 
-\i\b StatusMenuController.swift
-\i0\b0 . We have a structure, WeatherFields, that contains all of the pieces of weather information that will ultimately be display. 
-\i Right now it is based on Yahoo but could be adjusted based on other weather sources.
-\i0  When StatusMenuController wakes up, it starts building a menu bar app. \
+\f2\i\b AppDelegate.swift
+\f1\i0\b0 . We have a structure, WeatherFields, that contains all of the pieces of weather information that will ultimately be display. When AppDelegate wakes up, it starts building a menu bar app. \
 If the preferences don\'92t exist or they aren\'92t same same version as the current version\
 	the Preference menu is displayed (see PreferencesWindow)\
 else\
@@ -78,54 +77,54 @@ In RadarWindow\cf2 \expnd0\expndtw0\kerning0
 In YahooWeatherAPI (this logic should eventually get repeated for each weather source)\
 * a bunch of support/formatting routines exist that should exist for each weather source. It\'92s possible some can be shared.\
 
-\b beginParsing
-\b0  initializes the WeatherFields structure\
+\f0\b beginParsing
+\f1\b0  initializes the WeatherFields structure\
 	NSXMLParser is called based on the Yahoo! XML address for this particular city\
 	see {\field{\*\fldinst{HYPERLINK "https://developer.yahoo.com/weather/"}}{\fldrslt \cf4 https://developer.yahoo.com/weather/}}\
 
-\b setImage
-\b0  will pick the weather icon based on the current or forecast conditions for a given city\
+\f0\b setImage
+\f1\b0  will pick the weather icon based on the current or forecast conditions for a given city\
 
-\b formatTemp
-\b0  will format a temp is the proper unit and appoint F or C as required\
+\f0\b formatTemp
+\f1\b0  will format a temp is the proper unit and appoint F or C as required\
 
-\b formatWindSpeed
-\b0  will format the wind speed based on the requested unit\
+\f0\b formatWindSpeed
+\f1\b0  will format the wind speed based on the requested unit\
 
-\b formatPressure
-\b0  will format the barometric pressure based the requested unit\
+\f0\b formatPressure
+\f1\b0  will format the barometric pressure based the requested unit\
 
-\b formatVisibility
-\b0  will format the visibility based on the requested unit\
+\f0\b formatVisibility
+\f1\b0  will format the visibility based on the requested unit\
 
-\b extendedWeatherIcon
-\b0  will return the weather icon/image  or nil, depending on the preference\
+\f0\b extendedWeatherIcon
+\f1\b0  will return the weather icon/image  or nil, depending on the preference\
 
-\b currentConditions
-\b0  will format the current weather information\
+\f0\b currentConditions
+\f1\b0  will format the current weather information\
 
-\b extendedForecasts
-\b0  will format the forecasted weather information\
+\f0\b extendedForecasts
+\f1\b0  will format the forecasted weather information\
 
-\b \cf0 setRadarWind
-\b0  plays a game with RadarWindow so proper dispatching control is maintained. I really wish there was a better way.\
+\f0\b \cf0 setRadarWind
+\f1\b0  plays a game with RadarWindow so proper dispatching control is maintained. I really wish there was a better way.\
 
-\b updateMenuWithSecondaryLocation
-\b0  displays secondary cities as a submenu in the display. This can exist from 0 to 7 times.\
+\f0\b updateMenuWithSecondaryLocation
+\f1\b0  displays secondary cities as a submenu in the display. This can exist from 0 to 7 times.\
 
-\b updateMenuWithPrimaryLocation
-\b0  display the primary city in the requested menu. There can only be 1 primary.\
+\f0\b updateMenuWithPrimaryLocation
+\f1\b0  display the primary city in the requested menu. There can only be 1 primary.\
 XMLParser methods\
 	didStartElement\
 	didEndElement\
 	foundCharacters\
 
-\b dummy
-\b0  a dummy procedure so the menu items will display without being gray\'92d out\
+\f0\b dummy
+\f1\b0  a dummy procedure so the menu items will display without being gray\'92d out\
 
-\b openWeatherURL
-\b0  is a procedure to display the Yahoo! weather page for the selected city using an external call to Safari\
+\f0\b openWeatherURL
+\f1\b0  is a procedure to display the Yahoo! weather page for the selected city using an external call to Safari\
 
-\b showRadar
-\b0  will display the radar for the selected city by calling RadarWindow\
+\f0\b showRadar
+\f1\b0  will display the radar for the selected city by calling RadarWindow\
 }

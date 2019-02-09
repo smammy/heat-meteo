@@ -1,4 +1,11 @@
-3.1.4
-* Add French translations for Blowing Snow
-* Reduce WeatherUnderground calls from 2 to 1 for each city
-* Update to Swift 4.1 (Xcode 9.4)
+3.1.6
+* Now requires macOS 10.10 or newer
+* New weather source: Environment Canada (http://weather.gc.ca/)
+* Re-structure code for Yahoo support (added ohhAuth)
+* 9999 will show as temp for both F and C for error condition
+* Fixed "cloudy" icon with DarkSky
+* If you are using DarkSky, you will need to reselect it in the preferences
+* Update to Swift 4.2 (Xcode 10.1)
+* Correct "km/h" location
+* Added Help option under Controls that provides a brief explaination of Meteo
+* Double bump of version number

@@ -233,7 +233,8 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
                 var dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
                 dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                
+                dateFormatter.timeZone = NSTimeZone.local
+
                 weatherFields.sunrise = dateFormatter.string(from: date as Date)
                 
                 unixdate = Int(sunset)
@@ -241,7 +242,8 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
                 dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
                 dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                
+                dateFormatter.timeZone = NSTimeZone.local
+
                 weatherFields.sunset = dateFormatter.string(from: date as Date)
                 
                 // Convert epoch to UTC
@@ -250,13 +252,15 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
                 dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "E"
                 dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                
+                dateFormatter.timeZone = NSTimeZone.local
+
                 weatherFields.forecastDay[weatherFields.forecastCounter] = dateFormatter.string(from: date as Date)
 
                 // Convert epoch to DOW
                 dateFormatter.dateFormat = "d MMM yyyy"
                 dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                
+                dateFormatter.timeZone = NSTimeZone.local
+
                 weatherFields.forecastDate[weatherFields.forecastCounter] = dateFormatter.string(from: date as Date)
                 
                 for l2 in [loc] {
@@ -330,7 +334,8 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "E"
                 dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                
+                dateFormatter.timeZone = NSTimeZone.local
+
                 weatherFields.forecastDay[weatherFields.forecastCounter] = dateFormatter.string(from: date as Date)
                 weatherFields.forecastLow[weatherFields.forecastCounter] = NSString(format: "%.0f", minTempF) as String
                 weatherFields.forecastHigh[weatherFields.forecastCounter] = NSString(format: "%.0f", maxTempF) as String

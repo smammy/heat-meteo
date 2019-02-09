@@ -148,6 +148,7 @@
 "Thunderstorms" = "Orageux";
 "Tornado" = "Tornade";
 "Blowing Snow" = "Neige et Vent";
+"very heavy rain" = "Neige pluie";
 
 "resetPreferences_" = "Remettre à zéro les Préférences";
 "Patchy rain possible" = "Pluies éparses possibles";
@@ -155,7 +156,14 @@
 "LatLongFormat_" = "Lat/long sont en degrés suivies des décimales. Par exemple 12.345";
 "ExtendedForecastDisplayDate_" = "Affichage Date dans Prévisions Etendues";
 "Day_" = "Jour";
-"notImplemented_" = "Corrupt preference file";
-"contactDeveloper_" = "Recommend deleting ~/Library/Preferences/com.heat.Meteorologist.plist and reboot before relaunching.";
-"InvalidWeatherCode_" = "Invalid Weather Code";
+"notImplemented_" = "Fichier de préférences corrompu";
+"contactDeveloper_" = "Recommandez de supprimer ~/Library/Preferences/com.heat.Meteorologist.plist et redémarrez avant de relancer";
+"InvalidWeatherCode_" = "Code météo invalide";
 
+"canadaGovLocation_" = "Cherchez la ville dans l'URL à gauche. L'emplacement est comme \"ville, province\"";
+"CanadaGov_" = "Environnement Canada";
+"km/h_" = "km/h";
+"kPa_" = "kPa";
+"Help_" = "Aidez-moi";
+"mHelp_" = "Aide météorologue";
+"help_text_" = "Meteorologist, également appelé Meteo, permet d’afficher les conditions météo en temps réel dans votre barre de menu macOS.\n\nVotre premier choix de localité météo s’affiche sur la barre de menu. Vous pouvez personnaliser cet affichage à partir du sous-menu « Préférences ». Vous pouvez choisir jusqu’à 7 localités météo supplémentaires à suivre. Ces villes s’affichent dans un sous-menu qui apparait quand vous cliquez sur la localité affichée dan la barre de menu.\n\nLes paramètres généraux de Meteorologist sont accessibles à partir du sous-menu « Contrôles ».\n\n° Vous pouvez avoir un accès rapide au panneau « Préférences » en cliquant sur la barre de menu tout en combinant les touches cmd  virgule.\n° Vous pouvez forcer une réactualisation des températures actuelles en cliquant sur la barre de menu tout en combinant les touches cmd  R.\n° Vous pouvez forcer le redémarrage de Meteo en cliquant sur la barre de menu tout en combinant les touches cmd  `. Ce signe se trouve sous le « £ » du clavier français.\n° Vous pouvez forcer Meteo à quitter en cliquant sur la barre de menu tout en combinant les touches  cmd  Q.\n° Ce panneau d’Aide peut être affiché en cliquant sur la barre de menu tout en combinant les touches cmd  /.\n\nLes Préférences permettent de personnaliser Meteo.\n\nEn haut de panneau de Préférences, vous pouvez entrer jusqu’à 8 localités à suivre.\n\n° Dans la colonne Nom/ID de la ville, indiquez soit une « Ville, Etat », soit une « Latitude, Longitude ». Les données requises varient selon la source météo choisie. Voyez les détails dans la partie inférieure du panneau de Préférences. Soyez particulièrement attentif aux espaces et aux virgules.\n° Dans la colonne Nom affiché, indiquez le nom tel qu’il apparaitra dans le menu. Si rien n’est précisé, l’affichage par défaut sera celui de la colonne Nom/ID de la ville.\n° Dans la colonne source de données, choisissez la source Météo souhaitée. La précision des sources peut varier selon les localités choisies.\n° Dans la colonne Clé d’API, si la source Météo choisie nécessite une clé, saisissez-la dans cette case. Voyez les détails dans la partie inférieure du panneau de Préférences.\n° Dans la colonne Optionnel : 2e clé d’API, certaines sources météo nécessitent 2 clés distinctes. Saisissez la deuxième clé ici.\n\nDans la partie centrale du panneau de Préférences, vous pouvez sélectionner les diverses options utilisées par Meteorologist.\n\n° La Police du menu est celle utilisée sur la barre de menu. La Police d’affichage est celle utilisée dans le menu déroulant.\n° Le Délai de démarrage permet que Meteorologist attende pendant le nombre de secondes indiquées avant de rapatrier la météo. Ceci peut être utile quand vous redémarrez votre Mac en étant connecté en WiFi.\n° Enregistrer les messages dans la console permet d’afficher un message supplémentaire (de débogage) quand Meteorologist est actif. Vous n’utiliserez probablement cette option que si le logiciel le demande.\n° Unités globales est utilisé pour passer du Système Métrique aux Unités anglo-saxonnes et inversement.\n\nLa section inférieure du panneau de Préférences comprend deux parties.\n\n° La première partie est intitulée Inscription clé d’API. Si vous avez besoin d’un compte personnel, cliquez sur le lien pour faire une demande de compte. Une fois le compte obtenu, utilisez les informations reçues dans les champs Clé d’API plus haut dans les Préférences.\n° La deuxième partie décrit quelles informations de localisation sont requises par la source météo choisie. Ici aussi, soyez attentifs aux virgules et aux espaces.";

@@ -304,13 +304,15 @@ class WorldWeatherOnlineAPI: NSObject, XMLParserDelegate
 
                                 dateFormatter.dateFormat = "E"
                                 dateFormatter.timeZone = TimeZone(identifier: "UTC")
- 
+                                dateFormatter.timeZone = NSTimeZone.local
+
                                 weatherFields.forecastDay[weatherFields.forecastCounter] = dateFormatter.string(from: date2! as Date)
 
                                 // Convert epoch to DOW
                                 dateFormatter.dateFormat = "d MMM yyyy"
                                 dateFormatter.timeZone = TimeZone(identifier: "UTC")
-                                
+                                dateFormatter.timeZone = NSTimeZone.local
+
                                 weatherFields.forecastDate[weatherFields.forecastCounter] = dateFormatter.string(from: date2! as Date)
                                 
                                 weatherFields.forecastLow[weatherFields.forecastCounter] = mintempF

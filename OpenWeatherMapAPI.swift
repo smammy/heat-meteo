@@ -25,16 +25,22 @@
 //  OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
-// http://home.openweathermap.org/api
+// http://openweathermap.org/api
 //
 // This API Key belongs to me (Ed Danley).
 //  It is part of their FREE package.
 //  Individuals will need either own API Key.
 //
 // APIID = d7ae7d44827777c67ab2c00bf9132070
+// test APIID = 13f9b31f6eb45cd4940f43b995c92dca
 // BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 // Price = http://openweathermap.org/price
 //
+// http://api.openweathermap.org/data/2.5/forecast/daily?lat=41.78&lon=-88.10&appid=d7ae7d44827777c67ab2c00bf9132070&mode=json&units=imperial
+// http://api.openweathermap.org/data/2.5/forecast?lat=41.78&lon=-88.10&appid=13f9b31f6eb45cd4940f43b995c92dca&mode=json&units=imperial
+// http://api.openweathermap.org/data/2.5/weather?q=IL,%20naperville&appid=d7ae7d44827777c67ab2c00bf9132070&mode=json&units=imperial
+// http://api.openweathermap.org/data/2.5/weather?lat=41.735&lon=-88.2&appid=d7ae7d44827777c67ab2c00bf9132070&mode=json&units=imperial
+
 
 import Cocoa
 import Foundation
@@ -44,12 +50,12 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
     let QUERY_PREFIX1 = "http://api.openweathermap.org/data/2.5/weather?lat="
     let QUERY_SUFFIX1c = "&lon="
     let QUERY_SUFFIX1a = "&appid="
-    let QUERY_SUFFIX1b = "&mode=json&units=imperial"
+    let QUERY_SUFFIX1b = "&mode=json&units=imperial&lang=en"
     
-    let QUERY_PREFIX2 = "http://api.openweathermap.org/data/2.5/forecast/daily?lat="
+    let QUERY_PREFIX2 = "http://api.openweathermap.org/data/2.5/forecast?lat="
     let QUERY_SUFFIX2c = "&lon="
     let QUERY_SUFFIX2a = "&appid="
-    let QUERY_SUFFIX2b = "&mode=json&units=imperial"
+    let QUERY_SUFFIX2b = "&mode=json&units=imperial&lang=en"
     
     var lat = NSString()
     var lon = NSString()
@@ -59,14 +65,15 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
     
     var radarWindow = RadarWindow()
     
+    var saveMin = 0.0
+    var saveMax = 0.0
+    var saveDOW = ""
+    
     func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
         
         DebugLog(String(format:"in beginParsing: %@", inputCity))
         
         // https://OpenWeatherMap.org
-        
-        //weatherQuery = http://api.openweathermap.org/data/2.5/weather?q=IL,%20naperville&appid=d7ae7d44827777c67ab2c00bf9132070&mode=json&units=imperial
-        //weatherQuery = http://api.openweathermap.org/data/2.5/weather?lat=41.735&lon=-88.2&appid=d7ae7d44827777c67ab2c00bf9132070&mode=json&units=imperial
         
         // lat = inputCity before "," or " "
         // lon = inputCity after "," or " "
@@ -150,6 +157,7 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
             return
         }
         do {
+            saveDOW = ""
             let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
                 readJSONObjectF(object: dictionary, weatherFields: &weatherFields)
@@ -191,6 +199,7 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        dateFormatter.timeZone = NSTimeZone.local
         weatherFields.date = dateFormatter.string(from: date as Date)
         
         for xyzzy in [coord] as [[String: AnyObject]] {
@@ -260,7 +269,8 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
             var dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
             dateFormatter.timeZone = TimeZone(identifier: "UTC")
-            
+            dateFormatter.timeZone = NSTimeZone.local
+
             weatherFields.sunrise = dateFormatter.string(from: date as Date)
             
             unixdate = Int(sunset)
@@ -268,7 +278,8 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
             dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
             dateFormatter.timeZone = TimeZone(identifier: "UTC")
-            
+            dateFormatter.timeZone = NSTimeZone.local
+
             weatherFields.sunset = dateFormatter.string(from: date as Date)
             
         }
@@ -305,7 +316,7 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
             guard
             let dt = xyzzy["dt"] as? Double,
             let weather = xyzzy["weather"] as? [[String: AnyObject]],
-            let temp = xyzzy["temp"] as? [String: AnyObject]
+            let temp = xyzzy["main"] as? [String: AnyObject]
             else {
                 _ = "error"
                 return }
@@ -315,25 +326,45 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
             let date = NSDate(timeIntervalSince1970: TimeInterval(unixdate))
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "E"
-            dateFormatter.timeZone = TimeZone(identifier: "UTC")
+            //dateFormatter.timeZone = TimeZone(identifier: "UTC")
+            dateFormatter.timeZone = NSTimeZone.local
             
-            weatherFields.forecastDay[weatherFields.forecastCounter] = dateFormatter.string(from: date as Date)
-            
-            // Convert epoch to DOW
+            let fDOW = dateFormatter.string(from: date as Date)
+            if (saveDOW == "") {
+                saveDOW = fDOW
+                weatherFields.forecastDay[weatherFields.forecastCounter] = fDOW
+                saveMin = 0.0
+                saveMax = 0.0
+            } else if (saveDOW != fDOW) {
+                weatherFields.forecastCounter = weatherFields.forecastCounter + 1
+                saveDOW = fDOW
+                weatherFields.forecastDay[weatherFields.forecastCounter] = fDOW
+                saveMin = 0.0
+                saveMax = 0.0
+            }
+
+            // Convert epoch to d MMM yyyy
             dateFormatter.dateFormat = "d MMM yyyy"
-            dateFormatter.timeZone = TimeZone(identifier: "UTC")
-            
+            //dateFormatter.timeZone = TimeZone(identifier: "UTC")
+            dateFormatter.timeZone = NSTimeZone.local
+
             weatherFields.forecastDate[weatherFields.forecastCounter] = dateFormatter.string(from: date as Date)
             
             for x in [temp] {
                 guard
-                let min = x["min"] as? Double,
-                let max = x["max"] as? Double
+                let min = x["temp_min"] as? Double,
+                let max = x["temp_max"] as? Double
                 else {
                     _ = "error"
                     return }
-                weatherFields.forecastLow[weatherFields.forecastCounter] = NSString(format: "%.0f", min) as String
-                weatherFields.forecastHigh[weatherFields.forecastCounter] = NSString(format: "%.0f", max) as String
+                if ((saveMin == 0.0) || (saveMin > min)) {
+                    saveMin = min
+                    weatherFields.forecastLow[weatherFields.forecastCounter] = NSString(format: "%.0f", saveMin) as String
+                }
+                if ((saveMax == 0.0) || (saveMax < max)) {
+                    saveMax = max
+                    weatherFields.forecastHigh[weatherFields.forecastCounter] = NSString(format: "%.0f", saveMax) as String
+                }
             }
             
             for x in weather {
@@ -347,7 +378,6 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
                 weatherFields.forecastConditions[weatherFields.forecastCounter] = description
                 weatherFields.forecastCode[weatherFields.forecastCounter] = icon
             }
-            weatherFields.forecastCounter = weatherFields.forecastCounter + 1
         }
     } // readJSONObjectF
     
