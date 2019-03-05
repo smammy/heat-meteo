@@ -79,8 +79,14 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
         // lon = inputCity after "," or " "
         var token = [String]()
         escapedCity = inputCity.trimmingCharacters(in: .whitespacesAndNewlines)
-        if (escapedCity.contains(" ")) {
+        if (escapedCity.contains(", ")) {
+            token = escapedCity.components(separatedBy: ", ")
+            escapedCity = token[0] + "," + token[1]
+        } else if (escapedCity.contains(" ")) {
             token = escapedCity.components(separatedBy: " ")
+            escapedCity = token[0] + "," + token[1]
+        } else if (escapedCity.contains(" ,")) {
+            token = escapedCity.components(separatedBy: " ,")
             escapedCity = token[0] + "," + token[1]
         } else if (escapedCity.contains(",")) {
             token = escapedCity.components(separatedBy: ",")
@@ -106,6 +112,9 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
                 data = try Data(contentsOf: url!) as NSData
             } catch {
                 ErrorLog("\(error)")
+                weatherFields.currentTemp = "9999"
+                weatherFields.latitude = "\(error)"
+                return
             }
         }
         if (data == nil)
@@ -156,12 +165,15 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
                 let temperature = current["temperature"] as? Double,
                 let humidity = current["humidity"] as? Double,
                 let windSpeed = current["windSpeed"] as? Double,
+                let windGust = current["windGust"] as? Double,
                 let windBearing = current["windBearing"] as? Double,
-                let pressure = current["pressure"] as? Double
+                let pressure = current["pressure"] as? Double,
+                let uvIndex = current["uvIndex"] as? Double,
+                let visibility = current["visibility"] as? Double
                 else {
                     _ = "error"
                     return }
-
+            
             // Convert epoch to UTC
             let unixdate: Int
             unixdate = Int(time)
@@ -170,16 +182,17 @@ class DarkSkyAPI: NSObject, XMLParserDelegate
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
             dateFormatter.timeZone = TimeZone(identifier: "UTC")
             dateFormatter.timeZone = NSTimeZone.local
-
+            
             weatherFields.date = dateFormatter.string(from: date as Date)
-
+            
             weatherFields.windSpeed = NSString(format: "%.2f", windSpeed) as String
             weatherFields.windDirection = NSString(format: "%.2f", windBearing) as String
             weatherFields.humidity = NSString(format: "%.0f", humidity * 100.0) as String
             weatherFields.pressure = NSString(format: "%.2f", pressure) as String
-            //weatherFields.visibility = NSString(format: "%.1f", visibility + 0.05) as String
+            weatherFields.visibility = NSString(format: "%.1f", visibility + 0.05) as String
             weatherFields.windSpeed = NSString(format: "%.2f", windSpeed) as String
-            weatherFields.windSpeed = NSString(format: "%.2f", windSpeed) as String
+            weatherFields.windGust = NSString(format: "%.2f", windGust) as String
+            weatherFields.UVIndex = NSString(format: "%.0f", uvIndex) as String
             weatherFields.currentConditions = summary
             weatherFields.currentCode = icon
             weatherFields.currentTemp = NSString(format: "%.2f", temperature) as String

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		643B165E221276D800063A6D /* Readme.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 643B165D221276D800063A6D /* Readme.rtf */; };
 		643C89E91CD19F45000589F1 /* TheWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C89E71CD19F45000589F1 /* TheWeatherAPI.swift */; };
 		643C89EA1CD19F45000589F1 /* WeatherUndergroundAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C89E81CD19F45000589F1 /* WeatherUndergroundAPI.swift */; };
 		644573F51D52E84E00735B6E /* AERISWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644573F31D52E84E00735B6E /* AERISWeatherAPI.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		643B165D221276D800063A6D /* Readme.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Readme.rtf; path = dist/Readme.rtf; sourceTree = "<group>"; };
 		643C89E71CD19F45000589F1 /* TheWeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheWeatherAPI.swift; sourceTree = "<group>"; };
 		643C89E81CD19F45000589F1 /* WeatherUndergroundAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherUndergroundAPI.swift; sourceTree = "<group>"; };
 		644573F31D52E84E00735B6E /* AERISWeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AERISWeatherAPI.swift; sourceTree = "<group>"; };
@@ -88,8 +90,8 @@
 				64B8B8741E7450BE00F0CB39 /* Default.strings */,
 				6480B1321C43265100E55BE2 /* images */,
 				6480B10F1C43123900E55BE2 /* Assets.xcassets */,
-				6480B10D1C43123900E55BE2 /* AppDelegate.swift */,
 				6480B1111C43123900E55BE2 /* MainMenu.xib */,
+				6480B10D1C43123900E55BE2 /* AppDelegate.swift */,
 				646893981E861D5D005B22B4 /* Reachability.swift */,
 				6480B11E1C43238000E55BE2 /* LogUtils.swift */,
 				644573F31D52E84E00735B6E /* AERISWeatherAPI.swift */,
@@ -109,6 +111,7 @@
 				6480B1141C43123900E55BE2 /* Info.plist */,
 				6480B1301C43244800E55BE2 /* HowTo.txt */,
 				6480B1291C43243A00E55BE2 /* readme.rtf */,
+				643B165D221276D800063A6D /* Readme.rtf */,
 				6480B12A1C43243A00E55BE2 /* README.txt */,
 				6480B12B1C43243A00E55BE2 /* VERSION2 */,
 				6480B1281C43243A00E55BE2 /* CHANGELOG2 */,
@@ -190,6 +193,7 @@
 				6480B12D1C43243A00E55BE2 /* readme.rtf in Resources */,
 				6480B11D1C43172800E55BE2 /* ColorPickerWindow.xib in Resources */,
 				6480B1101C43123900E55BE2 /* Assets.xcassets in Resources */,
+				643B165E221276D800063A6D /* Readme.rtf in Resources */,
 				6480B1261C4323E100E55BE2 /* RadarWindow.xib in Resources */,
 				6480B1131C43123900E55BE2 /* MainMenu.xib in Resources */,
 				6480B12F1C43243A00E55BE2 /* VERSION2 in Resources */,

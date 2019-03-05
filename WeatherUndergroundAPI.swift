@@ -1,6 +1,6 @@
 //
 //  WeatherUnderground.swift
-//  Meteo2
+//  Meteorologist
 //
 //  Swift code written by Ed Danley on 9/19/15.
 //  Copyright © 2015 The Meteorologist Group, LLC. All rights reserved.
@@ -72,7 +72,13 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
         // lon = inputCity after "," or " "
         var token = [String]()
         escapedCity = inputCity.trimmingCharacters(in: .whitespacesAndNewlines)
-        if (escapedCity.contains(" ")) {
+        if (escapedCity.contains(", ")) {
+            token = escapedCity.components(separatedBy: ", ")
+            escapedCity = token[0] + "," + token[1]
+        } else if (escapedCity.contains(" ,")) {
+            token = escapedCity.components(separatedBy: " ,")
+            escapedCity = token[0] + "," + token[1]
+        } else if (escapedCity.contains(" ")) {
             token = escapedCity.components(separatedBy: " ")
             escapedCity = token[0] + "," + token[1]
         } else if (escapedCity.contains(",")) {
@@ -118,6 +124,9 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
                 data = try Data(contentsOf: url!) as NSData
             } catch {
                 ErrorLog("\(error)")
+                weatherFields.currentTemp = "9999"
+                weatherFields.latitude = "\(error)"
+                return
             }
         }
         if (data == nil)
@@ -172,9 +181,11 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
                 let temp_f = xyzzy["temp_f"] as? Double,
                 var wind_degrees = xyzzy["wind_degrees"] as? Double,
                 let wind_mph = xyzzy["wind_mph"] as? Double,
+                let wind_gust = xyzzy["wind_gust_mph"] as? Double,
                 let pressure_mb = xyzzy["pressure_mb"] as? String,
                 let weather = xyzzy["weather"] as? String,
-                //let visibility_mi = xyzzy["visibility_mi"] as? String,
+                let visibility_mi = xyzzy["visibility_mi"] as? String,
+                let UV = xyzzy["UV"] as? String,
                 let local_epoch = xyzzy["local_epoch"] as? String,
                 let icon = xyzzy["icon"] as? String,
                 let ob_url = xyzzy["ob_url"] as? String,
@@ -191,10 +202,13 @@ class WeatherUndergroundAPI: NSObject, XMLParserDelegate
             weatherFields.currentConditions = weather
             weatherFields.currentTemp = NSString(format: "%.2f", temp_f) as String
             weatherFields.windSpeed = NSString(format: "%.2f", wind_mph) as String
+            weatherFields.windGust = NSString(format: "%.2f", wind_gust) as String
             weatherFields.windDirection = NSString(format: "%.2f", wind_degrees) as String
+            weatherFields.visibility = UV
+            weatherFields.UVIndex = visibility_mi
             weatherFields.pressure = pressure_mb
             weatherFields.URL = ob_url
-            
+
             // Convert epoch to UTC
             let unixdate: Int
             unixdate = Int((local_epoch as NSString).doubleValue)

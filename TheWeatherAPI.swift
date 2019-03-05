@@ -1,6 +1,6 @@
 //
 //  TheWeather.swift
-//  Meteo2
+//  Meteorologist
 //
 //  Swift code written by Ed Danley on 9/19/15.
 //  Copyright © 2015 The Meteorologist Group, LLC. All rights reserved.
@@ -30,6 +30,7 @@
 // edwardd20@danleys.org/P@ssw0rd
 // affiliate_id = 4p1m5jb7mnyt
 // localidad for Naperville = 157281
+// http://api.theweather.com/index.php?api_lang=eu&localidad=157281&affiliate_id=4p1m5jb7mnyt
 
 import Cocoa
 import Foundation

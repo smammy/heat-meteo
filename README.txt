@@ -1,5 +1,19 @@
 This file could also be called the change log.
 
+3.1.7
+* At startup, Meteo will now determine your current location and display it if you use a location of <here>. That is the word *here* surrounded by angle brackets. Meteo does not retain or share on your location.
+* Updated display of Preferences window, now tabbed.
+* Allow for formatting of Latitude, Longitude containing: <comma>, <space>, <comma><space> or <space><comma>.
+* Clean up a few memory leaks.
+* Updated README in the DMG installation package, including French translation (thank you Manfred).
+* Logging of message is now ON by default for new users.
+* Default location is <here> and second default location is Cupertino, CA.
+* Received notice that Wunderground.com is shutting down on 31 Dec 2019.
+*   https://apicommunity.wunderground.com/weatherapi/topics/end-of-service-for-the-weather-underground-api
+* Add current Visibility to DarkSky and Wunderground
+* Add UV Index where available
+* Add Wind gusts where and when available
+
 3.1.6
 * Now requires macOS 10.10 or newer
 * New weather source: Environment Canada (http://weather.gc.ca/)

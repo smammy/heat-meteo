@@ -74,6 +74,7 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
         parseURL = ""
         parseURL.append(QUERY_PREFIX1)
         escapedCity = inputCity.replacingOccurrences(of: ", ", with: ",")
+        escapedCity = escapedCity.replacingOccurrences(of: " ,", with: ",")
         escapedCity = escapedCity.replacingOccurrences(of: " ", with: "-")
         escapedCity = escapedCity.replacingOccurrences(of: "&", with: "")
         parseURL.append(escapedCity)
@@ -92,38 +93,44 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
         // https://github.com/mw99/OhhAuth
         let cc = (key: ak1, secret: ak2)
         //let uc = (key: "", secret: "")
-        var req = URLRequest(url: URL(string: parseURL)!)
-        let paras = ["Yahoo-App-Id": appID, "Content-Type": "application/json"]
-        //let paras = ["": ""]
-
-        req.oAuthSign(method: "POST", urlFormParameters: paras, consumerCredentials: cc, userCredentials: nil)
-        //req.timeoutInterval = 3.0
-        
-        let group = DispatchGroup()
-        group.enter()
-        let task = URLSession(configuration: .ephemeral).dataTask(with: req) { (data, response, error) in
-            if let error = error {
-                print(error)
-                self.localWeatherFields.currentTemp = "9999"
-                self.localWeatherFields.latitude = error.localizedDescription
-            }
-            else if let data = data {
-                //print(String(data: data, encoding: .utf8) ?? "Does not look like a utf8 response :(")
-                self.data = data
-                InfoLog("Data for: " + parseURL)
-                InfoLog(String(decoding: data, as: UTF8.self))
-                //print(String(decoding: data, as: UTF8.self))
-
-                self.processWeatherData(data)
-                
-                if (self.localWeatherFields.forecastCounter == -1) {
-                    self.localWeatherFields.forecastCounter = 0
+        let myURL = URL(string: parseURL)
+        if (myURL == nil) {
+            self.localWeatherFields.currentTemp = "9999"
+            self.localWeatherFields.latitude = "Invalid Location"
+        } else {
+            var req = URLRequest(url: myURL!)
+            let paras = ["Yahoo-App-Id": appID, "Content-Type": "application/json"]
+            //let paras = ["": ""]
+            
+            req.oAuthSign(method: "POST", urlFormParameters: paras, consumerCredentials: cc, userCredentials: nil)
+            //req.timeoutInterval = 3.0
+            
+            let group = DispatchGroup()
+            group.enter()
+            let task = URLSession(configuration: .ephemeral).dataTask(with: req) { (data, response, error) in
+                if let error = error {
+                    print(error)
+                    self.localWeatherFields.currentTemp = "9999"
+                    self.localWeatherFields.latitude = error.localizedDescription
                 }
+                else if let data = data {
+                    //print(String(data: data, encoding: .utf8) ?? "Does not look like a utf8 response :(")
+                    self.data = data
+                    //InfoLog("Data for: " + parseURL)
+                    //InfoLog(String(decoding: data, as: UTF8.self))
+                    //print(String(decoding: data, as: UTF8.self))
+                    
+                    self.processWeatherData(data)
+                    
+                    if (self.localWeatherFields.forecastCounter == -1) {
+                        self.localWeatherFields.forecastCounter = 0
+                    }
+                }
+                group.leave()
             }
-            group.leave()
+            task.resume()
+            group.wait()
         }
-        task.resume()
-        group.wait()
         
         //self.localWeatherFields.currentTemp = "9999"
         //self.localWeatherFields.latitude = localizedString(forKey: "Unknown Error")
@@ -133,7 +140,7 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
         }
         
         weatherFields = self.localWeatherFields
-
+        
         DebugLog(String(format:"leaving beginParsing: %@", inputCity))
     } // beginParsing
     

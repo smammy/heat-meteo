@@ -1,6 +1,6 @@
 //
 //  APIXU.swift
-//  Meteo2
+//  Meteorologist
 //
 //  Swift code written by Ed Danley on 9/19/15.
 //  Copyright © 2015 The Meteorologist Group, LLC. All rights reserved.
@@ -158,6 +158,9 @@ class APIXUAPI: NSObject, XMLParserDelegate
                 data = try Data(contentsOf: url!) as NSData
             } catch {
                 ErrorLog("\(error)")
+                weatherFields.currentTemp = "9999"
+                weatherFields.latitude = "\(error)"
+                return
             }
         }
         if (data == nil)
@@ -265,6 +268,7 @@ class APIXUAPI: NSObject, XMLParserDelegate
                 let unixdate = c["last_updated_epoch"] as? Int,
                 let temp_F = c["temp_f"] as? Double,
                 let vis_miles = c["vis_miles"] as? Double,
+                let uv = c["uv"] as? Double,
                 let humidity = c["humidity"] as? Double,
                 let pressure = c["pressure_mb"] as? Double,
                 let windspeedMiles = c["wind_mph"] as? Double,
@@ -281,14 +285,15 @@ class APIXUAPI: NSObject, XMLParserDelegate
             dateFormatter.timeZone = TimeZone(identifier: "UTC")
             dateFormatter.timeZone = NSTimeZone.local
             weatherFields.date = dateFormatter.string(from: date as Date)
-            
+
             weatherFields.currentTemp = NSString(format: "%.0f", temp_F) as String
             weatherFields.humidity = NSString(format: "%.0f", humidity) as String
             weatherFields.pressure = NSString(format: "%.2f", pressure) as String
             weatherFields.windSpeed = NSString(format: "%.1f", windspeedMiles) as String
             weatherFields.windDirection = NSString(format: "%f", winddirDegree) as String
             weatherFields.visibility = NSString(format: "%.0f", vis_miles) as String
-            
+            weatherFields.UVIndex = NSString(format: "%.0f", uv) as String
+
             for cond in [condition] {
                 guard
                     let text = cond["text"] as? String,

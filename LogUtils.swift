@@ -14,62 +14,62 @@ var logFileHandle: FileHandle?
 var original_stderr: Int32?;
 
 #if DEBUG_1
-    func DebugLog(message: String, file: String = #file, line: Int = #line) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.stringForKey("logMessages")! == "1") {
-            return { NSLog("<Debug>: " + message + " [" + file + ":%i]", line) }()
-        }
+func DebugLog(message: String, file: String = #file, line: Int = #line) {
+    let defaults = NSUserDefaults.standardUserDefaults()
+    if (defaults.stringForKey("logMessages")! == "1") {
+        return { NSLog("<Debug>: " + message + " [" + file + ":%i]", line) }()
     }
-    
-    func InfoLog(message: String, file: String = #file, line: Int = #line) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.stringForKey("logMessages")! == "1") {
-            return { NSLog("<Info>: " + message + " [" + file + ":%i]", line) }()
-        }
+}
+
+func InfoLog(message: String, file: String = #file, line: Int = #line) {
+    let defaults = NSUserDefaults.standardUserDefaults()
+    if (defaults.stringForKey("logMessages")! == "1") {
+        return { NSLog("<Info>: " + message + " [" + file + ":%i]", line) }()
     }
-    
-    func WarningLog(message: String, file: String = #file, line: Int = #line) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.stringForKey("logMessages")! == "1") {
-            return { NSLog("<Warning>: " + message + " [" + file + ":%i]", line) }()
-        }
+}
+
+func WarningLog(message: String, file: String = #file, line: Int = #line) {
+    let defaults = NSUserDefaults.standardUserDefaults()
+    if (defaults.stringForKey("logMessages")! == "1") {
+        return { NSLog("<Warning>: " + message + " [" + file + ":%i]", line) }()
     }
-    
-    func ErrorLog(message: String, file: String = #file, line: Int = #line) {
-        //let defaults = NSUserDefaults.standardUserDefaults()
-        //if (defaults.stringForKey("logMessages")! == "1") {
-            return { NSLog("<Error>: " + message + " [" + file + ":%i]", line) }()
-        //}
-    }
+}
+
+func ErrorLog(message: String, file: String = #file, line: Int = #line) {
+    //let defaults = NSUserDefaults.standardUserDefaults()
+    //if (defaults.stringForKey("logMessages")! == "1") {
+    return { NSLog("<Error>: " + message + " [" + file + ":%i]", line) }()
+    //}
+}
 #else
-    func DebugLog(_ message: String, file: String = #file, line: Int = #line) {
-        let defaults = UserDefaults.standard
-        if (defaults.string(forKey: "logMessages")! == "1") {
-            // Uncomment this statement for Debug level messages
-            //return { NSLog("<Debug>: " + message) }()
-        }
+func DebugLog(_ message: String, file: String = #file, line: Int = #line) {
+    let defaults = UserDefaults.standard
+    if (defaults.string(forKey: "logMessages")! == "1") {
+        // Uncomment this statement for Debug level messages
+        //return { NSLog("<Debug>: " + message) }()
     }
-    
-    func InfoLog(_ message: String, file: String = #file, line: Int = #line) {
-        let defaults = UserDefaults.standard
-        if (defaults.string(forKey: "logMessages")! == "1") {
-            return { NSLog("<Info>: " + message) }()
-        }
+}
+
+func InfoLog(_ message: String, file: String = #file, line: Int = #line) {
+    let defaults = UserDefaults.standard
+    if (defaults.string(forKey: "logMessages")! == "1") {
+        return { NSLog("<Info>: " + message) }()
     }
-    
-    func WarningLog(_ message: String, file: String = #file, line: Int = #line) {
-        let defaults = UserDefaults.standard
-        if (defaults.string(forKey: "logMessages")! == "1") {
-            return { NSLog("<Warning>: " + message) }()
-        }
+}
+
+func WarningLog(_ message: String, file: String = #file, line: Int = #line) {
+    let defaults = UserDefaults.standard
+    if (defaults.string(forKey: "logMessages")! == "1") {
+        return { NSLog("<Warning>: " + message) }()
     }
-    
-    func ErrorLog(_ message: String, file: String = #file, line: Int = #line) {
-        //let defaults = NSUserDefaults.standardUserDefaults()
-        //if (defaults.stringForKey("logMessages")! == "1") {
-            return { NSLog("<Error>: " + message) }()
-        //}
-    }
+}
+
+func ErrorLog(_ message: String, file: String = #file, line: Int = #line) {
+    //let defaults = NSUserDefaults.standardUserDefaults()
+    //if (defaults.stringForKey("logMessages")! == "1") {
+    return { NSLog("<Error>: " + message) }()
+    //}
+}
 #endif
 
 
@@ -83,13 +83,23 @@ func SetCustomLogFilename(_ name: String) {
     } catch {
         return
     }
-
+    
     // Calculate full log file path
     if let logFilePath = logDirectory.appendingPathComponent(String(format:"%@.log", name)) as URL? {
         
         // Save STDERR
         let stderr = FileHandle.standardError
         original_stderr = dup(stderr.fileDescriptor);
+        
+        // If log file already exists, delete it
+        if FileManager.default.isWritableFile(atPath: logFilePath.path) {
+            do {
+                try FileManager.default.removeItem(atPath: logFilePath.path)
+            }
+            catch let error as NSError {
+                print("Ooops! Something went wrong deleting file: " + logFilePath.path + "\(error)")
+            }
+        }
         
         // Create an empty log file at path, NSFileHandle doesn't do it!
         if !FileManager.default.isWritableFile(atPath: logFilePath.path) {
