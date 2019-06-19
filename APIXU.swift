@@ -49,6 +49,7 @@ class APIXUAPI: NSObject, XMLParserDelegate
     
     func fixIcon(icon: String) -> String
     {
+        var currentCode = "Unknown"
         var workingString = icon
         
         if (workingString.hasPrefix("//cdn.apixu.com/weather/64x64/day"))
@@ -66,18 +67,25 @@ class APIXUAPI: NSObject, XMLParserDelegate
             //workingString = String(workingString.characters.dropLast(4))
             workingString = String(workingString[workingString.startIndex..<workingString.index(workingString.endIndex, offsetBy: -4)])
         }
+        if (workingString.count > 3)
+        {
+            workingString = String(workingString.suffix(3))
+        }
 
         if (workingString == "113")
         {
-            workingString = "Sun"
+            currentCode = "Sun"
+        }
+        else if ((workingString == "260") ||
+            (workingString == "248"))
+        {
+            currentCode = "Hazy"
         }
         else if ((workingString == "119") ||
             (workingString == "122") ||
-            (workingString == "143") ||
-            (workingString == "248") ||
             (workingString == "269"))
         {
-            workingString = "Cloudy"
+            currentCode = "Cloudy"
         }
         else if ((workingString == "176") ||
             (workingString == "182") ||
@@ -103,7 +111,7 @@ class APIXUAPI: NSObject, XMLParserDelegate
             (workingString == "362") ||
             (workingString == "365"))
         {
-            workingString = "Rain"
+            currentCode = "Rain"
         }
         else if ((workingString == "179") ||
             (workingString == "227") ||
@@ -122,20 +130,20 @@ class APIXUAPI: NSObject, XMLParserDelegate
             (workingString == "392") ||
             (workingString == "395"))
         {
-            workingString = "Snow"
+            currentCode = "Snow"
         }
         else if ((workingString == "200") ||
             (workingString == "386") ||
             (workingString == "389"))
         {
-            workingString = "Thunderstorm"
+            currentCode = "Thunderstorm"
         }
         else if (workingString == "116")
         {
-            workingString = "Sun-Cloud"
+            currentCode = "Sun-Cloud"
         }
         
-        return workingString
+        return currentCode
     } // fixIcon
     
     func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
@@ -157,7 +165,7 @@ class APIXUAPI: NSObject, XMLParserDelegate
                 // https://stackoverflow.com/questions/40812416/nsurl-url-and-nsdata-data?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
                 data = try Data(contentsOf: url!) as NSData
             } catch {
-                ErrorLog("\(error)")
+                ErrorLog("APIXU \(error)")
                 weatherFields.currentTemp = "9999"
                 weatherFields.latitude = "\(error)"
                 return
@@ -177,6 +185,9 @@ class APIXUAPI: NSObject, XMLParserDelegate
             }
         } catch {
             // Handle Error
+            weatherFields.currentTemp = "9999"
+            weatherFields.latitude = error.localizedDescription
+            ErrorLog("AERIS1 " + String(decoding: data!, as: UTF8.self))
         }
 
         DebugLog(String(format:"leaving APIXU beginParsing: %@", inputCity))
@@ -207,6 +218,9 @@ class APIXUAPI: NSObject, XMLParserDelegate
                 }
             } catch {
                 // Handle Error
+                weatherFields.currentTemp = "9999"
+                weatherFields.latitude = error.localizedDescription
+                ErrorLog("AERIS2 " + String(decoding: data!, as: UTF8.self))
             }
         }
         return intlConditions

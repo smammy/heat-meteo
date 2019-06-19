@@ -1,5 +1,18 @@
 This file could also be called the change log.
 
+3.1.8
+* Add translation of German special characters (umlauts) to ASCII.
+* Add detection of wake from sleep to avoid some wifi problems.
+* Detect and report (but can't auto-resolve) Yahoo! OAuth errors in the Console log (along with other possible validation errors).
+* Update Yahoo! authentication, again. This time for X-Yahoo-App-Id.
+* Add support for Yahoo! location to be either city,state or lat,long.
+* Allow for unknown weather icons for APIXU (after wake from sleep)
+* Correct a recurring 9999 for OpenWeatherMap
+* Provide a reference URL for Yahoo! locations.
+* Update source code to Swift 5 and Xcode 10.2.
+* Updated support for WunderGround and PWS's (put your PWS ID as the city).
+* Updated OhhAuth to latest version.
+
 3.1.7
 * At startup, Meteo will now determine your current location and display it if you use a location of <here>. That is the word *here* surrounded by angle brackets. Meteo does not retain or share on your location.
 * Updated display of Preferences window, now tabbed.

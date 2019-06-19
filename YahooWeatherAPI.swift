@@ -38,15 +38,13 @@ let ConsumerSecret = "5ccc0d61e58514d24eac2f95fad475e270b97b84"
 // App ID
 let appID = "MIAYgU4o"
 
-// Help: https://www.raywenderlich.com/99431/oauth-2-with-swift-tutorial
-//
-//       http://stackoverflow.com/questions/36186538/making-yahoo-weather-api-request-with-oauth-1
-//
-
 class YahooWeatherAPI: NSObject, XMLParserDelegate {
     
     
     let QUERY_PREFIX1 = "https://weather-ydn-yql.media.yahoo.com/forecastrss?location="
+    let QUERY_PREFIX1A = "https://weather-ydn-yql.media.yahoo.com/forecastrss?lat="
+    let QUERY_PREFIX1B = "&lon="
+    let QUERY_PREFIX1A1 = "https://weather-ydn-yql.media.yahoo.com/forecastrss?woeid="
     let QUERY_SUFFIX1 = "&u=f&format=json"
     // Optionally &lat=12.345,&lon=123.456 instead of location=
     
@@ -72,12 +70,45 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
         localWeatherFields = weatherFields
         
         parseURL = ""
-        parseURL.append(QUERY_PREFIX1)
         escapedCity = inputCity.replacingOccurrences(of: ", ", with: ",")
         escapedCity = escapedCity.replacingOccurrences(of: " ,", with: ",")
         escapedCity = escapedCity.replacingOccurrences(of: " ", with: "-")
         escapedCity = escapedCity.replacingOccurrences(of: "&", with: "")
-        parseURL.append(escapedCity)
+
+        // Is escapedCity a city, state or a lat,long or a woeid?
+        let arr = escapedCity.components(separatedBy: ",")
+        if (arr.count == 1) {
+            let n1 = arr[0]
+            let f1 = Int(n1)
+            let s1 = f1?.description
+            if (arr[0] == s1) {
+                parseURL.append(QUERY_PREFIX1A1)
+                parseURL.append(n1)
+            } else {
+                parseURL.append(QUERY_PREFIX1)
+                parseURL.append(escapedCity)
+            }
+        } else if (arr.count == 2) {
+            let n1 = arr[0]
+            let f1 = Double(n1)
+            let s1 = f1?.description
+            let n2 = arr[1]
+            let f2 = Double(n2)
+            let s2 = f2?.description
+            if ((arr[0] == s1) && (arr[1] == s2)) {
+                parseURL.append(QUERY_PREFIX1A)
+                parseURL.append(n1)
+                parseURL.append(QUERY_PREFIX1B)
+                parseURL.append(n2)
+            } else {
+                parseURL.append(QUERY_PREFIX1)
+                parseURL.append(escapedCity)
+            }
+        } else {
+            parseURL.append(QUERY_PREFIX1)
+            parseURL.append(escapedCity)
+        }
+
         parseURL.append(QUERY_SUFFIX1)
         InfoLog(String(format:"URL for Yahoo: %@\n", parseURL))
         //print(String(format:"URL for Yahoo: %@\n", parseURL))
@@ -91,19 +122,19 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
         }
         
         // https://github.com/mw99/OhhAuth
-        let cc = (key: ak1, secret: ak2)
         //let uc = (key: "", secret: "")
         let myURL = URL(string: parseURL)
         if (myURL == nil) {
             self.localWeatherFields.currentTemp = "9999"
             self.localWeatherFields.latitude = "Invalid Location"
         } else {
+            let cc = (key: ak1, secret: ak2)
             var req = URLRequest(url: myURL!)
-            let paras = ["Yahoo-App-Id": appID, "Content-Type": "application/json"]
+            let paras = ["X-Yahoo-App-Id": appID, "Content-Type": "application/json"]
             //let paras = ["": ""]
             
             req.oAuthSign(method: "POST", urlFormParameters: paras, consumerCredentials: cc, userCredentials: nil)
-            //req.timeoutInterval = 3.0
+            req.timeoutInterval = 3.0
             
             let group = DispatchGroup()
             group.enter()
@@ -115,6 +146,7 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
                 }
                 else if let data = data {
                     //print(String(data: data, encoding: .utf8) ?? "Does not look like a utf8 response :(")
+                    //let sData = String(decoding: data, as: UTF8.self)
                     self.data = data
                     //InfoLog("Data for: " + parseURL)
                     //InfoLog(String(decoding: data, as: UTF8.self))
@@ -153,12 +185,15 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
             }
         } catch {
             // Handle Error
+            self.localWeatherFields.currentTemp = "9999"
+            self.localWeatherFields.latitude = error.localizedDescription
+            ErrorLog("Yahoo2 " + String(decoding: data, as: UTF8.self))
         }
     } // processWeatherData
     
     func convert_Inches_mbar(_ temp: String) -> String
     {
-        // millibar value = kPa value x 33.8637526
+        // millibar value = kPa val ue x 33.8637526
         let answer = String(Int((temp as NSString).doubleValue * 33.8637526))
         
         return answer
@@ -258,12 +293,30 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
     // MARK: - JSON support
     func readJSONObject(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
-            //let location = object["location"] as? [String: AnyObject],
+            let location = object["location"] as? [String: AnyObject],
             let co = object["current_observation"] as? [String: AnyObject],
             let forecasts = object["forecasts"] as? [[String: AnyObject]]
             else {
                 _ = "error"
                 return }
+        
+        for l in [location] {
+            guard
+                //let city = l["city"] as? String,
+                //let region = l["region"] as? String,
+                //let country = l["country"] as? String,
+                let lat = l["lat"] as? Double,
+                let long = l["long"] as? Double,
+                //let timezone_id = l["timezone_id"] as? String,
+                let iWoeid = l["woeid"] as? Int
+                else {
+                    _ = "error"
+                    return
+            }
+            weatherFields.latitude = String(describing: lat)
+            weatherFields.longitude = String(describing: long)
+            weatherFields.URL = "https://www.yahoo.com/news/weather/forecast/" + String(describing: iWoeid)
+        }
         
         for c in [co] {
             guard

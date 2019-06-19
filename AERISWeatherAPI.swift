@@ -129,7 +129,7 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
                 // https://stackoverflow.com/questions/40812416/nsurl-url-and-nsdata-data?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
                 data = try Data(contentsOf: url!) as NSData
             } catch {
-                ErrorLog("\(error)")
+                ErrorLog("AERIS \(error)")
                 weatherFields.currentTemp = "9999"
                 weatherFields.latitude = "\(error)"
                 return
@@ -149,6 +149,9 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
             }
         } catch {
             // Handle Error
+            weatherFields.currentTemp = "9999"
+            weatherFields.latitude = error.localizedDescription
+            ErrorLog("AERIS1 " + String(decoding: data!, as: UTF8.self))
         }
         if (weatherFields.currentTemp == "9999")
         {
@@ -162,6 +165,9 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
             }
         } catch {
             // Handle Error
+            weatherFields.currentTemp = "9999"
+            weatherFields.latitude = error.localizedDescription
+            ErrorLog("AERIS2 " + String(decoding: data!, as: UTF8.self))
         }
         
         parseURL = QUERY_PREFIX2 + inputCity + QUERY_SUFFIX2a + APIKey1 + QUERY_SUFFIX2b + APIKey2
@@ -177,6 +183,9 @@ class AerisWeatherAPI: NSObject, XMLParserDelegate
             }
         } catch {
             // Handle Error
+            weatherFields.currentTemp = "9999"
+            weatherFields.latitude = error.localizedDescription
+            ErrorLog("AERIS3 " + String(decoding: data!, as: UTF8.self))
         }
         
         DebugLog(String(format:"leaving AerisWeatherAPI beginParsing: %@", inputCity))

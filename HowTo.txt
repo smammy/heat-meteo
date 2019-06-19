@@ -3,6 +3,7 @@ To build using Xcode 10:
 ¥ Open Meteorologist.xcodeproj
 ¥ÊSelect the project then click on the General tab. Change the Team dropdown to your Apple Dev account.
 ¥ÊMake sure code signing is: Authority=Developer IDÉ (not Authority=Mac Developer).
+¥Ê¥ÊDo this for both Project and Target
 ¥ÊTest away.
 ¥ Make sure the VERSION2 file is updated (do not end with CRLF).
 ¥ Make sure the CHANGELOG2 file is updated.

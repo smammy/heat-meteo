@@ -132,6 +132,9 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
             }
         } catch {
             // Handle Error
+            weatherFields.currentTemp = "9999"
+            weatherFields.latitude = error.localizedDescription
+            ErrorLog("OpenWeatherMap1 " + error.localizedDescription)
         }
         if (weatherFields.currentTemp == "9999")
         {
@@ -145,6 +148,9 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
             }
         } catch {
             // Handle Error
+            weatherFields.currentTemp = "9999"
+            weatherFields.latitude = error.localizedDescription
+            ErrorLog("OpenWeatherMap2 " + String(decoding: data!, as: UTF8.self))
         }
 
         parseURL = ""
@@ -175,6 +181,9 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
             }
         } catch {
             // Handle Error
+            weatherFields.currentTemp = "9999"
+            weatherFields.latitude = error.localizedDescription
+            ErrorLog("OpenWeatherMap3 " + String(decoding: data!, as: UTF8.self))
         }
         
         DebugLog(String(format:"leaving beginParsing: %@", inputCity))
@@ -299,8 +308,7 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
     
     func readJSONObjectE(object: [String: AnyObject], weatherFields: inout WeatherFields) {
         guard
-        let cod = object["cod"] as? Double,
-        let message = object["message"] as? String
+        let cod = object["cod"] as? Double
         else
         {
             _ = "error"
@@ -309,7 +317,9 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         if (cod == 401)
         {
             weatherFields.currentTemp = "9999"
-            weatherFields.latitude = message
+            weatherFields.latitude = object["message"] as! String
+        } else {
+            weatherFields.currentTemp = ""
         }
         
     } // readJSONObjectE

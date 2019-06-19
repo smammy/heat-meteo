@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -126,19 +126,19 @@
         <window title="Meteorologist" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="1070" height="313"/>
+            <rect key="contentRect" x="335" y="390" width="1041" height="317"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="1070" height="313"/>
+                <rect key="frame" x="0.0" y="0.0" width="1041" height="317"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <tabView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VOY-Fo-2nV">
-                        <rect key="frame" x="0.0" y="16" width="1040" height="301"/>
+                        <rect key="frame" x="1" y="2" width="1040" height="301"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Locations_" identifier="Locations_" id="Ct3-sn-Kal" userLabel="Locations Tab">
-                                <view key="view" id="qw4-cW-H1t">
+                                <view key="view" ambiguous="YES" id="qw4-cW-H1t">
                                     <rect key="frame" x="10" y="33" width="1020" height="255"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -551,7 +551,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Options_" identifier="Options_" id="hev-om-kST" userLabel="Options Tab">
-                                <view key="view" ambiguous="YES" id="OSu-6i-qwW">
+                                <view key="view" id="OSu-6i-qwW">
                                     <rect key="frame" x="10" y="33" width="1020" height="255"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -1314,6 +1314,10 @@
                                                     </textView>
                                                 </subviews>
                                             </clipView>
+                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="6G5-K6-rhh">
+                                                <rect key="frame" x="-100" y="-100" width="984" height="15"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </scroller>
                                             <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="izP-fL-KLJ">
                                                 <rect key="frame" x="984" y="0.0" width="15" height="230"/>
                                                 <autoresizingMask key="autoresizingMask"/>
@@ -1326,7 +1330,7 @@
                     </tabView>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-1769" y="-204.5"/>
+            <point key="canvasLocation" x="-1783.5" y="-202.5"/>
         </window>
         <menu title="Main Menu" systemMenu="main" id="JuA-bO-h1K">
             <items>

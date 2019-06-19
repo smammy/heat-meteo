@@ -107,6 +107,12 @@ extension String
     {
         return self.replacingOccurrences(of: target, with: withString, options: NSString.CompareOptions.literal, range: nil)
     }
+    // https://stackoverflow.com/questions/39677330/how-does-string-substring-work-in-swift
+    subscript(_ range: CountableRange<Int>) -> String {
+        let idx1 = index(startIndex, offsetBy: max(0, range.lowerBound))
+        let idx2 = index(startIndex, offsetBy: min(self.count, range.upperBound))
+        return String(self[idx1..<idx2])
+    }
 } // extension String
 
 // https://bluelemonbits.com/index.php/2015/08/20/evaluate-string-width-and-return-cgfloat-swift-osx/
@@ -124,8 +130,8 @@ func evaluateStringWidth (textToEvaluate: String) -> CGFloat{
         font = NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!
     }
     
-    let attributes = NSDictionary(object: font, forKey:NSAttributedStringKey.font as NSCopying)
-    let sizeOfText = textToEvaluate.size(withAttributes: (attributes as! [NSAttributedStringKey : Any]))
+    let attributes = NSDictionary(object: font, forKey:NSAttributedString.Key.font as NSCopying)
+    let sizeOfText = textToEvaluate.size(withAttributes: (attributes as! [NSAttributedString.Key : Any]))
     //let sizeOfText = textToEvaluate.size(withAttributes: (attributes as! [String : AnyObject]))
     
     return sizeOfText.width
@@ -159,10 +165,10 @@ struct WeatherFields {
     var humidity = String()         // percent
     var pressure = String()         // millibars
     var visibility = String()       // miles
-    var UVIndex = String()
+    var UVIndex = String()          // Int
     
-    var sunrise = String()
-    var sunset = String()
+    var sunrise = String()          // UTC "mm:dd:yyyy'T'hh:MM:ss"
+    var sunset = String()           // UTC "mm:dd:yyyy'T'hh:MM:ss"
 
     var currentLink = String()
     var currentTemp = String()      // *F
@@ -327,8 +333,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     
     var buttonPresses = 0
     
-    var modalMenuBar = ColorPickerWindow(windowNibName: NSNib.Name(rawValue: "ColorPickerWindow"))
-    var modalDisplay = ColorPickerWindow(windowNibName: NSNib.Name(rawValue: "ColorPickerWindow"))
+    var modalMenuBar = ColorPickerWindow(windowNibName: "ColorPickerWindow")
+    var modalDisplay = ColorPickerWindow(windowNibName: "ColorPickerWindow")
     var radarWindow = RadarWindow()
 
     
@@ -420,31 +426,36 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             InfoLog("status authorized")
             let location = locationManager.location
             
-            self.myLatitude = String(format: "%f", location?.coordinate.latitude ?? "")
-            self.myLongitude = String(format: "%f", location?.coordinate.longitude ?? "")
-            
-            InfoLog("")
-            InfoLog("This stuff is spooky, macOS knowing all this. But we're using part of it...")
-            InfoLog("")
-            InfoLog("location data:")
-            InfoLog("latitude: " + String(format: "%.4f", location?.coordinate.latitude ?? ""))
-            InfoLog("longitude: " + String(format: "%.4f", location?.coordinate.longitude ?? ""))
-            InfoLog("altitude: " + String(format: "%.2f", location?.altitude ?? "") + " meters")
-            //InfoLog("floor: " + String(format: "%.2f", location?.floor ?? ""))    // Not in macOS
-            InfoLog("horizontalAccuracy: " + String(format: "%.2f", location?.horizontalAccuracy ?? "") + " meters")
-            InfoLog("verticalAccuracy: " + String(format: "%.2f", location?.verticalAccuracy ?? "") + " meters")
-            InfoLog("speed: " + String(format: "%.2f", location?.speed ?? "") + " meters/second")
-            InfoLog("course: " + String(format: "%.2f", location?.course ?? "") + "˚")
-            
-            let geocoder = CLGeocoder()
-            // Geocode Location
             if (location != nil) {
-                geocoder.reverseGeocodeLocation(location!) { (placemarks, error) in
-                    // Process Response
-                    self.processResponse(withPlacemarks: placemarks, error: error)
+                self.myLatitude = String(format: "%f", location?.coordinate.latitude ?? "")
+                self.myLongitude = String(format: "%f", location?.coordinate.longitude ?? "")
+                
+                InfoLog("")
+                InfoLog("This stuff is spooky, macOS knowing all this. But we're using part of it...")
+                InfoLog("")
+                InfoLog("location data:")
+                InfoLog("latitude: " + String(format: "%.4f", location?.coordinate.latitude ?? ""))
+                InfoLog("longitude: " + String(format: "%.4f", location?.coordinate.longitude ?? ""))
+                InfoLog("altitude: " + String(format: "%.2f", location?.altitude ?? "") + " meters")
+                //InfoLog("floor: " + String(format: "%.2f", location?.floor ?? ""))    // Not in macOS
+                InfoLog("horizontalAccuracy: " + String(format: "%.2f", location?.horizontalAccuracy ?? "") + " meters")
+                InfoLog("verticalAccuracy: " + String(format: "%.2f", location?.verticalAccuracy ?? "") + " meters")
+                InfoLog("speed: " + String(format: "%.2f", location?.speed ?? "") + " meters/second")
+                InfoLog("course: " + String(format: "%.2f", location?.course ?? "") + "˚")
+                
+                let geocoder = CLGeocoder()
+                // Geocode Location
+                if (location != nil) {
+                    geocoder.reverseGeocodeLocation(location!) { (placemarks, error) in
+                        // Process Response
+                        self.processResponse(withPlacemarks: placemarks, error: error)
+                    }
                 }
+            } else {
+                InfoLog("Location data not available")
+                myCity = "Location unavailable"
             }
-            
+
         //case .authorizedAlways:
             //InfoLog("status authorized always")
             //_ = "status authorized always"
@@ -460,7 +471,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         
         if let error = error {
             InfoLog("Unable to Reverse Geocode Location (\(error))")
-            myCity = "unknown1"
+            myCity = "Location not available"
         } else {
             if let placemarks = placemarks, let placemark = placemarks.first {
                 myCity = placemark.locality ?? "anytown"
@@ -566,7 +577,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         statusBarItem = statusBar.statusItem(withLength: -1)
         statusBarItem.menu = menu
         statusBarItem.title = localizedString(forKey: "Loading_") + "..."
-        statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-1"))!
+        statusBarItem.image = NSImage(named: "Loading-1")!
         loadTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(AppDelegate.runTimedCode), userInfo: nil, repeats: true)  //Start animating the menubar icon
 
         let newItem : NSMenuItem = NSMenuItem(title: localizedString(forKey: "PleaseWait_"), action: #selector(AppDelegate.dummy(_:)), keyEquivalent: "")
@@ -597,11 +608,67 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         }
 
         // Sleep for a few seconds to allow WiFi to get started
+        if (launchDelay == 0.0) {
+            launchDelay = 0.1
+        }
         Timer.scheduledTimer(timeInterval: launchDelay, target: self, selector: #selector(AppDelegate.launchWeather), userInfo: nil, repeats: false)
 
     } // awakeFromNib
     
+    // This gets called when we Wake from sleep. See the setup below
+    // https://stackoverflow.com/questions/9247710/what-event-is-fired-when-mac-is-back-from-sleep
+    @objc func onWakeNote(note: NSNotification) {
+        let defaults = UserDefaults.standard
+        var launchDelay = 10.0
+        if ((defaults.string(forKey: "logMessages") != nil) &&
+            (defaults.string(forKey: "logMessages")! == "1")) {
+            InfoLog("Received wake notice: \(note.name)")
+
+            if (defaults.string(forKey: "launchDelay") != nil)
+            {
+                launchDelay = Double(defaults.string(forKey: "launchDelay")!)!
+            }
+
+        }
+
+        if (loadTimer != nil)
+        {
+            loadTimer.invalidate()
+            loadTimer = nil
+        }
+        
+        let uwTimer = myTimer
+        if uwTimer == myTimer
+        {
+            if uwTimer.isValid
+            {
+                uwTimer.invalidate()
+            }
+        }
+        
+        if (launchDelay < 10.0) {
+            launchDelay = launchDelay * 2 // Waking up takes twice as long as starting up
+        }
+        if (launchDelay > 0.0)
+        {
+            InfoLog(String(format:"Sleeping for %.0f second(s) to allow WiFi to get started", launchDelay))
+        }
+
+        // Sleep XX seconds for WiFi to wake up again
+        if (launchDelay == 0.0) {
+            launchDelay = 0.1
+        }
+        myTimer = Timer.scheduledTimer(timeInterval: Double(launchDelay), target:self, selector: #selector(AppDelegate.updateWeather), userInfo: nil, repeats: false)
+    } // onWakeNote
+    
     @objc func launchWeather() {
+
+        // This actually lets us get notified when we Wake from sleep
+        // https://stackoverflow.com/questions/9247710/what-event-is-fired-when-mac-is-back-from-sleep
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self, selector: #selector(onWakeNote(note:)),
+            name: NSWorkspace.didWakeNotification, object: nil)
+
         var webVERSION = ""
         let newVersion = defaults.string(forKey: "newVersion")
         var whatChanged = ""
@@ -613,6 +680,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                 {
                     webVERSION = try NSString(contentsOf: url, usedEncoding: nil) as String
                     webVERSION = webVERSION.replacingOccurrences(of: "\n", with: "", options: .regularExpression)
+                    if (webVERSION.count > 6) {
+                        ErrorLog("http://heat-meteo.sourceforge.net/" + "VERSION2" + " not in the proper format\n" + webVERSION)
+                        webVERSION = ""
+                    }
                 }
                 catch
                 {
@@ -647,6 +718,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                     do
                     {
                         whatChanged = try NSString(contentsOf: url, usedEncoding: nil) as String
+                        //if (whatChanged[0] == '<') {
+                        //  ErrorLog (whatChanged)
+                        //}
                     }
                     catch
                     {
@@ -722,13 +796,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         {
             statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                 localizedString(forKey: "NetworkFailure_"),
-                                                                                                                  attributes:[NSAttributedStringKey.font : font!]))
+                                                                                                                  attributes:[NSAttributedString.Key.font : font!]))
         }
         else
         {
             statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                 localizedString(forKey: "Loading_") + "...",
-                                                                                                                  attributes:[NSAttributedStringKey.font : font!]))
+                                                                                                                  attributes:[NSAttributedString.Key.font : font!]))
         }
         
         let preferenceVersion = defaults.string(forKey: "preferenceVersion")
@@ -744,37 +818,37 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     
     @objc func runTimedCode()  //Animate the icon while loading
     {
-        if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-8")))
+        if (statusBarItem.image == NSImage(named: "Loading-8"))
         {
-            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-1"))!
+            statusBarItem.image = NSImage(named: "Loading-1")!
         }
-        else if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-1")))
+        else if (statusBarItem.image == NSImage(named: "Loading-1"))
         {
-            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-2"))!
+            statusBarItem.image = NSImage(named: "Loading-2")!
         }
-        else if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-2")))
+        else if (statusBarItem.image == NSImage(named: "Loading-2"))
         {
-            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-3"))!
+            statusBarItem.image = NSImage(named: "Loading-3")!
         }
-        else if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-3")))
+        else if (statusBarItem.image == NSImage(named: "Loading-3"))
         {
-            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-4"))!
+            statusBarItem.image = NSImage(named: "Loading-4")!
         }
-        else if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-4")))
+        else if (statusBarItem.image == NSImage(named: "Loading-4"))
         {
-            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-5"))!
+            statusBarItem.image = NSImage(named: "Loading-5")!
         }
-        else if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-5")))
+        else if (statusBarItem.image == NSImage(named: "Loading-5"))
         {
-            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-6"))!
+            statusBarItem.image = NSImage(named: "Loading-6")!
         }
-        else if (statusBarItem.image == NSImage(named: NSImage.Name(rawValue: "Loading-6")))
+        else if (statusBarItem.image == NSImage(named: "Loading-6"))
         {
-            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-7"))!
+            statusBarItem.image = NSImage(named: "Loading-7")!
         }
         else
         {
-            statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "Loading-8"))!
+            statusBarItem.image = NSImage(named: "Loading-8")!
         }
     } // runTimedCode
     
@@ -804,7 +878,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         {
             attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                 string,
-                                                                                                    attributes:[NSAttributedStringKey.font : NSFont.systemFont(ofSize: CGFloat(truncating: m))]))
+                                                                                                    attributes:[NSAttributedString.Key.font : NSFont.systemFont(ofSize: CGFloat(truncating: m))]))
         }
         else
         {
@@ -829,8 +903,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             {
                 attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                     string,
-                                                                                                        attributes:[NSAttributedStringKey.font : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!,
-                                                                                                                    NSAttributedStringKey.foregroundColor : textColor]))
+                                                                                                        attributes:[NSAttributedString.Key.font : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!,
+                                                                                                                    NSAttributedString.Key.foregroundColor : textColor]))
             }
             else
             {
@@ -852,9 +926,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                 
                 attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                     string,
-                                                                                                        attributes:[NSAttributedStringKey.font : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!,
-                                                                                                                    NSAttributedStringKey.foregroundColor : textColor,
-                                                                                                                    NSAttributedStringKey.backgroundColor : backgroundColor]))
+                                                                                                        attributes:[NSAttributedString.Key.font : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!,
+                                                                                                                    NSAttributedString.Key.foregroundColor : textColor,
+                                                                                                                    NSAttributedString.Key.backgroundColor : backgroundColor]))
             }
         }
         newItem.attributedTitle = attributedTitle
@@ -1018,11 +1092,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                     displayCityName = city[secondarys]
                 }
                 
-                updateMenuWithSecondaryLocation(weatherArray[index],
-                                                cityName: (city[secondarys]),
-                                                displayCityName: (displayCityName),
-                                                menu: menu,
-                                                weatherDataSource: weatherDataSource[secondarys])
+                if (weatherArray.count >= index) {
+                    updateMenuWithSecondaryLocation(weatherArray[index],
+                                                    cityName: (city[secondarys]),
+                                                    displayCityName: (displayCityName),
+                                                    menu: menu,
+                                                    weatherDataSource: weatherDataSource[secondarys])
+                }
                 index = index + 1
             }
             secondarys = secondarys + 1
@@ -1113,7 +1189,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             }
         }
         
-        let updateFrequency = defaults.string(forKey: "updateFrequency")
+        var updateFrequency = defaults.string(forKey: "updateFrequency")
+        if (updateFrequency == "0") {
+            updateFrequency = "0.1"
+        }
         myTimer = Timer.scheduledTimer(timeInterval: Double(updateFrequency!)!*60, target:self, selector: #selector(AppDelegate.updateWeather), userInfo: nil, repeats: false)
         
         // whichWeatherFirst
@@ -1135,9 +1214,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                               APIKey1: String,
                               APIKey2: String,
                               weatherFields: inout WeatherFields) {
+        weatherFields.currentTemp = "9999"
+        
+        // https://german.stackexchange.com/questions/4992/conversion-table-for-diacritics-e-g-ü-→-ue
+        var escapedCity = inputCity.replacingOccurrences(of: "\u{00dc}", with: "UE")
+        escapedCity = escapedCity.replacingOccurrences(of: "\u{00c4}", with: "AE")
+        escapedCity = escapedCity.replacingOccurrences(of: "\u{00d6}", with: "OE")
+        escapedCity = escapedCity.replacingOccurrences(of: "\u{00fc}", with: "ue")
+        escapedCity = escapedCity.replacingOccurrences(of: "\u{00e4}", with: "ae")
+        escapedCity = escapedCity.replacingOccurrences(of: "\u{00f6}", with: "oe")
+        escapedCity = escapedCity.replacingOccurrences(of: "\u{00df}", with: "ss")
+
         if (weatherDataSource == YAHOO_WEATHER) {
             //yahooWeatherAPI.setRadarWind(radarWindow)
-            yahooWeatherAPI.beginParsing(inputCity,
+            yahooWeatherAPI.beginParsing(escapedCity,
                                               displayCity: displayCity,
                                               APIKey1: APIKey1,
                                               APIKey2: APIKey2,
@@ -1146,7 +1236,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         else if (weatherDataSource == OPENWEATHERMAP)
         {
             //openWeatherMapAPI.setRadarWind(radarWindow)
-            openWeatherMapAPI.beginParsing(inputCity,
+            openWeatherMapAPI.beginParsing(escapedCity,
                                            APIKey1: APIKey1,
                                            APIKey2: APIKey2,
                                            weatherFields: &weatherFields)
@@ -1154,7 +1244,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         else if (weatherDataSource == THEWEATHER)
         {
             //theWeatherAPI.setRadarWind(radarWindow)
-            theWeatherAPI.beginParsing(inputCity,
+            theWeatherAPI.beginParsing(escapedCity,
                                        APIKey1: APIKey1,
                                        APIKey2: APIKey2,
                                        weatherFields: &weatherFields)
@@ -1162,7 +1252,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         else if (weatherDataSource == WEATHERUNDERGROUND)
         {
             //weatherUndergroundAPI.setRadarWind(radarWindow)
-            weatherUndergroundAPI.beginParsing(inputCity,
+            weatherUndergroundAPI.beginParsing(escapedCity,
                                                APIKey1: APIKey1,
                                                APIKey2: APIKey2,
                                                weatherFields: &weatherFields)
@@ -1170,7 +1260,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         else if (weatherDataSource == DARKSKY)
         {
             //darkSkyAPI.setRadarWind(radarWindow)
-            darkSkyAPI.beginParsing(inputCity,
+            darkSkyAPI.beginParsing(escapedCity,
                                     APIKey1: APIKey1,
                                     APIKey2: APIKey2,
                                     weatherFields: &weatherFields)
@@ -1178,7 +1268,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         else if (weatherDataSource == AERISWEATHER)
         {
             //aerisWeatherAPI.setRadarWind(radarWindow)
-            aerisWeatherAPI.beginParsing(inputCity,
+            aerisWeatherAPI.beginParsing(escapedCity,
                                          APIKey1: APIKey1,
                                          APIKey2: APIKey2,
                                          weatherFields: &weatherFields)
@@ -1186,7 +1276,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         else if (weatherDataSource == WORLDWEATHERONLINE)
         {
             //worldWeatherOnlineAPI.setRadarWind(radarWindow)
-            worldWeatherOnlineAPI.beginParsing(inputCity,
+            worldWeatherOnlineAPI.beginParsing(escapedCity,
                                                APIKey1: APIKey1,
                                                APIKey2: APIKey2,
                                                weatherFields: &weatherFields)
@@ -1194,7 +1284,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         else if (weatherDataSource == APIXU)
         {
             //ApiXUApi.setRadarWind(radarWindow)
-            ApiXUApi.beginParsing(inputCity,
+            ApiXUApi.beginParsing(escapedCity,
                                   APIKey1: APIKey1,
                                   APIKey2: APIKey2,
                                   weatherFields: &weatherFields)
@@ -1202,7 +1292,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         else if (weatherDataSource == CANADAGOV)
         {
             //canadaWeatherAPI.setRadarWind(radarWindow)
-            canadaWeatherAPI.beginParsing(inputCity,
+            canadaWeatherAPI.beginParsing(escapedCity,
                                   APIKey1: APIKey1,
                                   APIKey2: APIKey2,
                                   weatherFields: &weatherFields)
@@ -1236,6 +1326,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
          3200    not available
          
          */
+        
+        //InfoLog("In setImage")
+        //InfoLog("weatherCode: " + weatherCode + ", weatherDataSource: " + weatherDataSource)
         
         var imageName = "Unknown"
         
@@ -1454,68 +1547,92 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             }
         } else if (weatherDataSource == WEATHERUNDERGROUND)
         {
-            if (weatherCode == "") {
+            if ((weatherCode == "32") ||
+                (weatherCode == "36")){
                 imageName = "Sun"
             }
-            else if ((weatherCode == "Overcast") ||
-                (weatherCode == "ns_cloudy") ||
-                (weatherCode == "cloudy"))
+            else if ((weatherCode == "26") ||
+                (weatherCode == "27") ||
+                (weatherCode == "28") ||
+                (weatherCode == "29") ||
+                (weatherCode == "30") ||
+                (weatherCode == "33") ||
+                (weatherCode == "34"))
             {
                 imageName = "Cloudy"
             }
-            else if ((weatherCode == "Rain") ||
-                (weatherCode == "rain") ||
-                (weatherCode == "chancerain") ||
-                (weatherCode == "nt_chancerain") ||
-                (weatherCode == "nt_rain"))
+            else if ((weatherCode == "09") ||
+                (weatherCode == "9") ||
+                (weatherCode == "11") ||
+                (weatherCode == "12") ||
+                (weatherCode == "39") ||
+                (weatherCode == "40") ||
+                (weatherCode == "45"))
             {
                 imageName = "Rain"
             }
-            else if ((weatherCode == "Rain") ||
-                (weatherCode == "rain") ||
-                (weatherCode == "chancerain") ||
-                (weatherCode == "nt_chancerain") ||
-                (weatherCode == "nt_rain"))
-            {
-                imageName = "Rain"
-            }
-            else if ((weatherCode == "tstorms") ||
-                (weatherCode == "chancetstorms"))
+            else if ((weatherCode == "03") ||
+                (weatherCode == "04") ||
+                (weatherCode == "3") ||
+                (weatherCode == "4") ||
+                (weatherCode == "37") ||
+                (weatherCode == "38") ||
+                (weatherCode == "47"))
             {
                 imageName = "Thunderstorm"
             }
-            else if ((weatherCode == "sleet") ||
-                (weatherCode == "sleet"))
+            else if ((weatherCode == "06") ||
+                (weatherCode == "08") ||
+                (weatherCode == "6") ||
+                (weatherCode == "8") ||
+                (weatherCode == "10") ||
+                (weatherCode == "17") ||
+                (weatherCode == "18") ||
+                (weatherCode == "35"))
             {
                 imageName = "Sleet"
             }
-            else if ((weatherCode == "Snow") ||
-                (weatherCode == "snow") ||
-                (weatherCode == "chancesnow") ||
-                (weatherCode == "nt_chancesnow") ||
-                (weatherCode == "nt_snow"))
+            else if ((weatherCode == "05") ||
+                (weatherCode == "07") ||
+                (weatherCode == "5") ||
+                (weatherCode == "7") ||
+                (weatherCode == "13") ||
+                (weatherCode == "14") ||
+                (weatherCode == "15") ||
+                (weatherCode == "16") ||
+                (weatherCode == "25") ||
+                (weatherCode == "41") ||
+                (weatherCode == "42") ||
+                (weatherCode == "43") ||
+                (weatherCode == "46"))
             {
                 imageName = "Snow"
             }
-            else if ((weatherCode == "Fog") ||
-                (weatherCode == "fog"))
+            else if ((weatherCode == "00") ||
+                (weatherCode == "19") ||
+                (weatherCode == "20") ||
+                (weatherCode == "21") ||
+                (weatherCode == "22") ||
+                (weatherCode == "0"))
             {
                 imageName = "Hazy"
             }
-            else if ((weatherCode == "Clear") ||
-                (weatherCode == "nt_clear") ||
-                (weatherCode == "clear"))
+            else if ((weatherCode == "31") ||
+                (weatherCode == "31"))
             {
-                imageName = "Sun"
+                imageName = "Moon"
             }
-            else if ((weatherCode == "nt_mostlycloudy") ||
-                (weatherCode == "nt_partlycloudy") ||
-                (weatherCode == "mostlycloudy") ||
-                (weatherCode == "partlycloudy") ||
-                (weatherCode == "Mostly Cloudy") ||
-                (weatherCode == "Partly Cloudy"))
+            else if ((weatherCode == "01") ||
+                (weatherCode == "1") ||
+                (weatherCode == "2") ||
+                (weatherCode == "02"))
             {
-                imageName = "Sun-Cloud"
+                imageName = "Hurricane"
+            }
+            else if ((weatherCode == "23") ||
+                (weatherCode == "24"))
+            {
+                imageName = "Wind"
             }
         } else if (weatherDataSource == AERISWEATHER)
         {
@@ -1572,10 +1689,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         } else if (weatherDataSource == APIXU)
         {
             imageName = weatherCode
+
         } else if (weatherDataSource == CANADAGOV)
         {
             // http://dd.weather.gc.ca/citypage_weather/docs/current_conditions_icon_code_descriptions_e.csv
-            imageName = "Unknown"
             if ((weatherCode == "02") ||
                 (weatherCode == "03") ||
                 (weatherCode == "10") ||
@@ -1705,6 +1822,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             }
         }
         
+        if (weatherCode == "") {
+            imageName = "Unknown"
+        }
         if (imageName == "Unknown")
         {
             ErrorLog(String(format:localizedString(forKey: "InvalidWeatherCode_") + " : weatherDataSource=" + weatherDataSource + ", weatherCode=" + weatherCode))
@@ -1719,7 +1839,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             imageName = imageName + "-Color"
         }
         
-        return NSImage(named: NSImage.Name(rawValue: imageName))!
+        return NSImage(named: imageName)!
         
     } // setImage
     
@@ -1742,7 +1862,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     func formatTemp(_ temp: String) -> String
     {
         let defaults = UserDefaults.standard
-        if (temp == "") {
+        if ((temp == "") || (temp == "-")) {
             return "---"
         }
         var formattedTemp = String(Int((temp as NSString).doubleValue))
@@ -2076,7 +2196,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                 if (defaults.string(forKey: "menuBarFontDefault") == "1")
                 {
                     statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string: statusTitle,
-                                                                                                                          attributes:[NSAttributedStringKey.font : font!]))
+                                                                                                                          attributes:[NSAttributedString.Key.font : font!]))
                 }
                 else
                 {
@@ -2100,8 +2220,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                     if (defaults.string(forKey: "menuBarFontTransparency")! == "1")
                     {
                         statusBarItem.attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string: statusTitle,
-                                                                                                                              attributes:[NSAttributedStringKey.font : font!,
-                                                                                                                                          NSAttributedStringKey.foregroundColor : textColor]))
+                                                                                                                              attributes:[NSAttributedString.Key.font : font!,
+                                                                                                                                          NSAttributedString.Key.foregroundColor : textColor]))
                     }
                     else
                     {
@@ -2122,9 +2242,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                         }
                         statusBarItem.attributedTitle =
                             NSMutableAttributedString(attributedString: NSMutableAttributedString(string: statusTitle,
-                                                                                                  attributes:[NSAttributedStringKey.font : font!,
-                                                                                                              NSAttributedStringKey.foregroundColor : textColor,
-                                                                                                              NSAttributedStringKey.backgroundColor : backgroundColor]))
+                                                                                                  attributes:[NSAttributedString.Key.font : font!,
+                                                                                                              NSAttributedString.Key.foregroundColor : textColor,
+                                                                                                              NSAttributedString.Key.backgroundColor : backgroundColor]))
                     }
                 }
             }
@@ -2149,9 +2269,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                 let attributedTitle: NSMutableAttributedString
                 attributedTitle = NSMutableAttributedString(attributedString: NSMutableAttributedString(string:
                     localizedString(forKey: "NoInternetConnectivity_"),
-                                                                                                        attributes:[NSAttributedStringKey.font : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!,
-                                                                                                                    NSAttributedStringKey.foregroundColor : textColor,
-                                                                                                                    NSAttributedStringKey.backgroundColor : backgroundColor]))
+                                                                                                        attributes:[NSAttributedString.Key.font : NSFont(name: defaults.string(forKey: "font")!, size: CGFloat(truncating: m))!,
+                                                                                                                    NSAttributedString.Key.foregroundColor : textColor,
+                                                                                                                    NSAttributedString.Key.backgroundColor : backgroundColor]))
                 
                 ErrorLog(self.appName + ": " + localizedString(forKey: "NoInternetConnectivity_"))
                 
@@ -2228,7 +2348,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             }
             else if (weatherDataSource == APIXU)
             {
-                statusTitle = localizedString(forKey: "ProvidedBy_") + " APIXU"
+                statusTitle = localizedString(forKey: "PoweredBy_") + " APIXU"
+                sourceURL = "https://www.apixu.com/weather/"
             }
             else if (weatherDataSource == CANADAGOV)
             {
@@ -2383,7 +2504,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         }
         else if (weatherDataSource == APIXU)
         {
-            statusTitle = localizedString(forKey: "ProvidedBy_") + " APIXU"
+            statusTitle = localizedString(forKey: "PoweredBy_") + " APIXU"
+            sourceURL = "https://www.apixu.com/weather/"
         }
         else if (weatherDataSource == CANADAGOV)
         {
