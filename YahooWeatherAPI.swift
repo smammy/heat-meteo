@@ -81,7 +81,7 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
             let n1 = arr[0]
             let f1 = Int(n1)
             let s1 = f1?.description
-            if (arr[0] == s1) {
+            if ((arr[0] == s1) && (escapedCity.count != 5)) {
                 parseURL.append(QUERY_PREFIX1A1)
                 parseURL.append(n1)
             } else {
