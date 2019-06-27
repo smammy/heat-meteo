@@ -90,7 +90,7 @@
 "Wind_" = "Wind";
 "worldWeatherLocation_" = "No FREE accounts - Typical location is \"city state\"";
 "WorldWeatherOnline_" = "WorldWeatherOnline";
-"wundergroundLocation_" = "Typical location is \"lat,long\"";
+"wundergroundLocation_" = "Location is limited to your PWS ID";
 "Yahoo!_" = "Yahoo!";
 "yahooLocation_" = "Typical location is \"city name\" - no API Key required at this time";
 "Yes_" = "Yes";

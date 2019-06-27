@@ -90,7 +90,7 @@
 "Wind_" = "Vent";
 "worldWeatherLocation_" = "Pas de compte GRATUIT Localisation sous forme \"ville État\"";
 "WorldWeatherOnline_" = "WorldWeatherOnline";
-"wundergroundLocation_" = "Localisation sous forme \"lat,long\"";
+"wundergroundLocation_" = "L'emplacement est limité à votre identifiant PWS";
 "Yahoo!_" = "Yahoo!";
 "yahooLocation_" = "Localisation sous forme \"nom de la ville\" aucune clé d'API requise pour l'instant";
 "Yes_" = "Oui";
