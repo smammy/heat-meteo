@@ -114,10 +114,8 @@ class YahooWeatherAPI: NSObject, XMLParserDelegate {
         //print(String(format:"URL for Yahoo: %@\n", parseURL))
         var ak1 = APIKey1
         var ak2 = APIKey2
-        if (ak1 == "") {
+        if ((ak1 == "") || (ak2 == "")) {
             ak1 = ConsumerKey
-        }
-        if (ak2 == "") {
             ak2 = ConsumerSecret
         }
         

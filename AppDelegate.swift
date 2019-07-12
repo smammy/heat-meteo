@@ -162,6 +162,7 @@ struct WeatherFields {
     var windGust = String()         // mph
     var windDirection = String()    // degrees
     
+    var altitude = String()         // meters
     var humidity = String()         // percent
     var pressure = String()         // millibars
     var visibility = String()       // miles
@@ -171,14 +172,14 @@ struct WeatherFields {
     var sunset = String()           // UTC "mm:dd:yyyy'T'hh:MM:ss"
 
     var currentLink = String()
-    var currentTemp = String()      // *F
+    var currentTemp = String()          // *F
     var currentCode = String()          // Abbreviated Conditions
     var currentConditions = String()    // Full Conditions
     
     // http://stackoverflow.com/questions/30430550/how-to-create-an-empty-array-in-swift
     var forecastCounter = 0
-    var forecastDate = [String]()
-    var forecastDay = [String]()
+    var forecastDate = [String]()       // 31
+    var forecastDay = [String]()        // Monday
     var forecastHigh = [String]()       // *F
     var forecastLow = [String]()        // *F
     var forecastCode = [String]()       // Abbreviated Conditions
@@ -286,6 +287,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     @IBOutlet weak var pressureUnit: NSPopUpButton!
     @IBOutlet weak var directionLabel: NSTextField!
     @IBOutlet weak var directionUnit: NSPopUpButton!
+    @IBOutlet weak var convertQFEtoQNH: NSButton!
     
     @IBOutlet weak var forecastLabel: NSTextField!
     @IBOutlet weak var forecastDays: NSPopUpButton!
@@ -295,6 +297,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     @IBOutlet weak var displayDegreeType: NSButton!
     @IBOutlet weak var displayWeatherIcon: NSButton!
     @IBOutlet weak var displayCityName: NSButton!
+    @IBOutlet weak var displayFeelsLike: NSButton!
     @IBOutlet weak var useNewWeatherIcons: NSButton!  //Added this to give choice between color and monochrome icons
     @IBOutlet weak var currentWeatherInSubmenu: NSButton!
     @IBOutlet weak var viewExtendedForecast: NSButton!
@@ -376,6 +379,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     
     var firstTime = false
     
+    var locationAltitude = "9999"     // meters
+    
     override init()
     {
         
@@ -430,8 +435,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                 self.myLatitude = String(format: "%f", location?.coordinate.latitude ?? "")
                 self.myLongitude = String(format: "%f", location?.coordinate.longitude ?? "")
                 
+                // <here>
+                locationAltitude = String(format: "%.2f", location?.altitude ?? "")
+                
                 InfoLog("")
-                InfoLog("This stuff is spooky, macOS knowing all this. But we're using part of it...")
+                InfoLog("This stuff is spooky, macOS knowing all this. But we're using parts of it...")
                 InfoLog("")
                 InfoLog("location data:")
                 InfoLog("latitude: " + String(format: "%.4f", location?.coordinate.latitude ?? ""))
@@ -1009,7 +1017,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         
     } // initWeatherFields
     
-    func loadWeatherData(weatherDataSource: [String], city: [String], displayCity: [String], APIKey1: [String], APIKey2: [String]) {
+    func loadWeatherData(weatherDataSource: [String], city: [String], displayCity: [String], APIKey1: [String], APIKey2: [String], altitude: [String]) {
 
         //let group = DispatchGroup()
         
@@ -1053,20 +1061,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         self.displayWeatherData(city: city,
                                 displayCity: displayCity,
                                 weatherDataSource: weatherDataSource,
-                                menu: self.menu)
+                                menu: self.menu,
+                                altitude: altitude)
 
     } // loadWeatherData
     
     func displayWeatherData(city: [String],
                             displayCity: [String],
                             weatherDataSource: [String],
-                            menu: NSMenu) {
+                            menu: NSMenu,
+                            altitude: [String]) {
         
         updateMenuWithPrimaryLocation(weatherArray[0],
                                       cityName: (city[whichWeatherFirst]),
                                       displayCityName: (displayCity[whichWeatherFirst]),
                                       menu: menu,
-                                      weatherDataSource: weatherDataSource[whichWeatherFirst])
+                                      weatherDataSource: weatherDataSource[whichWeatherFirst],
+                                      altitude: altitude[whichWeatherFirst])
         
         var bFirstTime = 0
         var secondarys = whichWeatherFirst + 1
@@ -1097,7 +1108,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                                                     cityName: (city[secondarys]),
                                                     displayCityName: (displayCityName),
                                                     menu: menu,
-                                                    weatherDataSource: weatherDataSource[secondarys])
+                                                    weatherDataSource: weatherDataSource[secondarys],
+                                                    altitude: altitude[secondarys])
                 }
                 index = index + 1
             }
@@ -1119,8 +1131,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         let defaults = UserDefaults.standard
         
         // whichWeatherFirst
-        if ((defaults.string(forKey: "rotateWeatherURLs") == nil) ||
-            (defaults.string(forKey: "rotateWeatherLocations") == "0"))
+        if  (defaults.string(forKey: "rotateWeatherLocations") == "0")
         {
             whichWeatherFirst = 0
         }
@@ -1130,7 +1141,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         var displayCity = [String]()
         var APIKey1 = [String]()
         var APIKey2 = [String]()
-        
+        var Altitude = [String]()
+
         var i = 0
         
         while (i < MAX_LOCATIONS)
@@ -1146,8 +1158,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                 displayCity.insert(defaults.string(forKey: String(format:"displayCity%d", i + 1))!, at: i)
             }
             weatherDataSource.insert(defaults.string(forKey: String(format:"weatherSource_%d", i + 1))!, at: i)
+            Altitude.insert("9999", at: i)
             if ((city[i] == "<" + localizedString(forKey: "here") + ">") ||
                 (city[i] == "<here>")) {
+                Altitude[i] = locationAltitude
                 if ((weatherDataSource[i] == YAHOO_WEATHER) ||
                     (weatherDataSource[i] == AERISWEATHER) ||
                     (weatherDataSource[i] == CANADAGOV)) {
@@ -1172,7 +1186,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         // TODO: Launch all weather sources as background task (async/in parallel)
         // Wait for all to complete then build menus
         
-        loadWeatherData(weatherDataSource: weatherDataSource, city: city, displayCity: displayCity, APIKey1: APIKey1, APIKey2: APIKey2)
+        loadWeatherData(weatherDataSource: weatherDataSource, city: city, displayCity: displayCity, APIKey1: APIKey1, APIKey2: APIKey2, altitude: Altitude)
         
         if (loadTimer != nil)
         {
@@ -2068,12 +2082,34 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         return formattedWindSpeed
     } // formatWindSpeed
     
-    func formatPressure(_ pressure: String) -> String {
+    func formatPressure(_ pressure: String, altitude: String) -> String {
         // input is millibars
         let defaults = UserDefaults.standard
         var formattedPressure = ""
         // TODO - This is stupid - double conversion for most cases
-        let pressure__ = String(format: "%.2f", (pressure as NSString).doubleValue / 33.8637526) // mbar -> Inches
+        var pressure__ = String(format: "%.2f", (pressure as NSString).doubleValue / 33.8637526) // mbar -> Inches
+        
+        // Convert QFE to QNH
+        /* 1 inch mercury is approximately equal to 900 feet. This calculation is therefore also approximate but is
+            good for airfield elevations to several hundred feet since we round to the nearest hundredth inches.
+        
+            Divide the airfield altitude in feet by 900 to get the number of inches above MSL.
+            Add this to the QFE to get QNH or subtract it from QNH to get QFE.
+        
+            For example, the airfield elevation is 300 feet. Diving by 900 gives us 0.33r.
+            The QFE is 30.12. Add 0.33 to get 30.45 which is the QNH.
+        */
+        if ((defaults.string(forKey: "convertQFEtoQNH")! == "1") &&
+            (altitude != "9999")) {
+            // First convert Meters to Feet
+            var meters = Double(altitude)
+            meters = Double(altitude)
+            let diffQFE = (meters! * 3.2808) / 900.0
+            let QFE = (Double(pressure__))!
+            let QNH = QFE + diffQFE
+            pressure__ = String(format: "%.2f", QNH)
+        }
+        
         if (defaults.string(forKey: "pressureUnit")! == "0")
         {
             formattedPressure += pressure__ + " " + localizedString(forKey: "Inches_")
@@ -2128,7 +2164,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         }
     } // extendedWeatherIcon
     
-    func updateMenuWithPrimaryLocation(_ weatherFields: WeatherFields, cityName: String, displayCityName: String, menu: NSMenu, weatherDataSource: String) {
+    func updateMenuWithPrimaryLocation(_ weatherFields: WeatherFields, cityName: String, displayCityName: String, menu: NSMenu, weatherDataSource: String, altitude: String) {
         
         var newItem = NSMenuItem()
         DebugLog(String(format:"in updateMenuWithPrimaryLocation: %@", cityName))
@@ -2181,13 +2217,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                 
                 if (defaults.string(forKey: "displayCityName")! == "1")
                 {
-                    statusTitle = displayCity + " " + formatTemp((weatherFields.currentTemp as String))
+                    statusTitle = displayCity + " "
                 }
-                else
+                if (defaults.string(forKey: "displayFeelsLike") == "1") {
+                    statusTitle = statusTitle + calculateFeelsLike(weatherFields.currentTemp, sWindspeed: weatherFields.windSpeed, sRH: weatherFields.humidity)
+                } else
                 {
-                    statusTitle = formatTemp((weatherFields.currentTemp as String))
+                    statusTitle = statusTitle + formatTemp((weatherFields.currentTemp as String))
                 }
-                
+
                 if (defaults.string(forKey: "displayHumidity")! == "1")
                 {
                     statusTitle = statusTitle + "/" + formatHumidity((weatherFields.humidity as String))
@@ -2381,7 +2419,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                 menu.addItem(NSMenuItem.separator())
             }
             
-            currentConditions(weatherFields, cityName: displayCityName, currentForecastMenu: currentForecastMenu)
+            currentConditions(weatherFields, cityName: displayCityName, currentForecastMenu: currentForecastMenu, altitude: altitude)
             
             //newItem = myMenuItem(localizedString(forKey: "RadarImage_"), url: "showRadar:", key: "")
             newItem.representedObject = weatherFields.weatherTag as String
@@ -2412,7 +2450,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                                          cityName: String,
                                          displayCityName: String,
                                          menu: NSMenu,
-                                         weatherDataSource: String) {
+                                         weatherDataSource: String,
+                                         altitude: String) {
         
         var newItem = NSMenuItem()
         let defaults = UserDefaults.standard
@@ -2430,7 +2469,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         }
         
         var statusTitle = city
-        if (weatherFields.currentTemp != "") {
+        if (defaults.string(forKey: "displayFeelsLike") == "1") {
+            statusTitle = statusTitle + " " + calculateFeelsLike(weatherFields.currentTemp, sWindspeed: weatherFields.windSpeed, sRH: weatherFields.humidity)
+        } else
+        {
             statusTitle = statusTitle + " " + formatTemp((weatherFields.currentTemp as String))
         }
         if (defaults.string(forKey: "displayHumidity")! == "1") {
@@ -2438,7 +2480,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                 statusTitle = statusTitle + "/" + formatHumidity((weatherFields.humidity as String))
             }
         }
-        
+
         myMenuItem(statusTitle, url: "openWeatherURL:", key: "", newItem: &newItem)
         if (weatherFields.currentCode != "") {
             newItem.image = setImage(weatherFields.currentCode as String, weatherDataSource: weatherDataSource)
@@ -2527,7 +2569,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         }
         currentForecastMenu.addItem(newItem)
         
-        currentConditions(weatherFields, cityName: displayCityName, currentForecastMenu: currentForecastMenu)
+        currentConditions(weatherFields, cityName: displayCityName, currentForecastMenu: currentForecastMenu, altitude: altitude)
         
         if ((defaults.string(forKey: "viewExtendedForecast")! == "1") &&
             (!weatherFields.forecastDay[0].isEqual(""))) {
@@ -2548,19 +2590,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         DebugLog(String(format:"leaving updateMenuWithSecondaryLocation: %@", cityName))
     } // updateMenuWithSecondaryLocation
     
-    func currentConditions(_ weatherFields: WeatherFields, cityName: String, currentForecastMenu: NSMenu) {
+    func currentConditions(_ weatherFields: WeatherFields, cityName: String, currentForecastMenu: NSMenu, altitude: String) {
 
         var newItem = NSMenuItem()
-        if (weatherFields.currentTemp != "") {
+        
+        if (defaults.string(forKey: "displayFeelsLike") == "1") {
+            // Feels like was display on the title
             myMenuItem(localizedString(forKey: "Temperature_") + ": " + formatTemp(weatherFields.currentTemp as String), url: "dummy:", key: "", newItem: &newItem)
-            currentForecastMenu.addItem(newItem)
+        } else {
+            // Feels like was not on the title
+            if (weatherFields.windSpeed != "") {
+                myMenuItem(localizedString(forKey: "FeelsLike_") + ": " + calculateFeelsLike(weatherFields.currentTemp, sWindspeed: weatherFields.windSpeed, sRH: weatherFields.humidity), url: "dummy:", key: "", newItem: &newItem)
+            }
         }
-        
-        if (weatherFields.windSpeed != "") {
-            myMenuItem(localizedString(forKey: "FeelsLike_") + ": " + calculateFeelsLike(weatherFields.currentTemp, sWindspeed: weatherFields.windSpeed, sRH: weatherFields.humidity), url: "dummy:", key: "", newItem: &newItem)
-            currentForecastMenu.addItem(newItem)
-        }
-        
+        currentForecastMenu.addItem(newItem)
+
         if (weatherFields.humidity != "") {
             myMenuItem(localizedString(forKey: "Humidity_") + ": " + formatHumidity(weatherFields.humidity as String), url: "dummy:", key: "", newItem: &newItem)
             currentForecastMenu.addItem(newItem)
@@ -2572,7 +2616,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         }
         
         if (weatherFields.pressure != "") {
-            myMenuItem(localizedString(forKey: "Pressure_") + ": " + formatPressure(weatherFields.pressure as String), url: "dummy:", key: "", newItem: &newItem)
+            myMenuItem(localizedString(forKey: "Pressure_") + ": " + formatPressure(weatherFields.pressure as String, altitude: altitude), url: "dummy:", key: "", newItem: &newItem)
             currentForecastMenu.addItem(newItem)
         }
         
@@ -2790,6 +2834,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         testAndSet("displayDegreeType", defaultValue: "1")
         testAndSet("displayWeatherIcon", defaultValue: "1")
         testAndSet("displayCityName", defaultValue: "1")
+        testAndSet("displayFeelsLike", defaultValue: "0")
+        testAndSet("useNewWeatherIcons", defaultValue: "1")  //Use new weather icons
         testAndSet("currentWeatherInSubmenu", defaultValue: "0")
         testAndSet("viewExtendedForecast", defaultValue: "1")
         testAndSet("extendedForecastSingleLine", defaultValue: "1")
@@ -2801,8 +2847,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         testAndSet("logMessages", defaultValue: "1")
         testAndSet("allowLocation", defaultValue: "1")
         testAndSet("launchDelay", defaultValue: "10")
-        testAndSet("useNewWeatherIcons", defaultValue: "1")  //Use new weather icons
-        
+        testAndSet("convertQFEtoQNH", defaultValue: "0")
+
         testAndSet("degreesUnit", defaultValue: "0")
         testAndSet("distanceUnit", defaultValue: "0")
         testAndSet("speedUnit", defaultValue: "0")
@@ -2883,22 +2929,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         
         updateFrequencyTextField.stringValue = defaults.string(forKey: "updateFrequency") ?? DEFAULT_INTERVAL
         delayFrequencyTextField.stringValue = defaults.string(forKey: "launchDelay") ?? "10"
+        convertQFEtoQNH.stringValue         = defaults.string(forKey: "convertQFEtoQNH") ?? "0"
         controlsInSubmenu.stringValue       = defaults.string(forKey: "controlsInSubmenu") ?? "1"
         displayHumidity.stringValue         = defaults.string(forKey: "displayHumidity") ?? "1"
         displayDegreeType.stringValue       = defaults.string(forKey: "displayDegreeType") ?? "1"
         displayWeatherIcon.stringValue      = defaults.string(forKey: "displayWeatherIcon") ?? "1"
         displayCityName.stringValue         = defaults.string(forKey: "displayCityName") ?? "1"
+        displayFeelsLike.stringValue        = defaults.string(forKey: "displayFeelsLike") ?? "0"
         useNewWeatherIcons.stringValue      = defaults.string(forKey: "useNewWeatherIcons") ?? "1"
-        currentWeatherInSubmenu.stringValue = defaults.string(forKey: "currentWeatherInSubmenu") ?? "1"
+        currentWeatherInSubmenu.stringValue = defaults.string(forKey: "currentWeatherInSubmenu") ?? "0"
         viewExtendedForecast.stringValue    = defaults.string(forKey: "viewExtendedForecast") ?? "1"
         extendedForecastSingleLine.stringValue = defaults.string(forKey: "extendedForecastSingleLine") ?? "1"
-        rotateWeatherLocations.stringValue = defaults.string(forKey: "rotateWeatherLocations") ?? "0"
+        rotateWeatherLocations.stringValue  = defaults.string(forKey: "rotateWeatherLocations") ?? "0"
         extendedForecastInSubmenu.stringValue = defaults.string(forKey: "extendedForecastInSubmenu") ?? "1"
         extendedForecastIcons.stringValue   = defaults.string(forKey: "extendedForecastIcons") ?? "1"
         extendedForecastDisplayDate.stringValue = defaults.string(forKey: "extendedForecastDisplayDate") ?? "0"
         newVersion.stringValue              = defaults.string(forKey: "newVersion") ?? "1"
         logMessages.stringValue             = defaults.string(forKey: "logMessages") ?? "1"
-        allowLocation.stringValue             = defaults.string(forKey: "allowLocation") ?? "0"
+        allowLocation.stringValue           = defaults.string(forKey: "allowLocation") ?? "0"
 
         degreesUnit.selectItem(at: Int(defaults.string(forKey: "degreesUnit") ?? "0")!)
         distanceUnit.selectItem(at: Int(defaults.string(forKey: "distanceUnit") ?? "0")!)
@@ -2980,10 +3028,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         defaults.setValue(updateFrequencyTextField.stringValue, forKey: "updateFrequency")
         defaults.setValue(delayFrequencyTextField.stringValue, forKey: "launchDelay")
         defaults.setValue(controlsInSubmenu.stringValue, forKey: "controlsInSubmenu")
+        defaults.setValue(convertQFEtoQNH.stringValue, forKey: "convertQFEtoQNH")
         defaults.setValue(displayHumidity.stringValue, forKey: "displayHumidity")
         defaults.setValue(displayDegreeType.stringValue, forKey: "displayDegreeType")
         defaults.setValue(displayWeatherIcon.stringValue, forKey: "displayWeatherIcon")
         defaults.setValue(displayCityName.stringValue, forKey: "displayCityName")
+        defaults.setValue(displayFeelsLike.stringValue, forKey: "displayFeelsLike")
         defaults.setValue(useNewWeatherIcons.stringValue, forKey: "useNewWeatherIcons")
         defaults.setValue(currentWeatherInSubmenu.stringValue, forKey: "currentWeatherInSubmenu")
         defaults.setValue(viewExtendedForecast.stringValue, forKey: "viewExtendedForecast")
@@ -3043,13 +3093,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         InitWeatherSourceButton(weatherSourceButton: weatherSource_7)
         InitWeatherSourceButton(weatherSourceButton: weatherSource_8)
         
-        currentWeatherInSubmenu.title = localizedString(forKey: "CurrentWeather_")
         displayHumidity.title = localizedString(forKey: "DisplayHumidity_")
         displayDegreeType.title = localizedString(forKey: "DisplayDegreeType_")
         displayWeatherIcon.title = localizedString(forKey: "DisplayWeatherIcon_")
         displayCityName.title = localizedString(forKey: "DisplayCityName_")
+        displayFeelsLike.title = localizedString(forKey: "DisplayFeelsLike_")
         useNewWeatherIcons.title = localizedString(forKey: "UseNewWeatherIcons_")
+        currentWeatherInSubmenu.title = localizedString(forKey: "CurrentWeather_")
         controlsInSubmenu.title = localizedString(forKey: "ControlsInSubmenu_")
+        convertQFEtoQNH.title = localizedString(forKey: "convertQFEtoQNH_")
         viewExtendedForecast.title = localizedString(forKey: "ViewExtendedForecast_")
         extendedForecastInSubmenu.title = localizedString(forKey: "ExtendedForecastInSubmenu_")
         extendedForecastIcons.title = localizedString(forKey: "ExtendedForecastIcons_")

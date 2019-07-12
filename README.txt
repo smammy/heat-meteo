@@ -1,5 +1,11 @@
 This file could also be called the change log.
 
+3.1.9
+* Correct Yahoo! lookup by US ZIP code
+* Add option to display Feels Like on menu bar (vs. actual temperature)
+* Correct rotation of cities
+* Adjust pressure (QFE) based on altitude (QNH), where altitude is provided (currently only via <here>)
+
 3.1.8
 * Add translation of German special characters (umlauts) to ASCII.
 * Add detection of wake from sleep to avoid some wifi problems.

@@ -11,6 +11,7 @@
 "Close_" = "Close";
 "Controls_" = "Controls";
 "ControlsInSubmenu_" = "Show controls in submenu";
+"convertQFEtoQNH_" = "Convert QFE to QNH";
 "currentConditions_" = "Current Conditions";
 "CurrentWeather_" = "Current weather in submenu";
 "DarkSky_" = "DarkSky.net";
@@ -22,6 +23,7 @@
 "DisplayDegreeType_" = "Display type (C/F)";
 "DisplayFont_" = "Display Font";
 "DisplayHumidity_" = "Display Humidity";
+"DisplayFeelsLike_" = "Display Feels Like";
 "DisplayWeatherIcon_" = "Display weather icon";
 "Distance_" = "Distance";
 "Download?_" = "Would you like to download it now?";

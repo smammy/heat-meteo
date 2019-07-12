@@ -11,6 +11,7 @@
 "Close_" = "Fermer";
 "Controls_" = "Contrôles";
 "ControlsInSubmenu_" = "Contrôles dans un sous-menu";
+"convertQFEtoQNH_" = "Convertir QFE en QNH";
 "currentConditions_" = "Météo actuelle";
 "CurrentWeather_" = "Météo actuelle dans sous-menu";
 "DarkSky_" = "DarkSky.net";
@@ -23,6 +24,7 @@
 "DisplayFont_" = "Police d'affichage";
 "DisplayHumidity_" = "Afficher l'humidité";
 "DisplayWeatherIcon_" = "Afficher l'icône-météo";
+"DisplayFeelsLike_" = "Display Ressentie";
 "Distance_" = "Distance";
 "Download?_" = "Télécharger immédiatement ?";
 "ExtendedForecast_" = "Prévisions étendues";

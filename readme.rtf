@@ -1,4 +1,4 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf200
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
 {\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;\f2\fswiss\fcharset0 Helvetica-BoldOblique;
 }
 {\colortbl;\red255\green255\blue255;\red38\green38\blue38;\red38\green71\blue75;\red14\green14\blue255;
@@ -14,7 +14,6 @@
 	* What works and what doesn\'92t on older OS\'92s?\
 \
 * localization started - French only for now\
-* default to current location\
 * localize weather forecast (partially complete)\
 \
 * display location (\strike \strikec0 Menubar\strike0\striked0  vs. Dock vs. Both) - does anybody use Dock view?\
@@ -23,9 +22,6 @@
 \
 * animate refreshing weather icon?\
 \
-* preference pane with 
-\f0\b tabs
-\f1\b0 \
 * dynamic city name list (not limited to 8?)\
 * There is some sort of memory link - possibly with NSTimer?\
 * Give API key only once for a given weather source\
@@ -40,7 +36,7 @@
 \f1\b0\fs28 \
 \
 Version 2 of Meteorologist is initially based on the menuBar app by Brad at {\field{\*\fldinst{HYPERLINK "http://footle.org/WeatherBar/"}}{\fldrslt http://footle.org/WeatherBar/}}.\
-The use is NSXMLParser came as a result of not getting a working copy of curl handle working with the original Meteorologist.\
+The use of NSXMLParser came as a result of not getting a working copy of curl handle working with the original Meteorologist.\
 \
 AppDelegate.swift is the starting point but never really used.\
 It contains a list of websites where I gathered and learn how to do all of this in Swift (2).\
@@ -65,7 +61,7 @@ updateWeather is also called each time the PreferencesWindow is closed\
 In PreferencesWindow\cf2 \expnd0\expndtw0\kerning0
 \CocoaLigature1 .swift\cf3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
 * the xib is updated with the proper localized (international) text\
-* the Window is updated with the current preferences (default are used if the don\'92t already exist)\
+* the Window is updated with the current preferences (default are used if they don\'92t already exist)\
 * when the Window is closed, the preferences are saved\
 \
 In RadarWindow\cf2 \expnd0\expndtw0\kerning0

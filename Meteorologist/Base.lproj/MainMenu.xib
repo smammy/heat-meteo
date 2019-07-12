@@ -55,6 +55,7 @@
                 <outlet property="cityTextField7" destination="Reb-eR-Quc" id="Bjo-W6-Gl5"/>
                 <outlet property="cityTextField8" destination="KVC-f8-WaV" id="XG9-hj-NIG"/>
                 <outlet property="controlsInSubmenu" destination="a5p-if-6gI" id="am2-tl-t8c"/>
+                <outlet property="convertQFEtoQNH" destination="Z1k-Rd-UbA" id="hVS-Mv-vfq"/>
                 <outlet property="currentWeatherInSubmenu" destination="Y29-eb-O86" id="A7H-mt-VZP"/>
                 <outlet property="darkSkyLocation" destination="7SB-25-SAM" id="Gxx-8I-717"/>
                 <outlet property="darkSkyURL" destination="NBI-97-MKP" id="Ssq-ek-Wq0"/>
@@ -67,6 +68,7 @@
                 <outlet property="directionUnit" destination="Xnb-H1-W6C" id="enF-pf-yn3"/>
                 <outlet property="displayCityName" destination="a84-ZU-bgl" id="fiH-eB-zGG"/>
                 <outlet property="displayDegreeType" destination="oFq-SC-5Xh" id="biw-WH-hRB"/>
+                <outlet property="displayFeelsLike" destination="ywj-wx-99a" id="eDS-5q-dDO"/>
                 <outlet property="displayHumidity" destination="qEC-Rn-aOw" id="aW4-Yl-oOz"/>
                 <outlet property="displayWeatherIcon" destination="msU-RW-U6K" id="ln6-Pa-0w1"/>
                 <outlet property="distanceLabel" destination="JH6-bw-2q7" id="CB0-K4-QZh"/>
@@ -138,7 +140,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Locations_" identifier="Locations_" id="Ct3-sn-Kal" userLabel="Locations Tab">
-                                <view key="view" ambiguous="YES" id="qw4-cW-H1t">
+                                <view key="view" id="qw4-cW-H1t">
                                     <rect key="frame" x="10" y="33" width="1020" height="255"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -551,7 +553,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Options_" identifier="Options_" id="hev-om-kST" userLabel="Options Tab">
-                                <view key="view" id="OSu-6i-qwW">
+                                <view key="view" ambiguous="YES" id="OSu-6i-qwW">
                                     <rect key="frame" x="10" y="33" width="1020" height="255"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -780,16 +782,16 @@
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                         </button>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UDx-ys-QaV">
+                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ywj-wx-99a" userLabel="Display Feels Like_">
                                             <rect key="frame" x="527" y="176" width="220" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="View extended forecast_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="weo-Gb-vAL">
+                                            <buttonCell key="cell" type="check" title="Display Feels Like_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="V9o-gk-Wn6" userLabel="Display Feels Like_">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RdL-mQ-nf6">
-                                            <rect key="frame" x="750" y="236" width="287" height="18"/>
+                                            <rect key="frame" x="750" y="216" width="287" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Extended forecast in submenu_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="bPO-ho-LLR">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -797,7 +799,7 @@
                                             </buttonCell>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fQB-Yr-XdY">
-                                            <rect key="frame" x="750" y="216" width="287" height="18"/>
+                                            <rect key="frame" x="750" y="196" width="287" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Extended forecast icons_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4wi-RG-hzU">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -805,7 +807,7 @@
                                             </buttonCell>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tmh-T9-GIK">
-                                            <rect key="frame" x="750" y="196" width="287" height="18"/>
+                                            <rect key="frame" x="750" y="176" width="287" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Extended forecast single line_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="u0w-e0-CBZ">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -813,7 +815,7 @@
                                             </buttonCell>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L0l-0t-2yC">
-                                            <rect key="frame" x="750" y="176" width="287" height="18"/>
+                                            <rect key="frame" x="750" y="156" width="287" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Extended forecast displays date_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="fyw-x6-4f4">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -821,7 +823,7 @@
                                             </buttonCell>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6ci-Sz-6PT">
-                                            <rect key="frame" x="750" y="156" width="287" height="18"/>
+                                            <rect key="frame" x="750" y="136" width="287" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Rotate weather locations" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kvB-yI-i09">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -829,9 +831,17 @@
                                             </buttonCell>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ad6-Bg-1bj">
-                                            <rect key="frame" x="750" y="136" width="287" height="18"/>
+                                            <rect key="frame" x="750" y="116" width="287" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Check for new versions on launch_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="9tL-Lo-Tjc">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z1k-Rd-UbA" userLabel="Convert QFE to QNH">
+                                            <rect key="frame" x="750" y="96" width="287" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Convert QFE to QNH_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="rsQ-XY-tO0" userLabel="Convert QFE to QNH">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -872,6 +882,14 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UDx-ys-QaV">
+                                            <rect key="frame" x="750" y="236" width="269" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="View extended forecast_" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="weo-Gb-vAL">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -1230,7 +1248,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="EET-S5-SCY">
                                                 <rect key="frame" x="0.0" y="0.0" width="984" height="230"/>
-                                                <autoresizingMask key="autoresizingMask"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" spellingCorrection="YES" smartInsertDelete="YES" id="GDo-Sy-c9b">
                                                         <rect key="frame" x="0.0" y="0.0" width="984" height="230"/>
