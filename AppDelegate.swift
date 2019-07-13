@@ -1103,7 +1103,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                     displayCityName = city[secondarys]
                 }
                 
-                if (weatherArray.count >= index) {
+                if (weatherArray.count > index) {
                     updateMenuWithSecondaryLocation(weatherArray[index],
                                                     cityName: (city[secondarys]),
                                                     displayCityName: (displayCityName),
@@ -1129,6 +1129,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     @objc func updateWeather()
     {
         let defaults = UserDefaults.standard
+        
+        if (loadTimer != nil)
+        {
+            loadTimer.invalidate()
+            loadTimer = nil
+        }
+        
+        let uwTimer = myTimer
+        if uwTimer == myTimer
+        {
+            if uwTimer.isValid
+            {
+                uwTimer.invalidate()
+            }
+        }
         
         // whichWeatherFirst
         if  (defaults.string(forKey: "rotateWeatherLocations") == "0")
@@ -1182,26 +1197,32 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             APIKey2.insert(defaults.string(forKey: String(format:"API_Key_Data2_%d", i + 1))!, at: i)
             i = i + 1
         }
+
+        let saveWWF = whichWeatherFirst
+        while (city[whichWeatherFirst] == "") {
+            whichWeatherFirst += 1
+            if (whichWeatherFirst > MAX_LOCATIONS - 1)
+            {
+                whichWeatherFirst = 0
+            }
+            if (whichWeatherFirst == saveWWF) {
+                // We are  in a loop!
+
+                statusBarItem = statusBar.statusItem(withLength: -1)
+                statusBarItem.menu = menu
+                statusBarItem.title = "9999°"
+
+                menu.removeAllItems()
+                addControlOptions()
+
+                return
+            }
+        }
         
         // TODO: Launch all weather sources as background task (async/in parallel)
         // Wait for all to complete then build menus
         
         loadWeatherData(weatherDataSource: weatherDataSource, city: city, displayCity: displayCity, APIKey1: APIKey1, APIKey2: APIKey2, altitude: Altitude)
-        
-        if (loadTimer != nil)
-        {
-            loadTimer.invalidate()
-            loadTimer = nil
-        }
-
-        let uwTimer = myTimer
-        if uwTimer == myTimer
-        {
-            if uwTimer.isValid
-            {
-                uwTimer.invalidate()
-            }
-        }
         
         var updateFrequency = defaults.string(forKey: "updateFrequency")
         if (updateFrequency == "0") {

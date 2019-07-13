@@ -1,5 +1,10 @@
 This file could also be called the change log.
 
+3.2.0
+* Correct crash when rotating cities and all cities are not in use
+* Correct crash if first city was empty
+* Correct crash if all locations were empty
+
 3.1.9
 * Correct Yahoo! lookup by US ZIP code
 * Add option to display Feels Like on menu bar (vs. actual temperature)
