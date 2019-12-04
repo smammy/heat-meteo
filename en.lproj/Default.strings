@@ -164,6 +164,8 @@
 
 "canadaGovLocation_" = "Look for city in the URL to the left. Location is as \"city,province\"";
 "CanadaGov_" = "Environment Canada";
+"noaaWeatherLocation_" = "Typical location is \"lat,long\" - no API Key required at this time";
+"NOAA Weather_" = "NOAA Weather";
 "km/h_" = "km/h";
 "kPa_" = "kPa";
 "Locations_" = "Locations";

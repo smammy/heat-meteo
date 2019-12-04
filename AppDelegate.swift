@@ -73,6 +73,7 @@ let WORLDWEATHERONLINE = "5"
 let DARKSKY = "6"
 let APIXU = "7"
 let CANADAGOV = "8"
+let NOAAWEATHER = "9"
 let MAX_LOCATIONS = 8
 
 var DEFAULT_PREFERENCE_VERSION = String()
@@ -323,6 +324,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     @IBOutlet weak var darkSkyLocation: NSTextField!
     @IBOutlet weak var APIXULocation: NSTextField!
     @IBOutlet weak var canadaGovLocation: NSTextField!
+    @IBOutlet weak var noaaWeatherLocation: NSTextField!
 
     @IBOutlet weak var theWeatherURL: NSButton!
     @IBOutlet weak var openWeatherMapURL: NSButton!
@@ -333,7 +335,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     @IBOutlet weak var darkSkyURL: NSButton!
     @IBOutlet weak var apixuURL: NSButton!
     @IBOutlet weak var canadaGovURL: NSButton!
-    
+    @IBOutlet weak var noaaWeatherURL: NSButton!
+
     var buttonPresses = 0
     
     var modalMenuBar = ColorPickerWindow(windowNibName: "ColorPickerWindow")
@@ -355,6 +358,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     let worldWeatherOnlineAPI = WorldWeatherOnlineAPI()
     let ApiXUApi = APIXUAPI()
     let canadaWeatherAPI = CanadaWeatherAPI()
+    let noaaWeatherAPI = NOAAWeatherAPI()
 
     var myTimer = Timer()   // http://ios-blog.co.uk/tutorials/swift-nstimer-tutorial-lets-create-a-counter-application/
     var loadTimer: Timer!   //For loading animation
@@ -579,6 +583,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         darkSkyURL.isHidden = true
         apixuURL.isHidden = true
         canadaGovURL.isHidden = true
+        noaaWeatherURL.isHidden = true
         #else
         #endif
         
@@ -1332,6 +1337,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                                   APIKey2: APIKey2,
                                   weatherFields: &weatherFields)
         }
+        else if (weatherDataSource == NOAAWEATHER)
+        {
+            //noaaWeatherAPI.setRadarWind(radarWindow)
+            noaaWeatherAPI.beginParsing(escapedCity,
+                                  APIKey1: APIKey1,
+                                  APIKey2: APIKey2,
+                                  weatherFields: &weatherFields)
+        }
         else
         {
             let i = Int(weatherDataSource)! + 1
@@ -1855,6 +1868,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             {
                 imageName = "Cloudy"
             }
+        } else if (weatherDataSource == NOAAWEATHER)
+        {
+            imageName = weatherCode
         }
         
         if (weatherCode == "") {
@@ -2414,6 +2430,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             {
                 statusTitle = localizedString(forKey: "ProvidedBy_") + " Environment Canada"
             }
+            else if (weatherDataSource == NOAAWEATHER)
+            {
+                statusTitle = localizedString(forKey: "ProvidedBy_") + " NOAA Weather"
+            }
             else
             {
                 statusTitle = "WeatherSource unknown"
@@ -2573,6 +2593,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         else if (weatherDataSource == CANADAGOV)
         {
             statusTitle = localizedString(forKey: "ProvidedBy_") + " Environment Canada"
+        }
+        else if (weatherDataSource == NOAAWEATHER)
+        {
+            statusTitle = localizedString(forKey: "ProvidedBy_") + " NOAA Weather"
         }
         else
         {
@@ -3184,6 +3208,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         darkSkyLocation.stringValue = localizedString(forKey: "darkSkyLocation_")
         APIXULocation.stringValue = localizedString(forKey: "APIXULocation_")
         canadaGovLocation.stringValue = localizedString(forKey: "canadaGovLocation_")
+        noaaWeatherLocation.stringValue = localizedString(forKey: "noaaWeatherLocation_")
 
         helpView.string = localizedString(forKey: "help_text_")
 
@@ -3264,6 +3289,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         weatherSourceButton.addItem(withTitle: localizedString(forKey: "DarkSky_") )
         weatherSourceButton.addItem(withTitle: localizedString(forKey: "APIXU_") )
         weatherSourceButton.addItem(withTitle: localizedString(forKey: "CanadaGov_") )
+        weatherSourceButton.addItem(withTitle: localizedString(forKey: "NOAA Weather_") )
     } // InitWeatherSourceButton
     
     func initPrefs() {

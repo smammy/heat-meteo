@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22DE8C78239854B5008DD47B /* NOAAWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DE8C77239854B5008DD47B /* NOAAWeatherAPI.swift */; };
 		643B165E221276D800063A6D /* Readme.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 643B165D221276D800063A6D /* Readme.rtf */; };
 		643C89E91CD19F45000589F1 /* TheWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C89E71CD19F45000589F1 /* TheWeatherAPI.swift */; };
 		643C89EA1CD19F45000589F1 /* WeatherUndergroundAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C89E81CD19F45000589F1 /* WeatherUndergroundAPI.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22DE8C77239854B5008DD47B /* NOAAWeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NOAAWeatherAPI.swift; sourceTree = "<group>"; };
 		643B165D221276D800063A6D /* Readme.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Readme.rtf; path = dist/Readme.rtf; sourceTree = "<group>"; };
 		643C89E71CD19F45000589F1 /* TheWeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheWeatherAPI.swift; sourceTree = "<group>"; };
 		643C89E81CD19F45000589F1 /* WeatherUndergroundAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherUndergroundAPI.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				643C89E81CD19F45000589F1 /* WeatherUndergroundAPI.swift */,
 				6480B1211C43239E00E55BE2 /* YahooWeatherAPI.swift */,
 				644573F41D52E84E00735B6E /* WorldWeatherOnline.swift */,
+				22DE8C77239854B5008DD47B /* NOAAWeatherAPI.swift */,
 				6480B11A1C43172800E55BE2 /* ColorPickerWindow.swift */,
 				6480B11B1C43172800E55BE2 /* ColorPickerWindow.xib */,
 				6480B1251C4323E100E55BE2 /* RadarWindow.swift */,
@@ -222,6 +225,7 @@
 				643C89EA1CD19F45000589F1 /* WeatherUndergroundAPI.swift in Sources */,
 				6480B1221C43239E00E55BE2 /* OpenWeatherMapAPI.swift in Sources */,
 				6480B11F1C43238000E55BE2 /* LogUtils.swift in Sources */,
+				22DE8C78239854B5008DD47B /* NOAAWeatherAPI.swift in Sources */,
 				64B85DBE1D52AFFB0049E719 /* DarkSkyAPI.swift in Sources */,
 				6469E03621FBD6A2002D05CE /* OhhAuth.swift in Sources */,
 				64DD17FE1E7B556200A0AC41 /* APIXU.swift in Sources */,
