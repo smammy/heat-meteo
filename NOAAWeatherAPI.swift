@@ -328,13 +328,13 @@ class NOAAWeatherAPI
             case (_, "tornado"):         return "Tornado"; /* Tornado */
             case (_, "hurricane"):       return "Hurricane"; /* Hurricane conditions */
             case (_, "tropical_storm"):  return "Hurricane"; /* Tropical storm conditions */
-            case (_, "dust"):            return "Haze"; /* Dust */
-            case (_, "smoke"):           return "Haze"; /* Smoke */
-            case (_, "haze"):            return "Haze"; /* Haze */
+            case (_, "dust"):            return "Hazy"; /* Dust */
+            case (_, "smoke"):           return "Hazy"; /* Smoke */
+            case (_, "haze"):            return "Hazy"; /* Haze */
             case (_, "hot"):             return "Unavailable"; /* Hot */
             case (_, "cold"):            return "Unavailable"; /* Cold */
             case (_, "blizzard"):        return "Snow"; /* Blizzard */
-            case (_, "fog"):             return "Haze"; /* Fog/mist */
+            case (_, "fog"):             return "Hazy"; /* Fog/mist */
             default:                     return "Unknown";
         }
     }
