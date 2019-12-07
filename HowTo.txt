@@ -10,8 +10,14 @@ To build using Xcode 10:
 • Make sure the version (Bundle versions string, short) in info.plist is updated.
 • Make sure README.txt is updated.
 • Use SVN to update the project (see below).
-• Run build_dmg.sh. This will create Meteorologist-v.r.m.dmg in the build folder using the pieces above.
 
+
+• Starting with macOS 10.15, notorization is required.
+• To start this process, you will need an App Specific password. I labeled mine Meteorologist. See https://ioshacker.com/how-to/generate-app-specific-passwords-apple-id-guide
+• For the Meteo build, you will need to create two specific files in your home folder: 1) ./altoolid and ./altoolpw
+• ./altoolid will contain your Apple developer ID (email address).
+• ./altoolpw will contain your App Specific password.
+• Now run build_dmg.sh (in the trunk folder). This will create Meteorologist-v.r.m.dmg in the build folder using all the pieces above.
 
 • Go to https://sourceforge.net/projects/heat-meteo/ and navigate to Files.
 • Create a new folder under Meteo called Meteo v.r.m.
@@ -21,16 +27,16 @@ To build using Xcode 10:
 
 
 • Open sftp <yourid>,heat-meteo@web.sourceforge.net (/home/project-web/heat-meteo/htdocs)
-—— ../Website folder ———
+• From the ../Website folder ———
 • Update version.xml
 • Update faq.html
 • Update index.html
 	For index.html, create a new section at the top of the main page describing the changes. In the detail second below, create an entirely new “fix” section, describe the change again, and update the link to point to the new version. If you highlight and duplicate the previous “fix”, you can do a CHANGE ALL in the selected section to pick up all changes. Finally, update the “Download latest version” section in the upper right of the page (near the top of the HTML).
     Update faq.html (upper left corner)
 
-—— ./trunk folder ———
-* Update CHANGELOG2
-* Update VERSION2
+• From the ./trunk folder ———
+• Update CHANGELOG2
+• Update VERSION2
 
 
 Quit and restart your copy of Meteo to make sure everything is looking OK.
@@ -43,5 +49,6 @@ SVN Notes:
 • svn add <module>
 • svn rm <module>
 • svn commit -m "description of change"
+• Check out SnailSVN Lite: https://apps.apple.com/us/app/snailsvn-lite-svn-for-finder/id1063090543?mt=12
 
 Note that you will need to (SVN) check in your trunk or tag code and also Website in the main portion of meteorologist.
