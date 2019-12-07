@@ -1,5 +1,5 @@
 //
-//  APIXU.swift
+//  AccuWeather.swift
 //  Meteorologist
 //
 //  Swift code written by Ed Danley on 9/19/15.
@@ -25,19 +25,22 @@
 //  OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
-// https://www.apixu.com/api.aspx
+// https://developer.accuweather.com/apis
 //
-// Key: 8c67b21afb7d4184ba0235136171603
+// Key: A2d0VXsnf8BuKdhdE3Wa44EVvGNDqJb2
 //
-// Sample: http://api.apixu.com/v1/forecast.json?key=8c67b21afb7d4184ba0235136171603&days=3&q=Naperville,IL
+// Sample : http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=A2d0VXsnf8BuKdhdE3Wa44EVvGNDqJb2&q=41.735%2C%20-88.095 <-- Returns "Key"
+// Current: http://dataservice.accuweather.com/currentconditions/v1/332669?details=true&apikey=A2d0VXsnf8BuKdhdE3Wa44EVvGNDqJb2
+// 5-Day  : http://dataservice.accuweather.com/forecasts/v1/daily/5day/332669?apikey=A2d0VXsnf8BuKdhdE3Wa44EVvGNDqJb2
+//
 
 import Cocoa
 import Foundation
 
-class APIXUAPI: NSObject, XMLParserDelegate
+class AccuWeatherAPI: NSObject, XMLParserDelegate
 {
     ///*
-    let QUERY_PREFIX1 = "http://api.apixu.com/v1/forecast.json?key="
+    let QUERY_PREFIX1 = "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search"
     let QUERY_SUFFIX1 = "&days=10&q="
     
     var weatherFields = WeatherFields()
@@ -52,12 +55,12 @@ class APIXUAPI: NSObject, XMLParserDelegate
         var currentCode = "Unknown"
         var workingString = icon
         
-        if (workingString.hasPrefix("//cdn.apixu.com/weather/64x64/day"))
+        if (workingString.hasPrefix("//cdn.AccuWeather.com/weather/64x64/day"))
         {
             //workingString = String(workingString.characters.dropFirst(34))
             workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 34)..<workingString.endIndex])
         }
-        if (workingString.hasPrefix("//cdn.apixu.com/weather/64x64/night"))
+        if (workingString.hasPrefix("//cdn.AccuWeather.com/weather/64x64/night"))
         {
             //workingString = String(workingString.characters.dropFirst(36))
             workingString = String(workingString[workingString.index(workingString.startIndex, offsetBy: 36)..<workingString.endIndex])
@@ -147,13 +150,13 @@ class APIXUAPI: NSObject, XMLParserDelegate
     } // fixIcon
     
     func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields) {
-        DebugLog(String(format:"in APIXU beginParsing: %@", inputCity))
+        DebugLog(String(format:"in AccuWeather beginParsing: %@", inputCity))
         
         escapedCity = inputCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)! as NSString
         escapedCity = escapedCity.replacingOccurrences(of: ",", with: "%3D") as NSString
         
         parseURL = QUERY_PREFIX1 + APIKey1 + QUERY_SUFFIX1 + (escapedCity as String)
-        InfoLog(String(format:"URL for APIXU: %@\n", parseURL))
+        InfoLog(String(format:"URL for AccuWeather: %@\n", parseURL))
         
         // https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-website-url
         let url = URL(string: parseURL)
@@ -165,7 +168,7 @@ class APIXUAPI: NSObject, XMLParserDelegate
                 // https://stackoverflow.com/questions/40812416/nsurl-url-and-nsdata-data?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
                 data = try Data(contentsOf: url!) as NSData
             } catch {
-                ErrorLog("APIXU \(error)")
+                ErrorLog("AccuWeather \(error)")
                 weatherFields.currentTemp = "9999"
                 weatherFields.latitude = "\(error)"
                 return
@@ -190,7 +193,7 @@ class APIXUAPI: NSObject, XMLParserDelegate
             ErrorLog("AERIS1 " + String(decoding: data!, as: UTF8.self))
         }
 
-        DebugLog(String(format:"leaving APIXU beginParsing: %@", inputCity))
+        DebugLog(String(format:"leaving AccuWeather beginParsing: %@", inputCity))
         
         return
     } // beginParsing
@@ -204,10 +207,10 @@ class APIXUAPI: NSObject, XMLParserDelegate
         let countryCode = (Locale.current as NSLocale).object(forKey: .countryCode) as? String
         if (countryCode?.caseInsensitiveCompare("US") != ComparisonResult.orderedSame)
         {
-            // parse http://www.apixu.com/doc/conditions.json
+            // parse http://www.AccuWeather.com/doc/conditions.json
             // weatherFields.currentConditions
             // weatherFields.forecastConditions[weatherFields.forecastCounter]
-            let url = URL(string: "http://www.apixu.com/doc/conditions.json")
+            let url = URL(string: "http://www.AccuWeather.com/doc/conditions.json")
             let data = NSData(contentsOf: url!)
             do {
                 let object = try JSONSerialization.jsonObject(with: data! as Data, options: .allowFragments)
@@ -390,4 +393,4 @@ class APIXUAPI: NSObject, XMLParserDelegate
     } // readJSONObject
     //*/
     
-} // APIXUAPI
+} // AccuWeatherAPI

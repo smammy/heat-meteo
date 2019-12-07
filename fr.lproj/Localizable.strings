@@ -24,7 +24,7 @@
 "DisplayFont_" = "Police d'affichage";
 "DisplayHumidity_" = "Afficher l'humidité";
 "DisplayWeatherIcon_" = "Afficher l'icône-météo";
-"DisplayFeelsLike_" = "Display Ressentie";
+"DisplayFeelsLike_" = "Afficher Ressentie";
 "Distance_" = "Distance";
 "Download?_" = "Télécharger immédiatement ?";
 "ExtendedForecast_" = "Prévisions étendues";
@@ -105,9 +105,9 @@
 "Sat" = "Sam";
 "Sun" = "Dim";
 "LastUpdate_" = "Dernière mise à jour";
-"APIXU_" = "APIXU";
-"APIXURL_" = "https://www.apixu.com";
-"APIXULocation_" = "Localisation sous forme \"lat long\"";
+"WEATHERSTACK_" = "weatherstack";
+"WEATHERSTACKURL_" = "https://www.weatherstack.com";
+"weatherstackLocation_" = "Localisation sous forme \"lat,long\"";
 "Visibility_" = "Visibilité";
 
 "NoInternetConnectivity_" = "Pas de connexion Internet. Utilisation de données en cache.";
@@ -174,3 +174,8 @@
 "here" = "ici";
 "allowLocation_" = "Permettre l'accès à la localité actuelle";
 "UV_" = "UV";
+"ﬂ_" = "Tr";
+"LocationDenied_" = "Les services de localisation sont refusés";
+"LocationNotAccessible_" = "Les services de localisation sont inactifs";
+"noaaWeatherLocation_" = "Localisation sous forme \"lat,long\" aucune clé d'API requise pour l'instant";
+"NOAA Weather_" = "NOAA Weather";

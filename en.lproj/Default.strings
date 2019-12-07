@@ -105,9 +105,9 @@
 "Sat" = "Sat";
 "Sun" = "Sun";
 "LastUpdate_" = "Last Update";
-"APIXU_" = "APIXU";
-"APIXURL_" = "https://www.apixu.com";
-"APIXULocation_" = "Typical location is \"lat long\"";
+"WEATHERSTACK_" = "weatherstack";
+"WEATHERSTACKURL_" = "https://www.weatherstack.com";
+"weatherstackLocation_" = "Typical location is \"lat,long\"";
 "Visibility_" = "Visibility";
 
 "NoInternetConnectivity_" = "No Internet Connectivity. Using cached data.";
@@ -174,3 +174,8 @@
 "here" = "here";
 "allowLocation_" = "Allow access to current location";
 "UV_" = "UV";
+"ﬂ_" = "ﬂ";
+"LocationDenied_" = "Location services are denied";
+"LocationNotAccessible_" = "Location services are not enabled";
+"noaaWeatherLocation_" = "Typical location is \"lat,long\" - no API Key required at this time";
+"NOAA Weather_" = "NOAA Weather";

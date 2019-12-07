@@ -1,5 +1,12 @@
 This file could also be called the change log.
 
+3.3.0
+* NOAA added as a new weather source thanks to Sam Hathaway!
+* Change URL in Help
+* APIXU changed to weatherstack
+* Display ß next to Feels Like temperature in menu bar (Tr for French)
+* As always, thank you to Manfred for his French translations.
+
 3.2.0
 * Correct crash when rotating cities and all cities are not in use
 * Correct crash if first city was empty
@@ -17,7 +24,7 @@ This file could also be called the change log.
 * Detect and report (but can't auto-resolve) Yahoo! OAuth errors in the Console log (along with other possible validation errors).
 * Update Yahoo! authentication, again. This time for X-Yahoo-App-Id.
 * Add support for Yahoo! location to be either city,state or lat,long.
-* Allow for unknown weather icons for APIXU (after wake from sleep)
+* Allow for unknown weather icons for WEATHERSTACK (after wake from sleep)
 * Correct a recurring 9999 for OpenWeatherMap
 * Provide a reference URL for Yahoo! locations.
 * Update source code to Swift 5 and Xcode 10.2.
@@ -89,13 +96,13 @@ This file could also be called the change log.
 * Correct problems with Last Update for Yahoo and OpenWeatherMap
 * Correct -9999 for wind direction for WeatherUnderground
 * Meteorologist is fully localized for French language
-* APIXU now has localized current and forecast conditions (but not other terms)
+* WEATHERSTACK now has localized current and forecast conditions (but not other terms)
 * Dark Sky now has localized current and forecast conditions (but not other terms)
 * If you are using Dark Sky, your update frequency will be a minimum of 30 minutes.
 
 3.0.2
 * Improve French localization
-* Add weather source APIXU.com
+* Add weather source weatherstack.com
 * Add weather source DarkSky.net (no key required)
 * Display cached weather information if network connection is lost
 *   Does not detect if you have an IP but router is not connected

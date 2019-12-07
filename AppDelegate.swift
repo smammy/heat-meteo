@@ -71,9 +71,10 @@ let WEATHERUNDERGROUND = "3"
 let AERISWEATHER = "4"
 let WORLDWEATHERONLINE = "5"
 let DARKSKY = "6"
-let APIXU = "7"
+let WEATHERSTACK = "7"
 let CANADAGOV = "8"
-let MAX_LOCATIONS = 8
+let NOAAWEATHER = "9"
+let MAX_LOCATIONS = 9
 
 var DEFAULT_PREFERENCE_VERSION = String()
 var NoInternetConnectivity = Int()
@@ -321,8 +322,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     @IBOutlet weak var aerisLocation: NSTextField!
     @IBOutlet weak var worldWeatherLocation: NSTextField!
     @IBOutlet weak var darkSkyLocation: NSTextField!
-    @IBOutlet weak var APIXULocation: NSTextField!
+    @IBOutlet weak var weatherstackLocation: NSTextField!
     @IBOutlet weak var canadaGovLocation: NSTextField!
+    @IBOutlet weak var noaaWeatherLocation: NSTextField!
 
     @IBOutlet weak var theWeatherURL: NSButton!
     @IBOutlet weak var openWeatherMapURL: NSButton!
@@ -331,8 +333,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     @IBOutlet weak var aerisURL: NSButton!
     @IBOutlet weak var worldWeatherURL: NSButton!
     @IBOutlet weak var darkSkyURL: NSButton!
-    @IBOutlet weak var apixuURL: NSButton!
+    @IBOutlet weak var weatherstackURL: NSButton!
     @IBOutlet weak var canadaGovURL: NSButton!
+    @IBOutlet weak var noaaWeatherURL: NSButton!
     
     var buttonPresses = 0
     
@@ -353,8 +356,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
     let darkSkyAPI = DarkSkyAPI()
     let aerisWeatherAPI = AerisWeatherAPI()
     let worldWeatherOnlineAPI = WorldWeatherOnlineAPI()
-    let ApiXUApi = APIXUAPI()
+    let weatherstackAPI = WeatherStackAPI()
     let canadaWeatherAPI = CanadaWeatherAPI()
+    let noaaWeatherAPI = NOAAWeatherAPI()
 
     var myTimer = Timer()   // http://ios-blog.co.uk/tutorials/swift-nstimer-tutorial-lets-create-a-counter-application/
     var loadTimer: Timer!   //For loading animation
@@ -411,8 +415,42 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         
         if ((defaults.string(forKey: "allowLocation") != nil) &&
             (defaults.string(forKey: "allowLocation")! == "1")) {
-            locationManager.delegate = self
-            locationManager.startUpdatingLocation()
+            if CLLocationManager.locationServicesEnabled() {
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+                locationManager.startUpdatingLocation()
+                /*
+                switch CLLocationManager.authorizationStatus() {
+                    case .notDetermined, .restricted, .denied:
+                        ErrorLog(localizedString(forKey: "LocationDenied_"))
+                        let myPopup: NSAlert = NSAlert()
+                        myPopup.messageText = localizedString(forKey: "LocationDenied_")
+                        myPopup.alertStyle = NSAlert.Style.warning
+                        //myPopup.addButton(withTitle: localizedString(forKey: "Yes_"))
+                        
+                        // http://swiftrien.blogspot.com/2015/03/code-sample-swift-nsalert_5.html
+                        // If any button is created with the title "Cancel" then that has the key "Escape" associated with it
+                        //myPopup.addButton(withTitle: localizedString(forKey: "Cancel_"))
+                        myPopup.runModal()
+                    case .authorizedAlways, .authorizedWhenInUse:
+                        locationManager.delegate = self
+                        /* Everything is AOK */
+                    @unknown default:
+                    break
+                }
+                */
+            } else {
+                ErrorLog(localizedString(forKey: "LocationNotAccessible_"))
+                let myPopup: NSAlert = NSAlert()
+                myPopup.messageText = localizedString(forKey: "LocationNotAccessible_")
+                myPopup.alertStyle = NSAlert.Style.warning
+                //myPopup.addButton(withTitle: localizedString(forKey: "Yes_"))
+                
+                // http://swiftrien.blogspot.com/2015/03/code-sample-swift-nsalert_5.html
+                // If any button is created with the title "Cancel" then that has the key "Escape" associated with it
+                //myPopup.addButton(withTitle: localizedString(forKey: "Cancel_"))
+                myPopup.runModal()
+            }
         }
     } // init
     
@@ -420,14 +458,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                          didChangeAuthorization status: CLAuthorizationStatus) {
         InfoLog("location manager auth status changed to:" )
         switch status {
-        case .restricted:
-            InfoLog("status restricted")
-            _ = "status restricted"
-        case .denied:
-            InfoLog("status denied")
-            _ = "status denied"
+        case .notDetermined, .restricted, .denied:
+            ErrorLog(localizedString(forKey: "LocationDenied_"))
+            let myPopup: NSAlert = NSAlert()
+            myPopup.messageText = localizedString(forKey: "LocationDenied_")
+            myPopup.alertStyle = NSAlert.Style.warning
+            myPopup.runModal()
+            switch status {
+                case .notDetermined:
+                    InfoLog("status notDetermined")
+                case .restricted:
+                    InfoLog("status restricted")
+                case .denied:
+                    InfoLog("status denied")
+                default:
+                    InfoLog("status should never happen")
+            }
             
-        case .authorized:
+        case .authorizedAlways, .authorizedWhenInUse:
             InfoLog("status authorized")
             let location = locationManager.location
             
@@ -464,13 +512,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                 myCity = "Location unavailable"
             }
 
-        //case .authorizedAlways:
-            //InfoLog("status authorized always")
-            //_ = "status authorized always"
         default:
-        //case .notDetermined:
+            ErrorLog(localizedString(forKey: "LocationNotAccessible_"))
+            let myPopup: NSAlert = NSAlert()
+            myPopup.messageText = localizedString(forKey: "LocationNotAccessible_")
+            myPopup.alertStyle = NSAlert.Style.warning
+            myPopup.runModal()
             InfoLog("status not yet determined")
-            _ = "status not yet determined"
         }
         locationManager.stopUpdatingLocation()
     } // locationManager
@@ -577,8 +625,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         aerisURL.isHidden = true
         worldWeatherURL.isHidden = true
         darkSkyURL.isHidden = true
-        apixuURL.isHidden = true
+        weatherstackURL.isHidden = true
         canadaGovURL.isHidden = true
+        noaaWeatherURL.isHidden = true
         #else
         #endif
         
@@ -1260,6 +1309,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         escapedCity = escapedCity.replacingOccurrences(of: "\u{00f6}", with: "oe")
         escapedCity = escapedCity.replacingOccurrences(of: "\u{00df}", with: "ss")
 
+        // TODO: Something to consider in the future:
+        // https://stackoverflow.com/questions/39691106/programmatically-screenshot-swift-3-macos
         if (weatherDataSource == YAHOO_WEATHER) {
             //yahooWeatherAPI.setRadarWind(radarWindow)
             yahooWeatherAPI.beginParsing(escapedCity,
@@ -1316,10 +1367,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                                                APIKey2: APIKey2,
                                                weatherFields: &weatherFields)
         }
-        else if (weatherDataSource == APIXU)
+        else if (weatherDataSource == WEATHERSTACK)
         {
-            //ApiXUApi.setRadarWind(radarWindow)
-            ApiXUApi.beginParsing(escapedCity,
+            //weatherstackAPI.setRadarWind(radarWindow)
+            weatherstackAPI.beginParsing(escapedCity,
                                   APIKey1: APIKey1,
                                   APIKey2: APIKey2,
                                   weatherFields: &weatherFields)
@@ -1328,6 +1379,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         {
             //canadaWeatherAPI.setRadarWind(radarWindow)
             canadaWeatherAPI.beginParsing(escapedCity,
+                                  APIKey1: APIKey1,
+                                  APIKey2: APIKey2,
+                                  weatherFields: &weatherFields)
+        }
+        else if (weatherDataSource == NOAAWEATHER)
+        {
+            //noaaWeatherAPI.setRadarWind(radarWindow)
+            noaaWeatherAPI.beginParsing(escapedCity,
                                   APIKey1: APIKey1,
                                   APIKey2: APIKey2,
                                   weatherFields: &weatherFields)
@@ -1721,7 +1780,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             {
                 imageName = "Rain"
             }
-        } else if (weatherDataSource == APIXU)
+        } else if (weatherDataSource == WEATHERSTACK)
         {
             imageName = weatherCode
 
@@ -1855,8 +1914,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             {
                 imageName = "Cloudy"
             }
+        } else if (weatherDataSource == NOAAWEATHER)
+        {
+            imageName = weatherCode
         }
-        
+
         if (weatherCode == "") {
             imageName = "Unknown"
         }
@@ -2241,7 +2303,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
                     statusTitle = displayCity + " "
                 }
                 if (defaults.string(forKey: "displayFeelsLike") == "1") {
-                    statusTitle = statusTitle + calculateFeelsLike(weatherFields.currentTemp, sWindspeed: weatherFields.windSpeed, sRH: weatherFields.humidity)
+                    statusTitle = statusTitle + localizedString(forKey: "ﬂ_") + " " + calculateFeelsLike(weatherFields.currentTemp, sWindspeed: weatherFields.windSpeed, sRH: weatherFields.humidity)
                 } else
                 {
                     statusTitle = statusTitle + formatTemp((weatherFields.currentTemp as String))
@@ -2377,14 +2439,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             if (weatherDataSource == YAHOO_WEATHER)
             {
                 statusTitle = localizedString(forKey: "ProvidedBy_") + " Yahoo!"
+                sourceURL = "https://www.yahoo.com/news/weather/"
             }
             else if (weatherDataSource == OPENWEATHERMAP)
             {
                 statusTitle = localizedString(forKey: "ProvidedBy_") + " OpenWeather"
+                sourceURL = "https://openweathermap.org"
             }
             else if (weatherDataSource == THEWEATHER)
             {
                 statusTitle = localizedString(forKey: "ProvidedBy_") + " TheWeather"
+                sourceURL = "https://www.theweather.com"
             }
             else if (weatherDataSource == WEATHERUNDERGROUND)
             {
@@ -2404,15 +2469,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
             else if (weatherDataSource == WORLDWEATHERONLINE)
             {
                 statusTitle = localizedString(forKey: "ProvidedBy_") + " World Weather Online"
+                sourceURL = "https://www.worldweatheronline.com"
             }
-            else if (weatherDataSource == APIXU)
+            else if (weatherDataSource == WEATHERSTACK)
             {
-                statusTitle = localizedString(forKey: "PoweredBy_") + " APIXU"
-                sourceURL = "https://www.apixu.com/weather/"
+                statusTitle = localizedString(forKey: "PoweredBy_") + " apilayer"
+                sourceURL = "https://www.weatherstack.com/"
             }
             else if (weatherDataSource == CANADAGOV)
             {
                 statusTitle = localizedString(forKey: "ProvidedBy_") + " Environment Canada"
+                sourceURL = "https://weather.gc.ca"
+            }
+            else if (weatherDataSource == NOAAWEATHER)
+            {
+                statusTitle = localizedString(forKey: "ProvidedBy_") + " NOAA Weather"
+                sourceURL = "https://www.weather.gov"
             }
             else
             {
@@ -2537,14 +2609,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         if (weatherDataSource == YAHOO_WEATHER)
         {
             statusTitle = localizedString(forKey: "ProvidedBy_") + " Yahoo!"
+            sourceURL = "https://www.yahoo.com/news/weather/"
         }
         else if (weatherDataSource == OPENWEATHERMAP)
         {
             statusTitle = localizedString(forKey: "ProvidedBy_") + " OpenWeather"
+            sourceURL = "https://openweathermap.org"
         }
         else if (weatherDataSource == THEWEATHER)
         {
             statusTitle = localizedString(forKey: "ProvidedBy_") + " TheWeather"
+            sourceURL = "https://www.theweather.com"
         }
         else if (weatherDataSource == WEATHERUNDERGROUND)
         {
@@ -2564,15 +2639,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         else if (weatherDataSource == WORLDWEATHERONLINE)
         {
             statusTitle = localizedString(forKey: "ProvidedBy_") + " World Weather Online"
+            sourceURL = "https://www.worldweatheronline.com"
         }
-        else if (weatherDataSource == APIXU)
+        else if (weatherDataSource == WEATHERSTACK)
         {
-            statusTitle = localizedString(forKey: "PoweredBy_") + " APIXU"
-            sourceURL = "https://www.apixu.com/weather/"
+            statusTitle = localizedString(forKey: "PoweredBy_") + " apilayer"
+            sourceURL = "https://www.weatherstack.com/"
         }
         else if (weatherDataSource == CANADAGOV)
         {
             statusTitle = localizedString(forKey: "ProvidedBy_") + " Environment Canada"
+            sourceURL = "https://weather.gc.ca"
+        }
+        else if (weatherDataSource == NOAAWEATHER)
+        {
+            statusTitle = localizedString(forKey: "ProvidedBy_") + " NOAA Weather"
+            sourceURL = "https://www.weather.gov"
         }
         else
         {
@@ -3182,8 +3264,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         aerisLocation.stringValue = localizedString(forKey: "aerisLocation_") + ":"
         worldWeatherLocation.stringValue = localizedString(forKey: "worldWeatherLocation_")
         darkSkyLocation.stringValue = localizedString(forKey: "darkSkyLocation_")
-        APIXULocation.stringValue = localizedString(forKey: "APIXULocation_")
+        weatherstackLocation.stringValue = localizedString(forKey: "weatherstackLocation_")
         canadaGovLocation.stringValue = localizedString(forKey: "canadaGovLocation_")
+        noaaWeatherLocation.stringValue = localizedString(forKey: "noaaWeatherLocation_")
 
         helpView.string = localizedString(forKey: "help_text_")
 
@@ -3262,8 +3345,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, CLLocation
         weatherSourceButton.addItem(withTitle: localizedString(forKey: "AERISWeather_") )
         weatherSourceButton.addItem(withTitle: localizedString(forKey: "WorldWeatherOnline_") )
         weatherSourceButton.addItem(withTitle: localizedString(forKey: "DarkSky_") )
-        weatherSourceButton.addItem(withTitle: localizedString(forKey: "APIXU_") )
+        weatherSourceButton.addItem(withTitle: localizedString(forKey: "WEATHERSTACK_") )
         weatherSourceButton.addItem(withTitle: localizedString(forKey: "CanadaGov_") )
+        weatherSourceButton.addItem(withTitle: localizedString(forKey: "NOAA Weather_") )
     } // InitWeatherSourceButton
     
     func initPrefs() {

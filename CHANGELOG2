@@ -1,10 +1,6 @@
-3.2.0
-* Correct crash when rotating cities and all cities are not in use
-* Correct crash if first city was empty
-* Correct crash if all locations were empty
-
-3.1.9
-* Correct Yahoo! lookup by US ZIP code
-* Add option to display Feels Like on menu bar (vs. actual temperature)
-* Correct rotation of cities
-* Adjust pressure (QFE) based on altitude (QNH), where altitude is provided (currently only via <here>)
+3.3.0
+* NOAA added as a new weather source thanks to Sam Hathaway!
+* Change URL in Help
+* APIXU changed to weatherstack
+* Display ﬂ next to Feels Like temperature in menu bar (Tr for French)
+* As always, thank you to Manfred for his French translations.

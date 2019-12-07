@@ -79,19 +79,19 @@ class OpenWeatherMapAPI: NSObject, XMLParserDelegate
         // lon = inputCity after "," or " "
         let trimmed = inputCity.trimmingCharacters(in: .whitespacesAndNewlines)
         if (trimmed.contains(", ")) {
-            var token = trimmed.components(separatedBy: ", ")
+            let token = trimmed.components(separatedBy: ", ")
             lat = token[0] as NSString
             lon = token[1] as NSString
         } else if (trimmed.contains(" ,")) {
-            var token = trimmed.components(separatedBy: " ,")
+            let token = trimmed.components(separatedBy: " ,")
             lat = token[0] as NSString
             lon = token[1] as NSString
         } else if (trimmed.contains(" ")) {
-            var token = trimmed.components(separatedBy: " ")
+            let token = trimmed.components(separatedBy: " ")
             lat = token[0] as NSString
             lon = token[1] as NSString
         } else if (trimmed.contains(",")) {
-            var token = trimmed.components(separatedBy: ",")
+            let token = trimmed.components(separatedBy: ",")
             lat = token[0] as NSString
             lon = token[1] as NSString
         } else {
