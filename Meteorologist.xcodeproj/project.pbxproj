@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		228C547F239C11F00016DC44 /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 228C547E239C11F00016DC44 /* XMLCoder */; };
 		22DE8C78239854B5008DD47B /* NOAAWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DE8C77239854B5008DD47B /* NOAAWeatherAPI.swift */; };
 		643B165E221276D800063A6D /* Readme.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 643B165D221276D800063A6D /* Readme.rtf */; };
 		643C89E91CD19F45000589F1 /* TheWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C89E71CD19F45000589F1 /* TheWeatherAPI.swift */; };
@@ -15,7 +16,6 @@
 		644573F61D52E84E00735B6E /* WorldWeatherOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644573F41D52E84E00735B6E /* WorldWeatherOnline.swift */; };
 		646893991E861D5D005B22B4 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646893981E861D5D005B22B4 /* Reachability.swift */; };
 		6469E03621FBD6A2002D05CE /* OhhAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6469E03521FBD6A2002D05CE /* OhhAuth.swift */; };
-		647C859222988C1D00BCDF17 /* AccuWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647C859122988C1D00BCDF17 /* AccuWeather.swift */; };
 		647C9D5A21C590CA00E89FD9 /* CanadaGov.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647C9D5921C590CA00E89FD9 /* CanadaGov.swift */; };
 		6480B10E1C43123900E55BE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6480B10D1C43123900E55BE2 /* AppDelegate.swift */; };
 		6480B1101C43123900E55BE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6480B10F1C43123900E55BE2 /* Assets.xcassets */; };
@@ -33,7 +33,6 @@
 		6480B12F1C43243A00E55BE2 /* VERSION2 in Resources */ = {isa = PBXBuildFile; fileRef = 6480B12B1C43243A00E55BE2 /* VERSION2 */; };
 		6480B1311C43244800E55BE2 /* HowTo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6480B1301C43244800E55BE2 /* HowTo.txt */; };
 		6480B1331C43265100E55BE2 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 6480B1321C43265100E55BE2 /* images */; };
-		6499DEC62239DA6000CAF1C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6499DEC52239DA6000CAF1C1 /* Main.storyboard */; };
 		64B85DBE1D52AFFB0049E719 /* DarkSkyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B85DBD1D52AFFB0049E719 /* DarkSkyAPI.swift */; };
 		64B8B8721E7450BE00F0CB39 /* Default.strings in Resources */ = {isa = PBXBuildFile; fileRef = 64B8B8741E7450BE00F0CB39 /* Default.strings */; };
 		64B8B8771E74543700F0CB39 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 64B8B8791E74543700F0CB39 /* Localizable.strings */; };
@@ -49,7 +48,6 @@
 		644573F41D52E84E00735B6E /* WorldWeatherOnline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldWeatherOnline.swift; sourceTree = "<group>"; };
 		646893981E861D5D005B22B4 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		6469E03521FBD6A2002D05CE /* OhhAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OhhAuth.swift; sourceTree = "<group>"; };
-		647C859122988C1D00BCDF17 /* AccuWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccuWeather.swift; sourceTree = "<group>"; };
 		647C9D5921C590CA00E89FD9 /* CanadaGov.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanadaGov.swift; sourceTree = "<group>"; };
 		6480B10A1C43123900E55BE2 /* Meteorologist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meteorologist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6480B10D1C43123900E55BE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ./AppDelegate.swift; sourceTree = "<group>"; };
@@ -70,7 +68,6 @@
 		6480B1301C43244800E55BE2 /* HowTo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = HowTo.txt; path = ./HowTo.txt; sourceTree = "<group>"; };
 		6480B1321C43265100E55BE2 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ./images; sourceTree = "<group>"; };
 		64941F941E745D53005FF75C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6499DEC52239DA6000CAF1C1 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		64B5F5EF1E74567500F6DA56 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		64B85DBD1D52AFFB0049E719 /* DarkSkyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkSkyAPI.swift; sourceTree = "<group>"; };
 		64B8B8731E7450BE00F0CB39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Default.strings; sourceTree = "<group>"; };
@@ -83,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				228C547F239C11F00016DC44 /* XMLCoder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,13 +94,11 @@
 				64B8B8741E7450BE00F0CB39 /* Default.strings */,
 				6480B1321C43265100E55BE2 /* images */,
 				6480B10F1C43123900E55BE2 /* Assets.xcassets */,
-				6499DEC52239DA6000CAF1C1 /* Main.storyboard */,
 				6480B1111C43123900E55BE2 /* MainMenu.xib */,
 				6480B10D1C43123900E55BE2 /* AppDelegate.swift */,
 				646893981E861D5D005B22B4 /* Reachability.swift */,
 				6480B11E1C43238000E55BE2 /* LogUtils.swift */,
 				644573F31D52E84E00735B6E /* AERISWeatherAPI.swift */,
-				647C859122988C1D00BCDF17 /* AccuWeather.swift */,
 				64DD17FD1E7B556200A0AC41 /* APIXU.swift */,
 				647C9D5921C590CA00E89FD9 /* CanadaGov.swift */,
 				64B85DBD1D52AFFB0049E719 /* DarkSkyAPI.swift */,
@@ -152,6 +148,9 @@
 			dependencies = (
 			);
 			name = Meteorologist;
+			packageProductDependencies = (
+				228C547E239C11F00016DC44 /* XMLCoder */,
+			);
 			productName = Meteorologist;
 			productReference = 6480B10A1C43123900E55BE2 /* Meteorologist.app */;
 			productType = "com.apple.product-type.application";
@@ -183,6 +182,9 @@
 				fr,
 			);
 			mainGroup = 6480B1011C43123900E55BE2;
+			packageReferences = (
+				228C547D239C11F00016DC44 /* XCRemoteSwiftPackageReference "XMLCoder" */,
+			);
 			productRefGroup = 6480B10B1C43123900E55BE2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -204,7 +206,6 @@
 				6480B1101C43123900E55BE2 /* Assets.xcassets in Resources */,
 				643B165E221276D800063A6D /* Readme.rtf in Resources */,
 				6480B1261C4323E100E55BE2 /* RadarWindow.xib in Resources */,
-				6499DEC62239DA6000CAF1C1 /* Main.storyboard in Resources */,
 				6480B1131C43123900E55BE2 /* MainMenu.xib in Resources */,
 				6480B12F1C43243A00E55BE2 /* VERSION2 in Resources */,
 				64B8B8721E7450BE00F0CB39 /* Default.strings in Resources */,
@@ -230,7 +231,6 @@
 				6469E03621FBD6A2002D05CE /* OhhAuth.swift in Sources */,
 				64DD17FE1E7B556200A0AC41 /* APIXU.swift in Sources */,
 				647C9D5A21C590CA00E89FD9 /* CanadaGov.swift in Sources */,
-				647C859222988C1D00BCDF17 /* AccuWeather.swift in Sources */,
 				644573F51D52E84E00735B6E /* AERISWeatherAPI.swift in Sources */,
 				6480B10E1C43123900E55BE2 /* AppDelegate.swift in Sources */,
 				6480B11C1C43172800E55BE2 /* ColorPickerWindow.swift in Sources */,
@@ -384,12 +384,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 7WNRPT262U;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ./Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.heat.Meteorologist;
@@ -403,18 +406,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 7WNRPT262U;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ./Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.heat.Meteorologist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -441,6 +448,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		228C547D239C11F00016DC44 /* XCRemoteSwiftPackageReference "XMLCoder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MaxDesiatov/XMLCoder";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		228C547E239C11F00016DC44 /* XMLCoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 228C547D239C11F00016DC44 /* XCRemoteSwiftPackageReference "XMLCoder" */;
+			productName = XMLCoder;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6480B1021C43123900E55BE2 /* Project object */;
 }

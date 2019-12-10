@@ -1,86 +1,131 @@
 import Cocoa
 import Foundation
-
-struct Observation: Decodable {
-    let geometry: ObservationGeometry
-    let properties: ObservationProperties
-}
-
-struct ObservationGeometry: Decodable {
-    let coordinates: [Double]
-}
-
-struct ObservationProperties: Decodable {
-    let timestamp: String
-    
-    let windSpeed: ObservationDoubleProperty
-    let windGust: ObservationDoubleProperty
-    let windDirection: ObservationDoubleProperty
-    
-    let elevation: ObservationIntProperty
-    let relativeHumidity: ObservationDoubleProperty
-    let barometricPressure: ObservationIntProperty
-    let visibility: ObservationIntProperty
-    
-    let temperature: ObservationDoubleProperty
-    let icon: URL
-    let textDescription: String
-}
-
-struct ObservationIntProperty: Decodable {
-    let value: Int?
-    let unitCode: String
-}
-
-struct ObservationDoubleProperty: Decodable {
-    let value: Double?
-    let unitCode: String
-}
-
-struct Forecast: Decodable {
-    let properties: ForecastProperties
-}
-
-struct ForecastProperties: Decodable {
-    let periods: [ForecastPeriod]
-}
-
-struct ForecastPeriod: Decodable {
-    let name: String
-    let icon: URL
-    let temperature: Int
-    let shortForecast: String
-    let isDaytime: Bool
-    let startTime: String
-}
+import XMLCoder
 
 class NOAAWeatherAPI
 {
     let POINTS_URL = "https://api.weather.gov/points/"
+    let CURR_OBS_XML_URL = "https://w1.weather.gov/xml/current_obs/"
+    
+    struct Point: Decodable {
+        let properties: PointProperties
+    }
+    
+    struct PointProperties: Decodable {
+        let forecast: URL
+        let observationStations: URL
+    }
+    
+    struct Stations: Decodable {
+        let features: [StationFeature]
+        let observationStations: [URL]
+    }
+    
+    struct StationFeature: Decodable {
+        let properties: StationFeatureProperties
+    }
+    
+    struct StationFeatureProperties: Decodable {
+        let stationIdentifier: String
+    }
+    
+    struct Observation: Decodable {
+        let geometry: ObservationGeometry
+        let properties: ObservationProperties
+    }
+
+    struct ObservationGeometry: Decodable {
+        let coordinates: [Double]
+    }
+
+    struct ObservationProperties: Decodable {
+        let timestamp: String
+        
+        let windSpeed: ObservationDoubleProperty
+        let windGust: ObservationDoubleProperty
+        let windDirection: ObservationDoubleProperty
+        
+        let elevation: ObservationIntProperty
+        let relativeHumidity: ObservationDoubleProperty
+        let barometricPressure: ObservationIntProperty
+        let visibility: ObservationIntProperty
+        
+        let temperature: ObservationDoubleProperty
+        let icon: URL
+        let textDescription: String
+    }
+
+    struct ObservationIntProperty: Decodable {
+        let value: Int?
+        let unitCode: String
+    }
+
+    struct ObservationDoubleProperty: Decodable {
+        let value: Double?
+        let unitCode: String
+    }
+
+    struct Forecast: Decodable {
+        let properties: ForecastProperties
+    }
+
+    struct ForecastProperties: Decodable {
+        let periods: [ForecastPeriod]
+    }
+
+    struct ForecastPeriod: Decodable {
+        let name: String
+        let icon: URL
+        let temperature: Int
+        let shortForecast: String
+        let isDaytime: Bool
+        let startTime: String
+    }
+    
+    struct XMLCurrentObservations: Decodable {
+        let observation_time_rfc822: String
+        let latitude: String
+        let longitude: String
+        let wind_mph: String
+        let wind_degrees: String
+        let relative_humidity: String
+        let pressure_mb: String
+        let visibility_mi: String
+        let temp_f: String
+        let icon_url_name: String
+        let weather: String
+    }
     
     func beginParsing(_ inputCity: String, APIKey1: String, APIKey2: String, weatherFields: inout WeatherFields)
     {
         DebugLog("NOAAWeatherAPI: beginParsing: entering " + inputCity)
         
-        weatherFields.currentTemp = "9999"
-        weatherFields.latitude = "not implemented"
-        
         let (stationsUrl, forecastUrl) = getGridpointUrls(inputCity)
         
         if let stationsUrl = stationsUrl {
-            //DebugLog("NOAAWeatherAPI: beginParsing: got stationsUrl: " + stationsUrl.absoluteString)
-            if let currentConditionsUrl = getNearestStationCurrentConditionsUrl(stationsUrl) {
-                //DebugLog("NOAAWeatherAPI: beginParsing: got currentConditionsUrl: " + currentConditionsUrl.absoluteString)
+            DebugLog("NOAAWeatherAPI: beginParsing: got stationsUrl: " + stationsUrl.absoluteString)
+            /*if let currentConditionsUrl = getNearestStationCurrentConditionsUrl(stationsUrl) {
+                DebugLog("NOAAWeatherAPI: beginParsing: got currentConditionsUrl: " + currentConditionsUrl.absoluteString)
                 if let currentConditionsJson = fetch(currentConditionsUrl) {
                     populateCurrentConditions(currentConditionsJson, weatherFields: &weatherFields)
                 } else {
                     ErrorLog("NOAAWeatherAPI: getGridpointUrls: no currentConditionsData")
                 }
+            }*/
+            if let stationID = getNearestStationID(stationsUrl) {
+                DebugLog("NOAAWeatherAPI: beginParsing: got stationID: " + stationID)
+                let currentConditionsXMLUrl = URL(string: CURR_OBS_XML_URL)!.appendingPathComponent(stationID + ".xml")
+                DebugLog("NOAAWeatherAPI: beginParsing: got currentConditionsXMLUrl: " + currentConditionsXMLUrl.absoluteString)
+                if let currentConditionsXML = fetch(currentConditionsXMLUrl) {
+                    populateCurrentConditionsXML(currentConditionsXML, weatherFields: &weatherFields)
+                } else {
+                    ErrorLog("NOAAWeatherAPI: getGridpointUrls: no currentConditionsXML")
+                }
             }
         }
         
         if let forecastUrl = forecastUrl {
-            //DebugLog("NOAAWeatherAPI: beginParsing: got forecastUrl: " + forecastUrl.absoluteString)
+            DebugLog("NOAAWeatherAPI: beginParsing: got forecastUrl: " + forecastUrl.absoluteString)
             if let forecastJson = fetch(forecastUrl) {
                 populateForecast(forecastJson, weatherFields: &weatherFields)
             } else {
@@ -93,88 +138,58 @@ class NOAAWeatherAPI
     
     func getGridpointUrls(_ latlng: String) -> (URL?, URL?)
     {
-        var stationsUrl: URL?
-        var forecastUrl: URL?
-        
-        var pointsUrl = URL(string: "https://api.weather.gov/points/")!
+        var pointsUrl = URL(string: POINTS_URL)!
         pointsUrl.appendPathComponent(latlng)
-        //DebugLog("NOAAWeatherAPI: getGridpointUrls: going to fetch " + pointsUrl.absoluteString)
-
-        if let response = fetch(pointsUrl) {
-            //DebugLog("NOAAWeatherAPI: getGridpointUrls: got response " + response)
-            do {
-                if let json = try JSONSerialization.jsonObject(with: Data(response.utf8), options: []) as? [String: Any] {
-                    if let props = json["properties"] as? [String: Any] {
-                        if let forecast = props["forecast"] as? String {
-                            forecastUrl = URL(string: forecast)
-                        } else {
-                            ErrorLog("NOAAWeatherAPI: getGridpointUrls: no forecast")
-                        }
-                        if let observationStations = props["observationStations"] as? String {
-                            stationsUrl = URL(string: observationStations)
-                        } else {
-                            ErrorLog("NOAAWeatherAPI: getGridpointUrls: no observationStations")
-                        }
-                    } else {
-                        ErrorLog("NOAAWeatherAPI: getGridpointUrls: no props")
-                    }
-                } else {
-                    ErrorLog("NOAAWeatherAPI: getGridpointUrls: no json")
-                }
-            } catch let error as NSError {
-                ErrorLog("NOAAWeatherAPI: getGridpointUrls: json parsing error: \(error.localizedDescription)")
-            }
-        } else {
+        
+        DebugLog("NOAAWeatherAPI: getGridpointUrls: going to fetch " + pointsUrl.absoluteString)
+        guard let json = fetch(pointsUrl) else {
             ErrorLog("NOAAWeatherAPI: getGridpointUrls: got no response")
-
+            return (nil, nil)
         }
         
-        return (stationsUrl, forecastUrl)
+        guard let point = try? JSONDecoder().decode(Point.self, from: Data(json.utf8)) else {
+            ErrorLog("NOAAWeatherAPI: getGridpointUrls: json parse error")
+            return (nil, nil)
+        }
+        
+        return (point.properties.observationStations, point.properties.forecast)
     }
     
     func getNearestStationCurrentConditionsUrl(_ stationsUrl: URL) -> URL?
     {
-        var currentConditionsUrl: URL?
-        
-        //DebugLog("NOAAWeatherAPI: getNearestStationCurrentConditionsUrl: going to fetch " + stationsUrl.absoluteString)
-
-        if let response = fetch(stationsUrl) {
-            //DebugLog("NOAAWeatherAPI: getNearestStationCurrentConditionsUrl: got response " + response)
-            do {
-                if let json = try JSONSerialization.jsonObject(with: Data(response.utf8), options: []) as? [String: Any] {
-                    if let observationStations = json["observationStations"] as? [String] {
-                        currentConditionsUrl = URL(string: observationStations[0] + "/observations/latest")
-                    } else {
-                        ErrorLog("NOAAWeatherAPI: getNearestStationCurrentConditionsUrl: no observationStations")
-                    }
-                } else {
-                    ErrorLog("NOAAWeatherAPI: getNearestStationCurrentConditionsUrl: no json")
-                }
-            } catch let error as NSError {
-                ErrorLog("NOAAWeatherAPI: getNearestStationCurrentConditionsUrl: json parsing error: \(error.localizedDescription)")
-            }
-        } else {
+        return getGridpointStations(stationsUrl)?.observationStations[0].appendingPathComponent("observations/latest")
+    }
+    
+    func getNearestStationID(_ stationsUrl: URL) -> String?
+    {
+        return getGridpointStations(stationsUrl)?.features[0].properties.stationIdentifier
+    }
+    
+    func getGridpointStations(_ stationsUrl: URL) -> Stations?
+    {
+        guard let json = fetch(stationsUrl) else {
             ErrorLog("NOAAWeatherAPI: getNearestStationCurrentConditionsUrl: got no response")
+            return nil
         }
         
-        return currentConditionsUrl
+        guard let stations = try? JSONDecoder().decode(Stations.self, from: Data(json.utf8)) else {
+            ErrorLog("NOAAWeatherAPI: getNearestStationCurrentConditionsUrl: json parse error")
+            return nil
+        }
+        
+        return stations
     }
     
     func populateCurrentConditions(_ json: String, weatherFields: inout WeatherFields)
     {
-        //DebugLog("NOAAWeatherAPI: populateCurrentConditions: json = " + json)
         guard let observation = try? JSONDecoder().decode(Observation.self, from: Data(json.utf8)) else {
             ErrorLog("NOAAWeatherAPI: populateCurrentConditions: json parse error")
             return
         }
-        //let observation = try! JSONDecoder().decode(Observation.self, from: Data(json.utf8))
         
-        //weatherFields.title1 = "?title1?"
         weatherFields.date = convertTimestamp(observation.properties.timestamp)
-        
         weatherFields.latitude = formatDouble(observation.geometry.coordinates[1])
         weatherFields.longitude = formatDouble(observation.geometry.coordinates[0])
-        
         weatherFields.windSpeed = formatDouble(mps_to_mph(observation.properties.windSpeed.value ?? 0))
         if let windGust = observation.properties.windGust.value {
             weatherFields.windGust = formatDouble(mps_to_mph(windGust))
@@ -195,12 +210,10 @@ class NOAAWeatherAPI
         if let visibility = observation.properties.visibility.value {
             weatherFields.visibility = String(format: "%.1f", m_to_mi(visibility))
         }
-        //weatherFields.UVIndex = "?UVIndex?"
-        
-        //weatherFields.sunrise = "?sunrise?"
-        //weatherFields.sunset = "?sunset?"
-        
-        //weatherFields.currentLink = "?currentLink"
+        //weatherFields.UVIndex
+        //weatherFields.sunrise
+        //weatherFields.sunset
+        //weatherFields.currentLink
         if let temperature = observation.properties.temperature.value {
             weatherFields.currentTemp = formatDouble(c_to_f(temperature))
         }
@@ -208,10 +221,34 @@ class NOAAWeatherAPI
         weatherFields.currentConditions = observation.properties.textDescription
     }
     
+    func populateCurrentConditionsXML(_ xml: String, weatherFields: inout WeatherFields)
+    {
+        guard let observation = try? XMLDecoder().decode(XMLCurrentObservations.self, from: Data(xml.utf8)) else {
+            ErrorLog("NOAAWeatherAPI: populateCurrentConditionsXML: xml parse error")
+            return
+        }
+        
+        weatherFields.date = convertRfc822Date(observation.observation_time_rfc822)
+        weatherFields.latitude = observation.latitude
+        weatherFields.longitude = observation.longitude
+        weatherFields.windSpeed = observation.wind_mph
+        //weatherFields.windGust
+        weatherFields.windDirection = observation.wind_degrees
+        //weatherFields.altitude
+        weatherFields.humidity = observation.relative_humidity
+        weatherFields.pressure = observation.pressure_mb
+        weatherFields.visibility = observation.visibility_mi
+        //weatherFields.UVIndex
+        //weatherFields.sunrise
+        //weatherFields.sunset
+        //weatherFields.currentLink
+        weatherFields.currentTemp = observation.temp_f
+        weatherFields.currentCode = convertXmlIconUrlName(observation.icon_url_name);
+        weatherFields.currentConditions = observation.weather
+    }
+    
     func populateForecast(_ json: String, weatherFields: inout WeatherFields)
     {
-        DebugLog("NOAAWeatherAPI: populateForecast: json = " + json)
-        //let forecast = try! JSONDecoder().decode(Forecast.self, from: Data(json.utf8))
         guard let forecast = try? JSONDecoder().decode(Forecast.self, from: Data(json.utf8)) else {
             ErrorLog("NOAAWeatherAPI: populateForecast: json parse error")
             return
@@ -227,6 +264,7 @@ class NOAAWeatherAPI
                 weatherFields.forecastConditions[weatherFields.forecastCounter] = "☀\u{fe0e} " + period.shortForecast
             } else {
                 if (firstPeriod) {
+                    DebugLog("NOAAWeatherAPI: populateForecast: first period is nighttime")
                     weatherFields.forecastDay[weatherFields.forecastCounter] = periodDay(period.startTime)
                     weatherFields.forecastCode[weatherFields.forecastCounter] = convertIconUrl(period.icon)
                 } else {
@@ -237,25 +275,6 @@ class NOAAWeatherAPI
                 weatherFields.forecastCounter += 1
             }
             firstPeriod = false
-        }
-    }
-    
-    func convertTimestamp(_ dateString: String) -> String
-    {
-        let inFormatter = DateFormatter()
-        inFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-        inFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        inFormatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        let outFormatter = DateFormatter()
-        outFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        inFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        inFormatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        if let date = inFormatter.date(from: dateString) {
-            return outFormatter.string(from: date)
-        } else {
-            return ""
         }
     }
     
@@ -292,9 +311,7 @@ class NOAAWeatherAPI
     func convertIconUrl(_ iconUrl: URL) -> String
     {
         let tod = iconUrl.pathComponents[3];
-        let con = iconUrl.pathComponents[4].split(separator: ",")[0];
-        
-        //DebugLog("NOAAWeatherAPI: convertIconUrl: iconUrl = \(iconUrl) tod = \(tod) con = \(con)")
+        let con = String(iconUrl.pathComponents[4].split(separator: ",")[0])
         
         switch (tod, con) {
             case ("day",   "skc"):       return "Sun"; /* Fair/clear */
@@ -335,7 +352,94 @@ class NOAAWeatherAPI
             case (_, "cold"):            return "Unavailable"; /* Cold */
             case (_, "blizzard"):        return "Snow"; /* Blizzard */
             case (_, "fog"):             return "Hazy"; /* Fog/mist */
-            default:                     return "Unknown";
+            default:
+                DebugLog("NOAAWeatherAPI: convertIconUrl: unrecognized icon URL: " + iconUrl.absoluteString)
+                return "Unknown";
+        }
+    }
+    
+    func convertXmlIconUrlName(_ iconUrlName: String) -> String
+    {
+        let name = String(iconUrlName.split(separator: ".")[0])
+        
+        switch (name) {
+            case "bkn":       return "Sun-Cloud";
+            case "nbkn":      return "Moon-Cloud";
+            case "skc":       return "Sun";
+            case "nskc":      return "Moon";
+            case "few":       return "Sun-Cloud";
+            case "nfew":      return "Moon-Cloud";
+            case "sct":       return "Sun-Cloud";
+            case "nsct":      return "Moon-Cloud";
+            case "ovc":       return "Cloudy";
+            case "novc":      return "Cloudy";
+            case "fg":        return "Hazy";
+            case "nfg":       return "Hazy";
+            case "smoke":     return "Hazy";
+            case "fzra":      return "Sleet";
+            case "ip":        return "Snow";
+            case "mix":       return "Sleet";
+            case "nmix":      return "Sleet";
+            case "raip":      return "Sleet";
+            case "rasn":      return "Sleet";
+            case "nrasn":     return "Sleet";
+            case "shra":      return "Rain";
+            case "tsra":      return "Thunderstorm";
+            case "ntsra":     return "Thunderstorm";
+            case "sn":        return "Snow";
+            case "nsn":       return "Snow";
+            case "wind":      return "Wind";
+            case "nwind":     return "Wind";
+            case "hi_shwrs":  return "Rain";
+            case "hi_nshwrs": return "Rain";
+            case "fzrara":    return "Sleet";
+            case "hi_tsra":   return "Thunderstorm";
+            case "hi_ntsra":  return "Thunderstorm";
+            case "ra":        return "Rain";
+            case "ra1":       return "Rain";
+            case "nra":       return "Rain";
+            case "nsvrtsra":  return "Tornado";
+            case "dust":      return "Hazy";
+            case "mist":      return "Hazy";
+            default:
+            DebugLog("NOAAWeatherAPI: convertXmlIconUrlName: unrecognized icon URL name: " + iconUrlName)
+            return "Unknown";
+        }
+    }
+    
+    func convertTimestamp(_ dateString: String) -> String
+    {
+        let inFormatter = DateFormatter()
+        inFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        inFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        inFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        let outFormatter = DateFormatter()
+        outFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        inFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        inFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        if let date = inFormatter.date(from: dateString) {
+            return outFormatter.string(from: date)
+        } else {
+            return ""
+        }
+    }
+    
+    func convertRfc822Date(_ dateString: String) -> String
+    {
+        let inFormatter = DateFormatter()
+        inFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss z"
+        
+        let outFormatter = DateFormatter()
+        outFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        inFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        inFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        if let date = inFormatter.date(from: dateString) {
+            return outFormatter.string(from: date)
+        } else {
+            return ""
         }
     }
     
